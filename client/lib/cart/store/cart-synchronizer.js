@@ -8,6 +8,7 @@ import flowRight from 'lodash/flowRight';
 import Dispatcher from 'dispatcher';
 import { action as upgradesActionTypes } from 'lib/upgrades/constants';
 import debugFactory from 'debug';
+import { infoNotice } from 'state/notices/actions';
 
 /**
  * Internal dependencies
@@ -221,6 +222,8 @@ CartSynchronizer.prototype._performRequest = function( type, requestFunction ) {
 		}
 
 		this.emit( 'change' );
+
+		this._showNoticeForStaleCartItems();
 	}.bind( this ) );
 };
 
@@ -242,6 +245,23 @@ CartSynchronizer.prototype.hasPendingServerUpdates = function() {
 		this._activeRequest.type === 'update' &&
 		this._activeRequest.state === 'pending'
 	);
+};
+
+CartSynchronizer.prototype._showNoticeForStaleCartItems = function() {
+	const cartItems = require( 'lib/cart-values' ).cartItems;
+
+	if ( cartItems.hasStaleItem( this._latestValue ) ) {
+		debug( 'Firing notice!' );
+		infoNotice(
+			'Your site deserves a boost!', // TODO: translate
+			{
+				isPersistent: true,
+				duration: 10000,
+				button: 'Complete your purchase',
+				href: '/checkout/', // TODO: Add the site slug
+			}
+		);
+	}
 };
 
 module.exports = CartSynchronizer;

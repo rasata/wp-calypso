@@ -52,15 +52,9 @@ class Post extends Component {
 		setLayoutFocus: PropTypes.func.isRequired,
 		recordViewPost: PropTypes.func.isRequired,
 		recordPreviewPost: PropTypes.func.isRequired,
-		recordEditPost: PropTypes.func.isRequired,
 		recordCommentIconClick: PropTypes.func.isRequired,
-		recordLikeIconClick: PropTypes.func.isRequired,
-		recordDateClick: PropTypes.func.isRequired,
-		recordFeaturedImageStandardClick: PropTypes.func.isRequired,
-		recordFeaturedImageLargeClick: PropTypes.func.isRequired,
 		recordPostTitleClick: PropTypes.func.isRequired,
 		recordPostExcerptClick: PropTypes.func.isRequired,
-		recordViewStats: PropTypes.func.isRequired,
 
 		// connected via updatePostStatus
 		buildUpdateTemplate: PropTypes.func.isRequired,
@@ -133,7 +127,7 @@ class Post extends Component {
 					href={ this.getContentLinkURL() }
 					className="post__title-link post__content-link"
 					target={ this.getContentLinkTarget() }
-					onClick={ this.props.postTitleClick }>
+					onClick={ this.props.recordPostTitleClick }>
 					<h4 className="post__title">{ this.props.post.title }</h4>
 				</a>
 			);
@@ -251,8 +245,10 @@ class Post extends Component {
 		const { isPreviewable, previewUrl, selectedSiteId } = this.props;
 
 		if ( this.props.post.status && this.props.post.status === 'future' ) {
+			// FIXME: why was this not being called?
 			this.props.recordPreviewPost;
 		} else {
+			// FIXME: why was this not being called?
 			this.props.recordViewPost;
 		}
 
@@ -324,15 +320,9 @@ class Post extends Component {
 const analyticsEvents = [
 	[ 'recordViewPost', 'Clicked View Post' ],
 	[ 'recordPreviewPost', 'Clicked Preview Post' ],
-	[ 'recordEditPost', 'Clicked Edit Post' ],
 	[ 'recordCommentIconClick', 'Clicked Post Comment Icon/Number' ],
-	[ 'recordLikeIconClick', 'Clicked Post Likes Icon/Number' ],
-	[ 'recordDateClick', 'Clicked Post Date' ],
-	[ 'recordFeaturedImageStandardClick', 'Clicked Post Featured Image Standard' ],
-	[ 'recordFeaturedImageLargeClick', 'Clicked Post Featured Image Large' ],
 	[ 'recordPostTitleClick', 'Clicked Post Title' ],
 	[ 'recordPostExcerptClick', 'Clicked Post Excerpt' ],
-	[ 'recordViewStats', 'Clicked View Post Stats' ],
 ];
 
 const mapDispatch = {

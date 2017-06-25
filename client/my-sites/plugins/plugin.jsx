@@ -23,15 +23,22 @@ import MainComponent from 'components/main';
 import SidebarNavigation from 'my-sites/sidebar-navigation';
 import JetpackManageErrorPage from 'my-sites/jetpack-manage-error-page';
 import PluginSections from 'my-sites/plugins/plugin-sections';
-import pluginsAccessControl from 'my-sites/plugins/access-control';
-import EmptyContent from 'components/empty-content';
-import FeatureExample from 'components/feature-example';
 import DocumentHead from 'components/data/document-head';
 import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
-import { isJetpackSite, canJetpackSiteManage, getRawSite } from 'state/sites/selectors';
-import { isSiteAutomatedTransfer } from 'state/selectors';
+import {
+	isJetpackSite,
+	canJetpackSiteManage,
+	getRawSite,
+	isRequestingSites
+} from 'state/sites/selectors';
 import { recordGoogleEvent } from 'state/analytics/actions';
 import QuerySites from 'components/data/query-sites';
+import {
+	isSiteAutomatedTransfer,
+	canCurrentUser,
+	canCurrentUserManagePlugins } from 'state/selectors';
+import NotAvailableError from './not-available-error';
+import MinimumJetpackVersionNotice from './minimum-jetpack-version-notice';
 
 const SinglePlugin = React.createClass( {
 	_DEFAULT_PLUGINS_BASE_PATH: 'http://wordpress.org/plugins/',
@@ -82,7 +89,6 @@ const SinglePlugin = React.createClass( {
 			}, sitePlugin );
 
 		return {
-			accessError: pluginsAccessControl.hasRestrictedAccess(),
 			sites: PluginsStore.getSites( sites, props.pluginSlug ) || [],
 			notInstalledSites: PluginsStore.getNotInstalledSites( sites, props.pluginSlug ) || [],
 			plugin: plugin,
@@ -318,18 +324,8 @@ const SinglePlugin = React.createClass( {
 	render() {
 		const { selectedSite } = this.props;
 
-		if ( this.state.accessError ) {
-			return (
-				<MainComponent>
-					{ this.renderDocumentHead() }
-					<SidebarNavigation />
-					<EmptyContent { ...this.state.accessError } />
-					{ this.state.accessError.featureExample
-						? <FeatureExample>{ this.state.accessError.featureExample }</FeatureExample>
-						: null
-					}
-				</MainComponent>
-			);
+		if ( ! this.props.isRequestingSites && ! this.props.userCanManagePlugins ) {
+			return <NotAvailableError />;
 		}
 
 		const plugin = this.getPlugin();
@@ -372,6 +368,7 @@ const SinglePlugin = React.createClass( {
 
 		return (
 			<MainComponent>
+				<MinimumJetpackVersionNotice />
 				<QuerySites allSites />
 				{ this.renderDocumentHead() }
 				<SidebarNavigation />
@@ -415,6 +412,10 @@ export default connect(
 			isJetpackSite: siteId => isJetpackSite( state, siteId ),
 			canJetpackSiteManage: siteId => canJetpackSiteManage( state, siteId ),
 			isSiteAutomatedTransfer: isSiteAutomatedTransfer( state, get( selectedSite, 'ID' ) ),
+			userCanManagePlugins: ( selectedSiteId
+				? canCurrentUser( state, selectedSiteId, 'manage_options' )
+				: canCurrentUserManagePlugins( state ) ),
+			isRequestingSites: isRequestingSites( state ),
 		};
 	},
 	{

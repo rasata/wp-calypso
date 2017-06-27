@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
+import { capitalize } from 'lodash';
 
 /**
  * Internal dependencies
@@ -37,6 +38,8 @@ export class LoginForm extends Component {
 		usernameOrEmail: '',
 		password: '',
 		rememberMe: false,
+		linkingSocialUser: false,
+		linkingSocialService: '',
 	};
 
 	onChangeField = ( event ) => {
@@ -73,6 +76,14 @@ export class LoginForm extends Component {
 		} );
 	};
 
+	linkSocialUser = ( service, usernameOrEmail ) => {
+		this.setState( {
+			usernameOrEmail: usernameOrEmail,
+			linkingSocialUser: true,
+			linkingSocialService: capitalize( service ),
+		} );
+	};
+
 	render() {
 		const isDisabled = {};
 		if ( this.props.isRequesting ) {
@@ -85,6 +96,29 @@ export class LoginForm extends Component {
 			<form onSubmit={ this.onSubmitForm } method="post">
 				<Card className="login__form">
 					<div className="login__form-userdata">
+						{ this.state.linkingSocialUser && (
+							<div className="login__form-link-social-notice">
+								<p>
+									{ this.props.translate( 'We found a WordPress.com account with the email address "%(email)s".' +
+										'To connect this account to your %(service)s account, please enter your password.', {
+											args: {
+												email: this.state.usernameOrEmail,
+												service: this.state.linkingSocialService,
+											}
+										}
+									) }
+								</p>
+								<p>
+									{ this.props.translate( 'You will be able to user your %(service)s account to ' +
+										'log in to WordPress.com in the future.', {
+											args: {
+												service: this.state.linkingSocialService,
+											}
+										}
+									) }
+								</p>
+							</div>
+						) }
 						<label htmlFor="usernameOrEmail" className="login__form-userdata-username">
 							{ this.props.translate( 'Username or Email Address' ) }
 						</label>
@@ -150,7 +184,7 @@ export class LoginForm extends Component {
 				{ config.isEnabled( 'signup/social' ) && (
 					<Card>
 						<div className="login__form-social">
-							<SocialLoginForm onSuccess={ this.props.onSuccess } />
+							<SocialLoginForm onSuccess={ this.props.onSuccess } linkSocialUser={ this.linkSocialUser } />
 						</div>
 					</Card>
 				) }

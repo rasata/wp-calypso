@@ -7,19 +7,15 @@ import page from 'page';
 /**
  * Internal dependencies
  */
-import localforage from 'lib/localforage';
-import { isOutsideCalypso } from 'lib/url';
+import {
+	getSavedPath,
+	savePath,
+} from 'lib/restore-last-path';
 import { ROUTE_SET } from 'state/action-types';
 
 const debug = debugFactory( 'calypso:restore-last-location' );
-const LAST_PATH = 'last_path';
-const ALLOWED_PATHS_FOR_RESTORING = /^\/(stats|plans|view|posts|pages|media|types|themes|sharing|people|plugins|domains)/i;
 
-const isWhitelistedForRestoring = ( path ) => {
-	return !! path.match( ALLOWED_PATHS_FOR_RESTORING );
-};
-
-export const restoreLastLocation = () => {
+export const routingMiddleware = () => {
 	let hasInitialized = false;
 
 	return ( next ) => ( action ) => {
@@ -27,30 +23,30 @@ export const restoreLastLocation = () => {
 			return next( action );
 		}
 
-		localforage.getItem( LAST_PATH ).then(
-			( lastPath ) => {
-				if ( ! hasInitialized &&
-						lastPath && lastPath !== '/' &&
-						action.path === '/' && Object.keys( action.query ).length === 0 &&
-						! isOutsideCalypso( lastPath ) &&
-						isWhitelistedForRestoring( lastPath ) ) {
-					debug( 'redir to', lastPath );
-					page( lastPath );
-				} else if ( action.path !== lastPath &&
-						! isOutsideCalypso( action.path ) ) {
-					debug( 'saving', action.path );
-					localforage.setItem( LAST_PATH, action.path );
-				}
+		if ( Object.keys( action.query ).length !== 0 ) {
+			return next( action );
+		}
 
-				if ( ! hasInitialized ) {
-					hasInitialized = true;
-				}
+		if ( ! hasInitialized && action.path === '/' ) {
+			hasInitialized = true;
+			return getSavedPath()
+					.then( ( lastPath ) => {
+						debug( 'restoring: ' + lastPath );
+						page( lastPath );
+						return;
+					} )
+					.catch( ( reason ) => {
+						debug( 'cannot restore', reason );
+						next( action );
+					} );
+		}
 
-				return next( action );
-			},
-			() => next( action )
-		);
+		savePath( action.path )
+			.then( () => debug( 'saved path: ' + action.path ) )
+			.catch( ( reason ) => debug( 'error saving path', reason ) );
+
+		next( action );
 	};
 };
 
-export default restoreLastLocation;
+export default routingMiddleware;

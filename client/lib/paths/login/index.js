@@ -4,7 +4,7 @@
 import { addQueryArgs } from 'lib/url';
 import config, { isEnabled } from 'config';
 
-export function login( { isNative, redirectTo, twoFactorAuthType } = {} ) {
+export function login( { isNative, redirectTo, twoFactorAuthType, socialConnect } = {} ) {
 	let url = config( 'login_url' );
 
 	if ( isNative && isEnabled( 'login/wp-login' ) ) {
@@ -12,6 +12,10 @@ export function login( { isNative, redirectTo, twoFactorAuthType } = {} ) {
 
 		if ( twoFactorAuthType ) {
 			url += '/' + twoFactorAuthType;
+		}
+
+		if ( socialConnect ) {
+			url += '/social-connect';
 		}
 	}
 

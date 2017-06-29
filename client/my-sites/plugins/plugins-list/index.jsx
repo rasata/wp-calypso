@@ -46,7 +46,6 @@ export const PluginsList = React.createClass( {
 			name: PropTypes.string,
 		} ) ).isRequired,
 		header: PropTypes.string.isRequired,
-		sites: PropTypes.object.isRequired,
 		selectedSite: PropTypes.object,
 		selectedSiteSlug: PropTypes.string,
 		pluginUpdateCount: PropTypes.number,
@@ -165,7 +164,7 @@ export const PluginsList = React.createClass( {
 	},
 
 	hasNoSitesThatCanManage( plugin ) {
-		return ! plugin.sites.some( site => includes( site.modules || [], 'manage' ) );
+		return ! plugin.sites.some( site => site.canManage );
 	},
 
 	getSelected() {
@@ -173,8 +172,7 @@ export const PluginsList = React.createClass( {
 	},
 
 	siteSuffix() {
-		const hasSingleSite = this.props.sites && this.props.sites.get().length === 1;
-		return ( this.props.selectedSite || hasSingleSite ) ? '/' + this.props.selectedSiteSlug : '';
+		return ( !! this.props.selectedSite ) ? '/' + this.props.selectedSiteSlug : '';
 	},
 
 	recordEvent( eventAction, includeSelectedPlugins ) {

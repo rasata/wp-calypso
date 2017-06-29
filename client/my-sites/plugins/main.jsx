@@ -30,6 +30,7 @@ import WpcomPluginPanel from 'my-sites/plugins-wpcom';
 import PluginsBrowser from './plugins-browser';
 import { getSelectedSite, getSelectedSiteSlug } from 'state/ui/selectors';
 import { isJetpackSite, canJetpackSiteManage, canJetpackSiteUpdateFiles } from 'state/sites/selectors';
+import { getSelectedOrAllSitesWithPlugins } from 'state/selectors';
 
 const PluginsMain = React.createClass( {
 	mixins: [ URLSearch ],
@@ -39,12 +40,10 @@ const PluginsMain = React.createClass( {
 	},
 
 	componentDidMount() {
-		this.props.sites.on( 'change', this.refreshPlugins );
 		PluginsStore.on( 'change', this.refreshPlugins );
 	},
 
 	componentWillUnmount() {
-		this.props.sites.removeListener( 'change', this.refreshPlugins );
 		PluginsStore.removeListener( 'change', this.refreshPlugins );
 	},
 
@@ -84,7 +83,7 @@ const PluginsMain = React.createClass( {
 	},
 
 	getPluginsState( nextProps ) {
-		const sites = this.props.sites.getSelectedOrAllWithPlugins(),
+		const sites = this.props.sites,
 			pluginUpdate = PluginsStore.getPlugins( sites, 'updates' );
 		return {
 			accessError: pluginsAccessControl.hasRestrictedAccess(),
@@ -133,8 +132,7 @@ const PluginsMain = React.createClass( {
 	},
 
 	isFetchingPlugins() {
-		const sites = this.props.sites.getSelectedOrAllWithPlugins() || [];
-		return sites.some( PluginsStore.isFetchingSite );
+		return this.props.sites.some( PluginsStore.isFetchingSite );
 	},
 
 	getSelectedText() {
@@ -233,7 +231,7 @@ const PluginsMain = React.createClass( {
 		}
 
 		return some(
-			this.props.sites.getSelectedOrAllWithPlugins(),
+			this.props.sites,
 			site => site && this.props.isJetpackSite( site.ID ) && this.props.canJetpackSiteUpdateFiles( site.ID )
 		);
 	},
@@ -286,7 +284,6 @@ const PluginsMain = React.createClass( {
 				<PluginsList
 					header={ this.translate( 'Plugins' ) }
 					plugins={ plugins }
-					sites={ this.props.sites }
 					pluginUpdateCount={ this.state.pluginUpdateCount }
 					isPlaceholder= { this.shouldShowPluginListPlaceholders() } />
 			</div>
@@ -429,7 +426,7 @@ const PluginsMain = React.createClass( {
 export default connect(
 	state => {
 		const selectedSite = getSelectedSite( state );
-
+		const sites = getSelectedOrAllSitesWithPlugins( state );
 		return {
 			selectedSite,
 			selectedSiteId: selectedSite && selectedSite.ID,
@@ -440,6 +437,7 @@ export default connect(
 			canJetpackSiteUpdateFiles: siteId => canJetpackSiteUpdateFiles( state, siteId ),
 			isJetpackSite: siteId => isJetpackSite( state, siteId ),
 			wporgPlugins: state.plugins.wporg.items,
+			sites,
 		};
 	},
 	{ wporgFetchPluginData }

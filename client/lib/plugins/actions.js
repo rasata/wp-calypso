@@ -162,7 +162,7 @@ const autoupdatePlugin = ( site, plugin ) => {
 const processAutoupdates = ( site, plugins ) => {
 	if ( site.canAutoupdateFiles &&
 		site.jetpack &&
-		site.canManage() &&
+		( typeof site.canManage === 'function' ? site.canManage() : site.canManage ) && //compatibility with old site object (for now)
 		utils.userCan( 'manage_options', site )
 	) {
 		plugins.forEach( plugin => {
@@ -305,7 +305,8 @@ const PluginsActions = {
 
 		const manageError = error => {
 			if ( error.name === 'PluginAlreadyInstalledError' ) {
-				if ( site.isMainNetworkSite() ) {
+				//compatibility with old site object (for now)
+				if ( typeof site.isMainNetworkSite === 'function' ? site.isMainNetworkSite() : site.isMainNetworkSite ) {
 					return update( plugin )
 						.then( autoupdate )
 						.then( manageSuccess )
@@ -330,8 +331,8 @@ const PluginsActions = {
 		};
 
 		dispatchMessage( 'INSTALL_PLUGIN' );
-
-		if ( site.isMainNetworkSite() ) {
+		//compatibility with old site object (for now)
+		if ( typeof site.isMainNetworkSite === 'function' ? site.isMainNetworkSite() : site.isMainNetworkSite ) {
 			return install()
 				.then( autoupdate )
 				.then( manageSuccess )

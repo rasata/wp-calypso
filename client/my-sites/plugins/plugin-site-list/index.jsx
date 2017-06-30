@@ -4,39 +4,40 @@
 var React = require( 'react' ),
 	classNames = require( 'classnames' ),
 	compact = require( 'lodash/compact' );
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
  */
-var allSites = require( 'lib/sites-list' )(),
-	PluginSite = require( 'my-sites/plugins/plugin-site/plugin-site' ),
+var PluginSite = require( 'my-sites/plugins/plugin-site/plugin-site' ),
 	SectionHeader = require( 'components/section-header' ),
 	PluginsStore = require( 'lib/plugins/store' );
+import { isConnectedSecondaryNetworkSite, getNetworkSites } from 'state/selectors';
 
-module.exports = React.createClass( {
+const PluginSiteList =  React.createClass( {
 
 	displayName: 'PluginSiteList',
 
 	propTypes: {
-		site: React.PropTypes.object,
+		sites: React.PropTypes.array,
 		plugin: React.PropTypes.object,
 		notices: React.PropTypes.object,
-		title: React.PropTypes.string
+		title: React.PropTypes.string,
+		sitesWithSecondarySites: React.PropTypes.array,
 	},
 
-	getSecondaryPluginSites: function( site ) {
-		let secondarySites = allSites.getNetworkSites( site );
-		let secondaryPluginSites = site.plugin
+	getSecondaryPluginSites: function( site, secondarySites ) {
+		const secondaryPluginSites = site.plugin
 			? PluginsStore.getSites( secondarySites, this.props.plugin.slug )
 			: secondarySites;
 		return compact( secondaryPluginSites );
 	},
 
-	renderPluginSite: function( site ) {
+	renderPluginSite: function( { site, secondarySites } ) {
 		return <PluginSite
 				key={ 'pluginSite' + site.ID }
 				site={ site }
-				secondarySites={ this.getSecondaryPluginSites( site ) }
+				secondarySites={ this.getSecondaryPluginSites( secondarySites ) }
 				plugin={ this.props.plugin }
 				wporg={ this.props.wporg }
 				notices={ this.props.notices } />;
@@ -47,12 +48,8 @@ module.exports = React.createClass( {
 			return null;
 		}
 		const classes = classNames( 'plugin-site-list', this.props.className ),
-			pluginSites = this.props.sites.map( function( site ) {
-				if ( allSites.isConnectedSecondaryNetworkSite( site ) ) {
-					return;
-				}
-
-				return this.renderPluginSite( site );
+			pluginSites = this.props.sitesWithSecondarySites.map( function( siteWithSecondarySites ) {
+				return this.renderPluginSite( siteWithSecondarySites );
 			}, this );
 
 		return (
@@ -63,3 +60,18 @@ module.exports = React.createClass( {
 		);
 	}
 } );
+
+export default connect(
+	( state, props ) => {
+		const sitesWithSecondarySites = props.sites
+		.filter( ( site ) => ! isConnectedSecondaryNetworkSite( state, site.ID )	)
+		.map( ( site ) => ( {
+			site,
+			secondarySites: getNetworkSites( state, site.ID )
+		} ) );
+
+		return {
+			sitesWithSecondarySites
+		};
+	}
+)( PluginSiteList );

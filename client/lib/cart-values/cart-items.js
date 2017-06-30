@@ -818,7 +818,7 @@ function getDomainPriceRule( withPlansOnly, selectedSite, cart, suggestion ) {
 function hasStaleItem( cart ) {
 	return some( getAll( cart ), function( cartItem ) {
 		// time_added_to_cart is in seconds, Date.now() returns milliseconds
-		return ( cartItem.time_added_to_cart && cartItem.time_added_to_cart < Date.now() - ( 10 * 60 * 1000 ) );
+		return ( cartItem.time_added_to_cart && cartItem.time_added_to_cart * 1000 < Date.now() - ( 10 * 60 * 1000 ) );
 	} );
 }
 

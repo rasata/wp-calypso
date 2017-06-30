@@ -54,9 +54,6 @@ var CartStore = {
 		_synchronizer.on( 'change', emitChange );
 
 		_poller = PollerPool.add( CartStore, _synchronizer._poll.bind( _synchronizer ) );
-
-		// Fire the request off once before the polling starts so the initial cart data is available outside of checkout related pages
-		_synchronizer.fetch();
 	}
 };
 

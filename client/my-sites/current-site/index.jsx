@@ -10,22 +10,26 @@ import { localize } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import AllSites from 'my-sites/all-sites';
-import analytics from 'lib/analytics';
-import Button from 'components/button';
-import Card from 'components/card';
-import Site from 'blocks/site';
-import Gridicon from 'gridicons';
-import UpgradesActions from 'lib/upgrades/actions';
-import DomainsStore from 'lib/domains/store';
-import DomainWarnings from 'my-sites/upgrades/components/domain-warnings';
-import config from 'config';
+const AllSites = require( 'my-sites/all-sites' ),
+	analytics = require( 'lib/analytics' ),
+	Button = require( 'components/button' ),
+	Card = require( 'components/card' ),
+	Site = require( 'blocks/site' ),
+	Gridicon = require( 'gridicons' ),
+	UpgradesActions = require( 'lib/upgrades/actions' ),
+	DomainsStore = require( 'lib/domains/store' ),
+	DomainWarnings = require( 'my-sites/upgrades/components/domain-warnings' ),
+	CartStore = require( 'lib/cart/store' );
+
 import SiteNotice from './notice';
 import { setLayoutFocus } from 'state/ui/layout-focus/actions';
 import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
 import { getCurrentUser } from 'state/current-user/selectors';
 import { isJetpackSite } from 'state/sites/selectors';
 import { getSelectedOrAllSites } from 'state/selectors';
+import { infoNotice, removeNotice } from 'state/notices/actions';
+import { getStaleCartNoticeLastTimeShown } from 'state/notices/selectors';
+import { getSectionName } from 'state/ui/selectors';
 
 class CurrentSite extends Component {
 	static propTypes = {
@@ -50,10 +54,12 @@ class CurrentSite extends Component {
 		}
 
 		DomainsStore.on( 'change', this.handleStoreChange );
+		CartStore.on( 'change', this.showStaleCartItemsNotice );
 	}
 
 	componentWillUnmount() {
 		DomainsStore.off( 'change', this.handleStoreChange );
+		CartStore.off( 'change', this.showStaleCartItemsNotice );
 	}
 
 	componentDidUpdate( prevProps ) {
@@ -65,6 +71,36 @@ class CurrentSite extends Component {
 
 	handleStoreChange = () => {
 		this.setState( { domainsStore: DomainsStore } );
+	}
+
+	showStaleCartItemsNotice = () => {
+		const { selectedSite } = this.props,
+			cartItems = require( 'lib/cart-values' ).cartItems,
+			staleCartItemNoticeId = 'stale-cart-item-notice';
+
+		// Remove any existing stale cart notice
+		this.props.removeNotice( staleCartItemNoticeId );
+
+		// Don't show on the checkout page?
+		if ( this.props.sectionName === 'upgrades' ) {
+			return null;
+		}
+
+		// TODO: Close notice on click
+
+		// Show a notice if there are stale itmes in the cart and it hasn't been shown in the last 10
+		if ( cartItems.hasStaleItem( CartStore.get() ) && this.props.staleCartNoticeLastTimeShown < Date.now() - ( 10 * 60 * 1000 ) ) {
+			this.props.infoNotice(
+				this.props.translate( 'Your site deserves a boost!' ),
+				{
+					id: staleCartItemNoticeId,
+					isPersistent: true,
+					duration: 10000,
+					button: this.props.translate( 'Complete your purchase' ),
+					href: '/checkout/' + selectedSite.slug
+				}
+			);
+		}
 	}
 
 	switchSites = ( event ) => {
@@ -200,7 +236,9 @@ export default connect(
 			selectedSite: getSelectedSite( state ),
 			anySiteSelected: getSelectedOrAllSites( state ),
 			siteCount: get( user, 'visible_site_count', 0 ),
+			staleCartNoticeLastTimeShown: getStaleCartNoticeLastTimeShown( state, 'stale-cart-item-notice' ),
+			sectionName: getSectionName( state ),
 		};
 	},
-	{ setLayoutFocus },
+	{ setLayoutFocus, infoNotice, removeNotice },
 )( localize( CurrentSite ) );

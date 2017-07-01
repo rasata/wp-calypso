@@ -19,7 +19,7 @@ export const getNotices = createSelector(
 	( state ) => state.notices.items
 );
 
-export const getStaleCartNoticeLastTimeShown = createSelector(
-	( state, noticeId ) => state.notices.lastTimeShown[ noticeId ] ? state.notices.lastTimeShown[ noticeId ] : 0,
+export const getNoticeLastTimeShown = createSelector(
+	( state, noticeId ) => state.notices.lastTimeShown[ noticeId ] || 0,
 	( state ) => state.notices.lastTimeShown
 );

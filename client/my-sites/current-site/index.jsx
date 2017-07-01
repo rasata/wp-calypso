@@ -28,8 +28,9 @@ import { getCurrentUser } from 'state/current-user/selectors';
 import { isJetpackSite } from 'state/sites/selectors';
 import { getSelectedOrAllSites } from 'state/selectors';
 import { infoNotice, removeNotice } from 'state/notices/actions';
-import { getStaleCartNoticeLastTimeShown } from 'state/notices/selectors';
+import { getNoticeLastTimeShown } from 'state/notices/selectors';
 import { getSectionName } from 'state/ui/selectors';
+import { abtest } from 'lib/abtest';
 
 class CurrentSite extends Component {
 	static propTypes = {
@@ -86,20 +87,20 @@ class CurrentSite extends Component {
 			return null;
 		}
 
-		// TODO: Close notice on click
-
-		// Show a notice if there are stale itmes in the cart and it hasn't been shown in the last 10
-		if ( cartItems.hasStaleItem( CartStore.get() ) && this.props.staleCartNoticeLastTimeShown < Date.now() - ( 10 * 60 * 1000 ) ) {
-			this.props.infoNotice(
-				this.props.translate( 'Your site deserves a boost!' ),
-				{
-					id: staleCartItemNoticeId,
-					isPersistent: true,
-					duration: 10000,
-					button: this.props.translate( 'Complete your purchase' ),
-					href: '/checkout/' + selectedSite.slug
-				}
-			);
+		// Show a notice if there are stale itmes in the cart and it hasn't been shown in the last 10 (cart abandonment)
+		if ( cartItems.hasStaleItem( CartStore.get() ) && this.props.staleCartItemNoticeLastTimeShown < Date.now() - ( 10 * 60 * 1000 ) ) {
+			if ( abtest( 'showCartAbandonmentNotice' ) === 'showNotice' ) {
+				this.props.infoNotice(
+					this.props.translate( 'Your site deserves a boost!' ),
+					{
+						id: staleCartItemNoticeId,
+						isPersistent: false,
+						duration: 10000,
+						button: this.props.translate( 'Complete your purchase' ),
+						href: '/checkout/' + selectedSite.slug,
+					}
+				);
+			}
 		}
 	}
 
@@ -236,7 +237,7 @@ export default connect(
 			selectedSite: getSelectedSite( state ),
 			anySiteSelected: getSelectedOrAllSites( state ),
 			siteCount: get( user, 'visible_site_count', 0 ),
-			staleCartNoticeLastTimeShown: getStaleCartNoticeLastTimeShown( state, 'stale-cart-item-notice' ),
+			staleCartItemNoticeLastTimeShown: getNoticeLastTimeShown( state, 'stale-cart-item-notice' ),
 			sectionName: getSectionName( state ),
 		};
 	},

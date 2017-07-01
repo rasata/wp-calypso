@@ -93,4 +93,13 @@ module.exports = {
 		},
 		defaultVariation: 'noShowPostPublishPreview',
 	},
+	showCartAbandonmentNotice: {
+		datestamp: '20170630',
+		variations: {
+			doNotShowNotice: 50,
+			showNotice: 50,
+		},
+		defaultVariation: 'doNotShowNotice',
+		allowExistingUsers: true,
+	},
 };

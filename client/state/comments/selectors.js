@@ -41,7 +41,7 @@ export const getPostMostRecentCommentDate = createSelector(
 );
 
 /***
- * Get most old (earliest) comment date for a given post
+ * Get most oldest comment date for a given post
  * @param {Object} state redux state
  * @param {Number} siteId site identification
  * @param {Number} postId site identification
@@ -51,6 +51,21 @@ export const getPostOldestCommentDate = createSelector(
 	( state, siteId, postId ) => {
 		const items = getPostCommentItems( state, siteId, postId );
 		return items && last( items ) ? new Date( get( last( items ), 'date' ) ) : undefined;
+	},
+	getPostCommentItems
+);
+
+/***
+ * Get newest comment date for a given post
+ * @param {Object} state redux state
+ * @param {Number} siteId site identification
+ * @param {Number} postId site identification
+ * @return {Date} earliest comment date
+ */
+export const getPostNewestCommentDate = createSelector(
+	( state, siteId, postId ) => {
+		const items = getPostCommentItems( state, siteId, postId );
+		return items && first( items ) ? new Date( get( first( items ), 'date' ) ) : undefined;
 	},
 	getPostCommentItems
 );

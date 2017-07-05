@@ -28,7 +28,11 @@ import { NUMBER_OF_COMMENTS_PER_FETCH } from './constants';
  * @param {String} status status filter. Defaults to approved posts
  * @returns {Function} thunk that requests comments for a given post
  */
-export function requestPostComments( siteId, postId, status = 'approved' ) {
+export function requestPostComments( {
+	siteId,
+	postId,
+	status = 'approved',
+} ) {
 	if ( ! isEnabled( 'comments/filters-in-posts' ) ) {
 		status = 'approved';
 	}

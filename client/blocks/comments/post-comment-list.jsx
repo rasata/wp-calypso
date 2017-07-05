@@ -37,9 +37,9 @@ class PostCommentList extends React.Component {
 	}
 
 	componentWillMount() {
-		const { post: { ID: postId, site_ID: siteId } } = this.props;
+		const { post: { ID: postId, site_ID: siteId }, commentsFilter: status } = this.props;
 
-		this.props.requestPostComments( siteId, postId, this.props.commentsFilter );
+		this.props.requestPostComments( { siteId, postId, status } );
 	}
 
 	componentWillReceiveProps( nextProps ) {
@@ -55,7 +55,11 @@ class PostCommentList extends React.Component {
 				this.props.post.ID !== nextPostId ||
 				this.props.commentsFilter !== nextCommentsFilter )
 		) {
-			this.props.requestPostComments( nextSiteId, nextPostId, this.props.commentsFilter );
+			this.props.requestPostComments( {
+				siteId: nextSiteId,
+				postId: nextPostId,
+				status: this.props.commentsFilter,
+			} );
 		}
 	}
 
@@ -187,7 +191,7 @@ class PostCommentList extends React.Component {
 	}
 
 	viewEarlierCommentsHandler() {
-		const { post: { ID: postId, site_ID: siteId } } = this.props;
+		const { post: { ID: postId, site_ID: siteId }, commentsFilter: status } = this.props;
 
 		const amountOfCommentsToTake = this.state.amountOfCommentsToTake + this.props.pageSize;
 
@@ -196,7 +200,7 @@ class PostCommentList extends React.Component {
 		} );
 
 		if ( this.props.haveMoreCommentsToFetch ) {
-			this.props.requestPostComments( siteId, postId, this.props.commentsFilter );
+			this.props.requestPostComments( { siteId, postId, status } );
 		}
 	}
 

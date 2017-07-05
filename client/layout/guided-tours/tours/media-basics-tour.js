@@ -45,7 +45,7 @@ export const MediaBasicsTour = makeTour(
 									'the {{icon/}} {{strong}}Add New{{/strong}} button.',
 						{
 							components: {
-								icon: <Gridicon icon="gridicons-add-image" />,
+								icon: <Gridicon icon="add-image" />,
 								strong: <strong />,
 							}
 						}
@@ -125,7 +125,7 @@ export const MediaBasicsTour = makeTour(
 									'perform basic edits to your images.',
 						{
 							components: {
-								icon: <Gridicon icon="gridicons-pencil" />,
+								icon: <Gridicon icon="pencil" />,
 								strong: <strong />,
 							}
 						}

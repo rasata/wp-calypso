@@ -63,7 +63,7 @@ export const MediaBasicsTour = makeTour(
 			placement="right"
 			>
 			<p>
-				{ translate( 'You can also drag-and-drop new media directly into your library as shown here.' ) }
+				{ translate( 'You can also drag-and-drop image and video files from your computer into your media library.' ) }
 			</p>
 			<img
 				src="https://cldup.com/AnA1V5AnoE.gif"
@@ -85,7 +85,7 @@ export const MediaBasicsTour = makeTour(
 			>
 
 			<Continue click step="click-to-edit" target=".media-library__list-item-figure">
-				{ translate( 'Click this image in your media library to continue.' ) }
+				{ translate( 'Click this image to select it.' ) }
 			</Continue>
 		</Step>
 
@@ -97,7 +97,13 @@ export const MediaBasicsTour = makeTour(
 			style={ { marginLeft: '-8px' } }
 			>
 			<Continue click step="launch-modal" target=".editor-media-modal__secondary-action">
-				{ translate( 'Click the Edit button to edit your selected image.' ) }
+				{
+					translate( 'Click the {{strong}}Edit{{/strong}} button to edit the selected image.', {
+						components: {
+							strong: <strong />,
+						}
+					} )
+				}
 			</Continue>
 		</Step>
 
@@ -106,7 +112,7 @@ export const MediaBasicsTour = makeTour(
 			arrow="right-top"
 			target=".editor-media-modal-detail__sidebar"
 			>
-			<p>{ translate( 'You can edit the title, add a caption, find the media URL, and see other details.' ) }
+			<p>{ translate( 'Here you can edit the title, add a caption, find the media URL, and see other details.' ) }
 			</p>
 			<ButtonRow>
 				<Next step="edit-image" />

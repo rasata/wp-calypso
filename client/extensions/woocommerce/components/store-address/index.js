@@ -47,6 +47,7 @@ class StoreAddress extends Component {
 		super( props );
 		this.state = {
 			showDialog: false,
+			showLabel: true,
 			address: props.address,
 		};
 	}
@@ -120,6 +121,9 @@ class StoreAddress extends Component {
 		} else {
 			display = (
 				<div>
+					{ false != this.props.showLabel && (
+						<FormLabel>{ translate( 'Store location' ) }</FormLabel>
+					)}
 					<AddressView address={ this.state.address } />
 					<a onClick={ this.onShowDialog }>{ translate( 'Edit address' ) }</a>
 				</div>
@@ -129,7 +133,6 @@ class StoreAddress extends Component {
 		const classes = classNames( 'store-address', { 'is-placeholder': ! site || loading }, className );
 		return (
 			<Card className={ classes }>
-				<FormLabel>{ translate( 'Store location' ) }</FormLabel>
 				<Dialog
 					buttons={ buttons }
 					isVisible={ this.state.showDialog }

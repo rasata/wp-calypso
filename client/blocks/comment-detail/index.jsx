@@ -43,7 +43,6 @@ export class CommentDetail extends Component {
 		setCommentStatus: PropTypes.func,
 		siteId: PropTypes.number,
 		submitComment: PropTypes.func,
-		toggleCommentLike: PropTypes.func,
 		toggleCommentSelected: PropTypes.func,
 	};
 
@@ -87,11 +86,6 @@ export class CommentDetail extends Component {
 
 	toggleExpanded = () => {
 		this.setState( { isExpanded: ! this.state.isExpanded } );
-	}
-
-	toggleLike = () => {
-		const { commentId, toggleCommentLike } = this.props;
-		toggleCommentLike( commentId );
 	}
 
 	toggleSelected = () => {
@@ -157,11 +151,13 @@ export class CommentDetail extends Component {
 		return (
 			<Card className={ classes }>
 				<CommentDetailHeader
+					siteId={ siteId }
+					postId={ postId }
+					commentId={ commentId }
 					authorAvatarUrl={ authorAvatarUrl }
 					authorDisplayName={ authorDisplayName }
 					authorUrl={ authorUrl }
 					commentContent={ commentContent }
-					commentIsLiked={ commentIsLiked }
 					commentIsSelected={ commentIsSelected }
 					commentStatus={ commentStatus }
 					deleteCommentPermanently={ this.deleteCommentPermanently }
@@ -171,7 +167,6 @@ export class CommentDetail extends Component {
 					postUrl={ postUrl }
 					toggleApprove={ this.toggleApprove }
 					toggleExpanded={ this.toggleExpanded }
-					toggleLike={ this.toggleLike }
 					toggleSelected={ this.toggleSelected }
 					toggleSpam={ this.toggleSpam }
 					toggleTrash={ this.toggleTrash }

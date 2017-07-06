@@ -193,18 +193,6 @@ export class CommentList extends Component {
 
 	toggleBulkEdit = () => this.setState( { isBulkEdit: ! this.state.isBulkEdit } );
 
-	toggleCommentLike = commentId => {
-		// TODO: Replace with Redux getComment()
-		const comment = find( this.props.comments, [ 'ID', commentId ] );
-
-		if ( 'unapproved' === comment.status ) {
-			this.props.removeNotice( `comment-notice-${ commentId }` );
-			this.showNotice( commentId, 'approved', 'unapproved' );
-		}
-
-		this.props.setCommentLike( commentId, ! comment.i_like );
-	}
-
 	toggleCommentSelected = commentId => {
 		// TODO: Replace with Redux getComment()
 		const { i_like, status } = this.getComment( commentId );
@@ -284,7 +272,6 @@ export class CommentList extends Component {
 							setCommentStatus={ this.setCommentStatus }
 							siteId={ siteId }
 							submitComment={ this.submitComment }
-							toggleCommentLike={ this.toggleCommentLike }
 							toggleCommentSelected={ this.toggleCommentSelected }
 						/>
 					) }

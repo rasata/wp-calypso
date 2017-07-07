@@ -28,17 +28,17 @@ export const MediaBasicsTour = makeTour(
 		name="mediaBasicsTour"
 		version="20170321"
 		path="/media"
-			when={ and(
+		when={ and(
 			isDesktop,
 			isNewUser,
-			) }
-		>
+		) }
+	>
 		<Step
 			name="init"
 			arrow="top-left"
 			target=".media-library__upload-buttons"
 			placement="below"
-			>
+		>
 			<p>
 				{
 					translate( 'Welcome to the Media Libary! You can add media by clicking ' +
@@ -61,14 +61,14 @@ export const MediaBasicsTour = makeTour(
 		<Step
 			name="drag-and-drop"
 			placement="right"
-			>
+		>
 			<p>
 				{ translate( 'You can also drag-and-drop image and video files from your computer into your media library.' ) }
 			</p>
 			<img
 				src="https://cldup.com/AnA1V5AnoE.gif"
 				style={ { marginBottom: '10px', border: '3px solid #00AADC', borderRadius: '4px' } }
-				/>
+			/>
 
 			<ButtonRow>
 				<Next step="select-image" />
@@ -82,8 +82,7 @@ export const MediaBasicsTour = makeTour(
 			arrow="top-left"
 			target=".media-library__list-item"
 			style={ { marginTop: '-10px' } }
-			>
-
+		>
 			<Continue click step="click-to-edit" target=".media-library__list-item-figure">
 				{ translate( 'Click this image to select it.' ) }
 			</Continue>
@@ -92,10 +91,9 @@ export const MediaBasicsTour = makeTour(
 		<Step name="click-to-edit"
 			placement="below"
 			arrow="top-left"
-			//when={ and( isImageSelected ) }
 			target=".editor-media-modal__secondary-action"
 			style={ { marginLeft: '-8px' } }
-			>
+		>
 			<Continue click step="launch-modal" target=".editor-media-modal__secondary-action">
 				{
 					translate( 'Click the {{strong}}Edit{{/strong}} button to edit the selected image.', {
@@ -111,8 +109,9 @@ export const MediaBasicsTour = makeTour(
 			placement="beside"
 			arrow="right-top"
 			target=".editor-media-modal-detail__sidebar"
-			>
-			<p>{ translate( 'Here you can edit the title, add a caption, find the media URL, and see other details.' ) }
+		>
+			<p>
+				{ translate( 'Here you can edit the title, add a caption, find the media URL, and see other details.' ) }
 			</p>
 			<ButtonRow>
 				<Next step="edit-image" />
@@ -124,11 +123,11 @@ export const MediaBasicsTour = makeTour(
 			placement="below"
 			arrow="top-left"
 			target=".editor-media-modal-detail__edit"
-			>
+		>
 			<p>
 				{
 					translate( 'You can click the {{icon/}} {{strong}}Edit Image{{/strong}} button to crop, rotate, and ' +
-									'perform basic edits to your images.',
+							'perform basic edits to your images.',
 						{
 							components: {
 								icon: <Gridicon icon="pencil" />,

@@ -26,7 +26,8 @@ import {
 	hasExpiredSecretError,
 	isRemoteSiteOnSitesList,
 	getAuthAttempts,
-	getSiteIdFromQueryObject
+	getSiteIdFromQueryObject,
+	getUserAlreadyConnected
 } from 'state/jetpack-connect/selectors';
 import { getCurrentUser } from 'state/current-user/selectors';
 import { recordTracksEvent } from 'state/analytics/actions';
@@ -153,6 +154,7 @@ export default connect(
 			requestHasXmlrpcError,
 			siteSlug,
 			user: getCurrentUser( state ),
+			userAlreadyConnected: getUserAlreadyConnected( state )
 		};
 	},
 	{

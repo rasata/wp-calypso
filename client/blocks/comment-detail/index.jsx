@@ -207,6 +207,7 @@ export class CommentDetail extends Component {
 						<CommentDetailReply
 							authorDisplayName={ authorDisplayName }
 							commentId={ commentId }
+							commentStatus={ commentStatus }
 							postId={ postId }
 							postTitle={ postTitle }
 							submitComment={ submitComment }

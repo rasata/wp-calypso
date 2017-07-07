@@ -113,7 +113,7 @@
 		"perfmon": false,
 		"persist-redux": true,
 		"plans/personal-plan": true,
-		"plans/jetpack-config-v2": true,
+		"plans/jetpack-config-v2": false,
 		"post-editor/delta-post-publish-flow": false,
 		"post-editor-github-link": false,
 		"post-editor/html-toolbar": true,

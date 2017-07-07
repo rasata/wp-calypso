@@ -14,6 +14,7 @@ import SectionHeader from 'components/section-header';
 import CompactFormToggle from 'components/forms/form-toggle/compact';
 import FormSettingExplanation from 'components/forms/form-setting-explanation';
 import { getSelectedSiteSlug } from 'state/ui/selectors';
+import { recordTracksEvent } from 'state/analytics/actions';
 
 class AmpWpcom extends Component {
 	static propTypes = {
@@ -32,7 +33,8 @@ class AmpWpcom extends Component {
 	};
 
 	handleToggle = () => {
-		const { fields, submitForm, trackEvent, updateFields } = this.props;
+		const { fields, submitForm, trackEvent, updateFields, trackTracksEvent } = this.props;
+		trackTracksEvent( 'calypso_seo_settings_amp_updated', { amp_is_enabled: ! fields.amp_is_enabled } );
 		updateFields( { amp_is_enabled: ! fields.amp_is_enabled }, () => {
 			submitForm();
 			trackEvent( 'Toggled AMP Toggle' );
@@ -104,5 +106,11 @@ class AmpWpcom extends Component {
 export default connect(
 	( state ) => ( {
 		siteSlug: getSelectedSiteSlug( state ),
-	} )
+	} ),
+	( dispatch ) => {
+		const trackTracksEvent = ( name, props ) => dispatch( recordTracksEvent( name, props ) );
+		return {
+			trackTracksEvent,
+		};
+	},
 )( localize( AmpWpcom ) );

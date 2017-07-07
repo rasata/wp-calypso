@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
-import { flowRight, isEqual, keys, omit, pick, isNaN } from 'lodash';
+import { flowRight, isEqual, keys, omit, pick, isNaN, forEach } from 'lodash';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 
@@ -100,9 +100,28 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 
 		// Some Utils
 		handleSubmitForm = event => {
+			const { dirtyFields, fields, trackTracksEvent } = this.props;
+
 			if ( ! event.isDefaultPrevented() && event.nativeEvent ) {
 				event.preventDefault();
 			}
+
+			forEach( dirtyFields, function( value ) {
+				switch ( value ) {
+					case 'blogdescription':
+						trackTracksEvent( 'calypso_settings_site_tagline_updated' );
+						break;
+					case 'blogname':
+						trackTracksEvent( 'calypso_settings_site_title_updated' );
+						break;
+					case 'blog_public':
+						trackTracksEvent( 'calypso_settings_site_privacy_updated', { privacy: fields.blog_public } );
+						break;
+					case 'wga':
+						trackTracksEvent( 'calypso_seo_settings_google_analytics_updated' );
+						break;
+				}
+			} );
 
 			this.submitForm();
 			this.props.trackEvent( 'Clicked Save Settings Button' );
@@ -254,9 +273,11 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				updateSettings,
 			}, dispatch );
 			const trackEvent = name => dispatch( recordGoogleEvent( 'Site Settings', name ) );
+			const trackTracksEvent = ( name, props ) => dispatch( recordTracksEvent( name, props ) );
 			return {
 				...boundActionCreators,
 				eventTracker: message => () => trackEvent( message ),
+				trackTracksEvent,
 				trackEvent,
 			};
 		}

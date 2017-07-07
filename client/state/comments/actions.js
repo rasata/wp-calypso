@@ -32,6 +32,7 @@ export function requestPostComments( {
 	siteId,
 	postId,
 	status = 'approved',
+	direction = 'before'
 } ) {
 	if ( ! isEnabled( 'comments/filters-in-posts' ) ) {
 		status = 'approved';
@@ -41,6 +42,7 @@ export function requestPostComments( {
 		type: COMMENTS_REQUEST,
 		siteId,
 		postId,
+		direction,
 		query: {
 			order: 'DESC',
 			number: NUMBER_OF_COMMENTS_PER_FETCH,

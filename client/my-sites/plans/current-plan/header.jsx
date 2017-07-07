@@ -12,6 +12,7 @@ import invoke from 'lodash/invoke';
 import Button from 'components/button';
 import Card from 'components/card';
 import HappinessSupport from 'components/happiness-support';
+import { isFreePlan } from 'lib/plans';
 import PlanIcon from 'components/plans/plan-icon';
 import {
 	PLAN_PREMIUM,
@@ -137,6 +138,8 @@ class CurrentPlanHeader extends Component {
 						<HappinessSupport
 							isJetpack={ !! selectedSite.jetpack && ! isAutomatedTransfer }
 							isPlaceholder={ isPlaceholder }
+							showLiveChatButton={ ! isFreePlan( currentPlanSlug ) && ! isAutomatedTransfer }
+							liveChatButtonEventName="calypso_plans_current_plan_chat_initiated"
 						/>
 					</div>
 				</div>

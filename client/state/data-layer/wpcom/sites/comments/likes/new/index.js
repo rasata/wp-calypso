@@ -6,6 +6,7 @@ import { translate } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
+import { isEnabled } from 'config';
 import {
 	COMMENTS_LIKE,
 	COMMENTS_UNLIKE,
@@ -13,7 +14,8 @@ import {
 import { http } from 'state/data-layer/wpcom-http/actions';
 import { local } from 'state/data-layer/utils';
 import { dispatchRequest } from 'state/data-layer/wpcom-http/utils';
-import { errorNotice } from 'state/notices/actions';
+import { changeCommentStatus } from 'state/comments/actions';
+import { successNotice, errorNotice, removeNotice } from 'state/notices/actions';
 
 export const likeComment = ( { dispatch }, action ) => {
 	dispatch( http( {
@@ -23,13 +25,29 @@ export const likeComment = ( { dispatch }, action ) => {
 	}, action ) );
 };
 
-export const updateCommentLikes = ( { dispatch }, { siteId, postId, commentId }, next, { like_count } ) => dispatch( local( {
-	type: COMMENTS_LIKE,
-	siteId,
-	postId,
-	commentId,
-	like_count
-} ) );
+export const updateCommentLikes = ( { dispatch }, { siteId, postId, commentId, status }, next, { like_count } ) => {
+	dispatch( local( {
+		type: COMMENTS_LIKE,
+		siteId,
+		postId,
+		commentId,
+		like_count
+	} ) );
+
+	if ( isEnabled( 'comments/undo-in-datalayer' ) && 'unapproved' === status ) {
+		const noticeId = `comment-notice-${ commentId }`;
+
+		dispatch( removeNotice( noticeId ) );
+
+		dispatch( successNotice( translate( 'Comment approved.' ), {
+			duration: 5000,
+			id: noticeId,
+			isPersistent: true,
+			button: translate( 'Undo' ),
+			onClick: () => dispatch( changeCommentStatus( siteId, postId, commentId, 'unapproved' ) )
+		} ) );
+	}
+};
 
 /***
  * dispatches a error notice if creating a new comment request failed

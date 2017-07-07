@@ -139,7 +139,10 @@ class ActivityLogItem extends Component {
 		translate: PropTypes.func.isRequired,
 	};
 
-	static defaultProps = { allowRestore: true };
+	static defaultProps = {
+		allowRestore: true,
+		disableRestore: false,
+	};
 
 	// TODO: Add analytics
 	handleClickRestore = () => {
@@ -310,6 +313,7 @@ class ActivityLogItem extends Component {
 	renderSummary() {
 		const {
 			allowRestore,
+			disableRestore,
 			translate,
 		} = this.props;
 
@@ -320,7 +324,11 @@ class ActivityLogItem extends Component {
 		return (
 			<div className="activity-log-item__action">
 				<EllipsisMenu position="bottom right">
-					<PopoverMenuItem onClick={ this.handleClickRestore } icon="undo">
+					<PopoverMenuItem
+						disabled={ disableRestore }
+						icon="undo"
+						onClick={ this.handleClickRestore }
+					>
 						{ translate( 'Rewind to this point' ) }
 					</PopoverMenuItem>
 				</EllipsisMenu>

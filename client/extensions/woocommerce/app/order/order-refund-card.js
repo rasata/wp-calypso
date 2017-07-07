@@ -10,7 +10,10 @@ import React, { Component, PropTypes } from 'react';
 /**
  * Internal dependencies
  */
-import { arePaymentMethodsLoaded, getPaymentMethod } from 'woocommerce/state/sites/payment-methods/selectors';
+import {
+	arePaymentMethodsLoaded,
+	getPaymentMethod,
+} from 'woocommerce/state/sites/payment-methods/selectors';
 import Button from 'components/button';
 import Dialog from 'components/dialog';
 import { fetchPaymentMethods } from 'woocommerce/state/sites/payment-methods/actions';
@@ -37,14 +40,14 @@ class OrderRefundCard extends Component {
 			ID: PropTypes.number.isRequired,
 			slug: PropTypes.string.isRequired,
 		} ),
-	}
+	};
 
 	state = {
 		errorMessage: false,
 		refundTotal: 0,
 		refundNote: '',
 		showDialog: false,
-	}
+	};
 
 	componentDidMount = () => {
 		const { site } = this.props;
@@ -52,21 +55,21 @@ class OrderRefundCard extends Component {
 		if ( site && site.ID ) {
 			this.props.fetchPaymentMethods( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchPaymentMethods( newSiteId );
 		}
-	}
+	};
 
-	getRefundedTotal = ( order ) => {
+	getRefundedTotal = order => {
 		return order.refunds.reduce( ( sum, i ) => sum + parseFloat( i.total ), 0 );
-	}
+	};
 
 	getRefundStatus = () => {
 		const { order, translate } = this.props;
@@ -74,14 +77,14 @@ class OrderRefundCard extends Component {
 			args: {
 				total: formatCurrency( order.total, order.currency ) || order.total,
 				method: order.payment_method_title,
-			}
+			},
 		} );
 
 		if ( 'refunded' === order.status ) {
 			refundStatus = translate( 'Payment of %(total)s has been refunded', {
 				args: {
 					total: formatCurrency( order.total, order.currency ) || order.total,
-				}
+				},
 			} );
 		} else if ( order.refunds.length ) {
 			const refund = this.getRefundedTotal( order );
@@ -89,11 +92,11 @@ class OrderRefundCard extends Component {
 				args: {
 					total: formatCurrency( order.total, order.currency ) || order.total,
 					refund: formatCurrency( refund, order.currency ) || refund,
-				}
+				},
 			} );
 		}
 		return refundStatus;
-	}
+	};
 
 	toggleDialog = () => {
 		this.setState( {
@@ -102,17 +105,17 @@ class OrderRefundCard extends Component {
 			refundNote: '',
 			showDialog: ! this.state.showDialog,
 		} );
-	}
+	};
 
-	recalculateRefund = ( total ) => {
+	recalculateRefund = total => {
 		this.setState( { refundTotal: total } );
-	}
+	};
 
-	updateNote = ( event ) => {
+	updateNote = event => {
 		this.setState( {
 			refundNote: event.target.value,
 		} );
-	}
+	};
 
 	sendRefund = () => {
 		const { order, paymentMethod, site, translate } = this.props;
@@ -128,10 +131,10 @@ class OrderRefundCard extends Component {
 		const refundObj = {
 			amount: this.state.refundTotal + '', // API expects a string
 			reason: this.state.refundNote,
-			api_refund: ( -1 !== paymentMethod.method_supports.indexOf( 'refunds' ) ),
+			api_refund: -1 !== paymentMethod.method_supports.indexOf( 'refunds' ),
 		};
 		this.props.sendRefund( site.ID, order.id, refundObj );
-	}
+	};
 
 	renderCreditCard = () => {
 		const { isPaymentLoading, paymentMethod, translate } = this.props;
@@ -143,7 +146,11 @@ class OrderRefundCard extends Component {
 			return (
 				<div className="order__refund-method">
 					<h3>{ translate( 'Manual Refund' ) }</h3>
-					<p>{ translate( 'This payment method doesn\'t support automated refunds and must be submitted manually.' ) }</p>
+					<p>
+						{ translate(
+							"This payment method doesn't support automated refunds and must be submitted manually.",
+						) }
+					</p>
 				</div>
 			);
 		}
@@ -154,12 +161,12 @@ class OrderRefundCard extends Component {
 					{ translate( 'Refunding payment via %(method)s', {
 						args: {
 							method: paymentMethod.title,
-						}
+						},
 					} ) }
 				</h3>
 			</div>
 		);
-	}
+	};
 
 	render() {
 		const { isPaymentLoading, order, site, translate } = this.props;
@@ -167,7 +174,8 @@ class OrderRefundCard extends Component {
 		const dialogClass = 'woocommerce'; // eslint/css specificity hack
 		let refundTotal = formatCurrency( 0, order.currency );
 		if ( this.state.refundTotal ) {
-			refundTotal = formatCurrency( this.state.refundTotal, order.currency ) || this.state.refundTotal;
+			refundTotal =
+				formatCurrency( this.state.refundTotal, order.currency ) || this.state.refundTotal;
 		}
 		refundTotal = refundTotal.replace( /[^0-9.,]/g, '' );
 
@@ -178,19 +186,24 @@ class OrderRefundCard extends Component {
 					{ this.getRefundStatus() }
 				</div>
 				<div className="order__details-refund-action">
-					{ ( 'refunded' !== order.status )
+					{ 'refunded' !== order.status
 						? <Button onClick={ this.toggleDialog }>{ translate( 'Submit Refund' ) }</Button>
-						: null
-					}
+						: null }
 				</div>
 
 				<Dialog
 					isVisible={ showDialog }
 					onClose={ this.toggleDialog }
 					className={ dialogClass }
-					additionalClassNames="order__refund-dialog woocommerce">
+					additionalClassNames="order__refund-dialog woocommerce"
+				>
 					<h1>{ translate( 'Refund order' ) }</h1>
-					<OrderDetailsTable order={ order } isEditable onChange={ this.recalculateRefund } site={ site } />
+					<OrderDetailsTable
+						order={ order }
+						isEditable
+						onChange={ this.recalculateRefund }
+						site={ site }
+					/>
 					<form className="order__refund-container">
 						<FormLabel className="order__refund-note">
 							{ translate( 'Refund note' ) }
@@ -199,13 +212,16 @@ class OrderRefundCard extends Component {
 
 						<FormFieldset className="order__refund-details">
 							<FormLabel className="order__refund-amount">
-								<span className="order__refund-amount-label">{ translate( 'Total refund amount' ) }</span>
+								<span className="order__refund-amount-label">
+									{ translate( 'Total refund amount' ) }
+								</span>
 								<div className="order__refund-amount-value">
 									<PriceInput
 										name="refund_total"
 										readOnly
 										currency={ order.currency }
-										value={ refundTotal } />
+										value={ refundTotal }
+									/>
 								</div>
 							</FormLabel>
 
@@ -213,9 +229,12 @@ class OrderRefundCard extends Component {
 						</FormFieldset>
 
 						<div className="order__refund-actions">
-							{ errorMessage && <Notice status="is-error" showDismiss={ false }>{ errorMessage }</Notice> }
+							{ errorMessage &&
+								<Notice status="is-error" showDismiss={ false }>{ errorMessage }</Notice> }
 							<Button onClick={ this.toggleDialog }>{ translate( 'Cancel' ) }</Button>
-							<Button primary onClick={ this.sendRefund } disabled={ isPaymentLoading }>{ translate( 'Refund' ) }</Button>
+							<Button primary onClick={ this.sendRefund } disabled={ isPaymentLoading }>
+								{ translate( 'Refund' ) }
+							</Button>
 						</div>
 					</form>
 				</Dialog>
@@ -233,5 +252,5 @@ export default connect(
 			paymentMethod,
 		};
 	},
-	dispatch => bindActionCreators( { fetchPaymentMethods, sendRefund }, dispatch )
+	dispatch => bindActionCreators( { fetchPaymentMethods, sendRefund }, dispatch ),
 )( localize( OrderRefundCard ) );

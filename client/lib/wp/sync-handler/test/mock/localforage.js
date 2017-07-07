@@ -15,7 +15,7 @@ export default {
 			debug( 'setItem: %o, (%o)', key, data );
 			localData[ key ] = data;
 			resolve();
-		} )
+		} );
 	},
 	getItem( key ) {
 		return new Promise( resolve => {
@@ -35,7 +35,7 @@ export default {
 			const keys = Object.keys( localData );
 			debug( 'keys: %o', keys );
 			resolve( keys );
-		} )
+		} );
 	},
 	getLocalData() {
 		return localData;
@@ -43,5 +43,5 @@ export default {
 	setLocalData( newData ) {
 		localData = newData;
 	},
-	config() {}
+	config() {},
 };

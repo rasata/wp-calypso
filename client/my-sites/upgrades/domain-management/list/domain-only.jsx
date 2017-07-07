@@ -19,12 +19,14 @@ const DomainOnly = ( { domainName, hasNotice, siteId, translate } ) => (
 			actionURL={ `/start/site-selected/?siteSlug=${ encodeURIComponent( domainName ) }&siteId=${ encodeURIComponent( siteId ) }` }
 			secondaryAction={ translate( 'Manage Domain' ) }
 			secondaryActionURL={ domainManagementEdit( domainName, domainName ) }
-			illustration={ '/calypso/images/drake/drake-browser.svg' } />
-		{ hasNotice && (
+			illustration={ '/calypso/images/drake/drake-browser.svg' }
+		/>
+		{ hasNotice &&
 			<div className="domain-only-site__settings-notice">
-				{ translate( 'Your domain should start working immediately, but may be unreliable during the first 72 hours.' ) }
-			</div>
-		) }
+				{ translate(
+					'Your domain should start working immediately, but may be unreliable during the first 72 hours.',
+				) }
+			</div> }
 	</div>
 );
 

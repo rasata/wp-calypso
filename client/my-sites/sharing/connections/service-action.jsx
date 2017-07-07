@@ -21,12 +21,10 @@ const SharingServiceAction = ( {
 	status,
 	translate,
 } ) => {
-	let primary = false,
-		warning = false,
-		label;
+	let primary = false, warning = false, label;
 
 	const isPending = 'unknown' === status || isDisconnecting || isRefreshing || isConnecting;
-	const onClick = ( event ) => {
+	const onClick = event => {
 		event.stopPropagation();
 		onAction();
 	};
@@ -34,20 +32,30 @@ const SharingServiceAction = ( {
 	if ( 'unknown' === status ) {
 		label = translate( 'Loading…', { context: 'Sharing: Publicize status pending button label' } );
 	} else if ( isDisconnecting ) {
-		label = translate( 'Disconnecting…', { context: 'Sharing: Publicize disconnect pending button label' } );
+		label = translate( 'Disconnecting…', {
+			context: 'Sharing: Publicize disconnect pending button label',
+		} );
 	} else if ( isRefreshing ) {
-		label = translate( 'Reconnecting…', { context: 'Sharing: Publicize reconnect pending button label' } );
+		label = translate( 'Reconnecting…', {
+			context: 'Sharing: Publicize reconnect pending button label',
+		} );
 		warning = true;
 	} else if ( isConnecting ) {
-		label = translate( 'Connecting…', { context: 'Sharing: Publicize connect pending button label' } );
+		label = translate( 'Connecting…', {
+			context: 'Sharing: Publicize connect pending button label',
+		} );
 	} else if ( 'connected' === status ) {
 		if ( removableConnections.length > 1 ) {
-			label = translate( 'Disconnect All', { context: 'Sharing: Publicize disconnect button label' } );
+			label = translate( 'Disconnect All', {
+				context: 'Sharing: Publicize disconnect button label',
+			} );
 		} else {
 			label = translate( 'Disconnect', { context: 'Sharing: Publicize disconnect button label' } );
 		}
 	} else if ( 'reconnect' === status ) {
-		label = translate( 'Reconnect', { context: 'Sharing: Publicize reconnect pending button label' } );
+		label = translate( 'Reconnect', {
+			context: 'Sharing: Publicize reconnect pending button label',
+		} );
 		warning = true;
 	} else {
 		label = translate( 'Connect', { context: 'Sharing: Publicize connect pending button label' } );
@@ -60,7 +68,8 @@ const SharingServiceAction = ( {
 			scary={ warning }
 			compact
 			onClick={ onClick }
-			disabled={ isPending }>
+			disabled={ isPending }
+		>
 			{ label }
 		</Button>
 	);
@@ -87,8 +96,6 @@ SharingServiceAction.defaultProps = {
 	translate: identity,
 };
 
-export default connect(
-	( state, { service } ) => ( {
-		removableConnections: getRemovableConnections( state, service.ID ),
-	} ),
-)( localize( SharingServiceAction ) );
+export default connect( ( state, { service } ) => ( {
+	removableConnections: getRemovableConnections( state, service.ID ),
+} ) )( localize( SharingServiceAction ) );

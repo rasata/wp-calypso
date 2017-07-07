@@ -15,7 +15,7 @@ const Property = React.createClass( {
 				</span>
 			</div>
 		);
-	}
+	},
 } );
 
 module.exports = Property;

@@ -25,16 +25,16 @@ const PlanFeaturesActions = ( {
 	translate,
 	manageHref,
 	isLandingPage,
-	planName
+	planName,
 } ) => {
 	let upgradeButton;
 	const classes = classNames(
 		'plan-features__actions-button',
 		{
 			'is-current': current,
-			'is-primary': ( primaryUpgrade && ! isPlaceholder ) || ( isPopular )
+			'is-primary': ( primaryUpgrade && ! isPlaceholder ) || isPopular,
 		},
-		className
+		className,
 	);
 
 	if ( current && ! isInSignup ) {
@@ -53,8 +53,8 @@ const PlanFeaturesActions = ( {
 		if ( isInSignup ) {
 			buttonText = translate( 'Start with %(plan)s', {
 				args: {
-					plan: planName
-				}
+					plan: planName,
+				},
 			} );
 		}
 
@@ -87,7 +87,7 @@ PlanFeaturesActions.propTypes = {
 	onUpgradeClick: PropTypes.func,
 	freePlan: PropTypes.bool,
 	isPlaceholder: PropTypes.bool,
-	isLandingPage: PropTypes.bool
+	isLandingPage: PropTypes.bool,
 };
 
 export default localize( PlanFeaturesActions );

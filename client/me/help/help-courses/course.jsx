@@ -18,24 +18,15 @@ import { getSiteSlug } from 'state/sites/selectors';
 
 class Course extends Component {
 	componentDidMount() {
-		const {
-			isBusinessPlanUser
-		} = this.props;
+		const { isBusinessPlanUser } = this.props;
 
 		analytics.tracks.recordEvent( 'calypso_help_course_pageview', {
-			is_business_plan_user: isBusinessPlanUser
+			is_business_plan_user: isBusinessPlanUser,
 		} );
 	}
 
 	render() {
-		const {
-			title,
-			description,
-			schedule,
-			isBusinessPlanUser,
-			video,
-			translate
-		} = this.props;
+		const { title, description, schedule, isBusinessPlanUser, video, translate } = this.props;
 
 		return (
 			<div className="help-courses__course">
@@ -47,28 +38,31 @@ class Course extends Component {
 						<HelpTeaserButton
 							href={ `/plans/${ this.props.primarySiteSlug }` }
 							title={ translate( 'Join this course with the Business Plan.' ) }
-							description={
-								translate( 'Upgrade to access webinars and courses to learn how to make the most of your site' )
-							}
-						/>
-					}
+							description={ translate(
+								'Upgrade to access webinars and courses to learn how to make the most of your site',
+							) }
+						/> }
 				</Card>
-				{ schedule && schedule.map( ( item, key ) => {
-					return ( <CourseScheduleItem { ...item } key={ key } isBusinessPlanUser={ isBusinessPlanUser } /> );
-				} ) }
+				{ schedule &&
+					schedule.map( ( item, key ) => {
+						return (
+							<CourseScheduleItem
+								{ ...item }
+								key={ key }
+								isBusinessPlanUser={ isBusinessPlanUser }
+							/>
+						);
+					} ) }
 			</div>
 		);
 	}
 }
-export default connect(
-	state => {
-		return {
-			primarySiteSlug: getSiteSlug( state, getPrimarySiteId( state ) )
-		};
-	} )( localize( Course ) );
+export default connect( state => {
+	return {
+		primarySiteSlug: getSiteSlug( state, getPrimarySiteId( state ) ),
+	};
+} )( localize( Course ) );
 
 export const CoursePlaceholder = () => {
-	return (
-		<div className="help-courses__course is-placeholder"></div>
-	);
+	return <div className="help-courses__course is-placeholder" />;
 };

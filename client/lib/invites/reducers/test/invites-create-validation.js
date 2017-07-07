@@ -6,8 +6,7 @@ const assert = require( 'chai' ).assert;
 /**
  * Internal dependencies
  */
-const Dispatcher = require( 'dispatcher' ),
-	constants = require( 'lib/invites/constants' );
+const Dispatcher = require( 'dispatcher' ), constants = require( 'lib/invites/constants' );
 
 describe( 'Invites Create Validation Store', () => {
 	let InvitesCreateValidationStore;
@@ -17,19 +16,19 @@ describe( 'Invites Create Validation Store', () => {
 		errors: {
 			'test@gmail.com': {
 				errors: {
-					'form-error-username-or-email': [ 'User already has a role on your site.' ]
+					'form-error-username-or-email': [ 'User already has a role on your site.' ],
 				},
-				error_data: []
-			}
+				error_data: [],
+			},
 		},
-		success: [ 'testuser', 'test2@gmail.com' ]
+		success: [ 'testuser', 'test2@gmail.com' ],
 	};
 
 	const actions = {
 		receiveValidaton: {
 			type: constants.action.RECEIVE_CREATE_INVITE_VALIDATION_SUCCESS,
 			siteId: siteId,
-			data: validationData
+			data: validationData,
 		},
 	};
 

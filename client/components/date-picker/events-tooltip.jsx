@@ -26,21 +26,14 @@ class EventsTooltip extends Component {
 	};
 
 	render() {
-		const {
-			events,
-			isVisible,
-			maxEvents,
-		} = this.props;
+		const { events, isVisible, maxEvents } = this.props;
 
 		let title = this.props.title;
 		if ( ! title ) {
-			title = this.props.translate(
-				'%d post',
-				'%d posts', {
-					count: events.length,
-					args: events.length,
-				}
-			);
+			title = this.props.translate( '%d post', '%d posts', {
+				count: events.length,
+				args: events.length,
+			} );
 		}
 
 		const show = !! ( events && events.length && isVisible );
@@ -51,12 +44,13 @@ class EventsTooltip extends Component {
 		if ( ! moreEventsLabel ) {
 			moreEventsLabel = this.props.translate(
 				'… and %(moreEvents)d more post',
-				'… and %(moreEvents)d more posts', {
+				'… and %(moreEvents)d more posts',
+				{
 					count: moreEvents,
 					args: {
-						moreEvents
-					}
-				}
+						moreEvents,
+					},
+				},
 			);
 		}
 
@@ -70,17 +64,21 @@ class EventsTooltip extends Component {
 				<span>{ title }</span>
 				<hr className="date-picker__division" />
 				<ul>
-					{ map( events, ( event, i ) => ( i < maxEvents ) &&
-						<li key={ event.id }>
-							<CalendarEvent
-								icon={ event.icon }
-								socialIcon={ event.socialIcon }
-								socialIconColor={ event.socialIconColor }
-								title={ event.title } />
-						</li>
+					{ map(
+						events,
+						( event, i ) =>
+							i < maxEvents &&
+							<li key={ event.id }>
+								<CalendarEvent
+									icon={ event.icon }
+									socialIcon={ event.socialIcon }
+									socialIconColor={ event.socialIconColor }
+									title={ event.title }
+								/>
+							</li>,
 					) }
 
-					{ ( moreEvents > 0 ) && <li>{ moreEventsLabel }</li> }
+					{ moreEvents > 0 && <li>{ moreEventsLabel }</li> }
 				</ul>
 			</Tooltip>
 		);
@@ -88,4 +86,3 @@ class EventsTooltip extends Component {
 }
 
 export default localize( EventsTooltip );
-

@@ -1,4 +1,3 @@
-
 /**
  * External dependencies
  */
@@ -40,11 +39,9 @@ class Tooltip extends PureComponent {
 
 		return (
 			<div>
-				<label>Position
-					<select
-						value={ this.state.position }
-						onChange={ this.changePosition }
-					>
+				<label>
+					Position
+					<select value={ this.state.position } onChange={ this.changePosition }>
 						<option value="top">top</option>
 						<option value="top left">top left</option>
 						<option value="top right">top right</option>

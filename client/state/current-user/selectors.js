@@ -39,7 +39,7 @@ export function getCurrentUser( state ) {
  * @param {?Any} otherwise A default value that is returned if no user or property is found
  * @returns {function} A selector which takes the state as a parameter
  */
-export const createCurrentUserSelector = ( path, otherwise = null ) => ( state ) => {
+export const createCurrentUserSelector = ( path, otherwise = null ) => state => {
 	const user = getCurrentUser( state );
 	return get( user, path, otherwise );
 };

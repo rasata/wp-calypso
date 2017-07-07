@@ -15,7 +15,9 @@ export default localize( ( { selectedSite, translate } ) => {
 			<PurchaseDetail
 				icon="stats-alt"
 				title={ translate( 'Stats from Google Analytics' ) }
-				description={ translate( 'Connect to Google Analytics for the perfect complement to WordPress.com stats.' ) }
+				description={ translate(
+					'Connect to Google Analytics for the perfect complement to WordPress.com stats.',
+				) }
 				buttonText={ translate( 'Connect Google Analytics' ) }
 				href={ '/settings/analytics/' + selectedSite.slug }
 			/>

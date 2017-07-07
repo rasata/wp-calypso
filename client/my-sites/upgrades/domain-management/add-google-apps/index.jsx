@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-const React = require( 'react' ),
-	page = require( 'page' );
+const React = require( 'react' ), page = require( 'page' );
 
 /**
  * Internal dependencies
@@ -24,15 +23,14 @@ const AddGoogleApps = React.createClass( {
 	},
 
 	ensureCanAddEmail() {
-		const needsRedirect = (
+		const needsRedirect =
 			this.props.domains.hasLoadedFromServer &&
-			! hasGoogleAppsSupportedDomain( this.props.domains.list )
-		);
+			! hasGoogleAppsSupportedDomain( this.props.domains.list );
 
 		if ( needsRedirect ) {
 			const path = paths.domainManagementEmail(
 				this.props.selectedSite.slug,
-				this.props.selectedDomainName
+				this.props.selectedDomainName,
 			);
 
 			page.replace( path );
@@ -42,9 +40,7 @@ const AddGoogleApps = React.createClass( {
 	render() {
 		return (
 			<Main className="domain-management-add-google-apps">
-				<Header
-					onClick={ this.goToEmail }
-					selectedDomainName={ this.props.selectedDomainName }>
+				<Header onClick={ this.goToEmail } selectedDomainName={ this.props.selectedDomainName }>
 					{ this.translate( 'Add G Suite' ) }
 				</Header>
 
@@ -53,7 +49,8 @@ const AddGoogleApps = React.createClass( {
 				<AddEmailAddressesCard
 					domains={ this.props.domains }
 					selectedDomainName={ this.props.selectedDomainName }
-					selectedSite={ this.props.selectedSite } />
+					selectedSite={ this.props.selectedSite }
+				/>
 			</Main>
 		);
 	},
@@ -61,11 +58,11 @@ const AddGoogleApps = React.createClass( {
 	goToEmail() {
 		const path = paths.domainManagementEmail(
 			this.props.selectedSite.slug,
-			this.props.selectedDomainName
+			this.props.selectedDomainName,
 		);
 
 		page( path );
-	}
+	},
 } );
 
 module.exports = AddGoogleApps;

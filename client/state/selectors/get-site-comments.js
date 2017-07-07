@@ -23,7 +23,7 @@ export const getSiteComments = createSelector(
 			.filter( key => parseInt( key.split( '-', 1 ), 10 ) === siteId )
 			.reduce( ( list, key ) => [ ...list, ...comments[ key ] ], [] );
 	},
-	state => [ state.comments.items ]
+	state => [ state.comments.items ],
 );
 
 export default getSiteComments;

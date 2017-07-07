@@ -25,13 +25,13 @@ class Tooltip extends Component {
 		rootClassName: PropTypes.string,
 		status: PropTypes.string,
 		showDelay: PropTypes.number,
-		showOnMobile: PropTypes.bool
+		showOnMobile: PropTypes.bool,
 	};
 
 	static defaultProps = {
 		showDelay: 100,
 		position: 'top',
-		showOnMobile: false
+		showOnMobile: false,
 	};
 
 	render() {
@@ -44,12 +44,12 @@ class Tooltip extends Component {
 			'tooltip',
 			`is-${ this.props.status }`,
 			`is-${ this.props.position }`,
-			this.props.className
+			this.props.className,
 		);
 
 		return (
 			<Popover
-				autoPosition= { this.props.autoPosition }
+				autoPosition={ this.props.autoPosition }
 				className={ classes }
 				rootClassName={ this.props.rootClassName }
 				context={ this.props.context }

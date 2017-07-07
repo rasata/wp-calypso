@@ -7,7 +7,7 @@ import autosize from 'autosize';
 
 export default class TextareaAutosize extends Component {
 	static propTypes = {
-		className: PropTypes.string
+		className: PropTypes.string,
 	};
 
 	componentDidMount() {
@@ -31,11 +31,6 @@ export default class TextareaAutosize extends Component {
 	render() {
 		const classes = classnames( 'textarea-autosize', this.props.className );
 
-		return (
-			<textarea
-				ref="textarea"
-				{ ...this.props }
-				className={ classes } />
-		);
+		return <textarea ref="textarea" { ...this.props } className={ classes } />;
 	}
 }

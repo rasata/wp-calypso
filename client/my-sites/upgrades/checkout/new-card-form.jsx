@@ -17,7 +17,7 @@ module.exports = React.createClass( {
 	propTypes: {
 		countriesList: React.PropTypes.object.isRequired,
 		hasStoredCards: React.PropTypes.bool.isRequired,
-		transaction: React.PropTypes.object.isRequired
+		transaction: React.PropTypes.object.isRequired,
 	},
 
 	isFieldInvalid: function( fieldName ) {
@@ -25,7 +25,9 @@ module.exports = React.createClass( {
 	},
 
 	render: function() {
-		let classes = classNames( 'all-fields-required', { 'has-saved-cards': this.props.hasStoredCards } );
+		let classes = classNames( 'all-fields-required', {
+			'has-saved-cards': this.props.hasStoredCards,
+		} );
 
 		return (
 			<div className="new-card">
@@ -34,9 +36,11 @@ module.exports = React.createClass( {
 				</button>
 
 				<div className="new-card-fields">
-					{ this.props.hasStoredCards ?
-						<h6 className="new-card-header">{ this.translate( 'Use New Credit/Debit Card' ) }:</h6> : null
-					}
+					{ this.props.hasStoredCards
+						? <h6 className="new-card-header">
+								{ this.translate( 'Use New Credit/Debit Card' ) }:
+							</h6>
+						: null }
 
 					<span className={ classes }>{ this.translate( 'All fields required' ) }</span>
 
@@ -45,7 +49,8 @@ module.exports = React.createClass( {
 						countriesList={ this.props.countriesList }
 						eventFormName="Checkout Form"
 						isFieldInvalid={ this.isFieldInvalid }
-						onFieldChange={ this.handleFieldChange } />
+						onFieldChange={ this.handleFieldChange }
+					/>
 				</div>
 			</div>
 		);
@@ -54,7 +59,7 @@ module.exports = React.createClass( {
 	handleFieldChange: function( rawDetails, maskedDetails ) {
 		upgradesActions.setNewCreditCardDetails( {
 			rawDetails: rawDetails,
-			maskedDetails: maskedDetails
+			maskedDetails: maskedDetails,
 		} );
-	}
+	},
 } );

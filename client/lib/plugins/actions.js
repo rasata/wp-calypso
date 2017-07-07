@@ -40,7 +40,7 @@ const queueSitePluginAction = ( action, siteId, pluginId, callback ) => {
 			action: action,
 			siteId: siteId,
 			pluginId: pluginId,
-			callback: callback
+			callback: callback,
 		} );
 	} else {
 		_actionsQueueBySite[ siteId ] = [];
@@ -62,11 +62,11 @@ const queueSitePluginActionAsPromise = ( action, siteId, pluginId, callback ) =>
 	} );
 };
 
-const getSolvedPromise = ( dataToPass ) => {
+const getSolvedPromise = dataToPass => {
 	return new Promise( resolve => resolve( dataToPass ) );
 };
 
-const getRejectedPromise = ( errorToPass ) => {
+const getRejectedPromise = errorToPass => {
 	return new Promise( ( resolve, reject ) => reject( errorToPass ) );
 };
 
@@ -115,14 +115,14 @@ const recordEvent = ( eventType, plugin, site, error ) => {
 		analytics.tracks.recordEvent( eventType + '_error', {
 			site: site.ID,
 			plugin: plugin.slug,
-			error: error.error
+			error: error.error,
 		} );
 		analytics.mc.bumpStat( eventType, 'failed' );
 		return;
 	}
 	analytics.tracks.recordEvent( eventType + '_success', {
 		site: site.ID,
-		plugin: plugin.slug
+		plugin: plugin.slug,
 	} );
 	analytics.mc.bumpStat( eventType, 'succeeded' );
 };
@@ -135,12 +135,12 @@ const autoupdatePlugin = ( site, plugin ) => {
 		type: 'AUTOUPDATE_PLUGIN',
 		action: 'AUTOUPDATE_PLUGIN',
 		site: site,
-		plugin: plugin
+		plugin: plugin,
 	} );
 
 	analytics.tracks.recordEvent( 'calypso_plugin_update_automatic', {
 		site: site.ID,
-		plugin: plugin.slug
+		plugin: plugin.slug,
 	} );
 
 	analytics.mc.bumpStat( 'calypso_plugin_update_automatic' );
@@ -153,14 +153,15 @@ const autoupdatePlugin = ( site, plugin ) => {
 			site: site,
 			plugin: plugin,
 			data: data,
-			error: error
+			error: error,
 		} );
 		recordEvent( 'calypso_plugin_updated_automatic', plugin, site, error );
 	} );
 };
 
 const processAutoupdates = ( site, plugins ) => {
-	if ( site.canAutoupdateFiles &&
+	if (
+		site.canAutoupdateFiles &&
 		site.jetpack &&
 		site.canManage() &&
 		utils.userCan( 'manage_options', site )
@@ -177,7 +178,7 @@ const PluginsActions = {
 	removePluginsNotices: logs => {
 		Dispatcher.handleViewAction( {
 			type: 'REMOVE_PLUGINS_NOTICES',
-			logs: logs
+			logs: logs,
 		} );
 	},
 
@@ -187,7 +188,7 @@ const PluginsActions = {
 				Dispatcher.handleViewAction( {
 					type: 'NOT_ALLOWED_TO_RECEIVE_PLUGINS',
 					action: 'RECEIVE_PLUGINS',
-					site: site
+					site: site,
 				} );
 			} );
 
@@ -200,7 +201,7 @@ const PluginsActions = {
 				action: 'RECEIVE_PLUGINS',
 				site: site,
 				data: data,
-				error: error
+				error: error,
 			} );
 			if ( ! error ) {
 				processAutoupdates( site, data.plugins );
@@ -231,7 +232,7 @@ const PluginsActions = {
 			type: 'UPDATE_PLUGIN',
 			action: 'UPDATE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		const boundUpdate = getPluginBoundMethod( site, plugin.id, 'updateVersion' );
@@ -242,7 +243,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: data,
-				error: error
+				error: error,
 			} );
 			recordEvent( 'calypso_plugin_updated', plugin, site, error );
 		} );
@@ -250,11 +251,11 @@ const PluginsActions = {
 
 	installPlugin: ( site, plugin ) => {
 		if ( ! site.canUpdateFiles ) {
-			return getRejectedPromise( 'Error: Can\'t update files on the site' );
+			return getRejectedPromise( "Error: Can't update files on the site" );
 		}
 
 		if ( ! utils.userCan( 'manage_options', site ) ) {
-			return getRejectedPromise( 'Error: User can\'t manage the site' );
+			return getRejectedPromise( "Error: User can't manage the site" );
 		}
 
 		const install = () => {
@@ -287,7 +288,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: responseData,
-				error: error
+				error: error,
 			};
 			if ( 'INSTALL_PLUGIN' === type ) {
 				Dispatcher.handleViewAction( message );
@@ -306,10 +307,7 @@ const PluginsActions = {
 		const manageError = error => {
 			if ( error.name === 'PluginAlreadyInstalledError' ) {
 				if ( site.isMainNetworkSite() ) {
-					return update( plugin )
-						.then( autoupdate )
-						.then( manageSuccess )
-						.catch( manageError );
+					return update( plugin ).then( autoupdate ).then( manageSuccess ).catch( manageError );
 				}
 
 				return update( plugin )
@@ -319,10 +317,7 @@ const PluginsActions = {
 					.catch( manageError );
 			}
 			if ( error.name === 'ActivationErrorError' ) {
-				return update( plugin )
-					.then( autoupdate )
-					.then( manageSuccess )
-					.catch( manageError );
+				return update( plugin ).then( autoupdate ).then( manageSuccess ).catch( manageError );
 			}
 
 			dispatchMessage( 'RECEIVE_INSTALLED_PLUGIN', null, error );
@@ -332,17 +327,10 @@ const PluginsActions = {
 		dispatchMessage( 'INSTALL_PLUGIN' );
 
 		if ( site.isMainNetworkSite() ) {
-			return install()
-				.then( autoupdate )
-				.then( manageSuccess )
-				.catch( manageError );
+			return install().then( autoupdate ).then( manageSuccess ).catch( manageError );
 		}
 
-		return install()
-			.then( activate )
-			.then( autoupdate )
-			.then( manageSuccess )
-			.catch( manageError );
+		return install().then( activate ).then( autoupdate ).then( manageSuccess ).catch( manageError );
 	},
 
 	removePlugin: ( site, plugin ) => {
@@ -354,7 +342,7 @@ const PluginsActions = {
 			type: 'REMOVE_PLUGIN',
 			action: 'REMOVE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		const dispatchMessage = ( type, responseData, error ) => {
@@ -364,7 +352,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: responseData,
-				error: error
+				error: error,
 			};
 
 			Dispatcher.handleServerAction( message );
@@ -407,7 +395,7 @@ const PluginsActions = {
 			type: 'ACTIVATE_PLUGIN',
 			action: 'ACTIVATE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		const pluginId = getPluginId( site, plugin );
@@ -421,22 +409,20 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: data,
-				error: error
+				error: error,
 			} );
 
 			// Sometime data can be empty or the plugin always
 			// return the active state even when the error is empty.
 			// Activation error is ok, because it means the plugin is already active
 			if (
-				( error && error.error !== 'activation_error' ) ||
-				( ! ( data && data.active ) &&
-				! error )
+				( error && error.error !== 'activation_error' ) || ( ! ( data && data.active ) && ! error )
 			) {
 				analytics.mc.bumpStat( 'calypso_plugin_activated', 'failed' );
 				analytics.tracks.recordEvent( 'calypso_plugin_activated_error', {
 					error: error && error.error ? error.error : 'Undefined activation error',
 					site: site.ID,
-					plugin: plugin.slug
+					plugin: plugin.slug,
 				} );
 
 				return;
@@ -445,7 +431,7 @@ const PluginsActions = {
 			analytics.mc.bumpStat( 'calypso_plugin_activated', 'succeeded' );
 			analytics.tracks.recordEvent( 'calypso_plugin_activated_success', {
 				site: site.ID,
-				plugin: plugin.slug
+				plugin: plugin.slug,
 			} );
 		} );
 	},
@@ -455,7 +441,7 @@ const PluginsActions = {
 			type: 'DEACTIVATE_PLUGIN',
 			action: 'DEACTIVATE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		const pluginId = getPluginId( site, plugin );
@@ -470,7 +456,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: data,
-				error: error
+				error: error,
 			} );
 
 			// Sometime data can be empty or the plugin always
@@ -481,7 +467,7 @@ const PluginsActions = {
 				analytics.tracks.recordEvent( 'calypso_plugin_deactivated_error', {
 					error: error.error ? error.error : 'Undefined deactivation error',
 					site: site.ID,
-					plugin: plugin.slug
+					plugin: plugin.slug,
 				} );
 
 				return;
@@ -489,7 +475,7 @@ const PluginsActions = {
 			analytics.mc.bumpStat( 'calypso_plugin_deactivated', 'succeeded' );
 			analytics.tracks.recordEvent( 'calypso_plugin_deactivated_success', {
 				site: site.ID,
-				plugin: plugin.slug
+				plugin: plugin.slug,
 			} );
 		} );
 	},
@@ -515,7 +501,7 @@ const PluginsActions = {
 			type: 'ENABLE_AUTOUPDATE_PLUGIN',
 			action: 'ENABLE_AUTOUPDATE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		const boundEnableAU = getPluginBoundMethod( site, plugin.id, 'enableAutoupdate' );
@@ -526,7 +512,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: data,
-				error: error
+				error: error,
 			} );
 			recordEvent( 'calypso_plugin_autoupdate_enabled', plugin, site, error );
 
@@ -545,7 +531,7 @@ const PluginsActions = {
 			type: 'DISABLE_AUTOUPDATE_PLUGIN',
 			action: 'DISABLE_AUTOUPDATE_PLUGIN',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 
 		// make the API Request
@@ -557,7 +543,7 @@ const PluginsActions = {
 				site: site,
 				plugin: plugin,
 				data: data,
-				error: error
+				error: error,
 			} );
 			recordEvent( 'calypso_plugin_autoupdate_disabled', plugin, site, error );
 		} );
@@ -579,12 +565,12 @@ const PluginsActions = {
 		Dispatcher.handleViewAction( {
 			type: 'REMOVE_PLUGINS_UPDATE_INFO',
 			site: site,
-			plugin: plugin
+			plugin: plugin,
 		} );
 	},
 
 	resetQueue: () => {
 		_actionsQueueBySite = {};
-	}
+	},
 };
 module.exports = PluginsActions;

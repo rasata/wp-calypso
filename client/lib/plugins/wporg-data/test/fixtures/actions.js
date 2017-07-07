@@ -3,7 +3,7 @@ var dummyPluginList = [
 		name: 'Jetpack',
 		slug: 'jetpack',
 		version: '1.0',
-		author: '<a href=\'http://jetpack.me\'>Automattic</a>',
+		author: "<a href='http://jetpack.me'>Automattic</a>",
 		author_profile: '//profiles.wordpress.org/automattic',
 		contributors: { Abiral: '' },
 		rating: 0,
@@ -13,13 +13,13 @@ var dummyPluginList = [
 			2: 0,
 			3: 0,
 			4: 0,
-			5: 0
+			5: 0,
 		},
 		homepage: 'http://jetpack.me/',
 		short_description: 'Your WordPress, Simplified.',
 		banners: [],
-		icons: { default: 'image.png' }
-	}
+		icons: { default: 'image.png' },
+	},
 ];
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
 		page: 1,
 		category: 'new',
 		type: 'RECEIVE_WPORG_PLUGINS_LIST',
-		data: dummyPluginList
+		data: dummyPluginList,
 	},
 
 	fetchedNewPluginsListSecondPage: {
@@ -37,7 +37,7 @@ module.exports = {
 		page: 2,
 		category: 'new',
 		type: 'RECEIVE_WPORG_PLUGINS_LIST',
-		data: dummyPluginList
+		data: dummyPluginList,
 	},
 
 	fetchedSearchPluginsList: {
@@ -46,7 +46,7 @@ module.exports = {
 		category: 'search',
 		searchTerm: 'test',
 		type: 'RECEIVE_WPORG_PLUGINS_LIST',
-		data: dummyPluginList
+		data: dummyPluginList,
 	},
 
 	fetchedSearchPluginsListSecondPage: {
@@ -55,21 +55,21 @@ module.exports = {
 		category: 'search',
 		searchTerm: 'test',
 		type: 'RECEIVE_WPORG_PLUGINS_LIST',
-		data: dummyPluginList
+		data: dummyPluginList,
 	},
 
 	fetchedPopularPluginsList: {
 		error: null,
 		category: 'popular',
 		type: 'RECEIVE_WPORG_PLUGINS_LIST',
-		data: dummyPluginList
+		data: dummyPluginList,
 	},
 
 	fetchingPopularPluginsList: {
 		error: null,
 		category: 'popular',
 		type: 'FETCH_WPORG_PLUGINS_LIST',
-		action: 'FETCH_WPORG_PLUGINS_LIST'
+		action: 'FETCH_WPORG_PLUGINS_LIST',
 	},
 
 	fetchingSearchPluginsList: {
@@ -78,7 +78,6 @@ module.exports = {
 		category: 'search',
 		searchTerm: 'test',
 		type: 'FETCH_WPORG_PLUGINS_LIST',
-		action: 'FETCH_WPORG_PLUGINS_LIST'
+		action: 'FETCH_WPORG_PLUGINS_LIST',
 	},
-
 };

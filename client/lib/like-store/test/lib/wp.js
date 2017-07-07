@@ -9,5 +9,5 @@ function returnSelf() {
 module.exports = {
 	site: returnSelf,
 	post: returnSelf,
-	likesList: returnSelf
+	likesList: returnSelf,
 };

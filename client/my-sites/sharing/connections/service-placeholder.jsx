@@ -24,10 +24,7 @@ class SharingServicePlaceholder extends Component {
 	render() {
 		const header = (
 			<div>
-				<GridIcon
-					icon="share"
-					size={ 48 }
-					className="sharing-service__logo" />
+				<GridIcon icon="share" size={ 48 } className="sharing-service__logo" />
 
 				<div className="sharing-service__name">
 					<h2 />
@@ -36,17 +33,11 @@ class SharingServicePlaceholder extends Component {
 			</div>
 		);
 
-		const summary = (
-			<Button compact disabled>{ this.props.translate( 'Loading' ) }</Button>
-		);
+		const summary = <Button compact disabled>{ this.props.translate( 'Loading' ) }</Button>;
 
 		return (
 			<li className="sharing-service is-placeholder">
-				<FoldableCard
-					header={ header }
-					summary={ summary }
-					className="sharing-service"
-					compact>
+				<FoldableCard header={ header } summary={ summary } className="sharing-service" compact>
 					<div />
 				</FoldableCard>
 			</li>

@@ -7,11 +7,7 @@ import { spy } from 'sinon';
 /**
  * Internal dependencies
  */
-import {
-	fetchPaymentMethods,
-	savePaymentMethod,
-	savePaymentMethodEnabled,
-} from '../actions';
+import { fetchPaymentMethods, savePaymentMethod, savePaymentMethodEnabled } from '../actions';
 import { LOADING } from 'woocommerce/state/constants';
 import useNock from 'test/helpers/use-nock';
 import { useSandbox } from 'test/helpers/use-sinon';
@@ -35,11 +31,11 @@ const method = {
 		title: {
 			id: 'title',
 			label: 'Title',
-			value: 'PayPal'
+			value: 'PayPal',
 		},
 		email: {
 			id: 'email',
-			label: 'PayPal email'
+			label: 'PayPal email',
 		},
 	},
 	title: 'PayPal6',
@@ -54,7 +50,7 @@ const state = {
 				},
 				789: {
 					paymentMethods: [ method ],
-				}
+				},
 			},
 			ui: {
 				payments: {
@@ -78,32 +74,36 @@ const state = {
 
 describe( 'actions', () => {
 	useSandbox();
-	useNock( ( nock ) => {
+	useNock( nock => {
 		nock( 'https://public-api.wordpress.com:443' )
 			.persist()
 			.get( '/rest/v1.1/jetpack-blogs/123/rest-api/' )
 			.query( { path: '/wc/v3/payment_gateways&_method=get', json: true } )
 			.reply( 200, {
-				data: [ {
-					id: 'bacs',
-					title: 'Direct bank transfer',
-					description: 'Make your payment directly into our bank account.',
-					enabled: false,
-					method_title: 'BACS',
-					method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
-				} ]
+				data: [
+					{
+						id: 'bacs',
+						title: 'Direct bank transfer',
+						description: 'Make your payment directly into our bank account.',
+						enabled: false,
+						method_title: 'BACS',
+						method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
+					},
+				],
 			} )
 			.get( '/rest/v1.1/jetpack-blogs/456/rest-api/' )
 			.query( { path: '/wc/v3/payment_gateways&_method=get', json: true } )
 			.reply( 200, {
-				data: [ {
-					id: 'bacs',
-					title: 'Direct bank transfer',
-					description: 'Make your payment directly into our bank account.',
-					enabled: true,
-					method_title: 'BACS',
-					method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
-				} ]
+				data: [
+					{
+						id: 'bacs',
+						title: 'Direct bank transfer',
+						description: 'Make your payment directly into our bank account.',
+						enabled: true,
+						method_title: 'BACS',
+						method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
+					},
+				],
 			} )
 			.post( '/rest/v1.1/jetpack-blogs/234/rest-api/' )
 			.query( { path: '/wc/v3/payment_gateways/paypal&_method=put', json: true } )
@@ -119,15 +119,15 @@ describe( 'actions', () => {
 						title: {
 							id: 'title',
 							label: 'Title',
-							value: 'PayPal'
+							value: 'PayPal',
 						},
 						email: {
 							id: 'email',
-							label: 'PayPal email'
+							label: 'PayPal email',
 						},
 					},
 					title: 'PayPal7',
-				}
+				},
 			} )
 			.post( '/rest/v1.1/jetpack-blogs/789/rest-api/' )
 			.query( { path: '/wc/v3/payment_gateways/paypal&_method=put', json: true } )
@@ -135,12 +135,12 @@ describe( 'actions', () => {
 				data: {
 					enabled: true,
 					id: 'paypal',
-				}
+				},
 			} )
 			.post( '/rest/v1.1/jetpack-blogs/456/rest-api/' )
 			.query( { path: '/wc/v3/payment_gateways/paypal&_method=put', json: true } )
 			.reply( 404, {
-				data: {}
+				data: {},
 			} );
 	} );
 
@@ -149,34 +149,41 @@ describe( 'actions', () => {
 		const enabled = {
 			type: WOOCOMMERCE_PAYMENT_METHODS_REQUEST_SUCCESS,
 			siteId: 456,
-			data: [ {
-				id: 'bacs',
-				title: 'Direct bank transfer',
-				description: 'Make your payment directly into our bank account.',
-				enabled: true,
-				method_title: 'BACS',
-				methodType: 'offline',
-				method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
-			} ]
+			data: [
+				{
+					id: 'bacs',
+					title: 'Direct bank transfer',
+					description: 'Make your payment directly into our bank account.',
+					enabled: true,
+					method_title: 'BACS',
+					methodType: 'offline',
+					method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
+				},
+			],
 		};
 		const notEnabled = {
 			type: WOOCOMMERCE_PAYMENT_METHODS_REQUEST_SUCCESS,
 			siteId,
-			data: [ {
-				id: 'bacs',
-				title: 'Direct bank transfer',
-				description: 'Make your payment directly into our bank account.',
-				enabled: false,
-				method_title: 'BACS',
-				methodType: 'offline',
-				method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
-			} ]
+			data: [
+				{
+					id: 'bacs',
+					title: 'Direct bank transfer',
+					description: 'Make your payment directly into our bank account.',
+					enabled: false,
+					method_title: 'BACS',
+					methodType: 'offline',
+					method_description: 'Allows payments by BACS, more commonly known as direct bank/wire transfer.',
+				},
+			],
 		};
 		it( 'should dispatch an action', () => {
 			const getState = () => ( {} );
 			const dispatch = spy();
 			fetchPaymentMethods( siteId )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith( { type: WOOCOMMERCE_PAYMENT_METHODS_REQUEST, siteId } );
+			expect( dispatch ).to.have.been.calledWith( {
+				type: WOOCOMMERCE_PAYMENT_METHODS_REQUEST,
+				siteId,
+			} );
 		} );
 
 		it( 'should dispatch a success action with payment information when request completes', () => {
@@ -215,11 +222,11 @@ describe( 'actions', () => {
 					woocommerce: {
 						sites: {
 							[ siteId ]: {
-								paymentMethods: LOADING
-							}
-						}
-					}
-				}
+								paymentMethods: LOADING,
+							},
+						},
+					},
+				},
 			} );
 			const dispatch = spy();
 			fetchPaymentMethods( siteId )( dispatch, getState );
@@ -231,14 +238,17 @@ describe( 'actions', () => {
 		const siteId = '234';
 
 		it( 'should dispatch an action', () => {
-			const getState = () => ( state );
+			const getState = () => state;
 			const dispatch = spy();
 			savePaymentMethod( siteId, method )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith( { type: WOOCOMMERCE_PAYMENT_METHOD_UPDATE, siteId } );
+			expect( dispatch ).to.have.been.calledWith( {
+				type: WOOCOMMERCE_PAYMENT_METHOD_UPDATE,
+				siteId,
+			} );
 		} );
 
 		it( 'should dispatch a success action with payment information when request completes', () => {
-			const getState = () => ( state );
+			const getState = () => state;
 			const dispatch = spy();
 			const response = savePaymentMethod( siteId, method )( dispatch, getState );
 
@@ -265,15 +275,15 @@ describe( 'actions', () => {
 							title: {
 								id: 'title',
 								label: 'Title',
-								value: 'PayPal'
+								value: 'PayPal',
 							},
 							email: {
 								id: 'email',
-								label: 'PayPal email'
+								label: 'PayPal email',
 							},
 						},
 						title: 'PayPal7',
-					}
+					},
 				} );
 			} );
 		} );
@@ -283,21 +293,19 @@ describe( 'actions', () => {
 		const siteId = '789';
 
 		it( 'should dispatch an action', () => {
-			const getState = () => ( state );
+			const getState = () => state;
 			const dispatch = spy();
 			savePaymentMethodEnabled( siteId, method.id, true )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith(
-				{
-					type: WOOCOMMERCE_PAYMENT_METHOD_ENABLED_UPDATE,
-					siteId,
-					enabled: true,
-					methodId: 'paypal',
-				}
-			);
+			expect( dispatch ).to.have.been.calledWith( {
+				type: WOOCOMMERCE_PAYMENT_METHOD_ENABLED_UPDATE,
+				siteId,
+				enabled: true,
+				methodId: 'paypal',
+			} );
 		} );
 
 		it( 'should dispatch a success action with method complete', () => {
-			const getState = () => ( state );
+			const getState = () => state;
 			const dispatch = spy();
 			const response = savePaymentMethodEnabled( siteId, method.id, true )( dispatch, getState );
 
@@ -318,7 +326,7 @@ describe( 'actions', () => {
 						informationUrl: 'https://docs.woocommerce.com/document/paypal-standard/',
 						isSuggested: true,
 						methodType: 'off-site',
-					}
+					},
 				} );
 			} );
 		} );

@@ -16,7 +16,7 @@ class QueryJetpackUserConnection extends Component {
 		// Connected props
 		isRequesting: PropTypes.bool,
 		requestJetpackUserConnectionData: PropTypes.func.isRequired,
-	}
+	};
 
 	componentDidMount() {
 		this.request( this.props );
@@ -44,5 +44,5 @@ export default connect(
 	( state, { siteId } ) => ( {
 		isRequesting: isRequestingJetpackUserConnection( state, siteId ),
 	} ),
-	{ requestJetpackUserConnectionData }
+	{ requestJetpackUserConnectionData },
 )( QueryJetpackUserConnection );

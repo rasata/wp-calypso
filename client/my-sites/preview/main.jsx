@@ -9,10 +9,7 @@ import debugFactory from 'debug';
 /**
  * Internal dependencies
  */
-import {
-	getSelectedSite,
-	getSelectedSiteId,
-} from 'state/ui/selectors';
+import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
 import { isSitePreviewable } from 'state/sites/selectors';
 import addQueryArgs from 'lib/route/add-query-args';
 
@@ -26,7 +23,6 @@ import WebPreviewContent from 'components/web-preview/content';
 const debug = debugFactory( 'calypso:my-sites:preview' );
 
 class PreviewMain extends React.Component {
-
 	static displayName = 'Preview';
 
 	state = {
@@ -46,11 +42,14 @@ class PreviewMain extends React.Component {
 			return;
 		}
 
-		const newUrl = addQueryArgs( {
-			preview: true,
-			iframe: true,
-			'frame-nonce': this.props.site.options.frame_nonce
-		}, this.getBasePreviewUrl() );
+		const newUrl = addQueryArgs(
+			{
+				preview: true,
+				iframe: true,
+				'frame-nonce': this.props.site.options.frame_nonce,
+			},
+			this.getBasePreviewUrl(),
+		);
 
 		if ( this.iframeUrl !== newUrl ) {
 			debug( 'loading', newUrl );
@@ -109,7 +108,7 @@ class PreviewMain extends React.Component {
 	}
 }
 
-const mapState = ( state ) => {
+const mapState = state => {
 	const selectedSiteId = getSelectedSiteId( state );
 	return {
 		isPreviewable: isSitePreviewable( state, selectedSiteId ),

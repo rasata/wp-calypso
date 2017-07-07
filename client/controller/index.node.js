@@ -17,11 +17,7 @@ export { setSection, setUpLocale } from './shared.js';
 
 const ReduxWrappedLoggedOutLayout = ( { store, primary, secondary, redirectUri } ) => (
 	<ReduxProvider store={ store }>
-		<LayoutLoggedOut
-			primary={ primary }
-			secondary={ secondary }
-			redirectUri={ redirectUri }
-		/>
+		<LayoutLoggedOut primary={ primary } secondary={ secondary } redirectUri={ redirectUri } />
 	</ReduxProvider>
 );
 

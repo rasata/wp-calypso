@@ -12,10 +12,14 @@ describe( 'selectors', () => {
 	let state;
 
 	before( () => {
-		state = { ui: { layoutFocus: {
-			current: 'sites',
-			next: 'preview',
-		} } };
+		state = {
+			ui: {
+				layoutFocus: {
+					current: 'sites',
+					next: 'preview',
+				},
+			},
+		};
 	} );
 
 	describe( 'getCurrentLayoutFocus', () => {

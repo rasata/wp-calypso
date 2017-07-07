@@ -14,7 +14,7 @@ var Dispatcher = require( 'dispatcher' ),
  * Module variables
  */
 var PreferencesStore = {
-	_preferences: undefined
+	_preferences: undefined,
 };
 
 emitter( PreferencesStore );

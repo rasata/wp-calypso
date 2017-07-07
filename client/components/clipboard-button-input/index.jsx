@@ -17,19 +17,19 @@ export default React.createClass( {
 	propTypes: {
 		value: PropTypes.string,
 		disabled: PropTypes.bool,
-		className: PropTypes.string
+		className: PropTypes.string,
 	},
 
 	getInitialState() {
 		return {
 			isCopied: false,
-			disabled: false
+			disabled: false,
 		};
 	},
 
 	getDefaultProps() {
 		return {
-			value: ''
+			value: '',
 		};
 	},
 
@@ -40,12 +40,12 @@ export default React.createClass( {
 
 	showConfirmation() {
 		this.setState( {
-			isCopied: true
+			isCopied: true,
 		} );
 
 		this.confirmationTimeout = setTimeout( () => {
 			this.setState( {
-				isCopied: false
+				isCopied: false,
 			} );
 		}, 4000 );
 	},
@@ -56,21 +56,18 @@ export default React.createClass( {
 
 		return (
 			<span className={ classes }>
-				<FormTextInput
-					{ ...omit( this.props, 'className' ) }
-					type="text"
-					selectOnFocus
-					readOnly />
+				<FormTextInput { ...omit( this.props, 'className' ) } type="text" selectOnFocus readOnly />
 				<ClipboardButton
 					text={ value }
 					onCopy={ this.showConfirmation }
 					disabled={ disabled }
-					compact>
+					compact
+				>
 					{ this.state.isCopied
 						? this.translate( 'Copied!' )
 						: this.translate( 'Copy', { context: 'verb' } ) }
 				</ClipboardButton>
 			</span>
 		);
-	}
+	},
 } );

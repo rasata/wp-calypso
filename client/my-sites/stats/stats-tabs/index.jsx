@@ -20,18 +20,28 @@ export default React.createClass( {
 		selectedTab: PropTypes.string,
 		switchTab: PropTypes.func,
 		tabs: PropTypes.array,
-		borderless: PropTypes.bool
+		borderless: PropTypes.bool,
 	},
 
 	render() {
-		const { children, data, activeIndex, activeKey, tabs, switchTab, selectedTab, borderless } = this.props;
+		const {
+			children,
+			data,
+			activeIndex,
+			activeKey,
+			tabs,
+			switchTab,
+			selectedTab,
+			borderless,
+		} = this.props;
 		let statsTabs;
 
 		if ( data && ! children ) {
 			const activeData = find( data, { [ activeKey ]: activeIndex } );
 
-			statsTabs = tabs.map( ( tab ) => {
-				const hasData = activeData && ( activeData[ tab.attr ] >= 0 ) && ( activeData[ tab.attr ] !== null );
+			statsTabs = tabs.map( tab => {
+				const hasData =
+					activeData && activeData[ tab.attr ] >= 0 && activeData[ tab.attr ] !== null;
 
 				const tabOptions = {
 					attr: tab.attr,
@@ -41,7 +51,7 @@ export default React.createClass( {
 					loading: ! hasData,
 					selected: selectedTab === tab.attr,
 					tabClick: switchTab,
-					value: hasData ? activeData[ tab.attr ] : null
+					value: hasData ? activeData[ tab.attr ] : null,
 				};
 
 				return <StatTab key={ tabOptions.attr } { ...tabOptions } />;
@@ -49,9 +59,15 @@ export default React.createClass( {
 		}
 
 		return (
-			<ul className={ classNames( 'stats-tabs', { 'is-enabled': !! data }, { 'is-borderless': borderless } ) }>
+			<ul
+				className={ classNames(
+					'stats-tabs',
+					{ 'is-enabled': !! data },
+					{ 'is-borderless': borderless },
+				) }
+			>
 				{ statsTabs || children }
 			</ul>
 		);
-	}
+	},
 } );

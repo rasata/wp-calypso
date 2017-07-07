@@ -19,7 +19,6 @@ import FormToggle from 'components/forms/form-toggle';
 import VerticalMenu from 'components/vertical-menu';
 
 class ProductFormVariationsModal extends React.Component {
-
 	static propTypes = {
 		siteId: PropTypes.number,
 		product: PropTypes.object.isRequired,
@@ -46,29 +45,31 @@ class ProductFormVariationsModal extends React.Component {
 	 * make sure the correct event handler runs, and that we don't share the
 	 * same TinyMCE instance for different descriptions.
 	 */
-	editorComponent = ( variationId ) => {
+	editorComponent = variationId => {
 		const { siteId, product, variations, editProductVariation } = this.props;
-		const variation = find( variations, ( v ) => variationId === v.id );
-		const setDescription = debounce( ( description ) => {
+		const variation = find( variations, v => variationId === v.id );
+		const setDescription = debounce( description => {
 			editProductVariation( siteId, product, variation, { description } );
 		}, 200 );
-		return <CompactTinyMCE
+		return (
+			<CompactTinyMCE
 				initialValue={ variation.description || '' }
 				onContentsChange={ setDescription }
-			/>;
-	}
+			/>
+		);
+	};
 
 	selectedVariation() {
 		const { selectedVariation } = this.state;
 		const { variations } = this.props;
-		return find( variations, ( v ) => selectedVariation === v.id );
+		return find( variations, v => selectedVariation === v.id );
 	}
 
-	setSku = ( sku ) => {
+	setSku = sku => {
 		const { siteId, product, editProductVariation } = this.props;
 		const variation = this.selectedVariation();
 		editProductVariation( siteId, product, variation, { sku } );
-	}
+	};
 
 	toggleVisible() {
 		const { siteId, product, editProductVariation } = this.props;
@@ -89,11 +90,11 @@ class ProductFormVariationsModal extends React.Component {
 		const { selectedVariation } = this.state;
 		const variation = this.selectedVariation();
 
-		const navItems = variations && variations.map( function( v, i ) {
-			return (
-				<ModalNavItem key={ i } variation={ v } selected={ selectedVariation } />
-			);
-		} );
+		const navItems =
+			variations &&
+			variations.map( function( v, i ) {
+				return <ModalNavItem key={ i } variation={ v } selected={ selectedVariation } />;
+			} );
 
 		const Editor = this.state.editor;
 
@@ -101,8 +102,11 @@ class ProductFormVariationsModal extends React.Component {
 			<div className="products__product-form-modal-wrapper">
 				<h1>{ translate( 'Variation details' ) }</h1>
 
-				<VerticalMenu onClick={ this.switchVariation } className="products__product-form-modal-menu">
-					{navItems}
+				<VerticalMenu
+					onClick={ this.switchVariation }
+					className="products__product-form-modal-menu"
+				>
+					{ navItems }
 				</VerticalMenu>
 
 				<div className="products__product-form-modal-contents">
@@ -122,9 +126,11 @@ class ProductFormVariationsModal extends React.Component {
 					<FormFieldSet className="products__product-form-variation-description">
 						<FormLabel htmlFor="description">{ translate( 'Description' ) }</FormLabel>
 						<Editor />
-						<FormSettingExplanation>{ translate(
-								'This additional information will be displayed when a customer choses this variation.'
-						) }</FormSettingExplanation>
+						<FormSettingExplanation>
+							{ translate(
+								'This additional information will be displayed when a customer choses this variation.',
+							) }
+						</FormSettingExplanation>
 					</FormFieldSet>
 
 					<FormLabel>
@@ -134,27 +140,21 @@ class ProductFormVariationsModal extends React.Component {
 							checked={ 'publish' === variation.status }
 						/>
 					</FormLabel>
-					<FormSettingExplanation>{ translate(
-						'Hide variations you don’t want to offer to customers.'
-					) }</FormSettingExplanation>
+					<FormSettingExplanation>
+						{ translate( 'Hide variations you don’t want to offer to customers.' ) }
+					</FormSettingExplanation>
 				</div>
 			</div>
 		);
 	}
-
 }
 
 const ModalNavItem = props => {
-	const {
-		onClick,
-		variation,
-		selected,
-	} = props;
+	const { onClick, variation, selected } = props;
 
-	const classes = classNames(
-		'vertical-menu__items',
-		{ 'is-selected': ( variation.id === selected ) }
-	);
+	const classes = classNames( 'vertical-menu__items', {
+		'is-selected': variation.id === selected,
+	} );
 
 	const clickHandler = () => {
 		onClick( variation.id );

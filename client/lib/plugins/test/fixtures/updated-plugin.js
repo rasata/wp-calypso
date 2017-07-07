@@ -9,5 +9,5 @@ module.exports = {
 	network: false,
 	plugin_url: 'http://wordpress.org/extend/plugins/dolly-hello/',
 	slug: 'hello-dolly',
-	version: '1.6'
+	version: '1.6',
 };

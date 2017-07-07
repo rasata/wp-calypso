@@ -7,12 +7,14 @@ import page from 'page';
 /**
  * Internal dependencies
  */
-import DomainMainPlaceholder from 'my-sites/upgrades/domain-management/components/domain/main-placeholder';
+import DomainMainPlaceholder
+	from 'my-sites/upgrades/domain-management/components/domain/main-placeholder';
 import { getSelectedDomain } from 'lib/domains';
 import Header from 'my-sites/upgrades/domain-management/components/header';
 import { localize } from 'i18n-calypso';
 import Main from 'components/main';
-import MaintenanceCard from 'my-sites/upgrades/domain-management/components/domain/maintenance-card';
+import MaintenanceCard
+	from 'my-sites/upgrades/domain-management/components/domain/maintenance-card';
 import MappedDomain from './mapped-domain';
 import paths from 'my-sites/upgrades/paths';
 import RegisteredDomain from './registered-domain';
@@ -32,7 +34,10 @@ const Edit = React.createClass( {
 
 		return (
 			<Main className="domain-management-edit">
-				<Header onClick={ this.goToDomainManagement } selectedDomainName={ this.props.selectedDomainName }>
+				<Header
+					onClick={ this.goToDomainManagement }
+					selectedDomainName={ this.props.selectedDomainName }
+				>
 					{ this.props.translate( 'Domain Settings' ) }
 				</Header>
 				{ this.renderDetails( domain, Details ) }
@@ -66,16 +71,18 @@ const Edit = React.createClass( {
 			return <MaintenanceCard { ...this.props } />;
 		}
 
-		return <Details
-			domain={ domain }
-			selectedSite={ this.props.selectedSite }
-			settingPrimaryDomain={ this.props.domains.settingPrimaryDomain }
-		/>;
+		return (
+			<Details
+				domain={ domain }
+				selectedSite={ this.props.selectedSite }
+				settingPrimaryDomain={ this.props.domains.settingPrimaryDomain }
+			/>
+		);
 	},
 
 	goToDomainManagement() {
 		page( paths.domainManagementList( this.props.selectedSite.slug ) );
-	}
+	},
 } );
 
 export default localize( Edit );

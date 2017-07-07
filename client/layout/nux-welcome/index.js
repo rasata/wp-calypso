@@ -17,7 +17,6 @@ var Emitter = require( 'lib/mixins/emitter' );
  * what the focus for any view of Calypso should be.
  */
 var nuxWelcome = {
-
 	tempWelcome: false,
 
 	showWelcome: store.get( 'show-welcome' ),
@@ -35,7 +34,7 @@ var nuxWelcome = {
 	},
 
 	getWelcome: function() {
-		return ( this.tempWelcome || this.showWelcome );
+		return this.tempWelcome || this.showWelcome;
 	},
 
 	clearTempWelcome: function() {
@@ -50,8 +49,7 @@ var nuxWelcome = {
 		this.showWelcome = false;
 		this.tempWelcome = false;
 		store.remove( 'show-welcome' );
-	}
-
+	},
 };
 
 /**

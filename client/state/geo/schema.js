@@ -6,6 +6,6 @@ export const geoSchema = {
 		country_short: { type: 'string' },
 		country_long: { type: 'string' },
 		region: { type: 'string' },
-		city: { type: 'string' }
-	}
+		city: { type: 'string' },
+	},
 };

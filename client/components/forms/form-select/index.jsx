@@ -22,7 +22,7 @@ const FormSelect = React.createClass( {
 				{ this.props.children }
 			</select>
 		);
-	}
+	},
 } );
 
 export default FormSelect;

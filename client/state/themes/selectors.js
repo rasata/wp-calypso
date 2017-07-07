@@ -26,7 +26,7 @@ import {
 	getSerializedThemesQuery,
 	getSerializedThemesQueryWithoutPage,
 	isPremium,
-	oldShowcaseUrl
+	oldShowcaseUrl,
 } from './utils';
 import { DEFAULT_THEME_QUERY } from './constants';
 import { FEATURE_UNLIMITED_PREMIUM_THEMES } from 'lib/plans/constants';
@@ -39,17 +39,14 @@ import { FEATURE_UNLIMITED_PREMIUM_THEMES } from 'lib/plans/constants';
  * @param  {String}  themeId Theme ID
  * @return {?Object}         Theme object
  */
-export const getTheme = createSelector(
-	( state, siteId, themeId ) => {
-		const manager = state.themes.queries[ siteId ];
-		if ( ! manager ) {
-			return null;
-		}
+export const getTheme = createSelector( ( state, siteId, themeId ) => {
+	const manager = state.themes.queries[ siteId ];
+	if ( ! manager ) {
+		return null;
+	}
 
-		return manager.getItem( themeId );
-	},
-	( state ) => state.themes.queries
-);
+	return manager.getItem( themeId );
+}, state => state.themes.queries );
 
 /**
  * Returns a theme object from what is considered the 'canonical' source, i.e.
@@ -133,8 +130,8 @@ export const getThemesForQuery = createSelector(
 		// over different pages) which we need to remove manually here for now.
 		return uniq( themes );
 	},
-	( state ) => state.themes.queries,
-	( state, siteId, query ) => getSerializedThemesQuery( query, siteId )
+	state => state.themes.queries,
+	( state, siteId, query ) => getSerializedThemesQuery( query, siteId ),
 );
 
 /**
@@ -249,8 +246,8 @@ export const getThemesForQueryIgnoringPage = createSelector(
 		// over different pages) which we need to remove manually here for now.
 		return uniq( themesForQueryIgnoringPage );
 	},
-	( state ) => state.themes.queries,
-	( state, siteId, query ) => getSerializedThemesQueryWithoutPage( query, siteId )
+	state => state.themes.queries,
+	( state, siteId, query ) => getSerializedThemesQueryWithoutPage( query, siteId ),
 );
 
 /**
@@ -275,14 +272,11 @@ export const isRequestingThemesForQueryIgnoringPage = createSelector(
 				return false;
 			}
 
-			return isEqual(
-				normalizedQueryWithoutPage,
-				omit( queryDetails.query, 'page' )
-			);
+			return isEqual( normalizedQueryWithoutPage, omit( queryDetails.query, 'page' ) );
 		} );
 	},
-	( state ) => state.themes.queryRequests,
-	( state, siteId, query ) => getSerializedThemesQuery( query, siteId )
+	state => state.themes.queryRequests,
+	( state, siteId, query ) => getSerializedThemesQuery( query, siteId ),
 );
 
 /**
@@ -349,12 +343,12 @@ export function getThemeDetailsUrl( state, themeId, siteId ) {
 		return null;
 	}
 
-	if ( isJetpackSite( state, siteId ) &&
-		! (
-			config.isEnabled( 'manage/themes/details/jetpack' ) &&
+	if (
+		isJetpackSite( state, siteId ) &&
+		! ( config.isEnabled( 'manage/themes/details/jetpack' ) &&
 			canJetpackSiteManage( state, siteId ) &&
-			hasJetpackSiteJetpackThemesExtendedFeatures( state, siteId )
-		) ) {
+			hasJetpackSiteJetpackThemesExtendedFeatures( state, siteId ) )
+	) {
 		return getSiteOption( state, siteId, 'admin_url' ) + 'themes.php?theme=' + themeId;
 	}
 
@@ -435,7 +429,7 @@ export function getThemePurchaseUrl( state, themeId, siteId ) {
 export function getThemeCustomizeUrl( state, themeId, siteId ) {
 	const customizerUrl = getCustomizerUrl( state, siteId );
 
-	if ( ! ( siteId && themeId ) || isThemeActive( state, themeId, siteId ) ) {
+	if ( ! ( siteId && themeId ) || isThemeActive( state, themeId, siteId ) ) {
 		return customizerUrl;
 	}
 
@@ -602,10 +596,11 @@ export function isThemePremium( state, themeId ) {
  * @return {Boolean}         True if the premium theme is available for the given site
  */
 export function isPremiumThemeAvailable( state, themeId, siteId ) {
-	return isThemePurchased( state, themeId, siteId ) || (
-			hasFeature( state, siteId, FEATURE_UNLIMITED_PREMIUM_THEMES ) &&
-			( ! isJetpackSite( state, siteId ) || config.isEnabled( 'jetpack/pijp' ) )
-		);
+	return (
+		isThemePurchased( state, themeId, siteId ) ||
+		( hasFeature( state, siteId, FEATURE_UNLIMITED_PREMIUM_THEMES ) &&
+			( ! isJetpackSite( state, siteId ) || config.isEnabled( 'jetpack/pijp' ) ) )
+	);
 }
 
 /**
@@ -617,11 +612,11 @@ export function isPremiumThemeAvailable( state, themeId, siteId ) {
  * @return {Boolean}         True if siteId is a Jetpack site on which theme is installed or can be installed.
  */
 export function isThemeAvailableOnJetpackSite( state, themeId, siteId ) {
-	return !! getTheme( state, siteId, themeId ) || ( // The theme is already available or...
-		isWpcomTheme( state, themeId ) && (  // ...it's a WP.com theme and...
-			config.isEnabled( 'manage/themes/upload' ) &&
-			hasJetpackSiteJetpackThemesExtendedFeatures( state, siteId ) // ...the site supports theme installation from WP.com.
-		)
+	return (
+		!! getTheme( state, siteId, themeId ) || // The theme is already available or...
+		( isWpcomTheme( state, themeId ) && // ...it's a WP.com theme and...
+			( config.isEnabled( 'manage/themes/upload' ) &&
+				hasJetpackSiteJetpackThemesExtendedFeatures( state, siteId ) ) ) // ...the site supports theme installation from WP.com.
 	);
 }
 
@@ -727,13 +722,13 @@ export function getJetpackUpgradeUrlIfPremiumTheme( state, themeId, siteId ) {
  * @return {String}          Price
  */
 export function getPremiumThemePrice( state, themeId, siteId ) {
-	if ( ! isThemePremium( state, themeId ) || isPremiumThemeAvailable( state, themeId, siteId ) ) {
+	if ( ! isThemePremium( state, themeId ) || isPremiumThemeAvailable( state, themeId, siteId ) ) {
 		return '';
 	}
 
 	if ( isJetpackSite( state, siteId ) && config.isEnabled( 'jetpack/pijp' ) ) {
 		return i18n.translate( 'Upgrade', {
-			comment: 'Used to indicate a premium theme is available to the user once they upgrade their plan'
+			comment: 'Used to indicate a premium theme is available to the user once they upgrade their plan',
 		} );
 	}
 

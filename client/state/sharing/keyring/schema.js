@@ -23,6 +23,6 @@ export const itemSchema = {
 				type: { type: 'string' },
 				user_ID: { type: 'integer' },
 			},
-		}
+		},
 	},
 };

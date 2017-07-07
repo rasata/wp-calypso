@@ -15,8 +15,7 @@ const FAQItem = ( { question, answer } ) => {
 FAQItem.propTypes = {
 	// Translations can include <a> links, that's why propType `node` is needed.
 	question: PropTypes.node.isRequired,
-	answer: PropTypes.node.isRequired
+	answer: PropTypes.node.isRequired,
 };
 
 export default FAQItem;
-

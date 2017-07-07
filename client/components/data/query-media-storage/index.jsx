@@ -14,7 +14,6 @@ import { requestMediaStorage } from 'state/sites/media-storage/actions';
 import MediaStore from 'lib/media/store';
 
 class QueryMediaStorage extends Component {
-
 	constructor( props ) {
 		super( props );
 		this.requestStorage = this.requestStorage.bind( this );
@@ -36,9 +35,11 @@ class QueryMediaStorage extends Component {
 	}
 
 	componentWillReceiveProps( nextProps ) {
-		if ( nextProps.requestingMediaStorage ||
+		if (
+			nextProps.requestingMediaStorage ||
 			! nextProps.siteId ||
-			( this.props.siteId === nextProps.siteId ) ) {
+			this.props.siteId === nextProps.siteId
+		) {
 			return;
 		}
 		this.requestStorage( nextProps );
@@ -52,22 +53,25 @@ class QueryMediaStorage extends Component {
 QueryMediaStorage.propTypes = {
 	siteId: PropTypes.number,
 	requestingMediaStorage: PropTypes.bool,
-	requestMediaStorage: PropTypes.func
+	requestMediaStorage: PropTypes.func,
 };
 
 QueryMediaStorage.defaultProps = {
-	requestMediaStorage: () => {}
+	requestMediaStorage: () => {},
 };
 
 export default connect(
 	( state, ownProps ) => {
 		return {
-			requestingMediaStorage: isRequestingMediaStorage( state, ownProps.siteId )
+			requestingMediaStorage: isRequestingMediaStorage( state, ownProps.siteId ),
 		};
 	},
-	( dispatch ) => {
-		return bindActionCreators( {
-			requestMediaStorage
-		}, dispatch );
-	}
+	dispatch => {
+		return bindActionCreators(
+			{
+				requestMediaStorage,
+			},
+			dispatch,
+		);
+	},
 )( QueryMediaStorage );

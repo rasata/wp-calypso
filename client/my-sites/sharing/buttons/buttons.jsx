@@ -1,9 +1,9 @@
 /**
  * External dependencies
  */
-import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { flowRight } from 'lodash';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -16,8 +16,16 @@ import QuerySharingButtons from 'components/data/query-sharing-buttons';
 import { saveSiteSettings } from 'state/site-settings/actions';
 import { saveSharingButtons } from 'state/sites/sharing-buttons/actions';
 import { getSelectedSiteId } from 'state/ui/selectors';
-import { getSiteSettings, isSavingSiteSettings, isSiteSettingsSaveSuccessful } from 'state/site-settings/selectors';
-import { getSharingButtons, isSavingSharingButtons, isSharingButtonsSaveSuccessful } from 'state/selectors';
+import {
+	getSiteSettings,
+	isSavingSiteSettings,
+	isSiteSettingsSaveSuccessful,
+} from 'state/site-settings/selectors';
+import {
+	getSharingButtons,
+	isSavingSharingButtons,
+	isSharingButtonsSaveSuccessful,
+} from 'state/selectors';
 import { recordGoogleEvent } from 'state/analytics/actions';
 import { successNotice, errorNotice } from 'state/notices/actions';
 import { protectForm } from 'lib/protect-form';
@@ -25,7 +33,7 @@ import { protectForm } from 'lib/protect-form';
 class SharingButtons extends Component {
 	state = {
 		values: {},
-		buttonsPendingSave: null
+		buttonsPendingSave: null,
 	};
 
 	static propTypes = {
@@ -50,12 +58,10 @@ class SharingButtons extends Component {
 	};
 
 	handleChange = ( option, value ) => {
-		const pairs = undefined === value
-			? option
-			: { [ option ]: value };
+		const pairs = undefined === value ? option : { [ option ]: value };
 		this.props.markChanged();
 		this.setState( {
-			values: Object.assign( {}, this.state.values, pairs )
+			values: Object.assign( {}, this.state.values, pairs ),
 		} );
 	};
 
@@ -66,10 +72,7 @@ class SharingButtons extends Component {
 
 	componentWillReceiveProps( nextProps ) {
 		// Save request has been performed
-		if (
-			this.props.isSaving &&
-			! nextProps.isSaving
-		) {
+		if ( this.props.isSaving && ! nextProps.isSaving ) {
 			if (
 				nextProps.isSaveSettingsSuccessful &&
 				( nextProps.isSaveButtonsSuccessful || ! this.state.buttonsPendingSave )
@@ -78,21 +81,27 @@ class SharingButtons extends Component {
 				nextProps.markSaved();
 				this.setState( {
 					values: {},
-					buttonsPendingSave: null
+					buttonsPendingSave: null,
 				} );
 			} else {
-				nextProps.errorNotice( nextProps.translate( 'There was a problem saving your changes. Please, try again.' ) );
+				nextProps.errorNotice(
+					nextProps.translate( 'There was a problem saving your changes. Please, try again.' ),
+				);
 			}
 		}
 	}
 
 	render() {
-		const { buttons, isSaving, settings, siteId } = this.props;
+		const { buttons, isSaving, settings, siteId } = this.props;
 		const updatedSettings = Object.assign( {}, settings, this.state.values );
 		const updatedButtons = this.state.buttonsPendingSave || buttons;
 
 		return (
-			<form onSubmit={ this.saveChanges } id="sharing-buttons" className="sharing-settings sharing-buttons">
+			<form
+				onSubmit={ this.saveChanges }
+				id="sharing-buttons"
+				className="sharing-settings sharing-buttons"
+			>
 				<QuerySiteSettings siteId={ siteId } />
 				<QuerySharingButtons siteId={ siteId } />
 				<ButtonsAppearance
@@ -101,11 +110,13 @@ class SharingButtons extends Component {
 					onChange={ this.handleChange }
 					onButtonsChange={ this.handleButtonsChange }
 					initialized={ !! buttons && !! settings }
-					saving={ isSaving } />
+					saving={ isSaving }
+				/>
 				<ButtonsOptions
 					settings={ updatedSettings }
 					onChange={ this.handleChange }
-					saving={ isSaving } />
+					saving={ isSaving }
+				/>
 			</form>
 		);
 	}
@@ -127,14 +138,10 @@ const connectComponent = connect(
 			isSaveButtonsSuccessful,
 			settings,
 			buttons,
-			siteId
+			siteId,
 		};
 	},
-	{ errorNotice, recordGoogleEvent, saveSiteSettings, saveSharingButtons, successNotice }
+	{ errorNotice, recordGoogleEvent, saveSiteSettings, saveSharingButtons, successNotice },
 );
 
-export default flowRight(
-	connectComponent,
-	protectForm,
-	localize,
-)( SharingButtons );
+export default flowRight( connectComponent, protectForm, localize )( SharingButtons );

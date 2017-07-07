@@ -3,7 +3,6 @@ var debug = require( 'debug' )( 'calypso:data-observe' );
 module.exports = function() {
 	var propNames = Array.prototype.slice.call( arguments );
 
-
 	return {
 		componentDidMount: function() {
 			propNames.forEach( function( propName ) {
@@ -37,7 +36,6 @@ module.exports = function() {
 					}
 				}
 			}, this );
-
 		},
 
 		update: function() {
@@ -45,7 +43,6 @@ module.exports = function() {
 				debug( 'Re-rendering ' + this.constructor.displayName + ' component.' );
 				this.forceUpdate();
 			}
-		}
-
+		},
 	};
 };

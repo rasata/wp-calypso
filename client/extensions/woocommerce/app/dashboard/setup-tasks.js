@@ -15,27 +15,17 @@ import {
 	getTriedCustomizerDuringInitialSetup,
 	getCheckedTaxSetup,
 } from 'woocommerce/state/sites/setup-choices/selectors';
-import {
-	getTotalProducts
-} from 'woocommerce/state/sites/products/selectors';
-import {
-	fetchProducts
-} from 'woocommerce/state/sites/products/actions';
-import {
-	fetchPaymentMethods,
-} from 'woocommerce/state/sites/payment-methods/actions';
+import { getTotalProducts } from 'woocommerce/state/sites/products/selectors';
+import { fetchProducts } from 'woocommerce/state/sites/products/actions';
+import { fetchPaymentMethods } from 'woocommerce/state/sites/payment-methods/actions';
 import {
 	fetchSetupChoices,
 	setOptedOutOfShippingSetup,
 	setTriedCustomizerDuringInitialSetup,
 	setCheckedTaxSetup,
 } from 'woocommerce/state/sites/setup-choices/actions';
-import {
-	fetchSettingsGeneral,
-} from 'woocommerce/state/sites/settings/general/actions';
-import {
-	arePaymentsSetup
-} from 'woocommerce/state/ui/payments/methods/selectors';
+import { fetchSettingsGeneral } from 'woocommerce/state/sites/settings/general/actions';
+import { arePaymentsSetup } from 'woocommerce/state/ui/payments/methods/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import SetupTask from './setup-task';
 import { areAnyShippingMethodsEnabled } from 'woocommerce/state/ui/shipping/zones/selectors';
@@ -64,36 +54,36 @@ class SetupTasks extends Component {
 			this.props.fetchSettingsGeneral( site.ID );
 			this.props.fetchSetupChoices( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchProducts( newSiteId, 1 );
 			this.props.fetchSettingsGeneral( newSiteId );
 			this.props.fetchSetupChoices( newSiteId );
 		}
-	}
+	};
 
-	onClickNoShip = ( event ) => {
+	onClickNoShip = event => {
 		event.preventDefault();
 		this.setState( {
-			showShippingTask: false
+			showShippingTask: false,
 		} );
 		this.props.setOptedOutOfShippingSetup( this.props.site.ID, true );
-	}
+	};
 
 	onClickTaxSettings = () => {
 		this.props.setCheckedTaxSetup( this.props.site.ID, true );
-	}
+	};
 
 	onClickOpenCustomizer = () => {
 		this.props.setTriedCustomizerDuringInitialSetup( this.props.site.ID, true );
-	}
+	};
 
 	getSetupTasks = () => {
 		const {
@@ -103,7 +93,7 @@ class SetupTasks extends Component {
 			paymentsAreSetUp,
 			shippingIsSetUp,
 			taxesAreSetUp,
-			translate
+			translate,
 		} = this.props;
 
 		return [
@@ -117,8 +107,8 @@ class SetupTasks extends Component {
 						label: 'Add a product',
 						path: getLink( '/store/product/:site', site ),
 						analyticsProp: 'add-product',
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: shippingIsSetUp,
@@ -132,12 +122,12 @@ class SetupTasks extends Component {
 						analyticsProp: 'set-up-shipping',
 					},
 					{
-						label: translate( 'I won\'t be shipping' ),
+						label: translate( "I won't be shipping" ),
 						isSecondary: true,
 						onClick: this.onClickNoShip,
 						analyticsProp: 'not-shipping',
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: paymentsAreSetUp,
@@ -149,12 +139,12 @@ class SetupTasks extends Component {
 						label: translate( 'Set up payments' ),
 						path: getLink( '/store/settings/payments/:site', site ),
 						analyticsProp: 'set-up-payments',
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: taxesAreSetUp,
-				explanation: translate( 'Taxes. Everyone\'s favorite. We made it simple.' ),
+				explanation: translate( "Taxes. Everyone's favorite. We made it simple." ),
 				label: translate( 'Set up taxes' ),
 				show: true,
 				actions: [
@@ -163,25 +153,31 @@ class SetupTasks extends Component {
 						path: getLink( '/store/settings/taxes/:site', site ),
 						onClick: this.onClickTaxSettings,
 						analyticsProp: 'set-up-taxes',
-					}
-				]
+					},
+				],
 			},
 			{
 				checked: triedCustomizer,
-				explanation: translate( 'View your store and make any final tweaks before opening for business.' ),
+				explanation: translate(
+					'View your store and make any final tweaks before opening for business.',
+				),
 				label: translate( 'View and customize' ),
 				show: true,
 				actions: [
 					{
 						label: translate( 'Customize' ),
-						path: getLink( 'https://:site/wp-admin/customize.php?return=' + encodeURIComponent( '//' + site.slug ), site ),
+						path: getLink(
+							'https://:site/wp-admin/customize.php?return=' +
+								encodeURIComponent( '//' + site.slug ),
+							site,
+						),
 						onClick: this.onClickOpenCustomizer,
 						analyticsProp: 'view-and-customize',
-					}
-				]
-			}
+					},
+				],
+			},
 		];
-	}
+	};
 
 	renderSetupTask = ( setupTask, index ) => {
 		if ( ! setupTask.show ) {
@@ -197,7 +193,7 @@ class SetupTasks extends Component {
 				label={ setupTask.label }
 			/>
 		);
-	}
+	};
 
 	render = () => {
 		return (
@@ -205,7 +201,7 @@ class SetupTasks extends Component {
 				{ this.getSetupTasks().map( this.renderSetupTask ) }
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
@@ -231,7 +227,7 @@ function mapDispatchToProps( dispatch ) {
 			setCheckedTaxSetup,
 			setTriedCustomizerDuringInitialSetup,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

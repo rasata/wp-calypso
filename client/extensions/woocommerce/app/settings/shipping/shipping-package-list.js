@@ -18,20 +18,23 @@ class ShippingPackageList extends Component {
 
 		//TODO: use redux state and real data
 		this.state = {
-			packages: [ {
-				type: 'box',
-				name: 'Custom Box',
-				dimensions: '10 x 10 x 10 in'
-			}, {
-				type: 'envelope',
-				name: 'Custom Envelope',
-				dimensions: '12 x 9 x 0.5 in'
-			} ],
+			packages: [
+				{
+					type: 'box',
+					name: 'Custom Box',
+					dimensions: '10 x 10 x 10 in',
+				},
+				{
+					type: 'envelope',
+					name: 'Custom Envelope',
+					dimensions: '12 x 9 x 0.5 in',
+				},
+			],
 		};
 	}
 
 	renderShippingPackage( pckg, index ) {
-		return ( <ShippingPackage key={ index } { ...pckg } /> );
+		return <ShippingPackage key={ index } { ...pckg } />;
 	}
 
 	render() {
@@ -41,12 +44,15 @@ class ShippingPackageList extends Component {
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Packages' ) }
-					description={ translate( 'Add the boxes, envelopes, and other packages you use most frequently.' ) }>
+					description={ translate(
+						'Add the boxes, envelopes, and other packages you use most frequently.',
+					) }
+				>
 					<Button>{ translate( 'Add package' ) }</Button>
 				</ExtendedHeader>
 				<Card className="shipping__packages">
 					<div className="shipping__packages-row shipping__packages-header">
-						<div className="shipping__packages-row-icon"></div>
+						<div className="shipping__packages-row-icon" />
 						<div className="shipping__packages-row-details">{ translate( 'Name' ) }</div>
 						<div className="shipping__packages-row-dimensions">{ translate( 'Dimensions' ) }</div>
 						<div className="shipping__packages-row-actions" />

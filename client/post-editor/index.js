@@ -6,8 +6,7 @@ var page = require( 'page' );
 /**
  * Internal dependencies
  */
-var sitesController = require( 'my-sites/controller' ),
-	controller = require( './controller' );
+var sitesController = require( 'my-sites/controller' ), controller = require( './controller' );
 import config from 'config';
 
 module.exports = function() {
@@ -23,7 +22,7 @@ module.exports = function() {
 
 	if ( config.isEnabled( 'manage/custom-post-types' ) ) {
 		page( '/edit/:type', sitesController.siteSelection, sitesController.sites );
-		page( '/edit/:type/new', ( context ) => page.redirect( `/edit/${ context.params.type }` ) );
+		page( '/edit/:type/new', context => page.redirect( `/edit/${ context.params.type }` ) );
 		page( '/edit/:type/:site?/:post?', sitesController.siteSelection, controller.post );
 		page.exit( '/edit/:type/:site?/:post?', controller.exitPost );
 	}

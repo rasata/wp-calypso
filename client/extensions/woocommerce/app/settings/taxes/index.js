@@ -27,10 +27,7 @@ import {
 	updateTaxesEnabledSetting,
 } from 'woocommerce/state/sites/settings/general/actions';
 import { fetchTaxRates } from 'woocommerce/state/sites/meta/taxrates/actions';
-import {
-	fetchTaxSettings,
-	updateTaxSettings,
-} from 'woocommerce/state/sites/settings/tax/actions';
+import { fetchTaxSettings, updateTaxSettings } from 'woocommerce/state/sites/settings/tax/actions';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
 import Main from 'components/main';
@@ -66,13 +63,13 @@ class SettingsTaxes extends Component {
 			this.props.fetchSettingsGeneral( site.ID );
 			this.props.fetchTaxSettings( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		if ( ! this.state.userBeganEditing ) {
 			const { site } = this.props;
-			const newSiteId = newProps.site && newProps.site.ID || null;
-			const oldSiteId = site && site.ID || null;
+			const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+			const oldSiteId = ( site && site.ID ) || null;
 			if ( oldSiteId !== newSiteId ) {
 				this.props.fetchSettingsGeneral( newSiteId );
 				this.props.fetchTaxSettings( newSiteId );
@@ -84,23 +81,23 @@ class SettingsTaxes extends Component {
 				taxesEnabled: newProps.taxesEnabled,
 			} );
 		}
-	}
+	};
 
 	onEnabledChange = () => {
 		this.setState( { taxesEnabled: ! this.state.taxesEnabled, userBeganEditing: true } );
-	}
+	};
 
-	onCheckboxChange = ( event ) => {
+	onCheckboxChange = event => {
 		const option = event.target.name;
 		const value = event.target.checked;
 		this.setState( { [ option ]: value, userBeganEditing: true } );
-	}
+	};
 
 	pageHasChanges = () => {
 		return this.state.userBeganEditing;
-	}
+	};
 
-	onSave = ( event ) => {
+	onSave = event => {
 		const { site, translate } = this.props;
 
 		event.preventDefault();
@@ -113,26 +110,25 @@ class SettingsTaxes extends Component {
 
 		const onFailure = () => {
 			this.setState( { isSaving: false } );
-			return errorNotice( translate( 'There was a problem saving your changes. Please try again.' ) );
+			return errorNotice(
+				translate( 'There was a problem saving your changes. Please try again.' ),
+			);
 		};
 
 		// TODO - chain these
 
-		this.props.updateTaxesEnabledSetting(
-			site.ID,
-			this.state.taxesEnabled,
-		);
+		this.props.updateTaxesEnabledSetting( site.ID, this.state.taxesEnabled );
 
 		this.props.updateTaxSettings(
 			site.ID,
 			this.state.pricesIncludeTaxes || false,
 			! this.state.shippingIsTaxable, // note the inversion
 			onSuccess,
-			onFailure
+			onFailure,
 		);
 	};
 
-	onAddressChange = ( address ) => {
+	onAddressChange = address => {
 		const { site } = this.props;
 		this.props.fetchTaxRates( site.ID, address, true );
 	};
@@ -146,8 +142,8 @@ class SettingsTaxes extends Component {
 		}
 
 		const breadcrumbs = [
-			( <a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a> ),
-			( <span>{ translate( 'Taxes' ) }</span> ),
+			<a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a>,
+			<span>{ translate( 'Taxes' ) }</span>,
 		];
 
 		const saveButtonDisabled = this.state.isSaving || ! this.pageHasChanges();
@@ -163,7 +159,10 @@ class SettingsTaxes extends Component {
 				<div className="taxes__nexus">
 					<ExtendedHeader
 						label={ translate( 'Store Address / Tax Nexus' ) }
-						description={ translate( 'The address of where your business is located for tax purposes.' ) } />
+						description={ translate(
+							'The address of where your business is located for tax purposes.',
+						) }
+					/>
 					<StoreAddress className="taxes__store-address" onSetAddress={ this.onAddressChange } />
 				</div>
 				<TaxesRates
@@ -178,8 +177,7 @@ class SettingsTaxes extends Component {
 				/>
 			</Main>
 		);
-	}
-
+	};
 }
 
 function mapStateToProps( state ) {
@@ -213,9 +211,9 @@ function mapDispatchToProps( dispatch ) {
 			fetchTaxRates,
 			fetchTaxSettings,
 			updateTaxesEnabledSetting,
-			updateTaxSettings
+			updateTaxSettings,
 		},
-		dispatch
+		dispatch,
 	);
 }
 export default connect( mapStateToProps, mapDispatchToProps )( localize( SettingsTaxes ) );

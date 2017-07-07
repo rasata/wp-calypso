@@ -3,10 +3,7 @@
  */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import {
-	debounce,
-	defer,
-} from 'lodash';
+import { debounce, defer } from 'lodash';
 import debugFactory from 'debug';
 
 /**
@@ -26,7 +23,7 @@ import contextTypes from '../context-types';
 
 const debug = debugFactory( 'calypso:guided-tours' );
 
-const anyFrom = ( obj ) => {
+const anyFrom = obj => {
 	const key = Object.keys( obj )[ 0 ];
 	return key && obj[ key ];
 };
@@ -34,17 +31,22 @@ const anyFrom = ( obj ) => {
 export default class Step extends Component {
 	static propTypes = {
 		name: PropTypes.string.isRequired,
-		placement: PropTypes.oneOf( [
-			'below', 'above', 'beside',
-			'center', 'middle', 'right',
-		] ),
+		placement: PropTypes.oneOf( [ 'below', 'above', 'beside', 'center', 'middle', 'right' ] ),
 		next: PropTypes.string,
 		target: PropTypes.string,
 		arrow: PropTypes.oneOf( [
-			'top-left', 'top-center', 'top-right',
-			'right-top', 'right-middle', 'right-bottom',
-			'bottom-left', 'bottom-center', 'bottom-right',
-			'left-top', 'left-middle', 'left-bottom',
+			'top-left',
+			'top-center',
+			'top-right',
+			'right-top',
+			'right-middle',
+			'right-bottom',
+			'bottom-left',
+			'bottom-center',
+			'bottom-right',
+			'left-top',
+			'left-middle',
+			'left-bottom',
 		] ),
 		when: PropTypes.func,
 		scrollContainer: PropTypes.string,
@@ -74,7 +76,7 @@ export default class Step extends Component {
 		this.scrollContainer.removeEventListener( 'scroll', this.onScrollOrResize );
 		this.scrollContainer = query( nextProps.scrollContainer )[ 0 ] || global.window;
 		this.scrollContainer.addEventListener( 'scroll', this.onScrollOrResize );
-		const shouldScrollTo = nextProps.shouldScrollTo && ( this.props.name !== nextProps.name );
+		const shouldScrollTo = nextProps.shouldScrollTo && this.props.name !== nextProps.name;
 		this.setStepPosition( nextProps, shouldScrollTo );
 	}
 
@@ -111,27 +113,27 @@ export default class Step extends Component {
 			return;
 		}
 
-		debug( 'Step#componentWillReceiveProps: stepSection:',
-				this.stepSection,
-				nextContext.sectionName );
+		debug(
+			'Step#componentWillReceiveProps: stepSection:',
+			this.stepSection,
+			nextContext.sectionName,
+		);
 
 		if ( this.context.step !== nextContext.step ) {
 			// invalidate if waiting for section
-			this.stepSection = nextContext.shouldPause
-				? null
-				: nextContext.sectionName;
-		} else if ( this.context.shouldPause &&
-				! nextContext.shouldPause &&
-				! this.stepSection ) {
+			this.stepSection = nextContext.shouldPause ? null : nextContext.sectionName;
+		} else if ( this.context.shouldPause && ! nextContext.shouldPause && ! this.stepSection ) {
 			// only write if previously invalidated
 			this.stepSection = nextContext.sectionName;
 		}
 	}
 
 	quitIfInvalidRoute( nextProps, nextContext ) {
-		if ( nextContext.step !== this.context.step ||
-				nextContext.sectionName === this.context.sectionName ||
-				! nextContext.sectionName ) {
+		if (
+			nextContext.step !== this.context.step ||
+			nextContext.sectionName === this.context.sectionName ||
+			! nextContext.sectionName
+		) {
 			return;
 		}
 
@@ -139,17 +141,25 @@ export default class Step extends Component {
 		const hasContinue = !! branching[ step ].continue;
 		const hasJustNavigated = lastAction.type === ROUTE_SET;
 
-		debug( 'Step.quitIfInvalidRoute',
-			'step', step,
-			'previousStep', this.context.step,
-			'hasContinue', hasContinue,
-			'hasJustNavigated', hasJustNavigated,
-			'lastAction', lastAction,
-			'path', lastAction.path,
-			'isDifferentSection', this.isDifferentSection( lastAction.path ) );
+		debug(
+			'Step.quitIfInvalidRoute',
+			'step',
+			step,
+			'previousStep',
+			this.context.step,
+			'hasContinue',
+			hasContinue,
+			'hasJustNavigated',
+			hasJustNavigated,
+			'lastAction',
+			lastAction,
+			'path',
+			lastAction.path,
+			'isDifferentSection',
+			this.isDifferentSection( lastAction.path ),
+		);
 
-		if ( ! hasContinue && hasJustNavigated &&
-				this.isDifferentSection( lastAction.path ) ) {
+		if ( ! hasContinue && hasJustNavigated && this.isDifferentSection( lastAction.path ) ) {
 			defer( () => {
 				debug( 'Step.quitIfInvalidRoute: quitting (different section)' );
 				this.context.quit( this.context );
@@ -170,8 +180,7 @@ export default class Step extends Component {
 	}
 
 	isDifferentSection( path ) {
-		return this.stepSection && path &&
-			this.stepSection !== pathToSection( path );
+		return this.stepSection && path && this.stepSection !== pathToSection( path );
 	}
 
 	skipIfInvalidContext( props, context ) {
@@ -188,24 +197,27 @@ export default class Step extends Component {
 	}
 
 	setAnalyticsTimestamp( { step, shouldPause } ) {
-		if ( this.context.step !== step ||
-				( this.context.shouldPause && ! shouldPause ) ) {
+		if ( this.context.step !== step || ( this.context.shouldPause && ! shouldPause ) ) {
 			this.lastTransitionTimestamp = Date.now();
 		}
 	}
 
 	shouldSkipAnalytics() {
-		return this.lastTransitionTimestamp &&
-			Date.now() - this.lastTransitionTimestamp < 500;
+		return this.lastTransitionTimestamp && Date.now() - this.lastTransitionTimestamp < 500;
 	}
 
 	onScrollOrResize = debounce( () => {
 		this.setStepPosition( this.props );
-	}, 50 )
+	}, 50 );
 
 	setStepPosition( props, shouldScrollTo ) {
 		const { placement, target } = props;
-		const stepPos = getStepPosition( { placement, targetSlug: target, shouldScrollTo, scrollContainer: this.scrollContainer } );
+		const stepPos = getStepPosition( {
+			placement,
+			targetSlug: target,
+			shouldScrollTo,
+			scrollContainer: this.scrollContainer,
+		} );
 		const stepCoords = posToCss( stepPos );
 		this.setState( { stepPos, stepCoords } );
 	}
@@ -234,17 +246,19 @@ export default class Step extends Component {
 			this.context.step === 'init' && 'guided-tours__step-first',
 			isLastStep && 'guided-tours__step-finish',
 			targetSlug && 'guided-tours__step-pointing',
-			targetSlug && 'guided-tours__step-pointing-' + getValidatedArrowPosition( {
-				targetSlug,
-				arrow,
-				stepPos,
-			} ),
+			targetSlug &&
+				'guided-tours__step-pointing-' +
+					getValidatedArrowPosition( {
+						targetSlug,
+						arrow,
+						stepPos,
+					} ),
 		].filter( Boolean );
 
 		const style = { ...this.props.style, ...stepCoords };
 
 		return (
-			<Card className={ classNames( ...classes ) } style={ style } >
+			<Card className={ classNames( ...classes ) } style={ style }>
 				{ children }
 			</Card>
 		);

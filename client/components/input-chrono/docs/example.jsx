@@ -20,7 +20,7 @@ export default React.createClass( {
 
 	getInitialState() {
 		return {
-			date: this.moment()
+			date: this.moment(),
 		};
 	},
 
@@ -45,10 +45,8 @@ export default React.createClass( {
 	render() {
 		return (
 			<Card style={ { width: '300px', margin: 0 } }>
-				<InputChrono
-					value={ this.state.date.calendar() }
-					onSet={ this.onSet }/>
+				<InputChrono value={ this.state.date.calendar() } onSet={ this.onSet } />
 			</Card>
 		);
-	}
+	},
 } );

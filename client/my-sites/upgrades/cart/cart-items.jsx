@@ -6,15 +6,13 @@ var React = require( 'react' );
 /**
  * Internal dependencies
  */
-var CartItem = require( './cart-item' ),
-	cartItems = require( 'lib/cart-values' ).cartItems;
+var CartItem = require( './cart-item' ), cartItems = require( 'lib/cart-values' ).cartItems;
 
 var COLLAPSED_ITEMS_COUNT = 2;
 
-var CartItems = React.createClass({
-
+var CartItems = React.createClass( {
 	propTypes: {
-		collapse: React.PropTypes.bool.isRequired
+		collapse: React.PropTypes.bool.isRequired,
 	},
 
 	getInitialState: function() {
@@ -38,24 +36,19 @@ var CartItems = React.createClass({
 		collapsedItems.push(
 			<li key="items-expander">
 				<a className="cart-items__expander" href="#" onClick={ this.handleExpand }>
-					{ this.translate(
-						'+ %(count)d more item',
-						'+ %(count)d more items',
-						{
-							count: collapsedItemsCount,
-							args: { count: collapsedItemsCount }
-						}
-					) }
+					{ this.translate( '+ %(count)d more item', '+ %(count)d more items', {
+						count: collapsedItemsCount,
+						args: { count: collapsedItemsCount },
+					} ) }
 				</a>
-			</li>
+			</li>,
 		);
 
 		return collapsedItems;
 	},
 
 	render: function() {
-		var cart = this.props.cart,
-			items;
+		var cart = this.props.cart, items;
 
 		if ( ! cartItems.getAll( cart ) ) {
 			return;
@@ -67,7 +60,8 @@ var CartItems = React.createClass({
 					cart={ cart }
 					cartItem={ cartItem }
 					selectedSite={ this.props.selectedSite }
-					key={ cartItem.product_id + '-' + cartItem.meta } />
+					key={ cartItem.product_id + '-' + cartItem.meta }
+				/>
 			);
 		}, this );
 
@@ -76,7 +70,7 @@ var CartItems = React.createClass({
 		}
 
 		return <ul className="cart-items">{ items }</ul>;
-	}
-});
+	},
+} );
 
 module.exports = CartItems;

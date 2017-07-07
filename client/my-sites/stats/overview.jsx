@@ -29,10 +29,10 @@ class StatsOverview extends Component {
 
 	render() {
 		const { moment, path, period, sites } = this.props;
-		const statsPath = ( path === '/stats' ) ? '/stats/day' : path;
-		const sitesSorted = sites.map( ( site ) => {
+		const statsPath = path === '/stats' ? '/stats/day' : path;
+		const sitesSorted = sites.map( site => {
 			let momentSiteZone = moment();
-			if ( 'object' === typeof ( site.options ) && 'undefined' !== typeof ( site.options.gmt_offset ) ) {
+			if ( 'object' === typeof site.options && 'undefined' !== typeof site.options.gmt_offset ) {
 				momentSiteZone = moment().utcOffset( site.options.gmt_offset );
 			}
 			site.periodEnd = momentSiteZone.endOf( period ).format( 'YYYY-MM-DD' );
@@ -65,7 +65,7 @@ class StatsOverview extends Component {
 			let siteOffset = 0;
 			const overview = [];
 
-			if ( 'object' === typeof ( site.options ) && 'undefined' !== typeof ( site.options.gmt_offset ) ) {
+			if ( 'object' === typeof site.options && 'undefined' !== typeof site.options.gmt_offset ) {
 				siteOffset = site.options.gmt_offset;
 			}
 
@@ -84,7 +84,7 @@ class StatsOverview extends Component {
 					path={ statsPath }
 					title={ site.title }
 					siteSlug={ site.slug }
-				/>
+				/>,
 			);
 
 			return overview;
@@ -116,11 +116,9 @@ class StatsOverview extends Component {
 	}
 }
 
-export default connect(
-	state => {
-		return {
-			user: getCurrentUser( state ),
-			sites: getVisibleSites( state )
-		};
-	}
-)( localize( StatsOverview ) );
+export default connect( state => {
+	return {
+		user: getCurrentUser( state ),
+		sites: getVisibleSites( state ),
+	};
+} )( localize( StatsOverview ) );

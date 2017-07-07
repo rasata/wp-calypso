@@ -54,10 +54,14 @@ Markup = {
 	 * @return {string}       A link markup string
 	 */
 	link: function( media ) {
-		var element = React.createElement( 'a', {
-			href: media.URL,
-			title: media.title
-		}, media.title );
+		var element = React.createElement(
+			'a',
+			{
+				href: media.URL,
+				title: media.title,
+			},
+			media.title,
+		);
 
 		return ReactDomServer.renderToStaticMarkup( element );
 	},
@@ -101,7 +105,14 @@ Markup = {
 
 		/*eslint-disable react/no-danger*/
 		return (
-			<dl className={ classNames( 'wp-caption', parsed.attrs.named.align, parsed.attrs.named.classes ) } style={ { width: width } }>
+			<dl
+				className={ classNames(
+					'wp-caption',
+					parsed.attrs.named.align,
+					parsed.attrs.named.classes,
+				) }
+				style={ { width: width } }
+			>
 				<dt className="wp-caption-dt" dangerouslySetInnerHTML={ { __html: img } } />
 				<dd className="wp-caption-dd">{ caption }</dd>
 			</dl>
@@ -120,11 +131,14 @@ Markup = {
 		 * @return {string}         An image markup string
 		 */
 		image: function( site, media, options ) {
-			options = assign( {
-				size: 'full',
-				align: 'none',
-				forceResize: false
-			}, options );
+			options = assign(
+				{
+					size: 'full',
+					align: 'none',
+					forceResize: false,
+				},
+				options,
+			);
 
 			let width, height;
 			if ( 'full' === options.size ) {
@@ -133,8 +147,8 @@ Markup = {
 			} else {
 				const dimensions = MediaUtils.getThumbnailSizeDimensions( options.size, site );
 				const ratio = Math.min(
-					( dimensions.width / media.width ) || Infinity,
-					( dimensions.height / media.height ) || Infinity
+					dimensions.width / media.width || Infinity,
+					dimensions.height / media.height || Infinity,
 				);
 
 				width = Math.round( media.width * ratio );
@@ -153,7 +167,11 @@ Markup = {
 				alt: media.alt || media.title,
 				width: isFinite( width ) ? width : null,
 				height: isFinite( height ) ? height : null,
-				className: classNames( 'align' + options.align, 'size-' + options.size, 'wp-image-' + media.ID )
+				className: classNames(
+					'align' + options.align,
+					'size-' + options.size,
+					'wp-image-' + media.ID,
+				),
 			} );
 
 			let markup = ReactDomServer.renderToStaticMarkup( img );
@@ -162,9 +180,9 @@ Markup = {
 					tag: 'caption',
 					attrs: {
 						id: 'attachment_' + media.ID,
-						width: width
+						width: width,
 					},
-					content: [ markup, media.caption ].join( ' ' )
+					content: [ markup, media.caption ].join( ' ' ),
 				} );
 			}
 
@@ -183,8 +201,8 @@ Markup = {
 			return Shortcode.stringify( {
 				tag: 'audio',
 				attrs: {
-					src: media.URL
-				}
+					src: media.URL,
+				},
 			} );
 		},
 
@@ -201,7 +219,7 @@ Markup = {
 				return Shortcode.stringify( {
 					tag: 'wpvideo',
 					attrs: [ media.videopress_guid ],
-					type: 'single'
+					type: 'single',
 				} );
 			}
 
@@ -210,11 +228,11 @@ Markup = {
 				attrs: {
 					src: media.URL,
 					height: media.height,
-					width: media.width
-				}
+					width: media.width,
+				},
 			} );
-		}
-	}
+		},
+	},
 };
 
 module.exports = Markup;

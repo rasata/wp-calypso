@@ -24,7 +24,7 @@ const DesignMenuPanel = React.createClass( {
 				</Card>
 			</div>
 		);
-	}
+	},
 } );
 
 export default DesignMenuPanel;

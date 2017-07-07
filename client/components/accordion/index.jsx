@@ -32,7 +32,7 @@ export default class Accordion extends Component {
 		super( ...arguments );
 
 		this.state = {
-			isExpanded: props.initialExpanded
+			isExpanded: props.initialExpanded,
 		};
 	}
 
@@ -40,7 +40,7 @@ export default class Accordion extends Component {
 		this.setExpandedStatus( ! this.state.isExpanded );
 	};
 
-	setExpandedStatus = ( isExpanded ) => {
+	setExpandedStatus = isExpanded => {
 		this.setState( { isExpanded } );
 		this.props.onToggle( isExpanded );
 	};
@@ -51,7 +51,7 @@ export default class Accordion extends Component {
 			'is-expanded': this.state.isExpanded || this.props.forceExpand,
 			'has-icon': !! icon,
 			'has-subtitle': !! subtitle,
-			'has-status': !! status
+			'has-status': !! status,
 		} );
 
 		return (

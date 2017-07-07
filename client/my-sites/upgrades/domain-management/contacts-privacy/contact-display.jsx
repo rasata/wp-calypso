@@ -5,7 +5,7 @@ const React = require( 'react' );
 
 const ContactDisplay = React.createClass( {
 	propTypes: {
-		contactInformation: React.PropTypes.object.isRequired
+		contactInformation: React.PropTypes.object.isRequired,
 	},
 
 	render() {
@@ -32,7 +32,7 @@ const ContactDisplay = React.createClass( {
 				</div>
 			</div>
 		);
-	}
+	},
 } );
 
 module.exports = ContactDisplay;

@@ -21,11 +21,7 @@ import TransactionStepsMixin from './transaction-steps-mixin';
 import upgradesActions from 'lib/upgrades/actions';
 import countriesList from 'lib/countries-list';
 import debugFactory from 'debug';
-import cartValues, {
-	isPaidForFullyInCredits,
-	isFree,
-	cartItems
-} from 'lib/cart-values';
+import cartValues, { isPaidForFullyInCredits, isFree, cartItems } from 'lib/cart-values';
 import Notice from 'components/notice';
 import { preventWidows } from 'lib/formatting';
 
@@ -49,7 +45,7 @@ const SecurePaymentForm = React.createClass( {
 		return {
 			userSelectedPaymentBox: null,
 			visiblePaymentBox: this.getVisiblePaymentBox( this.props.cart, this.props.paymentMethods ),
-			previousCart: null
+			previousCart: null,
 		};
 	},
 
@@ -79,7 +75,7 @@ const SecurePaymentForm = React.createClass( {
 		}
 
 		this.setState( {
-			visiblePaymentBox: this.getVisiblePaymentBox( nextProps.cart, nextProps.paymentMethods )
+			visiblePaymentBox: this.getVisiblePaymentBox( nextProps.cart, nextProps.paymentMethods ),
 		} );
 	},
 
@@ -142,7 +138,7 @@ const SecurePaymentForm = React.createClass( {
 	selectPaymentBox( paymentBox ) {
 		this.setState( {
 			userSelectedPaymentBox: paymentBox,
-			visiblePaymentBox: paymentBox
+			visiblePaymentBox: paymentBox,
 		} );
 	},
 
@@ -151,7 +147,8 @@ const SecurePaymentForm = React.createClass( {
 			<CreditsPaymentBox
 				cart={ this.props.cart }
 				onSubmit={ this.handlePaymentBoxSubmit }
-				transactionStep={ this.props.transaction.step } />
+				transactionStep={ this.props.transaction.step }
+			/>
 		);
 	},
 
@@ -160,7 +157,8 @@ const SecurePaymentForm = React.createClass( {
 			<FreeTrialConfirmationBox
 				cart={ this.props.cart }
 				onSubmit={ this.handlePaymentBoxSubmit }
-				transactionStep={ this.props.transaction.step } />
+				transactionStep={ this.props.transaction.step }
+			/>
 		);
 	},
 
@@ -171,7 +169,8 @@ const SecurePaymentForm = React.createClass( {
 				onSubmit={ this.handlePaymentBoxSubmit }
 				products={ this.props.products }
 				selectedSite={ this.props.selectedSite }
-				transactionStep={ this.props.transaction.step } />
+				transactionStep={ this.props.transaction.step }
+			/>
 		);
 	},
 
@@ -186,7 +185,8 @@ const SecurePaymentForm = React.createClass( {
 				selectedSite={ this.props.selectedSite }
 				onToggle={ this.selectPaymentBox }
 				onSubmit={ this.handlePaymentBoxSubmit }
-				transactionStep={ this.props.transaction.step } />
+				transactionStep={ this.props.transaction.step }
+			/>
 		);
 	},
 
@@ -198,14 +198,16 @@ const SecurePaymentForm = React.createClass( {
 				countriesList={ countriesListForPayments }
 				selectedSite={ this.props.selectedSite }
 				onToggle={ this.selectPaymentBox }
-				redirectTo={ this.props.redirectTo } />
+				redirectTo={ this.props.redirectTo }
+			/>
 		);
 	},
 
 	renderGetDotBlogNotice() {
-		const hasProductFromGetDotBlogSignup = find( this.props.cart.products, product => (
-			product.extra && product.extra.source === 'get-dot-blog-signup'
-		) );
+		const hasProductFromGetDotBlogSignup = find(
+			this.props.cart.products,
+			product => product.extra && product.extra.source === 'get-dot-blog-signup',
+		);
 
 		if ( this.state.visiblePaymentBox !== 'credit-card' || ! hasProductFromGetDotBlogSignup ) {
 			return;
@@ -213,8 +215,13 @@ const SecurePaymentForm = React.createClass( {
 
 		return (
 			<Notice icon="notice" showDismiss={ false }>
-				{ preventWidows( this.translate( 'You can reuse the payment information you entered on get.blog, ' +
-					'a WordPress.com service. Confirm your order below.' ), 4 ) }
+				{ preventWidows(
+					this.translate(
+						'You can reuse the payment information you entered on get.blog, ' +
+							'a WordPress.com service. Confirm your order below.',
+					),
+					4,
+				) }
 			</Notice>
 		);
 	},
@@ -252,7 +259,8 @@ const SecurePaymentForm = React.createClass( {
 					title={ this.translate( 'Checkout is not available' ) }
 					line={ this.translate( "We're hard at work on the issue. Please check back shortly." ) }
 					action={ this.translate( 'Back to Plans' ) }
-					actionURL={ '/plans/' + this.props.selectedSite.slug } />
+					actionURL={ '/plans/' + this.props.selectedSite.slug }
+				/>
 			);
 		}
 
@@ -262,8 +270,7 @@ const SecurePaymentForm = React.createClass( {
 				{ this.renderPaymentBox() }
 			</div>
 		);
-	}
+	},
 } );
 
 export default SecurePaymentForm;
-

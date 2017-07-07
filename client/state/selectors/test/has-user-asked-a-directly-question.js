@@ -13,7 +13,7 @@ describe( 'hasUserAskedADirectlyQuestion()', () => {
 	const questionData = deepFreeze( {
 		questionText: 'ABC',
 		name: '123',
-		email: 'fake@wordpress.com'
+		email: 'fake@wordpress.com',
 	} );
 
 	it( 'should be false when null', () => {

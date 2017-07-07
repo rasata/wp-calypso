@@ -7,7 +7,6 @@ var React = require( 'react' ),
 	i18n = require( 'i18n-calypso' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormLabel',
 
 	propTypes: {
@@ -16,12 +15,14 @@ module.exports = React.createClass( {
 
 	render: function() {
 		return (
-			<label { ...omit( this.props, 'className' ) } className={ classnames( this.props.className, 'form-label' ) } >
+			<label
+				{ ...omit( this.props, 'className' ) }
+				className={ classnames( this.props.className, 'form-label' ) }
+			>
 				{ this.props.children }
-				{ this.props.required && (
-					<small className="form-label__required">{ i18n.translate( 'Required' ) }</small>
-				) }
+				{ this.props.required &&
+					<small className="form-label__required">{ i18n.translate( 'Required' ) }</small> }
 			</label>
 		);
-	}
+	},
 } );

@@ -17,7 +17,7 @@ import { isItemBeingUploaded } from 'lib/media/utils';
  */
 const MediaStore = {
 	_media: {},
-	_pointers: {}
+	_pointers: {},
 };
 
 emitter( MediaStore );
@@ -143,7 +143,7 @@ MediaStore.dispatchToken = Dispatcher.register( function( payload ) {
 			}
 
 			receiveSingle( action.siteId, {
-				ID: action.id
+				ID: action.id,
 			} );
 
 			MediaStore.emit( 'change' );

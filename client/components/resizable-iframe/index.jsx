@@ -9,24 +9,17 @@ import { omit } from 'lodash';
 /**
  * Globals
  */
-const debug = debugFactory( 'calypso:resizable-iframe' ),
-	noop = () => {};
+const debug = debugFactory( 'calypso:resizable-iframe' ), noop = () => {};
 
 export default React.createClass( {
 	displayName: 'ResizableIframe',
 
 	propTypes: {
 		src: React.PropTypes.string,
-		width: React.PropTypes.oneOfType( [
-			React.PropTypes.string,
-			React.PropTypes.number
-		] ),
-		height: React.PropTypes.oneOfType( [
-			React.PropTypes.string,
-			React.PropTypes.number
-		] ),
+		width: React.PropTypes.oneOfType( [ React.PropTypes.string, React.PropTypes.number ] ),
+		height: React.PropTypes.oneOfType( [ React.PropTypes.string, React.PropTypes.number ] ),
 		onLoad: React.PropTypes.func,
-		onResize: React.PropTypes.func
+		onResize: React.PropTypes.func,
 	},
 
 	getInitialState: function() {
@@ -36,7 +29,7 @@ export default React.createClass( {
 	getDefaultProps: function() {
 		return {
 			onLoad: noop,
-			onResize: noop
+			onResize: noop,
 		};
 	},
 
@@ -175,7 +168,8 @@ export default React.createClass( {
 				{ ...omit( this.props, omitProps ) }
 				onLoad={ this.onLoad }
 				width={ this.props.width || this.state.width }
-				height={ this.props.height || this.state.height } />
+				height={ this.props.height || this.state.height }
+			/>
 		);
-	}
+	},
 } );

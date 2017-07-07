@@ -31,7 +31,7 @@ import {
 	PLUGIN_INSTALL_REQUEST_FAILURE,
 	PLUGIN_REMOVE_REQUEST,
 	PLUGIN_REMOVE_REQUEST_SUCCESS,
-	PLUGIN_REMOVE_REQUEST_FAILURE
+	PLUGIN_REMOVE_REQUEST_FAILURE,
 } from 'state/action-types';
 import {
 	ACTIVATE_PLUGIN,
@@ -40,7 +40,7 @@ import {
 	ENABLE_AUTOUPDATE_PLUGIN,
 	DISABLE_AUTOUPDATE_PLUGIN,
 	INSTALL_PLUGIN,
-	REMOVE_PLUGIN
+	REMOVE_PLUGIN,
 } from './constants';
 
 /**
@@ -56,7 +56,7 @@ const getPluginHandler = ( siteId, pluginId ) => {
 };
 
 export function activatePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: ACTIVATE_PLUGIN,
@@ -65,11 +65,11 @@ export function activatePlugin( siteId, plugin ) {
 		};
 		dispatch( { ...defaultAction, type: PLUGIN_ACTIVATE_REQUEST } );
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_ACTIVATE_REQUEST_SUCCESS, data } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			// This error means it's already active.
 			if ( error && error.error === 'activation_error' ) {
 				successCallback( plugin );
@@ -77,12 +77,15 @@ export function activatePlugin( siteId, plugin ) {
 			dispatch( { ...defaultAction, type: PLUGIN_ACTIVATE_REQUEST_FAILURE, error } );
 		};
 
-		return getPluginHandler( siteId, pluginId ).activate().then( successCallback ).catch( errorCallback );
+		return getPluginHandler( siteId, pluginId )
+			.activate()
+			.then( successCallback )
+			.catch( errorCallback );
 	};
 }
 
 export function deactivatePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: DEACTIVATE_PLUGIN,
@@ -91,11 +94,11 @@ export function deactivatePlugin( siteId, plugin ) {
 		};
 		dispatch( { ...defaultAction, type: PLUGIN_DEACTIVATE_REQUEST } );
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_DEACTIVATE_REQUEST_SUCCESS, data } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			// This error means it's already inactive.
 			if ( error && error.error === 'deactivation_error' ) {
 				successCallback( plugin );
@@ -103,12 +106,15 @@ export function deactivatePlugin( siteId, plugin ) {
 			dispatch( { ...defaultAction, type: PLUGIN_DEACTIVATE_REQUEST_FAILURE, error } );
 		};
 
-		return getPluginHandler( siteId, pluginId ).deactivate().then( successCallback ).catch( errorCallback );
+		return getPluginHandler( siteId, pluginId )
+			.deactivate()
+			.then( successCallback )
+			.catch( errorCallback );
 	};
 }
 
 export function updatePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		if ( ! plugin.update ) {
 			return Promise.reject( 'Error: Plugin already up-to-date.' );
 		}
@@ -121,20 +127,23 @@ export function updatePlugin( siteId, plugin ) {
 		};
 		dispatch( { ...defaultAction, type: PLUGIN_UPDATE_REQUEST } );
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_UPDATE_REQUEST_SUCCESS, data } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			dispatch( { ...defaultAction, type: PLUGIN_UPDATE_REQUEST_FAILURE, error } );
 		};
 
-		return getPluginHandler( siteId, pluginId ).updateVersion().then( successCallback ).catch( errorCallback );
+		return getPluginHandler( siteId, pluginId )
+			.updateVersion()
+			.then( successCallback )
+			.catch( errorCallback );
 	};
 }
 
 export function enableAutoupdatePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: ENABLE_AUTOUPDATE_PLUGIN,
@@ -143,23 +152,26 @@ export function enableAutoupdatePlugin( siteId, plugin ) {
 		};
 		dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_ENABLE_REQUEST } );
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_ENABLE_REQUEST_SUCCESS, data } );
 			if ( data.update ) {
 				updatePlugin( siteId, data )( dispatch );
 			}
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_ENABLE_REQUEST_FAILURE, error } );
 		};
 
-		return getPluginHandler( siteId, pluginId ).enableAutoupdate().then( successCallback ).catch( errorCallback );
+		return getPluginHandler( siteId, pluginId )
+			.enableAutoupdate()
+			.then( successCallback )
+			.catch( errorCallback );
 	};
 }
 
 export function disableAutoupdatePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: DISABLE_AUTOUPDATE_PLUGIN,
@@ -168,20 +180,23 @@ export function disableAutoupdatePlugin( siteId, plugin ) {
 		};
 		dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_DISABLE_REQUEST } );
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_DISABLE_REQUEST_SUCCESS, data } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			dispatch( { ...defaultAction, type: PLUGIN_AUTOUPDATE_DISABLE_REQUEST_FAILURE, error } );
 		};
 
-		return getPluginHandler( siteId, pluginId ).disableAutoupdate().then( successCallback ).catch( errorCallback );
+		return getPluginHandler( siteId, pluginId )
+			.disableAutoupdate()
+			.then( successCallback )
+			.catch( errorCallback );
 	};
 }
 
 function installPluginHelper( siteId, plugin, isMainNetworkSite = false ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: INSTALL_PLUGIN,
@@ -206,11 +221,11 @@ function installPluginHelper( siteId, plugin, isMainNetworkSite = false ) {
 			return getPluginHandler( siteId, pluginData.id ).enableAutoupdate();
 		};
 
-		const successCallback = ( data ) => {
+		const successCallback = data => {
 			dispatch( { ...defaultAction, type: PLUGIN_INSTALL_REQUEST_SUCCESS, data } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			if ( error.name === 'PluginAlreadyInstalledError' ) {
 				if ( isMainNetworkSite ) {
 					return doUpdate( plugin )
@@ -258,7 +273,7 @@ export function installPluginOnMultisite( siteId, plugin ) {
 }
 
 export function removePlugin( siteId, plugin ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		const pluginId = plugin.id;
 		const defaultAction = {
 			action: REMOVE_PLUGIN,
@@ -289,7 +304,7 @@ export function removePlugin( siteId, plugin ) {
 			dispatch( { ...defaultAction, type: PLUGIN_REMOVE_REQUEST_SUCCESS } );
 		};
 
-		const errorCallback = ( error ) => {
+		const errorCallback = error => {
 			dispatch( { ...defaultAction, type: PLUGIN_REMOVE_REQUEST_FAILURE, error } );
 			return Promise.reject( error );
 		};
@@ -303,14 +318,14 @@ export function removePlugin( siteId, plugin ) {
 }
 
 export function fetchPlugins( siteIds ) {
-	return ( dispatch ) => {
-		return siteIds.map( ( siteId ) => {
+	return dispatch => {
+		return siteIds.map( siteId => {
 			const defaultAction = {
-				siteId
+				siteId,
 			};
 			dispatch( { ...defaultAction, type: PLUGINS_REQUEST } );
 
-			const receivePluginsDispatchSuccess = ( data ) => {
+			const receivePluginsDispatchSuccess = data => {
 				dispatch( { ...defaultAction, type: PLUGINS_RECEIVE } );
 				dispatch( { ...defaultAction, type: PLUGINS_REQUEST_SUCCESS, data: data.plugins } );
 
@@ -321,12 +336,16 @@ export function fetchPlugins( siteIds ) {
 				} );
 			};
 
-			const receivePluginsDispatchFail = ( error ) => {
+			const receivePluginsDispatchFail = error => {
 				dispatch( { ...defaultAction, type: PLUGINS_RECEIVE } );
 				dispatch( { ...defaultAction, type: PLUGINS_REQUEST_FAILURE, error } );
 			};
 
-			return wpcom.site( siteId ).pluginsList().then( receivePluginsDispatchSuccess ).catch( receivePluginsDispatchFail );
+			return wpcom
+				.site( siteId )
+				.pluginsList()
+				.then( receivePluginsDispatchSuccess )
+				.catch( receivePluginsDispatchFail );
 		} );
 	};
 }

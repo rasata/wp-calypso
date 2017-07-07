@@ -22,7 +22,7 @@ const user = userFactory();
  */
 
 export default function emailVerification( context, next ) {
-	let showVerifiedNotice = ( '1' === context.query.verified );
+	let showVerifiedNotice = '1' === context.query.verified;
 
 	if ( showVerifiedNotice ) {
 		user.signalVerification();
@@ -30,7 +30,9 @@ export default function emailVerification( context, next ) {
 			// TODO: unify these once translations catch up
 			let message = i18n.getLocaleSlug() === 'en'
 				? i18n.translate( 'Email confirmed!' )
-				: i18n.translate( "Email confirmed! Now that you've confirmed your email address you can publish posts on your blog." );
+				: i18n.translate(
+						"Email confirmed! Now that you've confirmed your email address you can publish posts on your blog.",
+					);
 			let notice = successNotice( message, { duration: 10000 } );
 			context.store.dispatch( notice );
 		}, 100 ); // A delay is needed here, because the notice state seems to be cleared upon page load

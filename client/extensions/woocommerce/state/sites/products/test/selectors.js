@@ -64,14 +64,14 @@ const loadedState = {
 						products,
 						totalPages: 3,
 						totalProducts: 30,
-					}
+					},
 				},
 				401: {
 					products: {
 						search: {
 							isLoading: {
 								1: true,
-							}
+							},
 						},
 						isLoading: {
 							1: true,

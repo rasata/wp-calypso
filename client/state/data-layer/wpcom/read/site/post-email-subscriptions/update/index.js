@@ -33,7 +33,7 @@ export function requestUpdatePostEmailSubscription( { dispatch, getState }, acti
 			body: buildBody( get( action, [ 'payload', 'deliveryFrequency' ] ) ),
 			onSuccess: actionWithRevert,
 			onFailure: actionWithRevert,
-		} )
+		} ),
 	);
 }
 
@@ -47,12 +47,12 @@ export function receiveUpdatePostEmailSubscription( store, action, next, respons
 export function receiveUpdatePostEmailSubscriptionError(
 	{ dispatch },
 	{ payload: { blogId }, meta: { previousState } },
-	next
- ) {
+	next,
+) {
 	dispatch(
 		errorNotice(
-			translate( 'Sorry, we had a problem updating that subscription. Please try again.' )
-		)
+			translate( 'Sorry, we had a problem updating that subscription. Please try again.' ),
+		),
 	);
 	next( updateNewPostEmailSubscription( blogId, previousState ) );
 }
@@ -62,7 +62,7 @@ export default {
 		dispatchRequest(
 			requestUpdatePostEmailSubscription,
 			receiveUpdatePostEmailSubscription,
-			receiveUpdatePostEmailSubscriptionError
+			receiveUpdatePostEmailSubscriptionError,
 		),
 	],
 };

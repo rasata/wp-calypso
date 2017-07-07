@@ -7,11 +7,7 @@ import { expect } from 'chai';
  * Internal dependencies
  */
 import reducer from '../edits-reducer';
-import {
-	clearProductEdits,
-	editProduct,
-	editProductAttribute,
-} from '../actions';
+import { clearProductEdits, editProduct, editProductAttribute } from '../actions';
 import {
 	createProduct,
 	updateProduct,
@@ -40,14 +36,20 @@ describe( 'edits-reducer', () => {
 
 	it( 'should modify "updates" on second edit', () => {
 		const product = { id: 1 };
-		const edits1 = reducer( undefined, editProduct( siteId, product, {
-			name: 'After first edit',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, product, {
+				name: 'After first edit',
+			} ),
+		);
 
-		const edits2 = reducer( undefined, editProduct( siteId, product, {
-			name: 'After second edit',
-			description: 'Description',
-		} ) );
+		const edits2 = reducer(
+			undefined,
+			editProduct( siteId, product, {
+				name: 'After second edit',
+				description: 'Description',
+			} ),
+		);
 
 		expect( edits1.updates[ 0 ].name ).to.eql( 'After first edit' );
 		expect( edits2.updates[ 0 ].name ).to.eql( 'After second edit' );
@@ -57,14 +59,20 @@ describe( 'edits-reducer', () => {
 
 	it( 'should create updates for more than one existing product', () => {
 		const product1 = { id: 1 };
-		const edits1 = reducer( undefined, editProduct( siteId, product1, {
-			name: 'First product',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, product1, {
+				name: 'First product',
+			} ),
+		);
 
 		const product2 = { id: 2 };
-		const edits2 = reducer( edits1, editProduct( siteId, product2, {
-			name: 'Second product',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProduct( siteId, product2, {
+				name: 'Second product',
+			} ),
+		);
 
 		expect( edits2.updates[ 0 ].id ).to.eql( 1 );
 		expect( edits2.updates[ 0 ].name ).to.eql( 'First product' );
@@ -73,9 +81,12 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should create "creates" on first edit', () => {
-		const edits = reducer( undefined, editProduct( siteId, null, {
-			name: 'A new product',
-		} ) );
+		const edits = reducer(
+			undefined,
+			editProduct( siteId, null, {
+				name: 'A new product',
+			} ),
+		);
 
 		expect( edits ).to.not.equal( null );
 		expect( edits.creates ).to.exist;
@@ -86,30 +97,42 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should modify "creates" on second edit', () => {
-		const edits1 = reducer( undefined, editProduct( siteId, null, {
-			name: 'After first edit',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, null, {
+				name: 'After first edit',
+			} ),
+		);
 
 		expect( edits1.creates[ 0 ].name ).to.eql( 'After first edit' );
 		expect( edits1.creates[ 0 ].description ).to.not.exist;
 
-		const edits2 = reducer( edits1, editProduct( siteId, edits1.creates[ 0 ], {
-			name: 'After second edit',
-			description: 'Description',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProduct( siteId, edits1.creates[ 0 ], {
+				name: 'After second edit',
+				description: 'Description',
+			} ),
+		);
 
 		expect( edits2.creates[ 0 ].name ).to.eql( 'After second edit' );
 		expect( edits2.creates[ 0 ].description ).to.eql( 'Description' );
 	} );
 
 	it( 'should create more than one new product', () => {
-		const edits1 = reducer( undefined, editProduct( siteId, null, {
-			name: 'First product',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, null, {
+				name: 'First product',
+			} ),
+		);
 
-		const edits2 = reducer( edits1, editProduct( siteId, null, {
-			name: 'Second product',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProduct( siteId, null, {
+				name: 'Second product',
+			} ),
+		);
 
 		expect( edits2.creates[ 0 ].id ).to.exist;
 		expect( edits2.creates[ 0 ].id.placeholder ).to.exist;
@@ -122,9 +145,12 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should create new product in "creates" when editing attribute the first time', () => {
-		const edits = reducer( undefined, editProductAttribute( siteId, null, null, {
-			name: 'New Attribute',
-		} ) );
+		const edits = reducer(
+			undefined,
+			editProductAttribute( siteId, null, null, {
+				name: 'New Attribute',
+			} ),
+		);
 
 		expect( edits ).to.not.equal( null );
 		expect( edits.creates ).to.exist;
@@ -133,16 +159,22 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should modify product in "creates" when editing attribute a second time', () => {
-		const edits1 = reducer( undefined, editProductAttribute( siteId, null, null, {
-			name: 'Edited once',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProductAttribute( siteId, null, null, {
+				name: 'Edited once',
+			} ),
+		);
 
 		let product = edits1.creates[ 0 ];
 		let attribute = product.attributes[ 0 ];
 
-		const edits2 = reducer( edits1, editProductAttribute( siteId, product, attribute, {
-			name: 'Edited twice',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProductAttribute( siteId, product, attribute, {
+				name: 'Edited twice',
+			} ),
+		);
 
 		product = edits2.creates[ 0 ];
 		attribute = product.attributes[ 0 ];
@@ -151,16 +183,22 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should create more than one attribute for a newly created product', () => {
-		const edits1 = reducer( undefined, editProductAttribute( siteId, null, null, {
-			name: 'Attribute One',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProductAttribute( siteId, null, null, {
+				name: 'Attribute One',
+			} ),
+		);
 
 		let product = edits1.creates[ 0 ];
 		let attribute1 = product.attributes[ 0 ];
 
-		const edits2 = reducer( edits1, editProductAttribute( siteId, product, null, {
-			name: 'Attribute Two',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProductAttribute( siteId, product, null, {
+				name: 'Attribute Two',
+			} ),
+		);
 
 		product = edits2.creates[ 0 ];
 		attribute1 = product.attributes[ 0 ];
@@ -174,9 +212,12 @@ describe( 'edits-reducer', () => {
 		let product = {
 			id: 1,
 		};
-		const edits = reducer( undefined, editProductAttribute( siteId, product, null, {
-			name: 'New Attribute',
-		} ) );
+		const edits = reducer(
+			undefined,
+			editProductAttribute( siteId, product, null, {
+				name: 'New Attribute',
+			} ),
+		);
 
 		expect( edits ).to.not.equal( null );
 		expect( edits.updates ).to.exist;
@@ -192,16 +233,22 @@ describe( 'edits-reducer', () => {
 		let product = {
 			id: 1,
 		};
-		const edits1 = reducer( undefined, editProductAttribute( siteId, product, null, {
-			name: 'Edited once',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProductAttribute( siteId, product, null, {
+				name: 'Edited once',
+			} ),
+		);
 
 		product = edits1.updates[ 0 ];
 		let attribute = product.attributes[ 0 ];
 
-		const edits2 = reducer( edits1, editProductAttribute( siteId, product, attribute, {
-			name: 'Edited twice',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProductAttribute( siteId, product, attribute, {
+				name: 'Edited twice',
+			} ),
+		);
 
 		product = edits2.updates[ 0 ];
 		attribute = product.attributes[ 0 ];
@@ -213,16 +260,22 @@ describe( 'edits-reducer', () => {
 		let product = {
 			id: 1,
 		};
-		const edits1 = reducer( undefined, editProductAttribute( siteId, product, null, {
-			name: 'Attribute One',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProductAttribute( siteId, product, null, {
+				name: 'Attribute One',
+			} ),
+		);
 
 		product = edits1.updates[ 0 ];
 		let attribute1 = product.attributes[ 0 ];
 
-		const edits2 = reducer( edits1, editProductAttribute( siteId, product, null, {
-			name: 'Attribute Two',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProductAttribute( siteId, product, null, {
+				name: 'Attribute Two',
+			} ),
+		);
 
 		product = edits2.updates[ 0 ];
 		attribute1 = product.attributes[ 0 ];
@@ -233,24 +286,33 @@ describe( 'edits-reducer', () => {
 	} );
 
 	it( 'should set currentlyEditingId when editing a new product', () => {
-		const edits1 = reducer( undefined, editProduct( siteId, null, {
-			name: 'A new product',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, null, {
+				name: 'A new product',
+			} ),
+		);
 
 		expect( edits1.currentlyEditingId ).to.eql( edits1.creates[ 0 ].id );
 
-		const edits2 = reducer( edits1, editProduct( siteId, null, {
-			name: 'Second product',
-		} ) );
+		const edits2 = reducer(
+			edits1,
+			editProduct( siteId, null, {
+				name: 'Second product',
+			} ),
+		);
 
 		expect( edits2.currentlyEditingId ).to.eql( edits2.creates[ 1 ].id );
 	} );
 
 	it( 'should set currentlyEditingId when editing an existing product', () => {
 		const product1 = { id: 1 };
-		const edits1 = reducer( undefined, editProduct( siteId, product1, {
-			name: 'First product',
-		} ) );
+		const edits1 = reducer(
+			undefined,
+			editProduct( siteId, product1, {
+				name: 'First product',
+			} ),
+		);
 		expect( edits1.currentlyEditingId ).to.eql( edits1.updates[ 0 ].id );
 	} );
 
@@ -281,16 +343,12 @@ describe( 'edits-reducer', () => {
 
 		const product1 = {
 			id: { placeholder: 'product_1' },
-			categories: [
-				{ id: { placeholder: 'productCategory_1' } },
-			],
+			categories: [ { id: { placeholder: 'productCategory_1' } } ],
 		};
 
 		const product2 = {
 			id: 42,
-			categories: [
-				{ id: { placeholder: 'productCategory_1' } },
-			],
+			categories: [ { id: { placeholder: 'productCategory_1' } } ],
 		};
 
 		const edits1 = {

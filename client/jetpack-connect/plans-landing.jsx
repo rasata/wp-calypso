@@ -49,7 +49,7 @@ class PlansLanding extends Component {
 		}
 	}
 
-	storeSelectedPlan = ( cartItem ) => {
+	storeSelectedPlan = cartItem => {
 		const { url } = this.props;
 		let redirectUrl = CALYPSO_JETPACK_CONNECT;
 
@@ -58,20 +58,17 @@ class PlansLanding extends Component {
 		}
 
 		this.props.recordTracksEvent( 'calypso_jpc_plans_store_plan', {
-			plan: cartItem ? cartItem.product_slug : 'free'
+			plan: cartItem ? cartItem.product_slug : 'free',
 		} );
 		this.props.selectPlanInAdvance( cartItem ? cartItem.product_slug : 'free', '*' );
 
 		setTimeout( () => {
 			page.redirect( redirectUrl );
 		}, 25 );
-	}
+	};
 
 	render() {
-		const {
-			basePlansPath,
-			interval,
-		} = this.props;
+		const { basePlansPath, interval } = this.props;
 		return (
 			<div>
 				<QueryPlans />
@@ -101,5 +98,5 @@ export default connect(
 	{
 		recordTracksEvent,
 		selectPlanInAdvance,
-	}
+	},
 )( PlansLanding );

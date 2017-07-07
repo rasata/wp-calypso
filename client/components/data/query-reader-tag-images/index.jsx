@@ -35,22 +35,25 @@ class QueryReaderTagImages extends Component {
 
 QueryReaderTagImages.propTypes = {
 	shouldRequestTagImages: PropTypes.bool,
-	requestTagImages: PropTypes.func
+	requestTagImages: PropTypes.func,
 };
 
 QueryReaderTagImages.defaultProps = {
-	requestTagImages: () => {}
+	requestTagImages: () => {},
 };
 
 export default connect(
 	( state, ownProps ) => {
 		return {
-			shouldRequestTagImages: shouldRequestTagImages( state, ownProps.tag )
+			shouldRequestTagImages: shouldRequestTagImages( state, ownProps.tag ),
 		};
 	},
-	( dispatch ) => {
-		return bindActionCreators( {
-			requestTagImages
-		}, dispatch );
-	}
+	dispatch => {
+		return bindActionCreators(
+			{
+				requestTagImages,
+			},
+			dispatch,
+		);
+	},
 )( QueryReaderTagImages );

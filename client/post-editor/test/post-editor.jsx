@@ -18,11 +18,11 @@ describe( 'PostEditor', function() {
 	const defaultProps = {
 		translate: string => string,
 		markSaved: () => {},
-		markChanged: () => {}
+		markChanged: () => {},
 	};
 
 	useFakeDom();
-	useSandbox( ( newSandbox ) => sandbox = newSandbox );
+	useSandbox( newSandbox => sandbox = newSandbox );
 	useMockery();
 
 	before( () => {
@@ -31,7 +31,7 @@ describe( 'PostEditor', function() {
 		const MOCK_COMPONENT = React.createClass( {
 			render: function() {
 				return null;
-			}
+			},
 		} );
 
 		mockery.registerSubstitute( 'matches-selector', 'component-matches-selector' );
@@ -65,13 +65,13 @@ describe( 'PostEditor', function() {
 		mockery.registerMock( 'lib/preferences/actions', { set() {} } );
 		mockery.registerMock( 'lib/wp', {
 			me: () => ( {
-				get: noop
+				get: noop,
 			} ),
-			undocumented: noop
+			undocumented: noop,
 		} );
 		// TODO: REDUX - add proper tests when whole post-editor is reduxified
 		mockery.registerMock( 'react-redux', {
-			connect: () => ( component ) => component
+			connect: () => component => component,
 		} );
 
 		PostEditStore = require( 'lib/posts/post-edit-store' );
@@ -85,10 +85,7 @@ describe( 'PostEditor', function() {
 	describe( 'onEditedPostChange', function() {
 		it( 'should clear content when store state transitions to isNew()', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const stub = sandbox.stub( PostEditStore, 'isNew' );
@@ -101,10 +98,7 @@ describe( 'PostEditor', function() {
 
 		it( 'should not clear content when store state already isNew()', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const stub = sandbox.stub( PostEditStore, 'isNew' );
@@ -117,10 +111,7 @@ describe( 'PostEditor', function() {
 
 		it( 'should clear content when loading', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const stub = sandbox.stub( PostEditStore, 'isLoading' );
@@ -132,16 +123,13 @@ describe( 'PostEditor', function() {
 
 		it( 'should set content after load', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const content = 'loaded post';
 			const stub = sandbox.stub( PostEditStore, 'get' );
 			stub.returns( {
-				content: content
+				content: content,
 			} );
 			tree.editor.setEditorContent = sandbox.spy();
 			tree.setState( { isLoading: true } );
@@ -151,16 +139,13 @@ describe( 'PostEditor', function() {
 
 		it( 'a normal content change should not clear content', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const content = 'new content';
 			const stub = sandbox.stub( PostEditStore, 'get' );
 			stub.returns( {
-				content: content
+				content: content,
 			} );
 			tree.editor.setEditorContent = sandbox.spy();
 			tree.setState( { post: { content: 'old content' } } );
@@ -171,10 +156,7 @@ describe( 'PostEditor', function() {
 
 		it( 'is a copy and it should set the copied content', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const content = 'copied content';
@@ -194,10 +176,7 @@ describe( 'PostEditor', function() {
 
 		it( 'should not set the copied content more than once', function() {
 			const tree = TestUtils.renderIntoDocument(
-				<PostEditor
-					preferences={ {} }
-					{ ...defaultProps }
-				/>
+				<PostEditor preferences={ {} } { ...defaultProps } />,
 			);
 
 			const content = 'copied content';

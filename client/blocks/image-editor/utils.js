@@ -1,10 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	indexOf,
-	get
-} from 'lodash';
+import { indexOf, get } from 'lodash';
 
 /**
  * Internal dependencies

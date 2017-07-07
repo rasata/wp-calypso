@@ -43,7 +43,7 @@ const PluginsBrowser = React.createClass( {
 
 		if ( this.props.search && this.props.searchTitle ) {
 			this.props.recordTracksEvent( 'calypso_plugins_search_noresults_recommendations_show', {
-				search_query: this.props.search
+				search_query: this.props.search,
 			} );
 		}
 	},
@@ -72,7 +72,11 @@ const PluginsBrowser = React.createClass( {
 			doSearch = false;
 		}
 
-		if ( this.state.fullLists.search && this.state.fullLists.search.list && this.state.fullLists.search.list.length < 10 ) {
+		if (
+			this.state.fullLists.search &&
+			this.state.fullLists.search.list &&
+			this.state.fullLists.search.list.length < 10
+		) {
 			doSearch = false;
 		}
 
@@ -84,8 +88,7 @@ const PluginsBrowser = React.createClass( {
 	},
 
 	getPluginsLists( search ) {
-		const shortLists = {},
-			fullLists = {};
+		const shortLists = {}, fullLists = {};
 		this.visibleCategories.forEach( category => {
 			shortLists[ category ] = PluginsListStore.getShortList( category );
 			fullLists[ category ] = PluginsListStore.getFullList( category );
@@ -94,7 +97,7 @@ const PluginsBrowser = React.createClass( {
 		return {
 			accessError: pluginsAccessControl.hasRestrictedAccess(),
 			shortLists: shortLists,
-			fullLists: fullLists
+			fullLists: fullLists,
 		};
 	},
 
@@ -121,64 +124,82 @@ const PluginsBrowser = React.createClass( {
 			case 'new':
 				return this.translate( 'New', { context: 'Category description for the plugin browser.' } );
 			case 'popular':
-				return this.translate( 'Popular', { context: 'Category description for the plugin browser.' } );
+				return this.translate( 'Popular', {
+					context: 'Category description for the plugin browser.',
+				} );
 			case 'featured':
-				return this.translate( 'Featured', { context: 'Category description for the plugin browser.' } );
+				return this.translate( 'Featured', {
+					context: 'Category description for the plugin browser.',
+				} );
 		}
 	},
 
 	getFullListView( category ) {
-		const isFetching = this.state.fullLists[ category ] ? !! this.state.fullLists[ category ].fetching : true;
+		const isFetching = this.state.fullLists[ category ]
+			? !! this.state.fullLists[ category ].fetching
+			: true;
 		if ( this.getPluginsFullList( category ).length > 0 || isFetching ) {
-			return <PluginsBrowserList
-				plugins={ this.getPluginsFullList( category ) }
-				listName={ category }
-				title={ this.translateCategory( category ) }
-				site={ this.props.site }
-				showPlaceholders={ isFetching }
-				currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() } />;
+			return (
+				<PluginsBrowserList
+					plugins={ this.getPluginsFullList( category ) }
+					listName={ category }
+					title={ this.translateCategory( category ) }
+					site={ this.props.site }
+					showPlaceholders={ isFetching }
+					currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() }
+				/>
+			);
 		}
 	},
 
 	getSearchListView( searchTerm ) {
 		const isFetching = this.state.fullLists.search ? !! this.state.fullLists.search.fetching : true;
 		if ( this.getPluginsFullList( 'search' ).length > 0 || isFetching ) {
-			const searchTitle = this.props.searchTitle || this.translate( 'Results for: %(searchTerm)s', {
-				textOnly: true,
-				args: {
-					searchTerm
-				}
-			} );
-			return <PluginsBrowserList
-				plugins={ this.getPluginsFullList( 'search' ) }
-				listName={ searchTerm }
-				title={ searchTitle }
-				site={ this.props.site }
-				showPlaceholders={ isFetching }
-				currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() } />;
+			const searchTitle =
+				this.props.searchTitle ||
+				this.translate( 'Results for: %(searchTerm)s', {
+					textOnly: true,
+					args: {
+						searchTerm,
+					},
+				} );
+			return (
+				<PluginsBrowserList
+					plugins={ this.getPluginsFullList( 'search' ) }
+					listName={ searchTerm }
+					title={ searchTitle }
+					site={ this.props.site }
+					showPlaceholders={ isFetching }
+					currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() }
+				/>
+			);
 		}
 		return (
 			<NoResults
-				text={
-					this.translate( 'No plugins match your search for {{searchTerm/}}.', {
-						textOnly: true,
-						components: { searchTerm: <em>{ searchTerm }</em> }
-					} )
-				} />
+				text={ this.translate( 'No plugins match your search for {{searchTerm/}}.', {
+					textOnly: true,
+					components: { searchTerm: <em>{ searchTerm }</em> },
+				} ) }
+			/>
 		);
 	},
 
 	getPluginSingleListView( category ) {
 		const listLink = '/plugins/browse/' + category + '/';
-		return <PluginsBrowserList
-			plugins={ this.getPluginsShortList( category ) }
-			listName={ category }
-			title={ this.translateCategory( category ) }
-			site={ this.props.site }
-			expandedListLink={ this.getPluginsFullList( category ).length > this._SHORT_LIST_LENGTH ? listLink : false }
-			size={ this._SHORT_LIST_LENGTH }
-			showPlaceholders={ this.state.fullLists[ category ].fetching !== false }
-			currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() } />;
+		return (
+			<PluginsBrowserList
+				plugins={ this.getPluginsShortList( category ) }
+				listName={ category }
+				title={ this.translateCategory( category ) }
+				site={ this.props.site }
+				expandedListLink={
+					this.getPluginsFullList( category ).length > this._SHORT_LIST_LENGTH ? listLink : false
+				}
+				size={ this._SHORT_LIST_LENGTH }
+				showPlaceholders={ this.state.fullLists[ category ].fetching !== false }
+				currentSites={ this.props.sites.getSelectedOrAllJetpackCanManage() }
+			/>
+		);
 	},
 
 	getShortListsView() {
@@ -201,7 +222,8 @@ const PluginsBrowser = React.createClass( {
 					initialValue={ this.props.search }
 					placeholder={ this.translate( 'Search Plugins' ) }
 					delaySearch={ true }
-					analyticsGroup="PluginsBrowser" />
+					analyticsGroup="PluginsBrowser"
+				/>
 			);
 		}
 
@@ -212,41 +234,45 @@ const PluginsBrowser = React.createClass( {
 				initialValue={ this.props.search }
 				placeholder={ this.translate( 'Search Plugins' ) }
 				delaySearch={ true }
-				analyticsGroup="PluginsBrowser" />
+				analyticsGroup="PluginsBrowser"
+			/>
 		);
 	},
 
 	getNavigationBar() {
 		const site = this.props.site ? '/' + this.props.site : '';
-		return <SectionNav selectedText={ this.translate( 'Category', { context: 'Category of plugins to be filtered by' } ) }>
-			<NavTabs label="Category">
-				<NavItem
-					path={ '/plugins/browse' + site }
-					selected={ false }
-				>
-					{ this.translate( 'All', { context: 'Filter all plugins' } ) }
-				</NavItem>
-				<NavItem
-					path={ '/plugins/browse/featured' + site }
-					selected={ this.props.path === ( '/plugins/browse/featured' + site ) }
-				>
-					{ this.translate( 'Featured', { context: 'Filter featured plugins' } ) }
-				</NavItem>
-				<NavItem
-					path={ '/plugins/browse/popular' + site }
-					selected={ this.props.path === ( '/plugins/browse/popular' + site ) }
-				>
-					{ this.translate( 'Popular', { context: 'Filter popular plugins' } ) }
-				</NavItem>
-				<NavItem
-					path={ '/plugins/browse/new' + site }
-					selected={ this.props.path === ( '/plugins/browse/new' + site ) }
-				>
-					{ this.translate( 'New', { context: 'Filter new plugins' } ) }
-				</NavItem>
-			</NavTabs>
-			{ this.getSearchBox( true ) }
-		</SectionNav>;
+		return (
+			<SectionNav
+				selectedText={ this.translate( 'Category', {
+					context: 'Category of plugins to be filtered by',
+				} ) }
+			>
+				<NavTabs label="Category">
+					<NavItem path={ '/plugins/browse' + site } selected={ false }>
+						{ this.translate( 'All', { context: 'Filter all plugins' } ) }
+					</NavItem>
+					<NavItem
+						path={ '/plugins/browse/featured' + site }
+						selected={ this.props.path === '/plugins/browse/featured' + site }
+					>
+						{ this.translate( 'Featured', { context: 'Filter featured plugins' } ) }
+					</NavItem>
+					<NavItem
+						path={ '/plugins/browse/popular' + site }
+						selected={ this.props.path === '/plugins/browse/popular' + site }
+					>
+						{ this.translate( 'Popular', { context: 'Filter popular plugins' } ) }
+					</NavItem>
+					<NavItem
+						path={ '/plugins/browse/new' + site }
+						selected={ this.props.path === '/plugins/browse/new' + site }
+					>
+						{ this.translate( 'New', { context: 'Filter new plugins' } ) }
+					</NavItem>
+				</NavTabs>
+				{ this.getSearchBox( true ) }
+			</SectionNav>
+		);
 	},
 
 	getPageHeaderView() {
@@ -266,11 +292,14 @@ const PluginsBrowser = React.createClass( {
 	},
 
 	getMockPluginItems() {
-		return <PluginsBrowserList
-			plugins={ this.getPluginsShortList( 'popular' ) }
-			listName={ 'Plugins' }
-			title={ this.translate( 'Popular Plugins' ) }
-			size={ 12 } />;
+		return (
+			<PluginsBrowserList
+				plugins={ this.getPluginsShortList( 'popular' ) }
+				listName={ 'Plugins' }
+				title={ this.translate( 'Popular Plugins' ) }
+				size={ 12 }
+			/>
+		);
 	},
 
 	renderDocumentHead() {
@@ -286,8 +315,7 @@ const PluginsBrowser = React.createClass( {
 					<EmptyContent { ...this.state.accessError } />
 					{ this.state.accessError.featureExample
 						? <FeatureExample>{ this.state.accessError.featureExample }</FeatureExample>
-						: null
-					}
+						: null }
 				</MainComponent>
 			);
 		}
@@ -299,11 +327,12 @@ const PluginsBrowser = React.createClass( {
 				<SidebarNavigation />
 				<JetpackManageErrorPage
 					template="optInManage"
-					title={ this.translate( 'Looking to manage this site\'s plugins?' ) }
+					title={ this.translate( "Looking to manage this site's plugins?" ) }
 					siteId={ selectedSite.ID }
 					section="plugins"
 					illustration="/calypso/images/jetpack/jetpack-manage.svg"
-					featureExample={ this.getMockPluginItems() } />
+					featureExample={ this.getMockPluginItems() }
+				/>
 			</MainComponent>
 		);
 	},
@@ -311,11 +340,10 @@ const PluginsBrowser = React.createClass( {
 	render() {
 		const { selectedSite } = this.props;
 
-		const cantManage = (
+		const cantManage =
 			selectedSite &&
 			this.props.isJetpackSite( selectedSite.ID ) &&
-			! this.props.canJetpackSiteManage( selectedSite.ID )
-		);
+			! this.props.canJetpackSiteManage( selectedSite.ID );
 
 		if ( ( this.state.accessError || cantManage ) && selectedSite ) {
 			return this.renderAccessError( selectedSite );
@@ -329,7 +357,7 @@ const PluginsBrowser = React.createClass( {
 				{ this.getPluginBrowserContent() }
 			</MainComponent>
 		);
-	}
+	},
 } );
 
 export default connect(
@@ -342,6 +370,6 @@ export default connect(
 		};
 	},
 	{
-		recordTracksEvent
-	}
+		recordTracksEvent,
+	},
 )( PluginsBrowser );

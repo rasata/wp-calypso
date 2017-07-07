@@ -26,9 +26,9 @@ export const billingTransactionsSchema = {
 					items: {
 						type: 'array',
 						items: {
-							type: 'object'
-						}
-					}
+							type: 'object',
+						},
+					},
 				},
 			},
 		},
@@ -49,5 +49,5 @@ export const billingTransactionsSchema = {
 				},
 			},
 		},
-	}
+	},
 };

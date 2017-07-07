@@ -66,7 +66,7 @@ export const getSitePlan = createSelector(
 		}
 		return plansBySiteId.data.filter( plan => plan.productSlug === productSlug ).shift();
 	},
-	( state, siteId ) => getPlansBySiteId( state, siteId )
+	( state, siteId ) => getPlansBySiteId( state, siteId ),
 );
 
 /**
@@ -77,18 +77,14 @@ export const getSitePlan = createSelector(
  * @param  {String}   productSlug   the plan product slug
  * @return {?Boolean}              true if a plan has a discount
  */
-export function isSitePlanDiscounted(
-	state,
-	siteId,
-	productSlug
-) {
+export function isSitePlanDiscounted( state, siteId, productSlug ) {
 	const plan = getSitePlan( state, siteId, productSlug );
 
 	if ( ! plan ) {
 		return null;
 	}
 
-	return ( get( plan, 'rawDiscount', -1 ) > 0 );
+	return get( plan, 'rawDiscount', -1 ) > 0;
 }
 
 /**
@@ -104,7 +100,7 @@ export function getPlanDiscountedRawPrice(
 	state,
 	siteId,
 	productSlug,
-	{ isMonthly = false } = {}
+	{ isMonthly = false } = {},
 ) {
 	const plan = getSitePlan( state, siteId, productSlug );
 
@@ -125,12 +121,7 @@ export function getPlanDiscountedRawPrice(
  * @param  {Boolean} isMonthly     if true, returns monthly price
  * @return {Number}                plan raw price
  */
-export function getSitePlanRawPrice(
-	state,
-	siteId,
-	productSlug,
-	{ isMonthly = false } = {}
-) {
+export function getSitePlanRawPrice( state, siteId, productSlug, { isMonthly = false } = {} ) {
 	const plan = getSitePlan( state, siteId, productSlug );
 
 	if ( get( plan, 'rawPrice', -1 ) < 0 ) {
@@ -152,21 +143,14 @@ export function getSitePlanRawPrice(
  * @param  {Boolean} isMonthly    if true, returns monthly price
  * @return {Number}               plan raw discount
  */
-export function getPlanRawDiscount(
-	state,
-	siteId,
-	productSlug,
-	{ isMonthly = false } = {}
-) {
+export function getPlanRawDiscount( state, siteId, productSlug, { isMonthly = false } = {} ) {
 	const plan = getSitePlan( state, siteId, productSlug );
 
 	if ( ! isSitePlanDiscounted( state, siteId, productSlug ) ) {
 		return null;
 	}
 
-	return isMonthly
-		? parseFloat( ( plan.rawDiscount / 12 ).toFixed( 2 ) )
-		: plan.rawDiscount;
+	return isMonthly ? parseFloat( ( plan.rawDiscount / 12 ).toFixed( 2 ) ) : plan.rawDiscount;
 }
 
 export function hasDomainCredit( state, siteId ) {

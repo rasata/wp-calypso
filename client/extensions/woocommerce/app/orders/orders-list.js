@@ -18,7 +18,7 @@ import {
 	areOrdersLoading,
 	areOrdersLoaded,
 	getOrders,
-	getTotalOrdersPages
+	getTotalOrdersPages,
 } from 'woocommerce/state/sites/orders/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import { getOrdersCurrentPage } from 'woocommerce/state/ui/orders/selectors';
@@ -42,12 +42,14 @@ class Orders extends Component {
 	}
 
 	componentWillReceiveProps( newProps ) {
-		if ( newProps.currentPage !== this.props.currentPage || newProps.siteId !== this.props.siteId ) {
+		if (
+			newProps.currentPage !== this.props.currentPage || newProps.siteId !== this.props.siteId
+		) {
 			this.props.fetchOrders( newProps.siteId, newProps.currentPage );
 		}
 	}
 
-	getOrderStatus = ( status ) => {
+	getOrderStatus = status => {
 		const { translate } = this.props;
 		const classes = `orders__item-status is-${ status }`;
 		let paymentLabel;
@@ -82,11 +84,13 @@ class Orders extends Component {
 
 		return (
 			<span className={ classes }>
-				{ shippingLabel ? <span className="orders__shipping-status">{ shippingLabel }</span> : null }
+				{ shippingLabel
+					? <span className="orders__shipping-status">{ shippingLabel }</span>
+					: null }
 				<span className="orders__payment-status">{ paymentLabel }</span>
 			</span>
 		);
-	}
+	};
 
 	renderOrderItems = ( order, i ) => {
 		const { site } = this.props;
@@ -109,26 +113,25 @@ class Orders extends Component {
 				</TableItem>
 			</TableRow>
 		);
-	}
+	};
 
-	onPageClick = ( i ) => {
+	onPageClick = i => {
 		return () => {
 			this.props.setCurrentPage( this.props.siteId, i );
 		};
-	}
+	};
 
-	renderPageLink = ( i ) => {
+	renderPageLink = i => {
 		// We want this to start at 1, not 0
 		i++;
 		return (
 			<li key={ i }>
-				{ ( i !== this.props.currentPage )
+				{ i !== this.props.currentPage
 					? <Button compact borderless onClick={ this.onPageClick( i ) }>{ i }</Button>
-					: <span>{ i }</span>
-				}
+					: <span>{ i }</span> }
 			</li>
 		);
-	}
+	};
 
 	renderPagination = () => {
 		const { totalPages } = this.props;
@@ -142,16 +145,14 @@ class Orders extends Component {
 				{ times( totalPages, this.renderPageLink ) }
 			</ul>
 		);
-	}
+	};
 
 	render() {
 		const { orders, translate } = this.props;
 		if ( ! orders.length ) {
 			return (
 				<div className="orders__container">
-					<EmptyContent
-						title={ translate( 'Your orders will appear here as they come in.' ) }
-					/>
+					<EmptyContent title={ translate( 'Your orders will appear here as they come in.' ) } />
 				</div>
 			);
 		}
@@ -202,5 +203,5 @@ export default connect(
 			totalPages,
 		};
 	},
-	dispatch => bindActionCreators( { fetchOrders, setCurrentPage }, dispatch )
+	dispatch => bindActionCreators( { fetchOrders, setCurrentPage }, dispatch ),
 )( localize( Orders ) );

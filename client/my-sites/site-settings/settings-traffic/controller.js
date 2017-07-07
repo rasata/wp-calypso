@@ -14,7 +14,7 @@ export default {
 		renderWithReduxStore(
 			React.createElement( TrafficMain ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
-	}
+	},
 };

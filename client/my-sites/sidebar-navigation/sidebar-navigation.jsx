@@ -2,7 +2,7 @@
  * External dependencies
  */
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 
 /**
@@ -10,11 +10,10 @@ import { localize } from 'i18n-calypso';
  */
 import SidebarNavigation from 'components/sidebar-navigation';
 import SiteIcon from 'blocks/site-icon';
-import { getSelectedSite } from 'state/ui/selectors';
+import { getSelectedSite } from 'state/ui/selectors';
 
 const MySitesSidebarNavigation = ( { site, translate } ) => {
-	let currentSiteTitle = translate( 'All Sites' ),
-		allSitesClass = 'all-sites';
+	let currentSiteTitle = translate( 'All Sites' ), allSitesClass = 'all-sites';
 
 	if ( site ) {
 		currentSiteTitle = site.title;
@@ -25,14 +24,13 @@ const MySitesSidebarNavigation = ( { site, translate } ) => {
 		<SidebarNavigation
 			linkClassName={ allSitesClass }
 			sectionName="site"
-			sectionTitle={ currentSiteTitle }>
+			sectionTitle={ currentSiteTitle }
+		>
 			{ site && <SiteIcon site={ site } /> }
 		</SidebarNavigation>
 	);
 };
 
-export default connect(
-	( state ) => ( {
-		site: getSelectedSite( state )
-	} )
-)( localize( MySitesSidebarNavigation ) );
+export default connect( state => ( {
+	site: getSelectedSite( state ),
+} ) )( localize( MySitesSidebarNavigation ) );

@@ -4,15 +4,11 @@
 import { domainConnectAuthorize, notFoundError } from './controller';
 import { makeLayout } from 'controller';
 
-export default ( router ) => {
+export default router => {
 	router(
 		'/domain-connect/authorize/v2/domainTemplates/providers/:providerId/services/:serviceId/apply',
 		domainConnectAuthorize,
-		makeLayout
+		makeLayout,
 	);
-	router(
-		'/*',
-		notFoundError,
-		makeLayout
-	);
+	router( '/*', notFoundError, makeLayout );
 };

@@ -27,33 +27,61 @@ const LostPassword = React.createClass( {
 	render: function() {
 		return (
 			<p className="auth__lost-password">
-				<a href="https://wordpress.com/wp-login.php?action=lostpassword" target="_blank" rel="noopener noreferrer">
+				<a
+					href="https://wordpress.com/wp-login.php?action=lostpassword"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
 					{ this.translate( 'Lost your password?' ) }
 				</a>
 			</p>
 		);
-	}
+	},
 } );
 
 const SelfHostedInstructions = React.createClass( {
-
 	render: function() {
 		return (
 			<div className="auth__self-hosted-instructions">
-				<a href="#" onClick={ this.props.onClickClose } className="auth__self-hosted-instructions-close"><Gridicon icon="cross" size={ 24 } /></a>
+				<a
+					href="#"
+					onClick={ this.props.onClickClose }
+					className="auth__self-hosted-instructions-close"
+				>
+					<Gridicon icon="cross" size={ 24 } />
+				</a>
 
 				<h2>{ this.translate( 'Add self-hosted site' ) }</h2>
-				<p>{ this.translate( 'By default when you sign into the WordPress.com app, you can edit blogs and sites hosted at WordPress.com' ) }</p>
-				<p>{ this.translate( 'If you\'d like to edit your self-hosted WordPress blog or site, you can do that by following these instructions:' ) }</p>
+				<p>
+					{ this.translate(
+						'By default when you sign into the WordPress.com app, you can edit blogs and sites hosted at WordPress.com',
+					) }
+				</p>
+				<p>
+					{ this.translate(
+						"If you'd like to edit your self-hosted WordPress blog or site, you can do that by following these instructions:",
+					) }
+				</p>
 
 				<ol>
-					<li><strong>{ this.translate( 'Install the Jetpack plugin.' ) }</strong><br /><a href="http://jetpack.me/install/">{ this.translate( 'Please follow these instructions to install Jetpack' ) }</a>.</li>
+					<li>
+						<strong>{ this.translate( 'Install the Jetpack plugin.' ) }</strong>
+						<br />
+						<a href="http://jetpack.me/install/">
+							{ this.translate( 'Please follow these instructions to install Jetpack' ) }
+						</a>
+						.
+					</li>
 					<li>{ this.translate( 'Connect Jetpack to WordPress.com.' ) }</li>
-					<li>{ this.translate( 'Now you can sign in to the app using the WordPress.com account Jetpack is connected to, and you can find your self-hosted site under the "My Sites" section.' ) }</li>
+					<li>
+						{ this.translate(
+							'Now you can sign in to the app using the WordPress.com account Jetpack is connected to, and you can find your self-hosted site under the "My Sites" section.',
+						) }
+					</li>
 				</ol>
 			</div>
 		);
-	}
+	},
 } );
 
 module.exports = React.createClass( {
@@ -80,11 +108,14 @@ module.exports = React.createClass( {
 	},
 
 	getInitialState: function() {
-		return Object.assign( {
-			login: '',
-			password: '',
-			auth_code: ''
-		}, AuthStore.get() );
+		return Object.assign(
+			{
+				login: '',
+				password: '',
+				auth_code: '',
+			},
+			AuthStore.get(),
+		);
 	},
 
 	submitForm: function( event ) {
@@ -117,8 +148,8 @@ module.exports = React.createClass( {
 		return this.hasLoginDetails();
 	},
 
-	toggleSelfHostedInstructions: function () {
-		var isShowing = !this.state.showInstructions;
+	toggleSelfHostedInstructions: function() {
+		var isShowing = ! this.state.showInstructions;
 		this.setState( { showInstructions: isShowing } );
 	},
 
@@ -132,14 +163,15 @@ module.exports = React.createClass( {
 					<form className="auth__form" onSubmit={ this.submitForm }>
 						<FormFieldset>
 							<div className="auth__input-wrapper">
-								<Gridicon icon="user"/>
+								<Gridicon icon="user" />
 								<FormTextInput
 									name="login"
 									ref="login"
 									disabled={ requires2fa || inProgress }
 									placeholder={ this.translate( 'Username or email address' ) }
 									onFocus={ this.recordFocusEvent( 'Username or email address' ) }
-									valueLink={ this.linkState( 'login' ) } />
+									valueLink={ this.linkState( 'login' ) }
+								/>
 							</div>
 							<div className="auth__input-wrapper">
 								<Gridicon icon="lock" />
@@ -151,7 +183,8 @@ module.exports = React.createClass( {
 									onFocus={ this.recordFocusEvent( 'Password' ) }
 									hideToggle={ requires2fa }
 									submitting={ inProgress }
-									valueLink={ this.linkState( 'password' ) } />
+									valueLink={ this.linkState( 'password' ) }
+								/>
 							</div>
 							{ requires2fa &&
 								<FormFieldset>
@@ -162,29 +195,43 @@ module.exports = React.createClass( {
 										disabled={ inProgress }
 										placeholder={ this.translate( 'Verification code' ) }
 										onFocus={ this.recordFocusEvent( 'Verification code' ) }
-										valueLink={ this.linkState( 'auth_code' ) } />
-								</FormFieldset>
-							}
+										valueLink={ this.linkState( 'auth_code' ) }
+									/>
+								</FormFieldset> }
 						</FormFieldset>
 						<FormButtonsBar>
-							<FormButton disabled={ ! this.canSubmitForm() } onClick={ this.recordClickEvent( 'Sign in' ) } >
+							<FormButton
+								disabled={ ! this.canSubmitForm() }
+								onClick={ this.recordClickEvent( 'Sign in' ) }
+							>
 								{ requires2fa ? this.translate( 'Verify' ) : this.translate( 'Sign in' ) }
 							</FormButton>
 						</FormButtonsBar>
 						{ ! requires2fa && <LostPassword /> }
-						{ errorMessage && <Notice text={ errorMessage } status={ errorLevel } showDismiss={ false } /> }
-						{ requires2fa && <AuthCodeButton username={ this.state.login } password={ this.state.password } /> }
+						{ errorMessage &&
+							<Notice text={ errorMessage } status={ errorLevel } showDismiss={ false } /> }
+						{ requires2fa &&
+							<AuthCodeButton username={ this.state.login } password={ this.state.password } /> }
 					</form>
-					<a className="auth__help" target="_blank" rel="noopener noreferrer" title={ this.translate( 'Visit the WordPress.com support site for help' ) } href="https://en.support.wordpress.com/">
+					<a
+						className="auth__help"
+						target="_blank"
+						rel="noopener noreferrer"
+						title={ this.translate( 'Visit the WordPress.com support site for help' ) }
+						href="https://en.support.wordpress.com/"
+					>
 						<Gridicon icon="help" />
 					</a>
 					<div className="auth__links">
-						<a href="#" onClick={ this.toggleSelfHostedInstructions }>{ this.translate( 'Add self-hosted site' ) }</a>
+						<a href="#" onClick={ this.toggleSelfHostedInstructions }>
+							{ this.translate( 'Add self-hosted site' ) }
+						</a>
 						<a href={ config( 'signup_url' ) }>{ this.translate( 'Create account' ) }</a>
 					</div>
-					{ showInstructions && <SelfHostedInstructions onClickClose={ this.toggleSelfHostedInstructions } /> }
+					{ showInstructions &&
+						<SelfHostedInstructions onClickClose={ this.toggleSelfHostedInstructions } /> }
 				</div>
 			</Main>
 		);
-	}
+	},
 } );

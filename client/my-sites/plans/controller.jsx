@@ -26,7 +26,7 @@ export default {
 				/>
 			</CheckoutData>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -56,5 +56,5 @@ export default {
 		}
 
 		return page.redirect( '/plans' );
-	}
+	},
 };

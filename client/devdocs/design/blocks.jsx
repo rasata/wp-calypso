@@ -74,7 +74,6 @@ import ReaderShare from 'blocks/reader-share/docs/example';
 import Login from 'blocks/login/docs/example';
 
 export default React.createClass( {
-
 	displayName: 'AppComponents',
 
 	getInitialState() {
@@ -92,18 +91,16 @@ export default React.createClass( {
 	render() {
 		return (
 			<Main className="design">
-				{
-					this.props.component
+				{ this.props.component
 					? <HeaderCake onClick={ this.backToComponents } backText="All Blocks">
-						{ slugToCamelCase( this.props.component ) }
-					</HeaderCake>
+							{ slugToCamelCase( this.props.component ) }
+						</HeaderCake>
 					: <SearchCard
-						onSearch={ this.onSearch }
-						initialValue={ this.state.filter }
-						placeholder="Search blocks…"
-						analyticsGroup="Docs">
-					</SearchCard>
-				}
+							onSearch={ this.onSearch }
+							initialValue={ this.state.filter }
+							placeholder="Search blocks…"
+							analyticsGroup="Docs"
+						/> }
 				<Collection
 					component={ this.props.component }
 					filter={ this.state.filter }
@@ -166,5 +163,5 @@ export default React.createClass( {
 				</Collection>
 			</Main>
 		);
-	}
+	},
 } );

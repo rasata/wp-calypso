@@ -18,7 +18,7 @@ describe( 'reducer', () => {
 		const siteId = 123;
 		const action = {
 			type: WOOCOMMERCE_SHIPPING_ZONES_REQUEST,
-			siteId
+			siteId,
 		};
 
 		const newSiteData = reducer( {}, action );
@@ -27,10 +27,7 @@ describe( 'reducer', () => {
 
 	it( 'should store data from the action', () => {
 		const siteId = 123;
-		const zones = [
-			{ id: 0, name: 'Rest of the World' },
-			{ id: 1, name: 'USA' },
-		];
+		const zones = [ { id: 0, name: 'Rest of the World' }, { id: 1, name: 'USA' } ];
 		const action = {
 			type: WOOCOMMERCE_SHIPPING_ZONES_REQUEST_SUCCESS,
 			siteId,

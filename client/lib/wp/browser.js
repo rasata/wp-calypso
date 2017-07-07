@@ -32,14 +32,17 @@ if ( config.isEnabled( 'oauth' ) ) {
 	wpcom = wpcomUndocumented( requestHandler );
 
 	// Upgrade to "access all users blogs" mode
-	wpcom.request( {
-		metaAPI: { accessAllUsersBlogs: true }
-	}, function( error ) {
-		if ( error ) {
-			throw error;
-		}
-		debug( 'Proxy now running in "access all user\'s blogs" mode' );
-	} );
+	wpcom.request(
+		{
+			metaAPI: { accessAllUsersBlogs: true },
+		},
+		function( error ) {
+			if ( error ) {
+				throw error;
+			}
+			debug( 'Proxy now running in "access all user\'s blogs" mode' );
+		},
+	);
 }
 
 if ( addSyncHandlerWrapper ) {

@@ -17,7 +17,7 @@ import {
 	ThumbnailSizeDimensions,
 	GalleryColumnedTypes,
 	GallerySizeableTypes,
-	GalleryDefaultAttrs
+	GalleryDefaultAttrs,
 } from './constants';
 import Shortcode from 'lib/shortcode';
 import versionCompare from 'lib/version-compare';
@@ -68,7 +68,7 @@ const MediaUtils = {
 
 		if ( options.maxWidth ) {
 			return resize( media.URL, {
-				w: options.maxWidth
+				w: options.maxWidth,
 			} );
 		}
 
@@ -131,8 +131,7 @@ const MediaUtils = {
 	 * @return {string}       The MIME type prefix
 	 */
 	getMimePrefix: function( media ) {
-		var mimeType = MediaUtils.getMimeType( media ),
-			mimePrefixMatch;
+		var mimeType = MediaUtils.getMimeType( media ), mimePrefixMatch;
 
 		if ( ! mimeType ) {
 			return;
@@ -235,7 +234,9 @@ const MediaUtils = {
 	 * @return {Boolean}      Site allowed file types are accurate
 	 */
 	isSiteAllowedFileTypesToBeTrusted: function( site ) {
-		return ! site || ! site.jetpack || versionCompare( site.options.jetpack_version, '3.8.1', '>=' );
+		return (
+			! site || ! site.jetpack || versionCompare( site.options.jetpack_version, '3.8.1', '>=' )
+		);
 	},
 
 	/**
@@ -318,8 +319,12 @@ const MediaUtils = {
 			return null;
 		}
 
-		if ( site.jetpack && site.isModuleActive( 'videopress' ) && site.versionCompare( '4.5', '>=' ) &&
-				startsWith( MediaUtils.getMimeType( item ), 'video/' ) ) {
+		if (
+			site.jetpack &&
+			site.isModuleActive( 'videopress' ) &&
+			site.versionCompare( '4.5', '>=' ) &&
+			startsWith( MediaUtils.getMimeType( item ), 'video/' )
+		) {
 			return null;
 		}
 
@@ -359,9 +364,11 @@ const MediaUtils = {
 			minutes = Math.floor( duration / 60 ) % 60,
 			seconds = Math.floor( duration ) % 60;
 
-		let playtime = [ minutes, seconds ].map( function( value ) {
-			return ( '0' + value ).slice( -2 );
-		} ).join( ':' );
+		let playtime = [ minutes, seconds ]
+			.map( function( value ) {
+				return ( '0' + value ).slice( -2 );
+			} )
+			.join( ':' );
 
 		if ( hours ) {
 			playtime = [ hours, playtime ].join( ':' );
@@ -417,9 +424,12 @@ const MediaUtils = {
 
 		// gallery images are passed in as an array of objects
 		// in settings.items but we just need the IDs set to attrs.ids
-		attrs = Object.assign( {
-			ids: settings.items.map( ( item ) => item.ID ).join()
-		}, settings );
+		attrs = Object.assign(
+			{
+				ids: settings.items.map( item => item.ID ).join(),
+			},
+			settings,
+		);
 
 		delete attrs.items;
 
@@ -444,7 +454,7 @@ const MediaUtils = {
 		return Shortcode.stringify( {
 			tag: 'gallery',
 			type: 'single',
-			attrs: attrs
+			attrs: attrs,
 		} );
 	},
 
@@ -486,10 +496,12 @@ const MediaUtils = {
 						arr[ i ] = binStr.charCodeAt( i );
 					}
 
-					polyfillCallback( new Blob( [ arr ], {
-						type: polyfillType || 'image/png'
-					} ) );
-				}
+					polyfillCallback(
+						new Blob( [ arr ], {
+							type: polyfillType || 'image/png',
+						} ),
+					);
+				},
 			} );
 		}
 
@@ -523,8 +535,8 @@ const MediaUtils = {
 	 */
 	createTransientMedia( file ) {
 		const transientMedia = {
-			'transient': true,
-			ID: uniqueId( 'media-' )
+			transient: true,
+			ID: uniqueId( 'media-' ),
 		};
 
 		if ( 'string' === typeof file ) {
@@ -533,7 +545,7 @@ const MediaUtils = {
 				file: file,
 				title: path.basename( file ),
 				extension: MediaUtils.getFileExtension( file ),
-				mime_type: MediaUtils.getMimeType( file )
+				mime_type: MediaUtils.getMimeType( file ),
 			} );
 		} else if ( file.thumbnails ) {
 			// Generate from a file data object
@@ -563,12 +575,12 @@ const MediaUtils = {
 				mime_type: MediaUtils.getMimeType( file.fileName || fileContents ),
 				// Size is not an API media property, though can be useful for
 				// validation purposes if known
-				size: fileContents.size
+				size: fileContents.size,
 			} );
 		}
 
 		return transientMedia;
-	}
+	},
 };
 
 module.exports = MediaUtils;

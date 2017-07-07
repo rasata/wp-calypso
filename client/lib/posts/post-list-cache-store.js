@@ -19,14 +19,14 @@ const PostsListCache = {
 	get,
 	_reset: function() {
 		cache = {};
-	}
+	},
 };
 const debug = debugFactory( 'calypso:posts-list:cache' );
 
 function isStale( list ) {
 	const now = new Date().getTime();
 	const { timeSaved } = list;
-	return ( now - timeSaved ) > TTL_IN_MS;
+	return now - timeSaved > TTL_IN_MS;
 }
 
 function get( listKey ) {
@@ -89,10 +89,15 @@ function markDirty( post, oldStatus ) {
 	}
 
 	// clear api cache for records with matching site/status
-	cacheIndex.clearRecordsByParamFilter( ( reqParams ) => {
+	cacheIndex.clearRecordsByParamFilter( reqParams => {
 		const siteIdentifiers = affectedSites.slice( 0, -1 ); // remove the `false` value from above
-		const affectedPaths = [ '/me/posts', ...siteIdentifiers.map( status => `/sites/${status}/posts` ) ]; // construct matching api routes
-		const recordStatuses = ( reqParams.query && reqParams.query.status ) ? reqParams.query.status.split( ',' ) : [];
+		const affectedPaths = [
+			'/me/posts',
+			...siteIdentifiers.map( status => `/sites/${ status }/posts` ),
+		]; // construct matching api routes
+		const recordStatuses = reqParams.query && reqParams.query.status
+			? reqParams.query.status.split( ',' )
+			: [];
 		const intersectingStatuses = intersection( recordStatuses, affectedStatuses );
 		if ( affectedPaths.indexOf( reqParams.path ) === -1 ) {
 			return false;
@@ -105,12 +110,11 @@ function markDirty( post, oldStatus ) {
 }
 
 function isListKeyFresh( listKey ) {
-	return ( cache[ listKey ] && ! isStale( cache[ listKey ] ) && ! cache[ listKey ].dirty );
+	return cache[ listKey ] && ! isStale( cache[ listKey ] ) && ! cache[ listKey ].dirty;
 }
 
 PostsListCache.dispatchToken = Dispatcher.register( function( payload ) {
-	var action = payload.action,
-		PostListStore = require( './post-list-store-factory' )();
+	var action = payload.action, PostListStore = require( './post-list-store-factory' )();
 
 	Dispatcher.waitFor( [ PostListStore.dispatchToken ] );
 

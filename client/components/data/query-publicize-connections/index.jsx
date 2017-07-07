@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 /**
  * Internal dependencies
  */
-import { isFetchingConnections as isRequestingConnections } from 'state/sharing/publicize/selectors';
+import {
+	isFetchingConnections as isRequestingConnections,
+} from 'state/sharing/publicize/selectors';
 import { fetchConnections as requestConnections } from 'state/sharing/publicize/actions';
 import { getSelectedSiteId } from 'state/ui/selectors';
 
@@ -54,5 +56,5 @@ export default connect(
 	},
 	{
 		requestConnections,
-	}
+	},
 )( QueryPublicizeConnections );

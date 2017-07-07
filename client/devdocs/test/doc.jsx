@@ -19,8 +19,8 @@ describe( 'SingleDoc', () => {
 		mockery.registerMock( './service', {
 			fetch( path, cb ) {
 				cb( fetchResponse );
-			}
-		}	);
+			},
+		} );
 	} );
 
 	before( () => {
@@ -38,7 +38,7 @@ describe( 'SingleDoc', () => {
 			beforeEach( () => {
 				fetchResponse = '<div><p>something hello</p></div>';
 				renderedSingleDoc = TestUtils.renderIntoDocument(
-					<SingleDocClass path={ '/example' } term={ 'hello' } />
+					<SingleDocClass path={ '/example' } term={ 'hello' } />,
 				);
 			} );
 

@@ -122,8 +122,6 @@ module.exports = React.createClass( {
 	 * @return {object} jsx object
 	 */
 	render: function() {
-		return (
-			<div className="olark-chatbox__container" />
-		);
-	}
+		return <div className="olark-chatbox__container" />;
+	},
 } );

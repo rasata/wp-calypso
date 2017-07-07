@@ -12,7 +12,8 @@ import { localize } from 'i18n-calypso';
 import Card from 'components/card';
 import CardContent from './card/content';
 import PrivacyProtectionCardHeader from './privacy-protection-card/header';
-import DomainMainPlaceholder from 'my-sites/upgrades/domain-management/components/domain/main-placeholder';
+import DomainMainPlaceholder
+	from 'my-sites/upgrades/domain-management/components/domain/main-placeholder';
 import Header from 'my-sites/upgrades/domain-management/components/header';
 import { getProductDisplayCost } from 'state/products-list/selectors';
 import { getSelectedDomain } from 'lib/domains';
@@ -25,10 +26,7 @@ class PrivacyProtection extends Component {
 	static propTypes = {
 		domains: PropTypes.object.isRequired,
 		selectedDomainName: PropTypes.string.isRequired,
-		selectedSite: PropTypes.oneOfType( [
-			PropTypes.object,
-			PropTypes.bool
-		] ).isRequired,
+		selectedSite: PropTypes.oneOfType( [ PropTypes.object, PropTypes.bool ] ).isRequired,
 		translate: PropTypes.func.isRequired,
 	};
 
@@ -48,14 +46,19 @@ class PrivacyProtection extends Component {
 		}
 
 		if ( ! this.canAddPrivacyProtection() ) {
-			page( paths.domainManagementContactsPrivacy( this.props.selectedSite.slug, this.props.selectedDomainName ) );
+			page(
+				paths.domainManagementContactsPrivacy(
+					this.props.selectedSite.slug,
+					this.props.selectedDomainName,
+				),
+			);
 		}
 	}
 
 	canAddPrivacyProtection() {
 		const domain = getSelectedDomain( this.props );
 
-		return ( domain && domain.type === domainTypes.REGISTERED && ! domain.hasPrivacyProtection );
+		return domain && domain.type === domainTypes.REGISTERED && ! domain.hasPrivacyProtection;
 	}
 
 	render() {
@@ -69,27 +72,30 @@ class PrivacyProtection extends Component {
 
 				<Header
 					onClick={ this.goToPreviousSection }
-					selectedDomainName={ this.props.selectedDomainName }>
+					selectedDomainName={ this.props.selectedDomainName }
+				>
 					{ this.props.translate( 'Privacy Protection' ) }
 				</Header>
 
 				<Card className="privacy-protection-card">
-					{ this.props.displayCost && <PrivacyProtectionCardHeader
-						displayCost={ this.props.displayCost }
-						selectedDomainName={ this.props.selectedDomainName }
-						selectedSite={ this.props.selectedSite } /> }
+					{ this.props.displayCost &&
+						<PrivacyProtectionCardHeader
+							displayCost={ this.props.displayCost }
+							selectedDomainName={ this.props.selectedDomainName }
+							selectedSite={ this.props.selectedSite }
+						/> }
 
 					<CardContent
 						selectedDomainName={ this.props.selectedDomainName }
-						selectedSite={ this.props.selectedSite } />
+						selectedSite={ this.props.selectedSite }
+					/>
 				</Card>
 			</Main>
 		);
 	}
 
 	goToPreviousSection = () => {
-		const { prevPath } = this.props.context,
-			previousSection = paths.getSectionName( prevPath );
+		const { prevPath } = this.props.context, previousSection = paths.getSectionName( prevPath );
 		let path;
 
 		if ( previousSection === 'contacts-privacy' ) {
@@ -98,15 +104,10 @@ class PrivacyProtection extends Component {
 			path = paths.domainManagementEdit;
 		}
 
-		page( path(
-			this.props.selectedSite.slug,
-			this.props.selectedDomainName
-		) );
-	}
+		page( path( this.props.selectedSite.slug, this.props.selectedDomainName ) );
+	};
 }
 
-export default connect(
-	state => ( {
-		displayCost: getProductDisplayCost( state, 'private_whois' ),
-	} )
-)( localize( PrivacyProtection ) );
+export default connect( state => ( {
+	displayCost: getProductDisplayCost( state, 'private_whois' ),
+} ) )( localize( PrivacyProtection ) );

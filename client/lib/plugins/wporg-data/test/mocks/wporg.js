@@ -1,5 +1,4 @@
-let fetchPluginsListCalls = 0,
-	lastRequestParams = null;
+let fetchPluginsListCalls = 0, lastRequestParams = null;
 
 module.exports = {
 	deactivatedCallbacks: false,
@@ -13,7 +12,7 @@ module.exports = {
 	getActivity: function() {
 		return {
 			fetchPluginsList: fetchPluginsListCalls,
-			lastRequestParams: lastRequestParams
+			lastRequestParams: lastRequestParams,
 		};
 	},
 	fetchPluginsList: function( options, callback ) {
@@ -22,8 +21,8 @@ module.exports = {
 		if ( ! this.deactivatedCallbacks ) {
 			callback( null, {
 				plugins: [],
-				info: { pages: this.mockedNumberOfReturnedPages }
+				info: { pages: this.mockedNumberOfReturnedPages },
 			} );
 		}
-	}
+	},
 };

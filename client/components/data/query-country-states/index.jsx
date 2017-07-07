@@ -35,12 +35,12 @@ class QueryCountryStates extends Component {
 QueryCountryStates.propTypes = {
 	countryCode: PropTypes.string.isRequired,
 	isRequesting: PropTypes.bool,
-	requestCountryStates: PropTypes.func
+	requestCountryStates: PropTypes.func,
 };
 
 export default connect(
 	( state, { countryCode } ) => ( {
-		isRequesting: isCountryStatesFetching( state, countryCode )
+		isRequesting: isCountryStatesFetching( state, countryCode ),
 	} ),
-	{ requestCountryStates }
+	{ requestCountryStates },
 )( QueryCountryStates );

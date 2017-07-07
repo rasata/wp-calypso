@@ -11,16 +11,12 @@ import { moment } from 'i18n-calypso';
  */
 import Main from 'components/main';
 import HeaderCake from 'components/header-cake';
-import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
+import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
 import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
 import DatePicker from 'my-sites/stats/stats-date-picker';
 import Module from './store-stats-module';
 import List from './store-stats-list';
-import {
-	topProducts,
-	topCategories,
-	topCoupons
-} from 'woocommerce/app/store-stats/constants';
+import { topProducts, topCategories, topCoupons } from 'woocommerce/app/store-stats/constants';
 import { getUnitPeriod } from './utils';
 
 const listType = {
@@ -69,7 +65,7 @@ class StoreStatsListView extends Component {
 					<DatePicker
 						period={ unit }
 						date={
-							( unit === 'week' )
+							unit === 'week'
 								? moment( selectedDate, 'YYYY-MM-DD' ).subtract( 1, 'days' ).format( 'YYYY-MM-DD' )
 								: selectedDate
 						}
@@ -96,9 +92,7 @@ class StoreStatsListView extends Component {
 	}
 }
 
-export default connect(
-	state => ( {
-		slug: getSelectedSiteSlug( state ),
-		siteId: getSelectedSiteId( state ),
-	} )
-)( StoreStatsListView );
+export default connect( state => ( {
+	slug: getSelectedSiteSlug( state ),
+	siteId: getSelectedSiteId( state ),
+} ) )( StoreStatsListView );

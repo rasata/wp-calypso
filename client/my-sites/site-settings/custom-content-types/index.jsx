@@ -50,20 +50,13 @@ class CustomContentTypes extends Component {
 	}
 
 	isFormPending() {
-		const {
-			isRequestingSettings,
-			isSavingSettings,
-		} = this.props;
+		const { isRequestingSettings, isSavingSettings } = this.props;
 
 		return isRequestingSettings || isSavingSettings;
 	}
 
 	renderToggle( name, label, description ) {
-		const {
-			activatingCustomContentTypesModule,
-			fields,
-			handleAutosavingToggle
-		} = this.props;
+		const { activatingCustomContentTypesModule, fields, handleAutosavingToggle } = this.props;
 		return (
 			<div>
 				<CompactFormToggle
@@ -84,34 +77,29 @@ class CustomContentTypes extends Component {
 	}
 
 	renderPostsPerPageField( fieldName, postTypeLabel ) {
-		const {
-			fields,
-			onChangeField,
-			translate,
-		} = this.props;
+		const { fields, onChangeField, translate } = this.props;
 		const numberFieldName = fieldName + '_posts_per_page';
 		return (
 			<div className="custom-content-types__indented-form-field indented-form-field">
-				{ translate(
-					'Display {{field /}} %s per page',
-					{
-						args: postTypeLabel.toLowerCase(),
-						components: {
-							field: (
-								<FormTextInput
-									name={ numberFieldName }
-									type="number"
-									step="1"
-									min="0"
-									id={ numberFieldName }
-									value={ 'undefined' === typeof fields[ numberFieldName ] ? 10 : fields[ numberFieldName ] }
-									onChange={ onChangeField( numberFieldName ) }
-									disabled={ this.isFormPending() || ! fields[ fieldName ] }
-								/>
-							)
-						}
-					}
-				) }
+				{ translate( 'Display {{field /}} %s per page', {
+					args: postTypeLabel.toLowerCase(),
+					components: {
+						field: (
+							<FormTextInput
+								name={ numberFieldName }
+								type="number"
+								step="1"
+								min="0"
+								id={ numberFieldName }
+								value={
+									'undefined' === typeof fields[ numberFieldName ] ? 10 : fields[ numberFieldName ]
+								}
+								onChange={ onChangeField( numberFieldName ) }
+								disabled={ this.isFormPending() || ! fields[ fieldName ] }
+							/>
+						),
+					},
+				} ) }
 			</div>
 		);
 	}
@@ -129,12 +117,12 @@ class CustomContentTypes extends Component {
 		const fieldLabel = translate( 'Testimonials' );
 		const fieldDescription = translate(
 			'Add, organize, and display {{link}}testimonials{{/link}}. If your theme doesn’t support testimonials yet, ' +
-			'you can display them using the shortcode [testimonials].',
+				'you can display them using the shortcode [testimonials].',
 			{
 				components: {
-					link: <a href="https://support.wordpress.com/testimonials/" />
-				}
-			}
+					link: <a href="https://support.wordpress.com/testimonials/" />,
+				},
+			},
 		);
 
 		return this.renderContentTypeSettings( 'jetpack_testimonial', fieldLabel, fieldDescription );
@@ -145,12 +133,12 @@ class CustomContentTypes extends Component {
 		const fieldLabel = translate( 'Portfolio Projects' );
 		const fieldDescription = translate(
 			'Add, organize, and display {{link}}portfolio projects{{/link}}. If your theme doesn’t support portfolio projects yet, ' +
-			'you can display them using the shortcode [portfolio].',
+				'you can display them using the shortcode [portfolio].',
 			{
 				components: {
-					link: <a href="https://support.wordpress.com/portfolios/" />
-				}
-			}
+					link: <a href="https://support.wordpress.com/portfolios/" />,
+				},
+			},
 		);
 
 		return this.renderContentTypeSettings( 'jetpack_portfolio', fieldLabel, fieldDescription );
@@ -163,7 +151,11 @@ class CustomContentTypes extends Component {
 				<FormFieldset>
 					<div className="custom-content-types__info-link-container site-settings__info-link-container">
 						<InfoPopover position="left">
-							<ExternalLink href="https://support.wordpress.com/custom-post-types/" icon target="_blank">
+							<ExternalLink
+								href="https://support.wordpress.com/custom-post-types/"
+								icon
+								target="_blank"
+							>
 								{ translate( 'Learn more about Custom Content Types.' ) }
 							</ExternalLink>
 						</InfoPopover>
@@ -180,7 +172,7 @@ class CustomContentTypes extends Component {
 CustomContentTypes.defaultProps = {
 	isSavingSettings: false,
 	isRequestingSettings: true,
-	fields: {}
+	fields: {},
 };
 
 CustomContentTypes.propTypes = {
@@ -192,17 +184,25 @@ CustomContentTypes.propTypes = {
 };
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 
 		return {
 			siteId,
 			siteIsJetpack: isJetpackSite( state, siteId ),
-			customContentTypesModuleActive: isJetpackModuleActive( state, siteId, 'custom-content-types' ),
-			activatingCustomContentTypesModule: isActivatingJetpackModule( state, siteId, 'custom-content-types' ),
+			customContentTypesModuleActive: isJetpackModuleActive(
+				state,
+				siteId,
+				'custom-content-types',
+			),
+			activatingCustomContentTypesModule: isActivatingJetpackModule(
+				state,
+				siteId,
+				'custom-content-types',
+			),
 		};
 	},
 	{
-		activateModule
-	}
+		activateModule,
+	},
 )( localize( CustomContentTypes ) );

@@ -11,4 +11,4 @@ export default function decodeEntities( text ) {
 	let decoded = element.textContent;
 	element.innerHTML = '';
 	return decoded;
-};
+}

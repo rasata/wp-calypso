@@ -13,9 +13,9 @@ describe( 'hasJetpackSites()', () => {
 		expect(
 			hasJetpackSites( {
 				sites: {
-					items: {}
-				}
-			} )
+					items: {},
+				},
+			} ),
 		).to.be.false;
 	} );
 
@@ -24,10 +24,10 @@ describe( 'hasJetpackSites()', () => {
 			hasJetpackSites( {
 				sites: {
 					items: {
-						77203074: { ID: 77203074, URL: 'https://example.wordpress.com', jetpack: false }
-					}
-				}
-			} )
+						77203074: { ID: 77203074, URL: 'https://example.wordpress.com', jetpack: false },
+					},
+				},
+			} ),
 		).to.be.false;
 	} );
 
@@ -38,10 +38,10 @@ describe( 'hasJetpackSites()', () => {
 					items: {
 						77203074: { ID: 77203074, URL: 'https://example.wordpress.com', jetpack: false },
 						12203074: { ID: 12203074, URL: 'https://example2.wordpress.com', jetpack: false },
-						32203074: { ID: 32203074, URL: 'https://test.wordpress.com', jetpack: false }
-					}
-				}
-			} )
+						32203074: { ID: 32203074, URL: 'https://test.wordpress.com', jetpack: false },
+					},
+				},
+			} ),
 		).to.be.false;
 	} );
 
@@ -52,10 +52,10 @@ describe( 'hasJetpackSites()', () => {
 					items: {
 						77203074: { ID: 77203074, URL: 'https://example.wordpress.com', jetpack: false },
 						12203074: { ID: 12203074, URL: 'https://example2.jetpack.com', jetpack: true },
-						32203074: { ID: 32203074, URL: 'https://test.wordpress.com', jetpack: false }
-					}
-				}
-			} )
+						32203074: { ID: 32203074, URL: 'https://test.wordpress.com', jetpack: false },
+					},
+				},
+			} ),
 		).to.be.true;
 	} );
 
@@ -66,10 +66,10 @@ describe( 'hasJetpackSites()', () => {
 					items: {
 						77203074: { ID: 77203074, URL: 'https://example.jetpack.com', jetpack: true },
 						12203074: { ID: 12203074, URL: 'https://example2.jetpack.com', jetpack: true },
-						32203074: { ID: 32203074, URL: 'https://test.jetpack.com', jetpack: true }
-					}
-				}
-			} )
+						32203074: { ID: 32203074, URL: 'https://test.jetpack.com', jetpack: true },
+					},
+				},
+			} ),
 		).to.be.true;
 	} );
 } );

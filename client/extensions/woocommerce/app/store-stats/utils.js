@@ -38,10 +38,12 @@ export function calculateDelta( item, previousItem, attr, unit ) {
 	if ( previousItem && previousItem[ attr ] !== 0 ) {
 		const current = item[ attr ];
 		const previous = previousItem[ attr ];
-		value = Math.round( ( ( current - previous ) / previous ) * 100 );
+		value = Math.round( ( current - previous ) / previous * 100 );
 	}
 	const isIncrease = value > 0;
-	const isIncreaseFavorable = includes( negativeIsBeneficialAttributes, attr ) ? ! isIncrease : isIncrease;
+	const isIncreaseFavorable = includes( negativeIsBeneficialAttributes, attr )
+		? ! isIncrease
+		: isIncrease;
 	const classes = classnames( {
 		'is-neutral': value === 0,
 		'is-increase': value > 0,
@@ -86,7 +88,7 @@ export function getQueryDate( context ) {
  * @return {string} - as required by the API, eg for unit 'week', '2017-W27' isoWeek returned
  */
 export function getUnitPeriod( date, unit ) {
-	return ( unit === 'week' )
+	return unit === 'week'
 		? `${ moment( date ).format( UNITS[ unit ].format ) }-W${ moment( date ).isoWeek() }`
 		: moment( date ).format( UNITS[ unit ].format );
 }
@@ -100,7 +102,7 @@ export function getUnitPeriod( date, unit ) {
  * @return {string} - YYYY-MM-DD format of the date to be queried
  */
 export function getEndPeriod( date, unit ) {
-	return ( unit === 'week' )
+	return unit === 'week'
 		? moment( date ).endOf( 'isoWeek' ).format( 'YYYY-MM-DD' )
 		: moment( date ).endOf( unit ).format( 'YYYY-MM-DD' );
 }

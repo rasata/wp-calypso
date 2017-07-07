@@ -18,6 +18,6 @@ export const guidedTransferStatusSchema = {
 				upgrade_purchased: { type: 'boolean' },
 				host_details_entered: { type: 'boolean' },
 			},
-		}
-	}
+		},
+	},
 };

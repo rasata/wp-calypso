@@ -37,7 +37,7 @@ function createPurchaseObject( purchase ) {
 			name: purchase.payment_name,
 			type: purchase.payment_type,
 			countryCode: purchase.payment_country_code,
-			countryName: purchase.payment_country_name
+			countryName: purchase.payment_country_name,
 		},
 		pendingTransfer: Boolean( purchase.pending_transfer ),
 		productId: Number( purchase.product_id ),
@@ -55,7 +55,7 @@ function createPurchaseObject( purchase ) {
 		subscribedDate: purchase.subscribed_date,
 		subscriptionStatus: purchase.subscription_status,
 		tagLine: purchase.tag_line,
-		userId: Number( purchase.user_id )
+		userId: Number( purchase.user_id ),
 	};
 
 	if ( 'credit_card' === purchase.payment_type ) {
@@ -65,15 +65,19 @@ function createPurchaseObject( purchase ) {
 				type: purchase.payment_card_type,
 				number: Number( purchase.payment_details ),
 				expiryDate: purchase.payment_expiry,
-				expiryMoment: purchase.payment_expiry ? i18n.moment( purchase.payment_expiry, 'MM/YY' ) : null
-			}
+				expiryMoment: purchase.payment_expiry
+					? i18n.moment( purchase.payment_expiry, 'MM/YY' )
+					: null,
+			},
 		} );
 
 		return Object.assign( {}, object, { payment } );
 	}
 
 	if ( 'paypal_direct' === purchase.payment_type ) {
-		object.payment.expiryMoment = purchase.payment_expiry ? i18n.moment( purchase.payment_expiry, 'MM/YY' ) : null;
+		object.payment.expiryMoment = purchase.payment_expiry
+			? i18n.moment( purchase.payment_expiry, 'MM/YY' )
+			: null;
 	}
 
 	return object;
@@ -89,5 +93,5 @@ function createPurchasesArray( dataTransferObject ) {
 
 export default {
 	createPurchaseObject,
-	createPurchasesArray
+	createPurchasesArray,
 };

@@ -36,16 +36,14 @@ export default {
 		}
 
 		renderWithReduxStore(
-			React.createElement( AccountComponent,
-				{
-					userSettings: userSettings,
-					path: context.path,
-					username: username,
-					showNoticeInitially: showNoticeInitially
-				}
-			),
+			React.createElement( AccountComponent, {
+				userSettings: userSettings,
+				path: context.path,
+				username: username,
+				showNoticeInitially: showNoticeInitially,
+			} ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
-	}
+	},
 };

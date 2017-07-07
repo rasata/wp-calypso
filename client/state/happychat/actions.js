@@ -29,11 +29,14 @@ import {
 } from 'state/action-types';
 
 export const setHappychatChatStatus = status => ( {
-	type: HAPPYCHAT_SET_CHAT_STATUS, status
+	type: HAPPYCHAT_SET_CHAT_STATUS,
+	status,
 } );
 export const requestChatTranscript = () => ( { type: HAPPYCHAT_TRANSCRIPT_REQUEST } );
 export const receiveChatTranscript = ( messages, timestamp ) => ( {
-	type: HAPPYCHAT_TRANSCRIPT_RECEIVE, messages, timestamp
+	type: HAPPYCHAT_TRANSCRIPT_RECEIVE,
+	messages,
+	timestamp,
 } );
 
 export const initialize = () => ( { type: HAPPYCHAT_INITIALIZE } );
@@ -47,7 +50,10 @@ export const setConnecting = () => ( { type: HAPPYCHAT_CONNECTING } );
 export const setDisconnected = errorStatus => ( { type: HAPPYCHAT_DISCONNECTED, errorStatus } );
 export const setReconnecting = () => ( { type: HAPPYCHAT_RECONNECTING } );
 
-export const setHappychatAvailable = isAvailable => ( { type: HAPPYCHAT_SET_AVAILABLE, isAvailable } );
+export const setHappychatAvailable = isAvailable => ( {
+	type: HAPPYCHAT_SET_AVAILABLE,
+	isAvailable,
+} );
 
 export const setChatMessage = message => ( { type: HAPPYCHAT_SET_MESSAGE, message } );
 export const clearChatMessage = () => setChatMessage( '' );
@@ -68,6 +74,6 @@ export const sendChatMessage = message => ( { type: HAPPYCHAT_SEND_MESSAGE, mess
 export function setGeoLocation( geoLocation ) {
 	return {
 		type: HAPPYCHAT_SET_GEO_LOCATION,
-		geoLocation
+		geoLocation,
 	};
 }

@@ -69,7 +69,7 @@ function trainTracksProxyForStream( stream, callback ) {
 		if ( response && response.algorithm ) {
 			stream.algorithm = response.algorithm;
 		}
-		forEach( response && response.posts, ( post ) => {
+		forEach( response && response.posts, post => {
 			if ( post.railcar ) {
 				if ( stream.isQuerySuggestion ) {
 					post.railcar.rec_result = 'suggestion';
@@ -91,7 +91,7 @@ function getStoreForFeed( storeId ) {
 		id: storeId,
 		fetcher: fetcher,
 		keyMaker: feedKeyMaker,
-		onNextPageFetch: addMetaToNextPageFetch
+		onNextPageFetch: addMetaToNextPageFetch,
 	} );
 }
 
@@ -107,7 +107,7 @@ function getStoreForTag( storeId ) {
 			id: storeId,
 			fetcher: fetcher,
 			keyMaker: siteKeyMaker,
-			perPage: 5
+			perPage: 5,
 		} );
 	}
 	return new FeedStream( {
@@ -116,7 +116,7 @@ function getStoreForTag( storeId ) {
 		keyMaker: mixedKeyMaker,
 		onGapFetch: limitSiteParamsForTags,
 		onUpdateFetch: limitSiteParamsForTags,
-		dateProperty: 'tagged_on'
+		dateProperty: 'tagged_on',
 	} );
 }
 
@@ -133,20 +133,22 @@ function getStoreForSearch( storeId ) {
 	const slug = idParts.slice( 2 ).join( ':' );
 	// We can use a feed stream when it's a strict date sort.
 	// This lets us go deeper than 20 pages and let's the results auto-update
-	const stream = sort === 'date' ? new FeedStream( {
-		id: storeId,
-		fetcher: fetcher,
-		keyMaker: siteKeyMaker,
-		perPage: 5,
-		onGapFetch: limitSiteParams,
-		onUpdateFetch: limitSiteParams,
-		maxUpdates: 20,
-	} ) : new PagedStream( {
-		id: storeId,
-		fetcher: fetcher,
-		keyMaker: siteKeyMaker,
-		perPage: 5
-	} );
+	const stream = sort === 'date'
+		? new FeedStream( {
+				id: storeId,
+				fetcher: fetcher,
+				keyMaker: siteKeyMaker,
+				perPage: 5,
+				onGapFetch: limitSiteParams,
+				onUpdateFetch: limitSiteParams,
+				maxUpdates: 20,
+			} )
+		: new PagedStream( {
+				id: storeId,
+				fetcher: fetcher,
+				keyMaker: siteKeyMaker,
+				perPage: 5,
+			} );
 	stream.sortOrder = sort;
 
 	function fetcher( query, callback ) {
@@ -173,7 +175,7 @@ function getStoreForList( storeId ) {
 		fetcher: fetcher,
 		keyMaker: mixedKeyMaker,
 		onGapFetch: limitSiteParams,
-		onUpdateFetch: limitSiteParams
+		onUpdateFetch: limitSiteParams,
 	} );
 }
 
@@ -189,7 +191,7 @@ function getStoreForSite( storeId ) {
 		fetcher: fetcher,
 		keyMaker: siteKeyMaker,
 		onGapFetch: limitSiteParams,
-		onUpdateFetch: limitSiteParams
+		onUpdateFetch: limitSiteParams,
 	} );
 }
 
@@ -204,7 +206,7 @@ function getStoreForFeatured( storeId ) {
 		fetcher: fetcher,
 		keyMaker: siteKeyMaker,
 		onGapFetch: limitSiteParams,
-		onUpdateFetch: limitSiteParams
+		onUpdateFetch: limitSiteParams,
 	} );
 }
 
@@ -279,14 +281,14 @@ export default function feedStoreFactory( storeId ) {
 			id: storeId,
 			fetcher: wpcomUndoc.readFollowing.bind( wpcomUndoc ),
 			keyMaker: feedKeyMaker,
-			onNextPageFetch: addMetaToNextPageFetch
+			onNextPageFetch: addMetaToNextPageFetch,
 		} );
 	} else if ( storeId === 'a8c' ) {
 		store = new FeedStream( {
 			id: storeId,
 			fetcher: wpcomUndoc.readA8C.bind( wpcomUndoc ),
 			keyMaker: feedKeyMaker,
-			onNextPageFetch: addMetaToNextPageFetch
+			onNextPageFetch: addMetaToNextPageFetch,
 		} );
 	} else if ( storeId === 'likes' ) {
 		store = new FeedStream( {
@@ -295,7 +297,7 @@ export default function feedStoreFactory( storeId ) {
 			keyMaker: siteKeyMaker,
 			onGapFetch: limitSiteParamsForLikes,
 			onUpdateFetch: limitSiteParamsForLikes,
-			dateProperty: 'date_liked'
+			dateProperty: 'date_liked',
 		} );
 	} else if ( storeId === 'recommendations_posts' ) {
 		store = getStoreForRecommendedPosts( storeId );

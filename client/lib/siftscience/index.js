@@ -10,8 +10,7 @@ var loadScript = require( 'lib/load-script' ),
 	user = require( 'lib/user' ),
 	config = require( 'config' );
 
-var SIFTSCIENCE_URL = 'https://cdn.siftscience.com/s.js',
-	hasLoaded = false;
+var SIFTSCIENCE_URL = 'https://cdn.siftscience.com/s.js', hasLoaded = false;
 
 if ( ! window._sift ) {
 	window._sift = [];
@@ -35,5 +34,5 @@ module.exports = {
 				}
 			} );
 		}
-	}
+	},
 };

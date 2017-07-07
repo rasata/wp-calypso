@@ -24,11 +24,11 @@ PostEditButton.propTypes = {
 	post: React.PropTypes.object.isRequired,
 	site: React.PropTypes.object.isRequired,
 	iconSize: React.PropTypes.number,
-	onClick: React.PropTypes.func
+	onClick: React.PropTypes.func,
 };
 
 PostEditButton.defaultProps = {
-	iconSize: 24
+	iconSize: 24,
 };
 
 export default localize( PostEditButton );

@@ -18,7 +18,11 @@ describe( 'actions', () => {
 			const getState = () => ( {} );
 			const dispatch = spy();
 			setCurrentPage( siteId, 2 )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith( { type: WOOCOMMERCE_UI_ORDERS_SET_PAGE, siteId, page: 2 } );
+			expect( dispatch ).to.have.been.calledWith( {
+				type: WOOCOMMERCE_UI_ORDERS_SET_PAGE,
+				siteId,
+				page: 2,
+			} );
 		} );
 	} );
 } );

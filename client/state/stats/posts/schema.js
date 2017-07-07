@@ -9,9 +9,9 @@ export const items = {
 			patternProperties: {
 				// Post Id
 				'^\\d+$': {
-					type: 'object'
-				}
-			}
-		}
-	}
+					type: 'object',
+				},
+			},
+		},
+	},
 };

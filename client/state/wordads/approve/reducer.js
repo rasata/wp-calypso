@@ -23,7 +23,7 @@ export function requesting( state = {}, action ) {
 		case WORDADS_SITE_APPROVE_REQUEST_SUCCESS:
 		case WORDADS_SITE_APPROVE_REQUEST_FAILURE:
 			return Object.assign( {}, state, {
-				[ action.siteId ]: action.type === WORDADS_SITE_APPROVE_REQUEST
+				[ action.siteId ]: action.type === WORDADS_SITE_APPROVE_REQUEST,
 			} );
 	}
 	return state;
@@ -39,13 +39,13 @@ export function requestErrors( state = {}, action ) {
 	switch ( action.type ) {
 		case WORDADS_SITE_APPROVE_REQUEST_FAILURE:
 			return Object.assign( {}, state, {
-				[ action.siteId ]: action.error
+				[ action.siteId ]: action.error,
 			} );
 		case WORDADS_SITE_APPROVE_REQUEST:
 		case WORDADS_SITE_APPROVE_REQUEST_SUCCESS:
 		case WORDADS_SITE_APPROVE_REQUEST_DISMISS_ERROR:
 			return Object.assign( {}, state, {
-				[ action.siteId ]: null
+				[ action.siteId ]: null,
 			} );
 	}
 	return state;
@@ -63,11 +63,11 @@ export function requestSuccess( state = {}, action ) {
 		case WORDADS_SITE_APPROVE_REQUEST_DISMISS_SUCCESS:
 		case WORDADS_SITE_APPROVE_REQUEST_FAILURE:
 			return Object.assign( {}, state, {
-				[ action.siteId ]: null
+				[ action.siteId ]: null,
 			} );
 		case WORDADS_SITE_APPROVE_REQUEST_SUCCESS:
 			return Object.assign( {}, state, {
-				[ action.siteId ]: true
+				[ action.siteId ]: true,
 			} );
 	}
 	return state;

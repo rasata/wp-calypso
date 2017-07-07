@@ -1,9 +1,7 @@
 /**
  * External Dependencies
  */
-var React = require( 'react' ),
-	i18n = require( 'i18n-calypso' ),
-	page = require( 'page' );
+var React = require( 'react' ), i18n = require( 'i18n-calypso' ), page = require( 'page' );
 
 /**
  * Internal Dependencies
@@ -41,7 +39,6 @@ function _getLayoutTitle( context ) {
 }
 
 module.exports = {
-
 	redirect: function( context ) {
 		page.redirect( '/ads/earnings/' + context.params.site_id );
 		return;
@@ -77,7 +74,7 @@ module.exports = {
 				path: context.path,
 			} ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
-	}
+	},
 };

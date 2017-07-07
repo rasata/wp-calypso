@@ -11,8 +11,7 @@ import { cartItems } from 'lib/cart-values';
 import { recordAddToCart } from 'lib/analytics/ad-tracking';
 
 function recordEvents( previousCart, nextCart ) {
-	const previousItems = cartItems.getAll( previousCart ),
-		nextItems = cartItems.getAll( nextCart );
+	const previousItems = cartItems.getAll( previousCart ), nextItems = cartItems.getAll( nextCart );
 
 	each( difference( nextItems, previousItems ), recordAddEvent );
 	each( difference( previousItems, nextItems ), recordRemoveEvent );
@@ -33,5 +32,5 @@ function recordRemoveEvent( cartItem ) {
 
 export default {
 	recordEvents,
-	removeNestedProperties
+	removeNestedProperties,
 };

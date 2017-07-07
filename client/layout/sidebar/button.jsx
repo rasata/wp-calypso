@@ -16,7 +16,7 @@ export default React.createClass( {
 		href: React.PropTypes.string,
 		onClick: React.PropTypes.func,
 		preloadSectionName: React.PropTypes.string,
-		children: React.PropTypes.node
+		children: React.PropTypes.node,
 	},
 
 	_preloaded: false,
@@ -46,5 +46,5 @@ export default React.createClass( {
 				{ this.props.children || this.translate( 'Add' ) }
 			</a>
 		);
-	}
+	},
 } );

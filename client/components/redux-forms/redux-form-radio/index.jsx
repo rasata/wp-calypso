@@ -25,18 +25,15 @@ class ReduxFormRadio extends Component {
 				checked={ value === defaultValue }
 				name={ name }
 				onChange={ this.updateRadio( onChange ) }
-				value={ defaultValue } />
+				value={ defaultValue }
+			/>
 		);
-	}
+	};
 
 	updateRadio = onChange => event => onChange( event.target.value );
 
 	render() {
-		return (
-			<Field
-				component={ this.renderRadio( this.props.value ) }
-				name={ this.props.name } />
-		);
+		return <Field component={ this.renderRadio( this.props.value ) } name={ this.props.name } />;
 	}
 }
 

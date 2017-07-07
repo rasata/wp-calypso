@@ -20,11 +20,7 @@ import { setSection } from 'state/ui/actions';
 import productsFactory from 'lib/products-list';
 import { renderWithReduxStore } from 'lib/react-helpers';
 import { canCurrentUser } from 'state/selectors';
-import {
-	getSelectedSiteId,
-	getSelectedSite,
-	getSelectedSiteSlug
-} from 'state/ui/selectors';
+import { getSelectedSiteId, getSelectedSite, getSelectedSiteSlug } from 'state/ui/selectors';
 import { getCurrentUser } from 'state/current-user/selectors';
 
 /**
@@ -33,7 +29,6 @@ import { getCurrentUser } from 'state/current-user/selectors';
 const productsList = productsFactory();
 
 module.exports = {
-
 	domainsAddHeader: function( context, next ) {
 		context.getSiteSelectionHeaderText = function() {
 			return i18n.translate( 'Select a site to add a domain' );
@@ -66,15 +61,11 @@ module.exports = {
 		}
 
 		renderWithReduxStore(
-			(
-				<CartData>
-					<DomainSearch
-						basePath={ basePath }
-						context={ context } />
-				</CartData>
-			),
+			<CartData>
+				<DomainSearch basePath={ basePath } context={ context } />
+			</CartData>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -89,13 +80,11 @@ module.exports = {
 		analytics.pageView.record( basePath, 'Domain Search > Site Redirect' );
 
 		renderWithReduxStore(
-			(
-				<CartData>
-					<SiteRedirect />
-				</CartData>
-			),
+			<CartData>
+				<SiteRedirect />
+			</CartData>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -109,16 +98,13 @@ module.exports = {
 
 		analytics.pageView.record( basePath, 'Domain Search > Domain Mapping' );
 		renderWithReduxStore(
-			(
-				<Main>
-					<CartData>
-						<MapDomain
-							initialQuery={ context.query.initialQuery } />
-					</CartData>
-				</Main>
-			),
+			<Main>
+				<CartData>
+					<MapDomain initialQuery={ context.query.initialQuery } />
+				</CartData>
+			</Main>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -127,11 +113,13 @@ module.exports = {
 			GoogleApps = require( 'components/upgrades/google-apps' );
 
 		// FIXME: Auto-converted from the Flux setTitle action. Please use <DocumentHead> instead.
-		context.store.dispatch( setTitle(
-			i18n.translate( 'Register %(domain)s', {
-				args: { domain: context.params.registerDomain }
-			} )
-		) );
+		context.store.dispatch(
+			setTitle(
+				i18n.translate( 'Register %(domain)s', {
+					args: { domain: context.params.registerDomain },
+				} ),
+			),
+		);
 
 		const state = context.store.getState();
 		const siteSlug = getSelectedSiteSlug( state ) || '';
@@ -149,23 +137,25 @@ module.exports = {
 			page( '/checkout/' + siteSlug );
 		};
 
-		analytics.pageView.record( '/domains/add/:site/google-apps', 'Domain Search > Domain Registration > Google Apps' );
+		analytics.pageView.record(
+			'/domains/add/:site/google-apps',
+			'Domain Search > Domain Registration > Google Apps',
+		);
 
 		renderWithReduxStore(
-			(
-				<Main>
-					<CartData>
-						<GoogleApps
-							productsList={ productsList }
-							domain={ context.params.registerDomain }
-							onGoBack={ handleGoBack }
-							onAddGoogleApps={ handleAddGoogleApps }
-							onClickSkip={ handleClickSkip } />
-					</CartData>
-				</Main>
-			),
+			<Main>
+				<CartData>
+					<GoogleApps
+						productsList={ productsList }
+						domain={ context.params.registerDomain }
+						onGoBack={ handleGoBack }
+						onAddGoogleApps={ handleAddGoogleApps }
+						onClickSkip={ handleClickSkip }
+					/>
+				</CartData>
+			</Main>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -191,29 +181,25 @@ module.exports = {
 		context.store.dispatch( setTitle( i18n.translate( 'Checkout' ) ) );
 
 		renderWithReduxStore(
-			(
-				<CheckoutData>
-					<Checkout
-						product={ product }
-						productsList={ productsList }
-						purchaseId={ context.params.purchaseId }
-						selectedFeature={ selectedFeature }
-						couponCode={ context.query.code }
-					/>
-				</CheckoutData>
-			),
+			<CheckoutData>
+				<Checkout
+					product={ product }
+					productsList={ productsList }
+					purchaseId={ context.params.purchaseId }
+					selectedFeature={ selectedFeature }
+					couponCode={ context.query.code }
+				/>
+			</CheckoutData>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 
 		renderWithReduxStore(
-			(
-				<CartData>
-					<SecondaryCart selectedSite={ selectedSite } />
-				</CartData>
-			),
+			<CartData>
+				<SecondaryCart selectedSite={ selectedSite } />
+			</CartData>,
 			document.getElementById( 'secondary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -229,26 +215,19 @@ module.exports = {
 		context.store.dispatch( setTitle( i18n.translate( 'Checkout' ) ) );
 
 		renderWithReduxStore(
-			(
-				<CheckoutData>
-					<Checkout
-						reduxStore={ context.store }
-						productsList={ productsList }
-					/>
-				</CheckoutData>
-			),
+			<CheckoutData>
+				<Checkout reduxStore={ context.store } productsList={ productsList } />
+			</CheckoutData>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 
 		renderWithReduxStore(
-			(
-				<CartData>
-					<SecondaryCart />
-				</CartData>
-			),
+			<CartData>
+				<SecondaryCart />
+			</CartData>,
 			document.getElementById( 'secondary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -267,16 +246,15 @@ module.exports = {
 		const selectedSite = getSelectedSite( state );
 
 		renderWithReduxStore(
-			(
-				<CheckoutThankYouComponent
-					productsList={ productsList }
-					receiptId={ receiptId }
-					domainOnlySiteFlow={ isEmpty( context.params.site ) }
-					selectedFeature={ context.params.feature }
-					selectedSite={ selectedSite } />
-			),
+			<CheckoutThankYouComponent
+				productsList={ productsList }
+				receiptId={ receiptId }
+				domainOnlySiteFlow={ isEmpty( context.params.site ) }
+				selectedFeature={ context.params.feature }
+				selectedSite={ selectedSite }
+			/>,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 
 		ReactDom.unmountComponentAtNode( document.getElementById( 'secondary' ) );
@@ -311,5 +289,5 @@ module.exports = {
 
 			next();
 		};
-	}
+	},
 };

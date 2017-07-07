@@ -19,7 +19,6 @@ import PluginSiteDisabledManage from 'my-sites/plugins/plugin-site-disabled-mana
 import Site from 'blocks/site';
 
 export default React.createClass( {
-
 	displayName: 'PluginSiteNetwork',
 
 	propTypes: {
@@ -33,14 +32,21 @@ export default React.createClass( {
 		if ( ! this.props.site.canManage() ) {
 			return this.renderManageWarning();
 		}
-		const installInProgress = PluginsLog.isInProgressAction( this.props.site.ID, this.props.plugin.slug, 'INSTALL_PLUGIN' );
+		const installInProgress = PluginsLog.isInProgressAction(
+			this.props.site.ID,
+			this.props.plugin.slug,
+			'INSTALL_PLUGIN',
+		);
 
-		return <PluginInstallButton
-			isEmbed={ true }
-			notices={ this.props.notices }
-			selectedSite={ this.props.site }
-			plugin={ this.props.plugin }
-			isInstalling={ installInProgress } />;
+		return (
+			<PluginInstallButton
+				isEmbed={ true }
+				notices={ this.props.notices }
+				selectedSite={ this.props.site }
+				plugin={ this.props.plugin }
+				isInstalling={ installInProgress }
+			/>
+		);
 	},
 
 	renderMultisiteHeader: function() {
@@ -50,9 +56,9 @@ export default React.createClass( {
 					sites={ this.props.secondarySites }
 					count={ this.props.secondarySites.length }
 					domain={ this.props.site.domain }
-					title={ this.translate( '%(mainSiteName)s\'s Network', {
+					title={ this.translate( "%(mainSiteName)s's Network", {
 						args: {
-							mainSiteName: this.props.site.name
+							mainSiteName: this.props.site.name,
 						},
 					} ) }
 				/>
@@ -62,11 +68,12 @@ export default React.createClass( {
 
 	renderInstallPlugin: function() {
 		return (
-			<FoldableCard compact
+			<FoldableCard
+				compact
 				className="plugin-site-network"
 				header={ this.renderMultisiteHeader() }
-				actionButton={ this.renderInstallButton() } >
-			</FoldableCard>
+				actionButton={ this.renderInstallButton() }
+			/>
 		);
 	},
 
@@ -77,20 +84,45 @@ export default React.createClass( {
 
 		return (
 			<div className="plugin-site-network__actions">
-				<PluginAutoupdateToggle site={ this.props.site } plugin={ this.props.site.plugin } notices={ this.props.notices } wporg={ true } />
-				<PluginRemoveButton plugin={ this.props.site.plugin } site={ this.props.site } notices={ this.props.notices } />
+				<PluginAutoupdateToggle
+					site={ this.props.site }
+					plugin={ this.props.site.plugin }
+					notices={ this.props.notices }
+					wporg={ true }
+				/>
+				<PluginRemoveButton
+					plugin={ this.props.site.plugin }
+					site={ this.props.site }
+					notices={ this.props.notices }
+				/>
 			</div>
 		);
 	},
 
 	renderPluginSite: function() {
 		return (
-			<FoldableCard compact clickableHeader
+			<FoldableCard
+				compact
+				clickableHeader
 				className="plugin-site-network"
 				header={ this.renderMultisiteHeader() }
-				summary={ <PluginUpdateIndicator site={ this.props.site } plugin={ this.props.plugin } notices={ this.props.notices } expanded={ false }/> }
-				expandedSummary={ <PluginUpdateIndicator site={ this.props.site } plugin={ this.props.plugin } notices={ this.props.notices } expanded={ true }/> }
-				>
+				summary={
+					<PluginUpdateIndicator
+						site={ this.props.site }
+						plugin={ this.props.plugin }
+						notices={ this.props.notices }
+						expanded={ false }
+					/>
+				}
+				expandedSummary={
+					<PluginUpdateIndicator
+						site={ this.props.site }
+						plugin={ this.props.plugin }
+						notices={ this.props.notices }
+						expanded={ true }
+					/>
+				}
+			>
 				<div>
 					{ this.renderPluginActions() }
 					<div className="plugin-site__secondary-sites">
@@ -105,7 +137,10 @@ export default React.createClass( {
 
 	renderSecondarySite: function( site ) {
 		return (
-			<CompactCard className="plugin-site-network__secondary-site" key={ 'secondary-site-' + site.ID }>
+			<CompactCard
+				className="plugin-site-network__secondary-site"
+				key={ 'secondary-site-' + site.ID }
+			>
 				<Site site={ site } indicator={ false } />
 				{ this.renderSecondarySiteActions( site ) }
 			</CompactCard>
@@ -130,7 +165,11 @@ export default React.createClass( {
 	renderManageWarning: function() {
 		return (
 			<div className="plugin-site-network__network_disabled">
-				<PluginSiteDisabledManage site={ this.props.site } plugin={ this.props.plugin } isNetwork={ true } />
+				<PluginSiteDisabledManage
+					site={ this.props.site }
+					plugin={ this.props.plugin }
+					isNetwork={ true }
+				/>
 			</div>
 		);
 	},
@@ -145,5 +184,5 @@ export default React.createClass( {
 		}
 
 		return this.renderPluginSite();
-	}
+	},
 } );

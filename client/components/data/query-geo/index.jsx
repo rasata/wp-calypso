@@ -24,10 +24,9 @@ class QueryGeo extends Component {
 
 QueryGeo.propTypes = {
 	requesting: PropTypes.bool,
-	requestGeo: PropTypes.func
+	requestGeo: PropTypes.func,
 };
 
-export default connect(
-	( state ) => ( { requesting: isRequestingGeo( state ) } ),
-	{ requestGeo }
-)( QueryGeo );
+export default connect( state => ( { requesting: isRequestingGeo( state ) } ), { requestGeo } )(
+	QueryGeo,
+);

@@ -1,7 +1,7 @@
 var flows = {
 	simple_flow: {
 		steps: [ 'stepA', 'stepB' ],
-		destination: '/'
+		destination: '/',
 	},
 
 	flow_with_async: {
@@ -12,21 +12,21 @@ var flows = {
 		steps: [ 'siteCreation', 'userCreation' ],
 		destination: function( dependencies ) {
 			return '/checkout/' + dependencies.siteSlug;
-		}
+		},
 	},
 
 	invalid_flow_with_dependencies: {
-		steps: [ 'siteCreation', 'userCreationWithoutToken' ]
+		steps: [ 'siteCreation', 'userCreationWithoutToken' ],
 	},
 
 	flowWithDelay: {
-		steps: [ 'delayedStep', 'stepA' ]
+		steps: [ 'delayedStep', 'stepA' ],
 	},
 
 	flowWithProvidedDependencies: {
 		steps: [ 'stepRequiringSiteSlug' ],
-		providesDependenciesInQuery: [ 'siteSlug' ]
-	}
+		providesDependenciesInQuery: [ 'siteSlug' ],
+	},
 };
 
 module.exports = {
@@ -34,5 +34,5 @@ module.exports = {
 
 	getFlow: function( flowName ) {
 		return flows[ flowName ];
-	}
+	},
 };

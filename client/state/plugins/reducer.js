@@ -9,5 +9,5 @@ import installed from './installed/reducer';
 export default combineReducers( {
 	wporg,
 	premium,
-	installed
+	installed,
 } );

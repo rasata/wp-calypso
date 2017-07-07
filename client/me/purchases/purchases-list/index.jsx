@@ -42,18 +42,16 @@ class PurchasesList extends Component {
 		}
 
 		if ( this.props.hasLoadedUserPurchasesFromServer && this.props.purchases.length ) {
-			content = getPurchasesBySite( this.props.purchases, this.props.sites ).map(
-				site => (
-					<PurchasesSite
-						key={ site.id }
-						siteId={ site.id }
-						name={ site.name }
-						domain={ site.domain }
-						slug={ site.slug }
-						purchases={ site.purchases }
-					/>
-				)
-			);
+			content = getPurchasesBySite( this.props.purchases, this.props.sites ).map( site => (
+				<PurchasesSite
+					key={ site.id }
+					siteId={ site.id }
+					name={ site.name }
+					domain={ site.domain }
+					slug={ site.slug }
+					purchases={ site.purchases }
+				/>
+			) );
 		}
 
 		if ( this.props.hasLoadedUserPurchasesFromServer && ! this.props.purchases.length ) {
@@ -63,7 +61,7 @@ class PurchasesList extends Component {
 						title={ this.props.translate( 'Looking to upgrade?' ) }
 						line={ this.props.translate(
 							'Our plans give your site the power to thrive. ' +
-								'Find the plan that works for you.'
+								'Find the plan that works for you.',
 						) }
 						action={ this.props.translate( 'Upgrade Now' ) }
 						actionURL={ '/plans' }
@@ -98,5 +96,5 @@ export default connect(
 		isFetchingUserPurchases: isFetchingUserPurchases( state ),
 		sites: getSites( state ),
 	} ),
-	undefined
+	undefined,
 )( localize( PurchasesList ) );

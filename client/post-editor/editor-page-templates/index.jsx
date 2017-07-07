@@ -61,10 +61,12 @@ class EditorPageTemplates extends Component {
 
 	getTemplates() {
 		const { translate, templates } = this.props;
-		return [ {
-			label: translate( 'Default Template' ),
-			file: ''
-		} ].concat( templates || [] );
+		return [
+			{
+				label: translate( 'Default Template' ),
+				file: '',
+			},
+		].concat( templates || [] );
 	}
 
 	render() {
@@ -77,35 +79,37 @@ class EditorPageTemplates extends Component {
 		return (
 			<div>
 				{ siteId && <QueryPageTemplates siteId={ siteId } /> }
-				{ size( templates ) > 1 && (
+				{ size( templates ) > 1 &&
 					<AccordionSection>
 						<EditorDrawerLabel labelText={ translate( 'Page Template' ) }>
 							<EditorThemeHelp className="editor-page-templates__help-link" />
 							<SelectDropdown selectedText={ this.getSelectedTemplateText() }>
-								{ map( templates, ( { file, label } ) => (
-									/* eslint-disable react/jsx-no-bind */
-									// jsx-no-bind disabled because while it's possible
-									// to extract this out into a separate component
-									// with its own click handler, that would severely
-									// harm the readability of this component.
+								{ map( templates, ( {
+									file,
+									label,
+								} /* eslint-disable react/jsx-no-bind */ ) => // jsx-no-bind disabled because while it's possible
+								// to extract this out into a separate component
+								// with its own click handler, that would severely
+								// harm the readability of this component.
+								(
 									<DropdownItem
 										key={ file }
 										selected={ file === template }
-										onClick={ () => this.selectTemplate( file ) }>
+										onClick={ () => this.selectTemplate( file ) }
+									>
 										{ label }
 									</DropdownItem>
 								) ) }
 							</SelectDropdown>
 						</EditorDrawerLabel>
-					</AccordionSection>
-				) }
+					</AccordionSection> }
 			</div>
 		);
 	}
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const postId = getEditorPostId( state );
 		const postType = getEditedPostValue( state, siteId, postId, 'type' );
@@ -115,5 +119,5 @@ export default connect(
 
 		return { siteId, postId, postType, template, templates, pageForPostsId };
 	},
-	{ editPost }
+	{ editPost },
 )( localize( EditorPageTemplates ) );

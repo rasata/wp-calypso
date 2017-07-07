@@ -19,9 +19,9 @@ describe( 'selectors', () => {
 			services: {
 				items: {},
 				isFetching: false,
-			}
+			},
 		},
-		ui: { selectedSiteId: 0 }
+		ui: { selectedSiteId: 0 },
 	};
 	const activeState = {
 		sharing: {
@@ -45,8 +45,8 @@ describe( 'selectors', () => {
 					},
 				},
 				isFetching: true,
-			}
-		}
+			},
+		},
 	};
 
 	describe( 'getKeyringServices()', () => {
@@ -104,9 +104,9 @@ describe( 'selectors', () => {
 				capabilities: {
 					2916284: {
 						manage_options: true,
-						publish_posts: true
-					}
-				}
+						publish_posts: true,
+					},
+				},
 			},
 			sites: {
 				items: {
@@ -119,12 +119,12 @@ describe( 'selectors', () => {
 							active_modules: [ 'publicize' ],
 						},
 						jetpack: true,
-					}
-				}
+					},
+				},
 			},
 			ui: {
-				selectedSiteId: 2916284
-			}
+				selectedSiteId: 2916284,
+			},
 		};
 
 		it( 'should return empty object if there are no services', () => {
@@ -167,7 +167,7 @@ describe( 'selectors', () => {
 					jetpack_support: true,
 					jetpack_module_required: 'publicize',
 					type: 'other',
-				}
+				},
 			] );
 		} );
 
@@ -198,8 +198,8 @@ describe( 'selectors', () => {
 				sharing: {
 					services: {
 						isFetching: false,
-					}
-				}
+					},
+				},
 			} );
 
 			expect( isRequesting ).to.be.false;

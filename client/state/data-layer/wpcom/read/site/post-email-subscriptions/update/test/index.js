@@ -56,7 +56,7 @@ describe( 'comment-email-subscriptions', () => {
 					apiVersion: '1.2',
 					onSuccess: actionWithRevert,
 					onFailure: actionWithRevert,
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -72,7 +72,7 @@ describe( 'comment-email-subscriptions', () => {
 					meta: { previousState: 'instantly' },
 				},
 				next,
-				{ success: true }
+				{ success: true },
 			);
 			expect( dispatch ).to.have.not.been.called;
 			expect( next ).to.have.not.been.called;
@@ -89,10 +89,10 @@ describe( 'comment-email-subscriptions', () => {
 					meta: { previousState },
 				},
 				next,
-				null
+				null,
 			);
 			expect( next ).to.have.been.calledWith(
-				updateNewPostEmailSubscription( 1234, previousState )
+				updateNewPostEmailSubscription( 1234, previousState ),
 			);
 		} );
 
@@ -107,10 +107,10 @@ describe( 'comment-email-subscriptions', () => {
 					meta: { previousState },
 				},
 				next,
-				{ success: false }
+				{ success: false },
 			);
 			expect( next ).to.have.been.calledWith(
-				updateNewPostEmailSubscription( 1234, previousState )
+				updateNewPostEmailSubscription( 1234, previousState ),
 			);
 		} );
 	} );
@@ -126,10 +126,10 @@ describe( 'comment-email-subscriptions', () => {
 					payload: { blogId: 1234 },
 					meta: { previousState },
 				},
-				next
+				next,
 			);
 			expect( next ).to.have.been.calledWith(
-				updateNewPostEmailSubscription( 1234, previousState )
+				updateNewPostEmailSubscription( 1234, previousState ),
 			);
 			expect( dispatch ).to.have.been.calledWithMatch( {
 				notice: { text: 'Sorry, we had a problem updating that subscription. Please try again.' },

@@ -47,11 +47,10 @@ export class RecommendedSites extends React.PureComponent {
 
 		function recordRecommendationRender( index ) {
 			return function( railcar ) {
-				recordTracksRailcarRender(
-					'recommended_site',
-					railcar,
-					{ ui_algo: 'following_manage_recommended_site', ui_position: index }
-				);
+				recordTracksRailcarRender( 'recommended_site', railcar, {
+					ui_algo: 'following_manage_recommended_site',
+					ui_position: index,
+				} );
 			};
 		}
 

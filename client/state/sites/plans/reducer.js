@@ -20,7 +20,7 @@ export const initialSiteState = {
 	data: null,
 	error: null,
 	hasLoadedFromServer: false,
-	isRequesting: false
+	isRequesting: false,
 };
 
 /**
@@ -33,7 +33,7 @@ export const initialSiteState = {
  */
 function updateSiteState( state, siteId, attributes ) {
 	return Object.assign( {}, state, {
-		[ siteId ]: Object.assign( {}, initialSiteState, state[ siteId ], attributes )
+		[ siteId ]: Object.assign( {}, initialSiteState, state[ siteId ], attributes ),
 	} );
 }
 
@@ -42,7 +42,7 @@ export function plans( state = {}, action ) {
 		case SITE_PLANS_FETCH:
 			return updateSiteState( state, action.siteId, {
 				error: null,
-				isRequesting: true
+				isRequesting: true,
 			} );
 
 		case SITE_PLANS_FETCH_COMPLETED:
@@ -50,13 +50,13 @@ export function plans( state = {}, action ) {
 				error: null,
 				hasLoadedFromServer: true,
 				isRequesting: false,
-				data: action.plans
+				data: action.plans,
 			} );
 
 		case SITE_PLANS_FETCH_FAILED:
 			return updateSiteState( state, action.siteId, {
 				error: action.error,
-				isRequesting: false
+				isRequesting: false,
 			} );
 
 		case SITE_PLANS_REMOVE:
@@ -64,7 +64,7 @@ export function plans( state = {}, action ) {
 
 		case SITE_PLANS_TRIAL_CANCEL:
 			return updateSiteState( state, action.siteId, {
-				isRequesting: true
+				isRequesting: true,
 			} );
 
 		case SITE_PLANS_TRIAL_CANCEL_COMPLETED:
@@ -72,13 +72,13 @@ export function plans( state = {}, action ) {
 				error: null,
 				hasLoadedFromServer: true,
 				isRequesting: false,
-				data: action.plans
+				data: action.plans,
 			} );
 
 		case SITE_PLANS_TRIAL_CANCEL_FAILED:
 			return updateSiteState( state, action.siteId, {
 				error: action.error,
-				isRequesting: false
+				isRequesting: false,
 			} );
 	}
 

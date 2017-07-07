@@ -81,7 +81,8 @@ export class Login extends React.Component {
 
 					<DocumentHead
 						title={ translate( 'Log In', { textOnly: true } ) }
-						link={ [ { rel: 'canonical', href: canonicalUrl } ] } />
+						link={ [ { rel: 'canonical', href: canonicalUrl } ] }
+					/>
 
 					<GlobalNotices id="notices" notices={ notices.list } />
 

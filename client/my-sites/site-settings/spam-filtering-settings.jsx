@@ -101,7 +101,7 @@ const SpamFilteringSettings = ( {
 											<ExternalLink icon href="https://akismet.com/wordpress/" target="_blank" />
 										),
 									},
-								}
+								},
 							) }
 						</FormSettingExplanation> }
 				</div>

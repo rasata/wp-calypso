@@ -12,7 +12,7 @@ import PluginSiteJetpack from 'my-sites/plugins/plugin-site-jetpack';
 import PluginSiteNetwork from 'my-sites/plugins/plugin-site-network';
 import isSiteAutomatedTransfer from 'state/selectors/is-site-automated-transfer';
 
-const PluginSite = ( props ) => {
+const PluginSite = props => {
 	if ( ! props.site ) {
 		return null;
 	}

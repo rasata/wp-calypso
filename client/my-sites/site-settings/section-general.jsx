@@ -20,8 +20,6 @@ const SiteSettingsGeneral = ( { site } ) => {
 	);
 };
 
-export default connect(
-	( state ) => ( {
-		site: getSelectedSite( state ),
-	} )
-)( SiteSettingsGeneral );
+export default connect( state => ( {
+	site: getSelectedSite( state ),
+} ) )( SiteSettingsGeneral );

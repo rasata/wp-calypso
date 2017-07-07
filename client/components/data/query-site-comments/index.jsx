@@ -9,9 +9,8 @@ import { connect } from 'react-redux';
  */
 import { requestCommentsList } from 'state/comments/actions';
 
-const requestComments = ( { requestSiteComments, siteId, status } ) => (
-	siteId && requestSiteComments( { siteId, status } )
-);
+const requestComments = ( { requestSiteComments, siteId, status } ) =>
+	siteId && requestSiteComments( { siteId, status } );
 
 export class QuerySiteComments extends Component {
 	componentDidMount() {
@@ -30,12 +29,15 @@ export class QuerySiteComments extends Component {
 }
 
 const mapDispatchToProps = dispatch => ( {
-	requestSiteComments: ( { siteId, status = 'unapproved' } ) => dispatch( requestCommentsList( {
-		listType: 'site',
-		siteId,
-		status,
-		type: 'comment',
-	} ) ),
+	requestSiteComments: ( { siteId, status = 'unapproved' } ) =>
+		dispatch(
+			requestCommentsList( {
+				listType: 'site',
+				siteId,
+				status,
+				type: 'comment',
+			} ),
+		),
 } );
 
 export default connect( null, mapDispatchToProps )( QuerySiteComments );

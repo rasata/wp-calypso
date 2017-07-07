@@ -16,4 +16,3 @@ function FAQ( { translate, heading = translate( 'Frequently Asked Questions' ), 
 }
 
 export default localize( FAQ );
-

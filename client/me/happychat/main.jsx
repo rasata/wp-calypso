@@ -7,10 +7,7 @@ import { findDOMNode } from 'react-dom';
 /**
  * Internal dependencies
  */
-import {
-	blur,
-	focus,
-} from 'state/happychat/actions';
+import { blur, focus } from 'state/happychat/actions';
 import viewport from 'lib/viewport';
 import HappychatConnection from 'components/happychat/connection';
 import Composer from 'components/happychat/composer';
@@ -35,7 +32,7 @@ class HappychatPage extends Component {
 
 		if ( viewport.isMobile() ) {
 			/* User tapped textfield on a phone. This shows the keyboard. Unless we scroll to the bottom, the chatbox will be invisible */
-			setTimeout( () => composerNode.scrollIntoView(), 500 );	/* Wait for the keyboard to appear */
+			setTimeout( () => composerNode.scrollIntoView(), 500 ); /* Wait for the keyboard to appear */
 		}
 	}
 

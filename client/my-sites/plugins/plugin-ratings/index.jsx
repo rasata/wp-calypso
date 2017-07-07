@@ -18,7 +18,7 @@ export default React.createClass( {
 		ratings: React.PropTypes.object,
 		downloaded: React.PropTypes.number,
 		slug: React.PropTypes.string,
-		numRatings: React.PropTypes.number
+		numRatings: React.PropTypes.number,
 	},
 
 	ratingTiers: [ 5, 4, 3, 2, 1 ],
@@ -33,19 +33,22 @@ export default React.createClass( {
 	},
 
 	renderPlaceholder() {
-		return ( // eslint-disable-next-line
-			<div className="plugin-ratings is-placeholder">
-				<div className="plugin-ratings__rating-stars">
-					<Rating rating={ 0 } />
+		return (
+			// eslint-disable-next-line
+			(
+				<div className="plugin-ratings is-placeholder">
+					<div className="plugin-ratings__rating-stars">
+						<Rating rating={ 0 } />
+					</div>
+					<div className="plugin-ratings__rating-text">{ this.translate( 'Based on' ) }</div>
 				</div>
-				<div className="plugin-ratings__rating-text">{ this.translate( 'Based on' ) }</div>
-			</div>
+			)
 		);
 	},
 
 	renderRatingTier( ratingTier ) {
 		const { ratings, slug, numRatings } = this.props;
-		const numberOfRatings = ( ratings && ratings[ ratingTier ] ) ? ratings[ ratingTier ] : 0;
+		const numberOfRatings = ratings && ratings[ ratingTier ] ? ratings[ ratingTier ] : 0;
 		const onClickPluginRatingsLink = () => {
 			analytics.ga.recordEvent( 'Plugins', 'Clicked Plugin Ratings Link', 'Plugin Name', slug );
 		};
@@ -60,14 +63,10 @@ export default React.createClass( {
 				href={ this.buildReviewUrl( ratingTier ) }
 			>
 				<span className="plugin-ratings__rating-tier-text">
-					{
-						this.translate(
-							'%(ratingTier)s star', '%(ratingTier)s stars', {
-								count: ratingTier,
-								args: { ratingTier: ratingTier }
-							}
-						)
-					}
+					{ this.translate( '%(ratingTier)s star', '%(ratingTier)s stars', {
+						count: ratingTier,
+						args: { ratingTier: ratingTier },
+					} ) }
 				</span>
 				<span className="plugin-ratings__bar">
 					<ProgressBar
@@ -92,11 +91,9 @@ export default React.createClass( {
 
 		return (
 			<div className="plugin-ratings__downloads">
-				{
-					this.translate( '%(installs)s downloads', {
-						args: { installs: downloaded }
-					} )
-				}
+				{ this.translate( '%(installs)s downloads', {
+					args: { installs: downloaded },
+				} ) }
 			</div>
 		);
 	},
@@ -119,10 +116,14 @@ export default React.createClass( {
 					<Rating rating={ rating } />
 				</div>
 				<div className="plugin-ratings__rating-text">
-					{ this.translate( 'Based on %(ratingsNumber)s rating', 'Based on %(ratingsNumber)s ratings', {
-						count: numRatings,
-						args: { ratingsNumber: numRatings }
-					} ) }
+					{ this.translate(
+						'Based on %(ratingsNumber)s rating',
+						'Based on %(ratingsNumber)s ratings',
+						{
+							count: numRatings,
+							args: { ratingsNumber: numRatings },
+						},
+					) }
 				</div>
 				<div className="plugin-ratings__rating-tiers">
 					{ tierViews }
@@ -130,5 +131,5 @@ export default React.createClass( {
 				{ this.renderDownloaded() }
 			</div>
 		);
-	}
+	},
 } );

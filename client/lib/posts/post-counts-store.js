@@ -1,4 +1,3 @@
-
 /**
  * External dependencies
  */
@@ -7,11 +6,10 @@ var isEqual = require( 'lodash/isEqual' ),
 	debug = require( 'debug' )( 'calypso:posts:post-counts-store' );
 
 const sum = obj => {
-	return Object.keys( obj )
-		.reduce( function( _sum, key ) {
-			return _sum + parseFloat( obj[ key ] );
-		}, 0 );
-}
+	return Object.keys( obj ).reduce( function( _sum, key ) {
+		return _sum + parseFloat( obj[ key ] );
+	}, 0 );
+};
 
 /**
  * Internal dependencies
@@ -23,8 +21,7 @@ var emitter = require( 'lib/mixins/emitter' ),
 	postUtils = require( 'lib/posts/utils' ),
 	Dispatcher = require( 'dispatcher' );
 
-var _counts = {},
-	PostCountsStore;
+var _counts = {}, PostCountsStore;
 
 /**
  * Get a normalized numberic siteId
@@ -49,7 +46,6 @@ function getSiteId( id ) {
  * PostCountsStore
  */
 PostCountsStore = {
-
 	/**
 	 * Return statuses of current site
 	 *
@@ -94,7 +90,7 @@ PostCountsStore = {
 		debug( '[%s][%s] total: %o ', siteId, scope, total );
 
 		return total;
-	}
+	},
 };
 
 emitter( PostCountsStore );

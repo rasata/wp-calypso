@@ -14,7 +14,7 @@ export default {
 		renderWithReduxStore(
 			React.createElement( SecurityMain ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 };

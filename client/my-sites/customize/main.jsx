@@ -7,7 +7,7 @@ var React = require( 'react' ),
 	cloneDeep = require( 'lodash/cloneDeep' ),
 	connect = require( 'react-redux' ).connect,
 	debug = require( 'debug' )( 'calypso:my-sites:customize' );
-import { get, startsWith } from 'lodash';
+import { get, startsWith } from 'lodash';
 
 /**
  * Internal dependencies
@@ -41,7 +41,7 @@ var Customize = React.createClass( {
 	getDefaultProps: function() {
 		return {
 			domain: '',
-			prevPath: null
+			prevPath: null,
 		};
 	},
 
@@ -49,7 +49,7 @@ var Customize = React.createClass( {
 		return {
 			iframeLoaded: false,
 			errorFromIframe: false,
-			timeoutError: false
+			timeoutError: false,
 		};
 	},
 
@@ -77,9 +77,9 @@ var Customize = React.createClass( {
 	},
 
 	canUserCustomizeDomain: function() {
-		const { site } = this.props;
+		const { site } = this.props;
 		if ( ! site ) {
-			debug( 'domain is not in the user\'s site list', this.props.domain );
+			debug( "domain is not in the user's site list", this.props.domain );
 			return false;
 		}
 		if ( site.capabilities && site.capabilities.edit_theme_options ) {
@@ -130,7 +130,7 @@ var Customize = React.createClass( {
 	},
 
 	getUrl: function() {
-		const { site } = this.props;
+		const { site } = this.props;
 		if ( ! site ) {
 			return false;
 		}
@@ -149,7 +149,7 @@ var Customize = React.createClass( {
 	buildCustomizerQuery: function() {
 		const { protocol, host } = window.location;
 		const query = cloneDeep( this.props.query );
-		const { panel, site } = this.props;
+		const { panel, site } = this.props;
 
 		query.return = protocol + '//' + host + this.getPreviousPath();
 		query.calypso = true;
@@ -176,7 +176,7 @@ var Customize = React.createClass( {
 	},
 
 	onMessage: function( event ) {
-		const { site } = this.props;
+		const { site } = this.props;
 		if ( ! site || ! site.options ) {
 			debug( 'ignoring message received from iframe because the site data cannot be found' );
 			return;
@@ -185,7 +185,9 @@ var Customize = React.createClass( {
 		const parsedOrigin = url.parse( event.origin, true );
 		const parsedSite = url.parse( site.options.unmapped_url );
 
-		if ( parsedOrigin.hostname !== this.props.domain && parsedOrigin.hostname !== parsedSite.hostname ) {
+		if (
+			parsedOrigin.hostname !== this.props.domain && parsedOrigin.hostname !== parsedSite.hostname
+		) {
 			debug( 'ignoring message received from iframe with incorrect origin', event.origin );
 			return;
 		}
@@ -259,14 +261,14 @@ var Customize = React.createClass( {
 				action: this.translate( 'Try again' ),
 				actionCallback: function() {
 					window.location.reload();
-				}
+				},
 			} );
 		}
 
 		if ( this.state.errorFromIframe ) {
 			this.cancelWaitingTimer();
 			return this.renderErrorPage( {
-				title: this.state.errorFromIframe
+				title: this.state.errorFromIframe,
 			} );
 		}
 
@@ -281,7 +283,7 @@ var Customize = React.createClass( {
 		if ( ! this.canUserCustomizeDomain() ) {
 			this.cancelWaitingTimer();
 			return this.renderErrorPage( {
-				title: this.translate( 'Sorry, you do not have enough permissions to customize this site' )
+				title: this.translate( 'Sorry, you do not have enough permissions to customize this site' ),
 			} );
 		}
 
@@ -310,18 +312,18 @@ var Customize = React.createClass( {
 			action: this.translate( 'Try again' ),
 			actionCallback: function() {
 				window.location.reload();
-			}
+			},
 		} );
-	}
+	},
 } );
 
 export default connect(
-	( state ) => {
+	state => {
 		const site = getSelectedSite( state );
 		return {
 			site,
-			menusUrl: getMenusUrl( state, get( site, 'ID' ) )
+			menusUrl: getMenusUrl( state, get( site, 'ID' ) ),
 		};
 	},
-	{ themeActivated }
+	{ themeActivated },
 )( Customize );

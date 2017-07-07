@@ -1,9 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	GUIDED_TOUR_UPDATE,
-} from 'state/action-types';
+import { GUIDED_TOUR_UPDATE } from 'state/action-types';
 
 import { savePreference } from 'state/preferences/actions';
 import { getPreference } from 'state/preferences/selectors';
@@ -46,6 +44,6 @@ function addSeenGuidedTour( getState, tourName, finished = false ) {
 			timestamp: Date.now(),
 			tourName,
 			finished,
-		}
+		},
 	] );
 }

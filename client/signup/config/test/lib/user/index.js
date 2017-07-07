@@ -6,6 +6,6 @@ export default () => {
 	return {
 		get() {
 			return {};
-		}
+		},
 	};
 };

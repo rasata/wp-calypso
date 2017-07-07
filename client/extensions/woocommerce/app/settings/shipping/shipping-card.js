@@ -28,7 +28,7 @@ const ShippingCard = ( { translate, selected, type, digits, name, date, onSelect
 				<div className="shipping__card-date">
 					{ translate( 'Expires %(date)s', {
 						args: { date: date },
-						context: 'date is of the form MM/YY'
+						context: 'date is of the form MM/YY',
 					} ) }
 				</div>
 			</div>
@@ -42,7 +42,7 @@ ShippingCard.propTypes = {
 	digits: PropTypes.string,
 	name: PropTypes.string,
 	date: PropTypes.string,
-	onSelect: PropTypes.func
+	onSelect: PropTypes.func,
 };
 
 export default localize( ShippingCard );

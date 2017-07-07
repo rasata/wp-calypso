@@ -18,7 +18,9 @@ import formState from 'lib/form-state';
 const user = require( 'lib/user' )();
 
 function getFlowName( parameters ) {
-	const flow = ( parameters.flowName && isFlowName( parameters.flowName ) ) ? parameters.flowName : defaultFlowName;
+	const flow = parameters.flowName && isFlowName( parameters.flowName )
+		? parameters.flowName
+		: defaultFlowName;
 	return maybeFilterFlowName( flow, flows.filterFlowName );
 }
 
@@ -53,7 +55,10 @@ function isStepSectionName( pathFragment ) {
 }
 
 function getLocale( parameters ) {
-	return find( pick( parameters, [ 'flowName', 'stepName', 'stepSectionName', 'lang' ] ), isLocale );
+	return find(
+		pick( parameters, [ 'flowName', 'stepName', 'stepSectionName', 'lang' ] ),
+		isLocale,
+	);
 }
 
 function isLocale( pathFragment ) {
@@ -107,17 +112,14 @@ function getFlowSteps( flowName ) {
 }
 
 function getValueFromProgressStore( { signupProgress, stepName, fieldName } ) {
-	const siteStepProgress = find(
-		signupProgress,
-		step => step.stepName === stepName
-	);
+	const siteStepProgress = find( signupProgress, step => step.stepName === stepName );
 	return siteStepProgress ? siteStepProgress[ fieldName ] : null;
 }
 
-function mergeFormWithValue( { form, fieldName, fieldValue} ) {
+function mergeFormWithValue( { form, fieldName, fieldValue } ) {
 	if ( ! formState.getFieldValue( form, fieldName ) ) {
 		return merge( form, {
-			[ fieldName ]: { value: fieldValue }
+			[ fieldName ]: { value: fieldValue },
 		} );
 	}
 	return form;
@@ -139,5 +141,5 @@ export default {
 	getNextStepName: getNextStepName,
 	getValueFromProgressStore: getValueFromProgressStore,
 	getDestination: getDestination,
-	mergeFormWithValue: mergeFormWithValue
+	mergeFormWithValue: mergeFormWithValue,
 };

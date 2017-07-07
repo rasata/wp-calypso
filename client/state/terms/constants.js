@@ -7,5 +7,5 @@ export const DEFAULT_TERMS_QUERY = {
 	page: 1,
 	order: 'DESC',
 	order_by: 'name',
-	search: ''
+	search: '',
 };

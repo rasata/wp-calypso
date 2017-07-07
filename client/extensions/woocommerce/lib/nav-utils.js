@@ -11,7 +11,7 @@ const navUtils = {
 			return '#unknownsite';
 		}
 		return path.replace( ':site', site.slug );
-	}
+	},
 };
 
 export default navUtils;

@@ -42,9 +42,10 @@ describe( 'requestFollow', () => {
 			} ),
 		);
 
-		expect( dispatch ).to.be.calledWithMatch(
-			{ type: NOTICE_CREATE, notice: { status: 'is-success' } },
-		);
+		expect( dispatch ).to.be.calledWithMatch( {
+			type: NOTICE_CREATE,
+			notice: { status: 'is-success' },
+		} );
 	} );
 } );
 
@@ -89,9 +90,10 @@ describe( 'receiveFollow', () => {
 		};
 
 		receiveFollow( { dispatch }, action, next, response );
-		expect( dispatch ).to.be.calledWithMatch(
-			{ type: NOTICE_CREATE, notice: { status: 'is-error' } },
-		);
+		expect( dispatch ).to.be.calledWithMatch( {
+			type: NOTICE_CREATE,
+			notice: { status: 'is-error' },
+		} );
 		expect( next ).to.be.calledWith( unfollow( 'http://example.com' ) );
 	} );
 } );

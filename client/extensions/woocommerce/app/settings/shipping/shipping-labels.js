@@ -24,24 +24,27 @@ class ShippingLabels extends Component {
 		//TODO: use redux state with real data
 		this.state = {
 			visible: true,
-			cards: [ {
-				selected: true,
-				type: 'VISA',
-				digits: '1234',
-				name: 'Name Surname',
-				date: '12/19'
-			}, {
-				selected: false,
-				type: 'MasterCard',
-				digits: '5678',
-				name: 'Name Surname',
-				date: '01/20'
-			} ]
+			cards: [
+				{
+					selected: true,
+					type: 'VISA',
+					digits: '1234',
+					name: 'Name Surname',
+					date: '12/19',
+				},
+				{
+					selected: false,
+					type: 'MasterCard',
+					digits: '5678',
+					name: 'Name Surname',
+					date: '01/20',
+				},
+			],
 		};
 	}
 
 	selectCard( index ) {
-		const cards = this.state.cards.map( ( card ) => {
+		const cards = this.state.cards.map( card => {
 			return { ...card, selected: false };
 		} );
 
@@ -62,24 +65,24 @@ class ShippingLabels extends Component {
 				this.selectCard( index );
 			};
 
-			return ( <ShippingCard
-				key={ index }
-				onSelect={ onSelect }
-				{ ...card } /> );
+			return <ShippingCard key={ index } onSelect={ onSelect } { ...card } />;
 		};
 
 		return (
 			<div>
 				<ExtendedHeader
 					label={ translate( 'Shipping Labels' ) }
-					description={ translate( 'Print shipping labels yourself and save a trip to the post office.' ) }>
+					description={ translate(
+						'Print shipping labels yourself and save a trip to the post office.',
+					) }
+				>
 					<FormToggle onChange={ onToggle } checked={ this.state.visible } />
 				</ExtendedHeader>
-				<Card className={ classNames( 'shipping__labels-container', { hidden: ! this.state.visible } ) }>
+				<Card
+					className={ classNames( 'shipping__labels-container', { hidden: ! this.state.visible } ) }
+				>
 					<FormFieldSet>
-						<FormLabel
-							className="shipping__labels-paper-size"
-							htmlFor="paper-size">
+						<FormLabel className="shipping__labels-paper-size" htmlFor="paper-size">
 							{ translate( 'Paper size' ) }
 						</FormLabel>
 						<FormSelect name="paper-size">
@@ -90,12 +93,13 @@ class ShippingLabels extends Component {
 						</FormSelect>
 					</FormFieldSet>
 					<FormFieldSet>
-						<FormLabel
-							className="shipping__cards-label">
+						<FormLabel className="shipping__cards-label">
 							{ translate( 'Credit card' ) }
 						</FormLabel>
 						<p className="shipping__credit-card-description">
-							{ translate( 'Use your credit card on file to pay for the labels you print or add a new one.' ) }
+							{ translate(
+								'Use your credit card on file to pay for the labels you print or add a new one.',
+							) }
 						</p>
 						{ this.state.cards.map( renderCard ) }
 						<Button compact>{ translate( 'Add another credit card' ) }</Button>

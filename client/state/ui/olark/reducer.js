@@ -14,7 +14,7 @@ import {
 	STATUS_READY,
 	STATUS_TIMEOUT,
 	OPERATOR_STATUS_AVAILABLE,
-	OPERATOR_STATUS_AWAY
+	OPERATOR_STATUS_AWAY,
 } from './constants';
 
 /**
@@ -90,5 +90,5 @@ export default combineReducers( {
 	operatorStatus,
 	availability,
 	requesting,
-	status
+	status,
 } );

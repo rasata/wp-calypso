@@ -26,7 +26,7 @@ export function requestPostEmailSubscription( { dispatch }, action ) {
 			apiVersion: '1.2',
 			onSuccess: action,
 			onFailure: action,
-		} )
+		} ),
 	);
 }
 
@@ -42,8 +42,8 @@ export function receivePostEmailSubscription( store, action, next, response ) {
 	next(
 		updateNewPostEmailSubscription(
 			action.payload.blogId,
-			get( response, [ 'subscription', 'delivery_frequency' ] )
-		)
+			get( response, [ 'subscription', 'delivery_frequency' ] ),
+		),
 	);
 }
 
@@ -57,7 +57,7 @@ export default {
 		dispatchRequest(
 			requestPostEmailSubscription,
 			receivePostEmailSubscription,
-			receivePostEmailSubscriptionError
+			receivePostEmailSubscriptionError,
 		),
 	],
 };

@@ -1,4 +1,3 @@
-
 /**
  * Internal dependencies
  */
@@ -72,4 +71,3 @@ export function actionListStepFailure( actionList, error ) {
 		error,
 	};
 }
-

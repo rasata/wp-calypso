@@ -10,36 +10,25 @@ import { localize } from 'i18n-calypso';
 import ActivityLogBanner from './index';
 import ProgressBar from 'components/progress-bar';
 
-function ProgressBanner( {
-	moment,
-	percent,
-	status,
-	timestamp,
-	translate,
-} ) {
+function ProgressBanner( { moment, percent, status, timestamp, translate } ) {
 	const restoreStatusDescription = status === 'queued'
 		? translate( 'Your restore will start in a moment.' )
-		: translate( 'We\'re on it! Your site is being restored.' );
+		: translate( "We're on it! Your site is being restored." );
 
 	return (
-		<ActivityLogBanner
-			status="info"
-			title={ translate( 'Currently restoring your site' ) }
-		>
-			<p>{ translate(
-				"We're in the process of restoring your site back to %s. " +
-				"You'll be notified once it's complete.",
-				{ args: moment( timestamp ).format( 'LLLL' ) }
-			) }</p>
+		<ActivityLogBanner status="info" title={ translate( 'Currently restoring your site' ) }>
+			<p>
+				{ translate(
+					"We're in the process of restoring your site back to %s. " +
+						"You'll be notified once it's complete.",
+					{ args: moment( timestamp ).format( 'LLLL' ) },
+				) }
+			</p>
 
 			<div>
 				<em>{ restoreStatusDescription }</em>
 				<ProgressBar
-					className={
-						status === 'queued'
-							? 'activity-log-banner__progress-bar--queued'
-							: null
-					}
+					className={ status === 'queued' ? 'activity-log-banner__progress-bar--queued' : null }
 					isPulsing
 					value={ status === 'queued' ? 100 : percent }
 				/>
@@ -50,10 +39,7 @@ function ProgressBanner( {
 
 ProgressBanner.propTypes = {
 	percent: PropTypes.number.isRequired,
-	status: PropTypes.oneOf( [
-		'queued',
-		'running',
-	] ).isRequired,
+	status: PropTypes.oneOf( [ 'queued', 'running' ] ).isRequired,
 	timestamp: PropTypes.number.isRequired,
 };
 

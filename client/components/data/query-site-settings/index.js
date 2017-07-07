@@ -39,14 +39,14 @@ class QuerySiteSettings extends Component {
 QuerySiteSettings.propTypes = {
 	siteId: PropTypes.number,
 	requestingSiteSettings: PropTypes.bool,
-	requestSiteSettings: PropTypes.func
+	requestSiteSettings: PropTypes.func,
 };
 
 export default connect(
 	( state, { siteId } ) => {
 		return {
-			requestingSiteSettings: isRequestingSiteSettings( state, siteId )
+			requestingSiteSettings: isRequestingSiteSettings( state, siteId ),
 		};
 	},
-	{ requestSiteSettings }
+	{ requestSiteSettings },
 )( QuerySiteSettings );

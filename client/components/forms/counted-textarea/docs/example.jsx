@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	PureRenderMixin = require( 'react-pure-render/mixin' );
+var React = require( 'react' ), PureRenderMixin = require( 'react-pure-render/mixin' );
 
 /**
  * Internal dependencies
@@ -16,13 +15,13 @@ module.exports = React.createClass( {
 
 	getInitialState: function() {
 		return {
-			value: 'Hello World!'
+			value: 'Hello World!',
 		};
 	},
 
 	onChange: function( event ) {
 		this.setState( {
-			value: event.target.value
+			value: event.target.value,
 		} );
 	},
 
@@ -31,7 +30,8 @@ module.exports = React.createClass( {
 			<CountedTextarea
 				value={ this.state.value }
 				onChange={ this.onChange }
-				acceptableLength={ 20 } />
+				acceptableLength={ 20 }
+			/>
 		);
-	}
+	},
 } );

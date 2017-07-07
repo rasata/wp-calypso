@@ -23,12 +23,12 @@ module.exports = React.createClass( {
 		position: React.PropTypes.string,
 		id: React.PropTypes.string,
 		groups: React.PropTypes.bool,
-		className: React.PropTypes.string
+		className: React.PropTypes.string,
 	},
 
 	getInitialState: function() {
 		return {
-			popoverVisible: false
+			popoverVisible: false,
 		};
 	},
 
@@ -39,7 +39,7 @@ module.exports = React.createClass( {
 			position: 'bottom left',
 			groups: false,
 			siteQuerystring: false,
-			className: ''
+			className: '',
 		};
 	},
 
@@ -55,7 +55,7 @@ module.exports = React.createClass( {
 
 	updatePopoverVisibilityState: function() {
 		this.setState( {
-			popoverVisible: this.props.visible
+			popoverVisible: this.props.visible,
 		} );
 	},
 
@@ -76,7 +76,8 @@ module.exports = React.createClass( {
 				indicator={ false }
 				autoFocus={ ! hasTouch() }
 				groups={ true }
-				onClose={ this.props.onClose } />
+				onClose={ this.props.onClose }
+			/>
 		);
 	},
 
@@ -84,7 +85,7 @@ module.exports = React.createClass( {
 		let classes = classnames(
 			this.props.className,
 			'popover sites-popover',
-			this.props.header && 'has-header'
+			this.props.header && 'has-header',
 		);
 
 		return (
@@ -101,5 +102,5 @@ module.exports = React.createClass( {
 				{ this.renderSiteSelector() }
 			</Popover>
 		);
-	}
+	},
 } );

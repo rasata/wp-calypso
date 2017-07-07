@@ -20,11 +20,11 @@ export const itemsSchema = {
 							assigned: { type: 'string' },
 							assigned_by: { type: 'number' },
 							code: { type: 'string' },
-							status: { type: 'string' }
-						}
-					}
-				}
-			}
-		}
-	}
+							status: { type: 'string' },
+						},
+					},
+				},
+			},
+		},
+	},
 };

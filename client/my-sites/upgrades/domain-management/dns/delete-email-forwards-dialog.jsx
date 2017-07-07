@@ -13,11 +13,9 @@ const DeleteEmailForwardsDialog = React.createClass( {
 	propTypes: {
 		onClose: React.PropTypes.func,
 		visible: React.PropTypes.bool.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired,
-		selectedDomainName: React.PropTypes.string.isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
+		selectedDomainName: React.PropTypes.string.isRequired,
 	},
 
 	close( result ) {
@@ -34,30 +32,37 @@ const DeleteEmailForwardsDialog = React.createClass( {
 				action: 'delete',
 				label: this.translate( 'Deactivate Email Forwards and Remove Records' ),
 				isPrimary: true,
-				onClick: () => this.close( { shouldDeleteEmailForwards: true } )
+				onClick: () => this.close( { shouldDeleteEmailForwards: true } ),
 			},
 			{
 				action: 'keep',
-				label: this.translate( 'Keep Records and Email Forwards' )
-			}
+				label: this.translate( 'Keep Records and Email Forwards' ),
+			},
 		];
 
 		return (
 			<Dialog
-					isVisible={ this.isVisible() }
-					buttons={ buttons }
-					onClose={ () => this.close( { shouldDeleteEmailForwards: false } ) }
-					className="cancel-purchase-button__warning-dialog">
+				isVisible={ this.isVisible() }
+				buttons={ buttons }
+				onClose={ () => this.close( { shouldDeleteEmailForwards: false } ) }
+				className="cancel-purchase-button__warning-dialog"
+			>
 				<h1>{ this.translate( 'Are you sure?' ) }</h1>
 				<p>
-				{ this.translate(
-					'Removing this record will delete your current {{a}}Email Forwards{{/a}}.',
-					{
-						components: {
-							a: <a target="_blank" rel="noopener noreferrer" href={ this.getEmailForwardingPath() } />
-						}
-					}
-				) }
+					{ this.translate(
+						'Removing this record will delete your current {{a}}Email Forwards{{/a}}.',
+						{
+							components: {
+								a: (
+									<a
+										target="_blank"
+										rel="noopener noreferrer"
+										href={ this.getEmailForwardingPath() }
+									/>
+								),
+							},
+						},
+					) }
 				</p>
 			</Dialog>
 		);
@@ -66,9 +71,9 @@ const DeleteEmailForwardsDialog = React.createClass( {
 	getEmailForwardingPath: function() {
 		return domainManagementEmailForwarding(
 			this.props.selectedSite.slug,
-			this.props.selectedDomainName
+			this.props.selectedDomainName,
 		);
-	}
+	},
 } );
 
 export default DeleteEmailForwardsDialog;

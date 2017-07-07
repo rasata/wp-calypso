@@ -21,7 +21,7 @@ export function currentPage( state = 1, action ) {
 }
 
 const ordersReducer = combineReducers( {
-	currentPage
+	currentPage,
 } );
 
 export default keyedReducer( 'siteId', ordersReducer );

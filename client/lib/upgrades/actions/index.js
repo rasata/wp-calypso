@@ -14,5 +14,5 @@ export default {
 	...freeTrials,
 	...domainManagement,
 	...domainSearch,
-	...purchases
+	...purchases,
 };

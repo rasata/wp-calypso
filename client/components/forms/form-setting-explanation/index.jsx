@@ -6,13 +6,12 @@ import classNames from 'classnames';
 import { omit } from 'lodash';
 
 export default React.createClass( {
-
 	displayName: 'FormSettingExplanation',
 
 	propTypes: {
 		noValidate: React.PropTypes.bool,
 		isIndented: React.PropTypes.bool,
-		className: React.PropTypes.string
+		className: React.PropTypes.string,
 	},
 
 	getDefaultProps() {
@@ -25,14 +24,13 @@ export default React.createClass( {
 	render() {
 		const classes = classNames( this.props.className, 'form-setting-explanation', {
 			'no-validate': this.props.noValidate,
-			'is-indented': this.props.isIndented
+			'is-indented': this.props.isIndented,
 		} );
 
 		return (
-			<p { ...omit( this.props, 'className', 'noValidate', 'isIndented' ) }
-				className={ classes } >
+			<p { ...omit( this.props, 'className', 'noValidate', 'isIndented' ) } className={ classes }>
 				{ this.props.children }
 			</p>
 		);
-	}
+	},
 } );

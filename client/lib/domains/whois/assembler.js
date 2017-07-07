@@ -12,10 +12,7 @@ function createDomainWhois( dataTransferObject ) {
 	const registrantWhois = createWhois( dataTransferObject, whoisType.REGISTRANT ),
 		privacyServiceWhois = createWhois( dataTransferObject, whoisType.PRIVACY_SERVICE );
 
-	return [
-		registrantWhois,
-		privacyServiceWhois
-	];
+	return [ registrantWhois, privacyServiceWhois ];
 }
 
 function createWhois( dataTransferObject, type ) {
@@ -36,10 +33,10 @@ function createWhois( dataTransferObject, type ) {
 		email: contactInformation.email || '',
 		phone: contactInformation.phone || '',
 		fax: contactInformation.fax || '',
-		type
+		type,
 	};
 }
 
 export default {
-	createDomainWhois
+	createDomainWhois,
 };

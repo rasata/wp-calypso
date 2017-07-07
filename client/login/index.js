@@ -2,11 +2,7 @@
  * Internal dependencies
  */
 import config from 'config';
-import {
-	login,
-	magicLogin,
-	magicLoginUse,
-} from './controller';
+import { login, magicLogin, magicLoginUse } from './controller';
 import { makeLayout, redirectLoggedIn, setUpLocale } from 'controller';
 
 export default router => {

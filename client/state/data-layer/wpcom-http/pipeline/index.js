@@ -1,10 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	compact,
-	pick,
-} from 'lodash';
+import { compact, pick } from 'lodash';
 
 /**
  * Internal dependencies
@@ -47,27 +44,24 @@ import { retryOnFailure } from './retry-on-failure';
  */
 
 /** @type {InboundProcessor[]} */
-const inboundChain = [
-	retryOnFailure(),
-	applyDuplicatesHandlers,
-];
+const inboundChain = [ retryOnFailure(), applyDuplicatesHandlers ];
 
 /** @type {OutboundProcessor[]} */
-const outboundChain = [
-	removeDuplicateGets,
-];
+const outboundChain = [ removeDuplicateGets ];
 
 const applyInboundProcessor = ( inboundData, nextProcessor ) =>
-	inboundData.shouldAbort !== true
-		? nextProcessor( inboundData )
-		: inboundData;
+	( inboundData.shouldAbort !== true ? nextProcessor( inboundData ) : inboundData );
 
 const applyOutboundProcessor = ( outboundData, nextProcessor ) =>
-	outboundData.nextRequest !== null
-		? nextProcessor( outboundData )
-		: outboundData;
+	( outboundData.nextRequest !== null ? nextProcessor( outboundData ) : outboundData );
 
-export const processInboundChain = chain => ( originalRequest, store, originalData, originalError, originalHeaders ) =>
+export const processInboundChain = chain => (
+	originalRequest,
+	store,
+	originalData,
+	originalError,
+	originalHeaders,
+) =>
 	pick(
 		chain.reduce( applyInboundProcessor, {
 			originalRequest,
@@ -85,8 +79,7 @@ export const processInboundChain = chain => ( originalRequest, store, originalDa
 	);
 
 export const processOutboundChain = chain => ( originalRequest, store ) =>
-	chain
-		.reduce( applyOutboundProcessor, { originalRequest, store, nextRequest: originalRequest } )
+	chain.reduce( applyOutboundProcessor, { originalRequest, store, nextRequest: originalRequest } )
 		.nextRequest;
 
 export const processInbound = processInboundChain( inboundChain );

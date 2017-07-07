@@ -6,7 +6,6 @@ var React = require( 'react' ),
 	classNames = require( 'classnames' );
 
 module.exports = React.createClass( {
-
 	displayName: 'Security2faProgressItem',
 
 	componentDidMount: function() {
@@ -26,7 +25,7 @@ module.exports = React.createClass( {
 		return classNames( {
 			'security-2fa-progress__item': true,
 			'is-highlighted': this.props.step.isHighlighted,
-			'is-completed': this.props.step.isCompleted
+			'is-completed': this.props.step.isCompleted,
 		} );
 	},
 
@@ -34,10 +33,10 @@ module.exports = React.createClass( {
 		return (
 			<div className={ this.highlight() }>
 
-				<span className={ this.noticon() }></span>
+				<span className={ this.noticon() } />
 				<label>{ this.props.label } </label>
 
 			</div>
 		);
-	}
+	},
 } );

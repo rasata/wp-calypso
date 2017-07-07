@@ -11,24 +11,20 @@ import controller from 'my-sites/controller';
 import settingsController from 'my-sites/site-settings/controller';
 
 module.exports = function() {
-	page(
-		'/settings',
-		controller.siteSelection,
-		settingsController.redirectToGeneral
-	);
+	page( '/settings', controller.siteSelection, settingsController.redirectToGeneral );
 	page(
 		'/settings/general/:site_id',
 		controller.siteSelection,
 		controller.navigation,
 		settingsController.setScroll,
-		settingsController.siteSettings
+		settingsController.siteSettings,
 	);
 
 	page(
 		'/settings/import/:site_id',
 		controller.siteSelection,
 		controller.navigation,
-		settingsController.importSite
+		settingsController.importSite,
 	);
 
 	if ( config.isEnabled( 'manage/export/guided-transfer' ) ) {
@@ -36,7 +32,7 @@ module.exports = function() {
 			'/settings/export/guided/:host_slug?/:site_id',
 			controller.siteSelection,
 			controller.navigation,
-			settingsController.guidedTransfer
+			settingsController.guidedTransfer,
 		);
 	}
 
@@ -45,7 +41,7 @@ module.exports = function() {
 			'/settings/export/:site_id',
 			controller.siteSelection,
 			controller.navigation,
-			settingsController.exportSite
+			settingsController.exportSite,
 		);
 	}
 
@@ -54,27 +50,27 @@ module.exports = function() {
 		controller.siteSelection,
 		controller.navigation,
 		settingsController.setScroll,
-		settingsController.deleteSite
+		settingsController.deleteSite,
 	);
 	page(
 		'/settings/start-over/:site_id',
 		controller.siteSelection,
 		controller.navigation,
 		settingsController.setScroll,
-		settingsController.startOver
+		settingsController.startOver,
 	);
 	page(
 		'/settings/theme-setup/:site_id',
 		controller.siteSelection,
 		controller.navigation,
 		settingsController.setScroll,
-		settingsController.themeSetup
+		settingsController.themeSetup,
 	);
 
 	page(
 		'/settings/:section',
 		settingsController.legacyRedirects,
 		controller.siteSelection,
-		controller.sites
+		controller.sites,
 	);
 };

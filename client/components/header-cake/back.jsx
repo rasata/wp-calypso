@@ -18,11 +18,10 @@ import viewport from 'lib/viewport';
  */
 const HIDE_BACK_CRITERIA = {
 	windowWidth: 480,
-	characterLength: 8
+	characterLength: 8,
 };
 
 export default React.createClass( {
-
 	displayName: 'HeaderCakeBack',
 
 	mixins: [ ObserveWindowSizeMixin ],
@@ -31,13 +30,13 @@ export default React.createClass( {
 		onClick: PropTypes.func,
 		href: PropTypes.string,
 		text: PropTypes.string,
-		spacer: PropTypes.bool
+		spacer: PropTypes.bool,
 	},
 
 	getDefaultProps() {
 		return {
 			spacer: false,
-			disabled: false
+			disabled: false,
 		};
 	},
 
@@ -45,8 +44,8 @@ export default React.createClass( {
 		const windowWidth = viewport.getWindowInnerWidth();
 
 		if (
-			windowWidth <= HIDE_BACK_CRITERIA.windowWidth &&
-			text.length >= HIDE_BACK_CRITERIA.characterLength ||
+			( windowWidth <= HIDE_BACK_CRITERIA.windowWidth &&
+				text.length >= HIDE_BACK_CRITERIA.characterLength ) ||
 			windowWidth <= 300
 		) {
 			return true;
@@ -60,11 +59,18 @@ export default React.createClass( {
 		const linkClasses = classNames( {
 			'header-cake__back': true,
 			'is-spacer': spacer,
-			'is-action': !! icon
+			'is-action': !! icon,
 		} );
 
 		return (
-			<Button compact borderless className={ linkClasses } href={ href } onClick={ onClick } disabled={ spacer }>
+			<Button
+				compact
+				borderless
+				className={ linkClasses }
+				href={ href }
+				onClick={ onClick }
+				disabled={ spacer }
+			>
 				<Gridicon icon={ icon || 'arrow-left' } size={ 18 } />
 				{ ! this.hideText( text ) && text }
 			</Button>
@@ -73,6 +79,5 @@ export default React.createClass( {
 
 	onWindowResize() {
 		this.forceUpdate();
-	}
-
+	},
 } );

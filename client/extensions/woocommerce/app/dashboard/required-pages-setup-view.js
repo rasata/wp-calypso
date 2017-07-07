@@ -27,7 +27,7 @@ class RequiredPagesSetupView extends Component {
 		if ( site ) {
 			this.props.setUpStorePages( site.ID );
 		}
-	}
+	};
 
 	render = () => {
 		const { translate } = this.props;
@@ -37,13 +37,13 @@ class RequiredPagesSetupView extends Component {
 					imageSource={ '/calypso/images/extensions/woocommerce/woocommerce-store-creation.svg' }
 					imageWidth={ 160 }
 					title={ translate( 'Setting up your store' ) }
-					subtitle={ translate( 'Give us a minute and we\'ll move right along.' ) }
+					subtitle={ translate( "Give us a minute and we'll move right along." ) }
 				>
 					<ProgressBar value={ 100 } isPulsing />
 				</SetupHeader>
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
@@ -58,7 +58,7 @@ function mapDispatchToProps( dispatch ) {
 		{
 			setUpStorePages,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

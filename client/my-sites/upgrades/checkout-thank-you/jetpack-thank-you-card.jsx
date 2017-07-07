@@ -9,13 +9,7 @@ import filter from 'lodash/filter';
 import range from 'lodash/range';
 import { localize } from 'i18n-calypso';
 import classNames from 'classnames';
-import {
-	map,
-	reduce,
-	get,
-	difference,
-	some
-} from 'lodash';
+import { map, reduce, get, difference, some } from 'lodash';
 
 /**
  * Internal dependencies
@@ -42,9 +36,7 @@ import { isJetpackSite, isRequestingSites, getRawSite } from 'state/sites/select
 import { getPlugin } from 'state/plugins/wporg/selectors';
 import { fetchPluginData } from 'state/plugins/wporg/actions';
 import { requestSites } from 'state/sites/actions';
-import {
-	installPlugin,
-} from 'state/plugins/premium/actions';
+import { installPlugin } from 'state/plugins/premium/actions';
 import {
 	getPluginsForSite,
 	getActivePlugin,
@@ -52,7 +44,7 @@ import {
 	isFinished,
 	isInstalling,
 	isRequesting,
-	hasRequested
+	hasRequested,
 } from 'state/plugins/premium/selectors';
 // Store for existing plugins
 import PluginsStore from 'lib/plugins/store';
@@ -69,7 +61,7 @@ import {
 	FEATURE_ONE_CLICK_THREAT_RESOLUTION,
 	FEATURE_SPAM_AKISMET_PLUS,
 	FEATURES_LIST,
-	getPlanClass
+	getPlanClass,
 } from 'lib/plans/constants';
 import { isFreePlan, getPlan } from 'lib/plans';
 
@@ -81,18 +73,18 @@ const vpFeatures = {
 	[ FEATURE_BACKUP_ARCHIVE_UNLIMITED ]: true,
 	[ FEATURE_EASY_SITE_MIGRATION ]: true,
 	[ FEATURE_MALWARE_SCANNING_DAILY_AND_ON_DEMAND ]: true,
-	[ FEATURE_ONE_CLICK_THREAT_RESOLUTION ]: true
+	[ FEATURE_ONE_CLICK_THREAT_RESOLUTION ]: true,
 };
 
 const akismetFeatures = {
-	[ FEATURE_SPAM_AKISMET_PLUS ]: true
+	[ FEATURE_SPAM_AKISMET_PLUS ]: true,
 };
 
 class JetpackThankYouCard extends Component {
-	constructor( props ) {
-		super( props );
+	constructor( props ) {
+		super( props );
 		this.state = {
-			completedJetpackFeatures: {}
+			completedJetpackFeatures: {},
 		};
 	}
 
@@ -128,7 +120,7 @@ class JetpackThankYouCard extends Component {
 
 	allPluginsHaveWporgData() {
 		const plugins = this.addWporgDataToPlugins( this.props.plugins );
-		return ( plugins.length === filter( plugins, { wporg: true } ).length );
+		return plugins.length === filter( plugins, { wporg: true } ).length;
 	}
 
 	componentDidMount() {
@@ -140,7 +132,8 @@ class JetpackThankYouCard extends Component {
 			if ( ! confirmText ) {
 				return next();
 			}
-			if ( window.confirm( confirmText ) ) { // eslint-disable-line no-aler
+			if ( window.confirm( confirmText ) ) {
+				// eslint-disable-line no-aler
 				next();
 			} else {
 				// save off the current path just in case context changes after this call
@@ -160,7 +153,8 @@ class JetpackThankYouCard extends Component {
 		const site = this.props.selectedSite;
 		const { plugins } = this.props;
 
-		if ( ! site ||
+		if (
+			! site ||
 			! site.jetpack ||
 			! site.canManage() ||
 			! this.allPluginsHaveWporgData() ||
@@ -169,7 +163,11 @@ class JetpackThankYouCard extends Component {
 			return;
 		}
 
-		if ( this.props.planFeatures && ! site.canUpdateFiles && ! Object.keys( this.state.completedJetpackFeatures ).length ) {
+		if (
+			this.props.planFeatures &&
+			! site.canUpdateFiles &&
+			! Object.keys( this.state.completedJetpackFeatures ).length
+		) {
 			this.activateJetpackFeatures();
 		}
 
@@ -179,7 +177,7 @@ class JetpackThankYouCard extends Component {
 			site.canUpdateFiles &&
 			plugins &&
 			! this.shouldRenderPlaceholders() &&
-			! some( plugins, ( plugin ) => 'done' !== plugin.status ) &&
+			! some( plugins, plugin => 'done' !== plugin.status ) &&
 			! Object.keys( this.state.completedJetpackFeatures ).length
 		) {
 			this.activateJetpackFeatures();
@@ -188,7 +186,8 @@ class JetpackThankYouCard extends Component {
 
 	warnIfNotFinished( event ) {
 		const site = this.props && this.props.selectedSite;
-		if ( ! site ||
+		if (
+			! site ||
 			! site.jetpack ||
 			! site.canUpdateFiles ||
 			! site.canManage() ||
@@ -197,7 +196,7 @@ class JetpackThankYouCard extends Component {
 			return;
 		}
 		analytics.tracks.recordEvent( 'calypso_plans_autoconfig_user_interrupt' );
-		const beforeUnloadText = this.props.translate( 'We haven\'t finished installing your plugins.' );
+		const beforeUnloadText = this.props.translate( "We haven't finished installing your plugins." );
 		( event || window.event ).returnValue = beforeUnloadText;
 		return beforeUnloadText;
 	}
@@ -254,7 +253,7 @@ class JetpackThankYouCard extends Component {
 		}
 
 		const classes = classNames( 'checkout-thank-you__jetpack-feature', {
-			'is-placeholder': ! feature
+			'is-placeholder': ! feature,
 		} );
 		return (
 			<li key={ key } className={ classes }>
@@ -281,14 +280,18 @@ class JetpackThankYouCard extends Component {
 
 	isErrored() {
 		const { selectedSite, plugins } = this.props;
-		return ( selectedSite && ! selectedSite.canUpdateFiles ) ||
-			some( plugins, ( plugin ) => plugin.hasOwnProperty( 'error' ) && plugin.error );
+		return (
+			( selectedSite && ! selectedSite.canUpdateFiles ) ||
+			some( plugins, plugin => plugin.hasOwnProperty( 'error' ) && plugin.error )
+		);
 	}
 
 	renderFeatures() {
 		const { selectedSite } = this.props;
 
-		const mappedFeatures = ( selectedSite && selectedSite.canUpdateFiles && this.shouldRenderPlaceholders() )
+		const mappedFeatures = selectedSite &&
+			selectedSite.canUpdateFiles &&
+			this.shouldRenderPlaceholders()
 			? this.renderFeaturePlaceholders()
 			: this.getFeaturesWithStatus().map( this.renderFeature );
 		const features = (
@@ -314,7 +317,8 @@ class JetpackThankYouCard extends Component {
 
 	renderLiveChatButton() {
 		const { isJetpackPaidPlan } = this.props;
-		return isJetpackPaidPlan && (
+		return (
+			isJetpackPaidPlan &&
 			<HappyChatButton
 				borderless={ false }
 				className="checkout-thank-you__happychat-button thank-you-card__button"
@@ -336,58 +340,62 @@ class JetpackThankYouCard extends Component {
 		if ( reasons && reasons.length > 0 ) {
 			reason = translate(
 				'We are unable to install the Akismet and VaultPress plugins that power the spam protection, backup, ' +
-				"and security features of your Jetpack plan due to your site's current " +
-				'file permissions settings. You must either install them manually or change your file permissions.'
+					"and security features of your Jetpack plan due to your site's current " +
+					'file permissions settings. You must either install them manually or change your file permissions.',
 			);
 			this.trackConfigFinished( 'calypso_plans_autoconfig_error_filemod', { error: reason } );
 		} else if ( ! selectedSite.hasMinimumJetpackVersion ) {
 			reason = translate(
 				'We are unable to install the Akismet and VaultPress plugins that power the spam protection, backup, ' +
-				'and security features of your Jetpack plan because your site has an older version of Jetpack. ' +
-				'Please upgrade Jetpack and try again.'
+					'and security features of your Jetpack plan because your site has an older version of Jetpack. ' +
+					'Please upgrade Jetpack and try again.',
 			);
 			this.trackConfigFinished( 'calypso_plans_autoconfig_error_jpversion', {
-				jetpack_version: selectedSite.options.jetpack_version
+				jetpack_version: selectedSite.options.jetpack_version,
 			} );
 		} else if ( ! selectedSite.isMainNetworkSite() ) {
 			reason = translate(
 				'We are unable to install the Akismet and VaultPress plugins that power the spam protection, backup, ' +
-				'and security features of your Jetpack plan because your site is part of a multi-site network, but is not ' +
-				'the main network site.'
+					'and security features of your Jetpack plan because your site is part of a multi-site network, but is not ' +
+					'the main network site.',
 			);
 
 			this.trackConfigFinished( 'calypso_plans_autoconfig_error_multisite' );
 		} else if ( selectedSite.options.is_multi_network ) {
 			reason = translate(
-					'We are unable to install the Akismet and VaultPress plugins that power the spam protection, backup, ' +
-					'and security features of your Jetpack plan because your site is part of a multi-network.'
-				);
+				'We are unable to install the Akismet and VaultPress plugins that power the spam protection, backup, ' +
+					'and security features of your Jetpack plan because your site is part of a multi-network.',
+			);
 			this.trackConfigFinished( 'calypso_plans_autoconfig_error_multinetwork' );
 		} else {
-			const erroredPlugins = reduce( this.props.plugins, ( erroredList, plugin ) => {
-				if ( 'error' === plugin.status ) {
-					erroredList.push( plugin.slug );
-				}
-				return erroredList;
-			}, [] );
+			const erroredPlugins = reduce(
+				this.props.plugins,
+				( erroredList, plugin ) => {
+					if ( 'error' === plugin.status ) {
+						erroredList.push( plugin.slug );
+					}
+					return erroredList;
+				},
+				[],
+			);
 
 			if ( 1 === erroredPlugins.length && -1 < erroredPlugins.indexOf( 'akismet' ) ) {
 				reason = translate(
 					'We are unable to automatically configure the Akismet plugin which powers the spam protection feature of ' +
-					'your Jetpack plan. Please continue with manual setup or contact ' +
-					'support by clicking one of the buttons below.'
+						'your Jetpack plan. Please continue with manual setup or contact ' +
+						'support by clicking one of the buttons below.',
 				);
 			} else if ( 1 === erroredPlugins.length && -1 < erroredPlugins.indexOf( 'vaultpress' ) ) {
 				reason = translate(
 					'We are unable to automatically configure the VaultPress plugin which powers the security and backup ' +
-					'features of your Jetpack plan. Please continue with manual setup or contact ' +
-					'support by clicking one of the buttons below.'
+						'features of your Jetpack plan. Please continue with manual setup or contact ' +
+						'support by clicking one of the buttons below.',
 				);
 			} else {
 				reason = translate(
 					'We are unable to automatically configure the Akismet and VaultPress plugins that power the spam protection, ' +
-					'backup, and security features of your Jetpack plan. Please continue with manual setup or contact ' +
-					'support by clicking one of the buttons below.'
+						'backup, and security features of your Jetpack plan. Please continue with manual setup or contact ' +
+						'support by clicking one of the buttons below.',
 				);
 			}
 			this.trackConfigFinished( 'calypso_plans_autoconfig_error' );
@@ -395,22 +403,22 @@ class JetpackThankYouCard extends Component {
 
 		return (
 			<div>
-					<Card className="checkout-thank-you__jetpack-error-card">
-						<h3 className="checkout-thank-you__jetpack-error-heading">
-							{ translate( 'We had trouble setting up your plan' ) }
-						</h3>
-						<p className="checkout-thank-you__jetpack-error-explanation">
-							{ reason }
-						</p>
-						<FormButtonsBar>
-							<FormButton href={ support.JETPACK_CONTACT_SUPPORT }>
-								{ translate( 'Get Help' ) }
-							</FormButton>
+				<Card className="checkout-thank-you__jetpack-error-card">
+					<h3 className="checkout-thank-you__jetpack-error-heading">
+						{ translate( 'We had trouble setting up your plan' ) }
+					</h3>
+					<p className="checkout-thank-you__jetpack-error-explanation">
+						{ reason }
+					</p>
+					<FormButtonsBar>
+						<FormButton href={ support.JETPACK_CONTACT_SUPPORT }>
+							{ translate( 'Get Help' ) }
+						</FormButton>
 
-							<FormButton isPrimary={ false } href={ support.SETTING_UP_PREMIUM_SERVICES }>
-								{ translate( 'Learn more about manual set up' ) }
-							</FormButton>
-						</FormButtonsBar>
+						<FormButton isPrimary={ false } href={ support.SETTING_UP_PREMIUM_SERVICES }>
+							{ translate( 'Learn more about manual set up' ) }
+						</FormButton>
+					</FormButtonsBar>
 				</Card>
 			</div>
 		);
@@ -428,8 +436,7 @@ class JetpackThankYouCard extends Component {
 				showDismiss={ false }
 				status="is-error"
 				text={ translate( 'We had trouble setting up your plan.' ) }
-				>
-			</Notice>
+			/>
 		);
 	}
 
@@ -449,10 +456,10 @@ class JetpackThankYouCard extends Component {
 				text={ translate(
 					'Jetpack Manage must be enabled for us to auto-configure your %(plan)s plan.',
 					{
-						args: { plan: selectedSite.plan.product_name_short }
-					}
+						args: { plan: selectedSite.plan.product_name_short },
+					},
 				) }
-				>
+			>
 				<NoticeAction href={ manageUrl }>
 					{ translate( 'Turn On Manage' ) }
 				</NoticeAction>
@@ -469,16 +476,20 @@ class JetpackThankYouCard extends Component {
 		const jetpackFeatures = difference(
 			planFeatures,
 			Object.keys( vpFeatures ),
-			Object.keys( akismetFeatures )
+			Object.keys( akismetFeatures ),
 		);
 
-		const completedJetpackFeatures = reduce( jetpackFeatures, ( completed, feature ) => {
-			completed[ feature ] = true;
-			return completed;
-		}, {} );
+		const completedJetpackFeatures = reduce(
+			jetpackFeatures,
+			( completed, feature ) => {
+				completed[ feature ] = true;
+				return completed;
+			},
+			{},
+		);
 
 		this.setState( {
-			completedJetpackFeatures
+			completedJetpackFeatures,
 		} );
 	}
 
@@ -491,28 +502,34 @@ class JetpackThankYouCard extends Component {
 
 		const plugins = selectedSite && ! selectedSite.canUpdateFiles
 			? [
-				{ slug: 'vaultpress', status: 'wait', error: true },
-				{ slug: 'akismet', status: 'wait', error: true }
-			]
+					{ slug: 'vaultpress', status: 'wait', error: true },
+					{ slug: 'akismet', status: 'wait', error: true },
+				]
 			: this.props.plugins;
 
-		const pluginsStatus = reduce( plugins, ( completed, plugin ) => {
-			if ( 'done' === plugin.status ) {
-				completed[ plugin.slug ] = 'done';
-			} else if ( plugin.hasOwnProperty( 'error' ) && plugin.error ) {
-				completed[ plugin.slug ] = 'error';
-			} else {
-				completed[ plugin.slug ] = 'wait';
-			}
-			return completed;
-		}, {} );
+		const pluginsStatus = reduce(
+			plugins,
+			( completed, plugin ) => {
+				if ( 'done' === plugin.status ) {
+					completed[ plugin.slug ] = 'done';
+				} else if ( plugin.hasOwnProperty( 'error' ) && plugin.error ) {
+					completed[ plugin.slug ] = 'error';
+				} else {
+					completed[ plugin.slug ] = 'wait';
+				}
+				return completed;
+			},
+			{},
+		);
 
-		return map( planFeatures, ( feature ) => {
+		return map( planFeatures, feature => {
 			let status = 'wait';
 
 			if ( vpFeatures.hasOwnProperty( feature ) && pluginsStatus.hasOwnProperty( 'vaultpress' ) ) {
 				status = pluginsStatus.vaultpress;
-			} else if ( akismetFeatures.hasOwnProperty( feature ) && pluginsStatus.hasOwnProperty( 'akismet' ) ) {
+			} else if (
+				akismetFeatures.hasOwnProperty( feature ) && pluginsStatus.hasOwnProperty( 'akismet' )
+			) {
 				status = pluginsStatus.akismet;
 			} else if ( completedJetpackFeatures.hasOwnProperty( feature ) ) {
 				status = 'done';
@@ -520,7 +537,7 @@ class JetpackThankYouCard extends Component {
 
 			return {
 				slug: feature,
-				status
+				status,
 			};
 		} );
 	}
@@ -533,13 +550,21 @@ class JetpackThankYouCard extends Component {
 		const features = this.getFeaturesWithStatus() || [ '' ];
 		const completed = this.shouldRenderPlaceholders()
 			? 0
-			: reduce( features, ( total, feature ) => {
-				if ( 'object' !== typeof feature || ! feature.hasOwnProperty( 'status' ) || 'done' !== feature.status ) {
-					return total;
-				}
+			: reduce(
+					features,
+					( total, feature ) => {
+						if (
+							'object' !== typeof feature ||
+							! feature.hasOwnProperty( 'status' ) ||
+							'done' !== feature.status
+						) {
+							return total;
+						}
 
-				return total += 1;
-			}, 0 );
+						return ( total += 1 );
+					},
+					0,
+				);
 
 		return Math.ceil( completed / features.length * 100 );
 	}
@@ -559,16 +584,15 @@ class JetpackThankYouCard extends Component {
 					{ this.renderLiveChatButton() }
 					<a
 						className={ classNames( 'thank-you-card__button', { 'is-placeholder': ! buttonUrl } ) }
-						href={ buttonUrl }>
+						href={ buttonUrl }
+					>
 						{ translate( 'Visit Your Site' ) }
 					</a>
 				</div>
 			);
 		}
 
-		return (
-			<ProgressBar value={ progress } isPulsing />
-		);
+		return <ProgressBar value={ progress } isPulsing />;
 	}
 
 	renderDescription( progress = 0 ) {
@@ -591,7 +615,7 @@ class JetpackThankYouCard extends Component {
 		}
 
 		const classes = classNames( 'checkout-thank-you__jetpack', this.props.planClass, {
-			'is-errored': this.isErrored()
+			'is-errored': this.isErrored(),
 		} );
 
 		const progress = this.getProgress();
@@ -604,7 +628,8 @@ class JetpackThankYouCard extends Component {
 				<PlanThankYouCard
 					siteId={ site.ID }
 					action={ this.renderAction( progress ) }
-					description={ this.renderDescription( progress ) } />
+					description={ this.renderDescription( progress ) }
+				/>
 				{ this.renderFeatures() }
 			</div>
 		);
@@ -617,16 +642,13 @@ export default connect(
 		const site = getSelectedSite( state );
 		const whitelist = ownProps.whitelist || false;
 		let plan = getCurrentPlan( state, siteId );
-		const planClass = plan && plan.productSlug
-			? getPlanClass( plan.productSlug )
-			: '';
-		const isJetpackFreePlan = isJetpackSite( state, siteId ) && plan && plan.productSlug && isFreePlan( plan.productSlug );
+		const planClass = plan && plan.productSlug ? getPlanClass( plan.productSlug ) : '';
+		const isJetpackFreePlan =
+			isJetpackSite( state, siteId ) && plan && plan.productSlug && isFreePlan( plan.productSlug );
 		if ( plan ) {
 			plan = getPlan( plan.productSlug );
 		}
-		const planFeatures = plan && plan.getFeatures
-			? plan.getFeatures()
-			: false;
+		const planFeatures = plan && plan.getFeatures ? plan.getFeatures() : false;
 
 		// We need to pass the raw redux site to JetpackSite() in order to properly build the site.
 		const selectedSite = site && isJetpackSite( state, siteId )
@@ -646,8 +668,8 @@ export default connect(
 			isRequestingSites: isRequestingSites( state ),
 			siteId,
 			planFeatures,
-			planClass
+			planClass,
 		};
 	},
-	dispatch => bindActionCreators( { requestSites, fetchPluginData, installPlugin }, dispatch )
+	dispatch => bindActionCreators( { requestSites, fetchPluginData, installPlugin }, dispatch ),
 )( localize( JetpackThankYouCard ) );

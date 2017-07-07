@@ -21,7 +21,7 @@ export class GooglePhotos extends SharingService {
 		deleteStoredKeyringConnection: () => {},
 	};
 
-	createOrUpdateConnection = () => { };
+	createOrUpdateConnection = () => {};
 
 	/**
 	 * Deletes the passed connections.
@@ -53,10 +53,13 @@ export class GooglePhotos extends SharingService {
 
 		if ( this.didKeyringConnectionSucceed( availableExternalAccounts ) ) {
 			this.setState( { isConnecting: false } );
-			this.props.successNotice( this.props.translate( 'The %(service)s account was successfully connected.', {
-				args: { service: this.props.service.label },
-				context: 'Sharing: Publicize connection confirmation',
-			} ), { id: 'publicize' } );
+			this.props.successNotice(
+				this.props.translate( 'The %(service)s account was successfully connected.', {
+					args: { service: this.props.service.label },
+					context: 'Sharing: Publicize connection confirmation',
+				} ),
+				{ id: 'publicize' },
+			);
 		}
 	}
 
@@ -67,7 +70,14 @@ export class GooglePhotos extends SharingService {
 	renderLogo() {
 		return (
 			/* eslint-disable wpcalypso/jsx-classname-namespace */
-			<img className="sharing-service__logo" src="/calypso/images/sharing/google-photos-logo.svg" width="48" height="48" />
+			(
+				<img
+					className="sharing-service__logo"
+					src="/calypso/images/sharing/google-photos-logo.svg"
+					width="48"
+					height="48"
+				/>
+			)
 		);
 	}
 }
@@ -79,10 +89,13 @@ export default connectFor(
 			...props,
 			removableConnections: props.keyringConnections,
 			fetchConnection: props.requestKeyringConnections,
-			siteUserConnections: props.keyringConnections.map( connection => ( { ...connection, keyring_connection_ID: connection.ID } ) ),
+			siteUserConnections: props.keyringConnections.map( connection => ( {
+				...connection,
+				keyring_connection_ID: connection.ID,
+			} ) ),
 		};
 	},
 	{
 		deleteStoredKeyringConnection,
-	}
+	},
 );

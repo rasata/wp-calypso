@@ -16,7 +16,7 @@ import DocsSelectorsResult from './result';
 export default class DocsSelectorsSingle extends Component {
 	static propTypes = {
 		selector: PropTypes.string.isRequired,
-		search: PropTypes.string
+		search: PropTypes.string,
 	};
 
 	state = {};
@@ -31,14 +31,14 @@ export default class DocsSelectorsSingle extends Component {
 		}
 	}
 
-	request = ( selector ) => {
-		request.get( '/devdocs/service/selectors' )
-			.query( { search: selector } )
-			.then( ( { body } ) => {
-				const result = find( body, { name: selector } );
-				this.setState( { result } );
-			} );
-	}
+	request = selector => {
+		request.get( '/devdocs/service/selectors' ).query( { search: selector } ).then( ( {
+			body,
+		} ) => {
+			const result = find( body, { name: selector } );
+			this.setState( { result } );
+		} );
+	};
 
 	onReturnToSearch = () => {
 		const { search } = this.props;
@@ -49,7 +49,7 @@ export default class DocsSelectorsSingle extends Component {
 		}
 
 		page( url );
-	}
+	};
 
 	render() {
 		const { selector } = this.props;
@@ -60,13 +60,10 @@ export default class DocsSelectorsSingle extends Component {
 				<HeaderCake onClick={ this.onReturnToSearch }>
 					{ selector }
 				</HeaderCake>
-				{ 'result' in this.state && (
-					this.state.result
-						? <DocsSelectorsResult
-							{ ...{ name, description, tags } }
-							expanded />
-						: 'No selector found'
-				) }
+				{ 'result' in this.state &&
+					( this.state.result
+						? <DocsSelectorsResult { ...{ name, description, tags } } expanded />
+						: 'No selector found' ) }
 			</div>
 		);
 	}

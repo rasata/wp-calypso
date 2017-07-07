@@ -1,10 +1,9 @@
-
 function preventScrollBounceOSX( body, event ) {
 	if (
 		( event.deltaY < 0 && body.scrollTop === 0 ) ||
 		( event.deltaY > 0 && body.scrollTop === body.scrollHeight - this.innerHeight )
 	) {
-		event.preventDefault()
+		event.preventDefault();
 	}
 }
 

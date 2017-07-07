@@ -7,36 +7,36 @@ export const sparkWidgetList1 = [
 	{
 		key: 'products',
 		title: translate( 'Products Purchased' ),
-		type: 'number'
+		type: 'number',
 	},
 	{
 		key: 'avg_products_per_order',
 		title: translate( 'Products Per Order' ),
-		type: 'number'
+		type: 'number',
 	},
 	{
 		key: 'coupons',
 		title: translate( 'Coupons Used' ),
-		type: 'number'
-	}
+		type: 'number',
+	},
 ];
 
 export const sparkWidgetList2 = [
 	{
 		key: 'total_refund',
 		title: translate( 'Refunds' ),
-		type: 'currency'
+		type: 'currency',
 	},
 	{
 		key: 'total_shipping',
 		title: translate( 'Shipping' ),
-		type: 'currency'
+		type: 'currency',
 	},
 	{
 		key: 'total_tax',
 		title: translate( 'Tax' ),
-		type: 'currency'
-	}
+		type: 'currency',
+	},
 ];
 
 export const topProducts = {
@@ -92,7 +92,7 @@ export const UNITS = {
 		quantity: 30,
 		label: 'months',
 		durationFn: 'asMonths',
-		format: 'YYYY-MM'
+		format: 'YYYY-MM',
 	},
 	year: {
 		quantity: 10,

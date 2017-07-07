@@ -29,11 +29,7 @@ function mentions( editor ) {
 			node.setAttribute( 'class', 'mentions__container' );
 			editor.getContainer().appendChild( node );
 
-			renderWithReduxStore(
-				<Mentions editor={ editor } node={ node } />,
-				node,
-				store
-			);
+			renderWithReduxStore( <Mentions editor={ editor } node={ node } />, node, store );
 
 			isRendered = true;
 		}
@@ -46,7 +42,7 @@ function mentions( editor ) {
 
 	// Cancel Enter key press if the popover is visible.
 	// Doing this in the Mentions component is too late.
-	editor.on( 'keydown', ( event ) => {
+	editor.on( 'keydown', event => {
 		if ( document.querySelector( '.mentions__suggestions' ) && event.keyCode === ENTER ) {
 			event.preventDefault();
 		}

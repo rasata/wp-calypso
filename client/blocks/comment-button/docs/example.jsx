@@ -23,5 +23,5 @@ export default React.createClass( {
 				</Card>
 			</div>
 		);
-	}
+	},
 } );

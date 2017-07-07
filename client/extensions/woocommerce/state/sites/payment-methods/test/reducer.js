@@ -37,16 +37,10 @@ describe( 'reducer', () => {
 		const siteId = 123;
 		const state = {
 			[ siteId ]: {
-				paymentMethods: [
-					{ id: 'bar', enabled: false },
-					{ id: 'bang', enabled: false }
-				]
+				paymentMethods: [ { id: 'bar', enabled: false }, { id: 'bang', enabled: false } ],
 			},
 			789: {
-				paymentMethods: [
-					{ id: 'bar', enabled: false },
-					{ id: 'bang', enabled: false }
-				]
+				paymentMethods: [ { id: 'bar', enabled: false }, { id: 'bang', enabled: false } ],
 			},
 		};
 		const action = {
@@ -59,7 +53,7 @@ describe( 'reducer', () => {
 		expect( newState[ siteId ] ).to.exist;
 		expect( newState[ siteId ].paymentMethods ).to.deep.equal( [
 			{ id: 'bar', enabled: true },
-			{ id: 'bang', enabled: false }
+			{ id: 'bang', enabled: false },
 		] );
 	} );
 
@@ -97,10 +91,7 @@ describe( 'reducer', () => {
 		const action = {
 			type: WOOCOMMERCE_PAYMENT_METHODS_REQUEST_SUCCESS,
 			siteId,
-			data: [
-				{ id: 'foo', title: 'foo' },
-				{ id: 'bar', title: 'bar' },
-			],
+			data: [ { id: 'foo', title: 'foo' }, { id: 'bar', title: 'bar' } ],
 		};
 
 		const newState = reducer( state, action );
@@ -113,9 +104,11 @@ describe( 'reducer', () => {
 
 	it( 'should store data from the action', () => {
 		const siteId = 123;
-		const state = { [ siteId ]: {
-			paymentMethods: [ { id: 'bar', title: 'bar' } ]
-		} };
+		const state = {
+			[ siteId ]: {
+				paymentMethods: [ { id: 'bar', title: 'bar' } ],
+			},
+		};
 		const action = {
 			type: WOOCOMMERCE_PAYMENT_METHOD_UPDATE_SUCCESS,
 			siteId,

@@ -40,10 +40,8 @@ StoreStatsList.propTypes = {
 	values: PropTypes.array.isRequired,
 };
 
-export default connect(
-	( state, { siteId, statType, query } ) => {
-		return {
-			data: getSiteStatsNormalizedData( state, siteId, statType, query ),
-		};
-	}
-)( StoreStatsList );
+export default connect( ( state, { siteId, statType, query } ) => {
+	return {
+		data: getSiteStatsNormalizedData( state, siteId, statType, query ),
+	};
+} )( StoreStatsList );

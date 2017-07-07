@@ -6,8 +6,7 @@ var React = require( 'react' );
 /**
  * Internal dependencies
  */
-var analytics = require( 'lib/analytics' ),
-	upgradesActions = require( 'lib/upgrades/actions' );
+var analytics = require( 'lib/analytics' ), upgradesActions = require( 'lib/upgrades/actions' );
 
 module.exports = React.createClass( {
 	displayName: 'CartCoupon',
@@ -20,7 +19,7 @@ module.exports = React.createClass( {
 			isCouponFormShowing: cartHadCouponBeforeMount,
 			hasSubmittedCoupon: cartHadCouponBeforeMount,
 			couponInputValue: coupon,
-			userChangedCoupon: false
+			userChangedCoupon: false,
 		};
 	},
 
@@ -46,12 +45,12 @@ module.exports = React.createClass( {
 		event.preventDefault();
 
 		analytics.tracks.recordEvent( 'calypso_checkout_coupon_submit', {
-			coupon_code: this.state.couponInputValue
+			coupon_code: this.state.couponInputValue,
 		} );
 
 		this.setState( {
 			userChangedCoupon: false,
-			hasSubmittedCoupon: true
+			hasSubmittedCoupon: true,
 		} );
 		upgradesActions.applyCoupon( this.state.couponInputValue );
 	},
@@ -59,7 +58,7 @@ module.exports = React.createClass( {
 	handleCouponInput: function( event ) {
 		this.setState( {
 			userChangedCoupon: true,
-			couponInputValue: event.target.value
+			couponInputValue: event.target.value,
 		} );
 	},
 
@@ -73,7 +72,9 @@ module.exports = React.createClass( {
 		}
 
 		return (
-			<a href="" onClick={ this.toggleCouponDetails }>{ this.translate( 'Have a coupon code?' ) }</a>
+			<a href="" onClick={ this.toggleCouponDetails }>
+				{ this.translate( 'Have a coupon code?' ) }
+			</a>
 		);
 	},
 
@@ -88,7 +89,12 @@ module.exports = React.createClass( {
 
 		return (
 			<form onSubmit={ this.applyCoupon }>
-				<input type="text" placeholder={ this.translate( 'Enter Coupon Code', { textOnly: true } ) } onChange={ this.handleCouponInput } value={ this.state.couponInputValue } />
+				<input
+					type="text"
+					placeholder={ this.translate( 'Enter Coupon Code', { textOnly: true } ) }
+					onChange={ this.handleCouponInput }
+					value={ this.state.couponInputValue }
+				/>
 				<button type="submit" className="button">
 					{ this.translate( 'Apply' ) }
 				</button>
@@ -103,5 +109,5 @@ module.exports = React.createClass( {
 				{ this.getCouponForm() }
 			</div>
 		);
-	}
+	},
 } );

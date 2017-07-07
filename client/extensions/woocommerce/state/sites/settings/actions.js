@@ -26,7 +26,7 @@ export const doInitialSetup = (
 	postcode,
 	country,
 	successAction,
-	failureAction
+	failureAction,
 ) => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
@@ -110,11 +110,12 @@ export const doInitialSetup = (
 			group_id: 'general',
 			id: 'woocommerce_calc_taxes',
 			value: 'yes',
-		}
+		},
 	];
 
-	return request( siteId ).post( 'settings/batch', { update } )
-		.then( ( data ) => {
+	return request( siteId )
+		.post( 'settings/batch', { update } )
+		.then( data => {
 			dispatch( doInitialSetupSuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );
@@ -145,7 +146,7 @@ export const setAddress = (
 	postcode,
 	country,
 	successAction,
-	failureAction
+	failureAction,
 ) => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
@@ -189,8 +190,9 @@ export const setAddress = (
 		},
 	];
 
-	return request( siteId ).post( 'settings/batch', { update } )
-		.then( ( data ) => {
+	return request( siteId )
+		.post( 'settings/batch', { update } )
+		.then( data => {
 			dispatch( setAddressSuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );

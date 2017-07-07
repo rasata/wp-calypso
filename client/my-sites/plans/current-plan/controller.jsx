@@ -33,7 +33,7 @@ export default {
 		renderWithReduxStore(
 			<CurrentPlan context={ context } />,
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
-	}
+	},
 };

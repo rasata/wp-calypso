@@ -24,7 +24,7 @@ const NavigationLink = React.createClass( {
 		positionInFlow: React.PropTypes.number,
 		previousPath: React.PropTypes.string,
 		signupProgress: React.PropTypes.array,
-		stepName: React.PropTypes.string.isRequired
+		stepName: React.PropTypes.string.isRequired,
 	},
 
 	/**
@@ -38,7 +38,10 @@ const NavigationLink = React.createClass( {
 
 		const currentStepIndex = findIndex( signupProgress, { stepName } );
 
-		const previousStep = find( signupProgress.slice( 0, currentStepIndex ).reverse(), step => ! step.wasSkipped );
+		const previousStep = find(
+			signupProgress.slice( 0, currentStepIndex ).reverse(),
+			step => ! step.wasSkipped,
+		);
 
 		return previousStep ? previousStep.stepName : null;
 	},
@@ -54,9 +57,18 @@ const NavigationLink = React.createClass( {
 
 		const previousStepName = this.getPreviousStepName();
 
-		const stepSectionName = get( find( this.props.signupProgress, { stepName: previousStepName } ), 'stepSectionName', '' );
+		const stepSectionName = get(
+			find( this.props.signupProgress, { stepName: previousStepName } ),
+			'stepSectionName',
+			'',
+		);
 
-		return signupUtils.getStepUrl( this.props.flowName, previousStepName, stepSectionName, i18n.getLocaleSlug() );
+		return signupUtils.getStepUrl(
+			this.props.flowName,
+			previousStepName,
+			stepSectionName,
+			i18n.getLocaleSlug(),
+		);
 	},
 
 	handleClick() {
@@ -72,7 +84,7 @@ const NavigationLink = React.createClass( {
 	recordClick() {
 		const tracksProps = {
 			flow: this.props.flowName,
-			step: this.props.stepName
+			step: this.props.stepName,
 		};
 
 		if ( this.props.direction === 'back' ) {
@@ -85,7 +97,11 @@ const NavigationLink = React.createClass( {
 	},
 
 	render() {
-		if ( this.props.positionInFlow === 0 && this.props.direction === 'back' && ! this.props.stepSectionName ) {
+		if (
+			this.props.positionInFlow === 0 &&
+			this.props.direction === 'back' &&
+			! this.props.stepSectionName
+		) {
 			return null;
 		}
 
@@ -102,13 +118,19 @@ const NavigationLink = React.createClass( {
 		}
 
 		return (
-			<Button compact borderless className="navigation-link" href={ this.getBackUrl() } onClick={ this.handleClick }>
+			<Button
+				compact
+				borderless
+				className="navigation-link"
+				href={ this.getBackUrl() }
+				onClick={ this.handleClick }
+			>
 				{ backGridicon }
 				{ text }
 				{ forwardGridicon }
 			</Button>
 		);
-	}
+	},
 } );
 
 export default NavigationLink;

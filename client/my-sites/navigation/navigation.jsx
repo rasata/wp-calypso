@@ -32,7 +32,7 @@ const MySitesNavigation = React.createClass( {
 				/>
 			</div>
 		);
-	}
+	},
 } );
 
 module.exports = MySitesNavigation;

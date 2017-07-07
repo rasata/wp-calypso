@@ -27,5 +27,5 @@ module.exports = {
 	jp_version: '3.6',
 	user_can_manage: true,
 	visible: true,
-	wpcom_url: 'example.com'
+	wpcom_url: 'example.com',
 };

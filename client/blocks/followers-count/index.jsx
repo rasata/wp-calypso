@@ -28,16 +28,15 @@ class FollowersCount extends Component {
 						borderless
 						href={ '/people/followers/' + slug }
 						title={ translate( 'Total of WordPress and Email Followers' ) }
-						>
+					>
 						{ translate( 'Followers' ) } <Count count={ followers } />
-					</Button>
-				}
+					</Button> }
 			</div>
 		);
 	}
 }
 
-export default connect( ( state ) => {
+export default connect( state => {
 	const site = getSelectedSite( state );
 	const siteId = get( site, 'ID' );
 	const data = getSiteStatsNormalizedData( state, siteId, 'stats' );

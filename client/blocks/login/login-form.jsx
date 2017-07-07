@@ -39,13 +39,13 @@ export class LoginForm extends Component {
 		rememberMe: false,
 	};
 
-	onChangeField = ( event ) => {
+	onChangeField = event => {
 		this.setState( {
-			[ event.target.name ]: event.target.value
+			[ event.target.name ]: event.target.value,
 		} );
 	};
 
-	onChangeRememberMe = ( event ) => {
+	onChangeRememberMe = event => {
 		const { name, checked } = event.target;
 
 		this.props.recordTracksEvent( 'calypso_login_block_remember_me_click', { new_value: checked } );
@@ -53,7 +53,7 @@ export class LoginForm extends Component {
 		this.setState( { [ name ]: checked } );
 	};
 
-	onSubmitForm = ( event ) => {
+	onSubmitForm = event => {
 		event.preventDefault();
 
 		const { password, rememberMe, usernameOrEmail } = this.state;
@@ -61,16 +61,19 @@ export class LoginForm extends Component {
 
 		this.props.recordTracksEvent( 'calypso_login_block_login_form_submit' );
 
-		this.props.loginUser( usernameOrEmail, password, rememberMe, redirectTo ).then( () => {
-			this.props.recordTracksEvent( 'calypso_login_block_login_form_success' );
+		this.props
+			.loginUser( usernameOrEmail, password, rememberMe, redirectTo )
+			.then( () => {
+				this.props.recordTracksEvent( 'calypso_login_block_login_form_success' );
 
-			onSuccess();
-		} ).catch( error => {
-			this.props.recordTracksEvent( 'calypso_login_block_login_form_failure', {
-				error_code: error.code,
-				error_message: error.message
+				onSuccess();
+			} )
+			.catch( error => {
+				this.props.recordTracksEvent( 'calypso_login_block_login_form_failure', {
+					error_code: error.code,
+					error_message: error.message,
+				} );
 			} );
-		} );
 	};
 
 	render() {
@@ -92,20 +95,19 @@ export class LoginForm extends Component {
 						<FormTextInput
 							autoCapitalize="off"
 							autoFocus
-							className={
-								classNames( 'login__form-userdata-username-input', {
-									'is-error': requestError && requestError.field === 'usernameOrEmail'
-								} )
-							}
+							className={ classNames( 'login__form-userdata-username-input', {
+								'is-error': requestError && requestError.field === 'usernameOrEmail',
+							} ) }
 							onChange={ this.onChangeField }
 							id="usernameOrEmail"
 							name="usernameOrEmail"
 							value={ this.state.usernameOrEmail }
-							{ ...isDisabled } />
+							{ ...isDisabled }
+						/>
 
-						{ requestError && requestError.field === 'usernameOrEmail' && (
-							<FormInputValidation isError text={ requestError.message } />
-						) }
+						{ requestError &&
+							requestError.field === 'usernameOrEmail' &&
+							<FormInputValidation isError text={ requestError.message } /> }
 
 						<label htmlFor="password" className="login__form-userdata-username">
 							{ this.props.translate( 'Password' ) }
@@ -114,20 +116,19 @@ export class LoginForm extends Component {
 						<FormPasswordInput
 							autoCapitalize="off"
 							autoComplete="off"
-							className={
-								classNames( 'login__form-userdata-username-password', {
-									'is-error': requestError && requestError.field === 'password'
-								} )
-							}
+							className={ classNames( 'login__form-userdata-username-password', {
+								'is-error': requestError && requestError.field === 'password',
+							} ) }
 							onChange={ this.onChangeField }
 							id="password"
 							name="password"
 							value={ this.state.password }
-							{ ...isDisabled } />
+							{ ...isDisabled }
+						/>
 
-						{ requestError && requestError.field === 'password' && (
-							<FormInputValidation isError text={ requestError.message } />
-						) }
+						{ requestError &&
+							requestError.field === 'password' &&
+							<FormInputValidation isError text={ requestError.message } /> }
 					</div>
 
 					<div className="login__form-remember-me">
@@ -136,7 +137,8 @@ export class LoginForm extends Component {
 								name="rememberMe"
 								checked={ this.state.rememberMe }
 								onChange={ this.onChangeRememberMe }
-								{ ...isDisabled } />
+								{ ...isDisabled }
+							/>
 							<span>{ this.props.translate( 'Keep me logged in' ) }</span>
 						</label>
 					</div>
@@ -147,20 +149,19 @@ export class LoginForm extends Component {
 						</FormsButton>
 					</div>
 				</Card>
-				{ config.isEnabled( 'signup/social' ) && (
+				{ config.isEnabled( 'signup/social' ) &&
 					<Card>
 						<div className="login__form-social">
 							<SocialLoginForm onSuccess={ this.props.onSuccess } />
 						</div>
-					</Card>
-				) }
+					</Card> }
 			</form>
 		);
 	}
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		redirectTo: getCurrentQueryArguments( state ).redirect_to,
 		isRequesting: isRequesting( state ),
 		requestError: getRequestError( state ),
@@ -168,5 +169,5 @@ export default connect(
 	{
 		loginUser,
 		recordTracksEvent,
-	}
+	},
 )( localize( LoginForm ) );

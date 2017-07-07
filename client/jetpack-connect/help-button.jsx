@@ -15,7 +15,8 @@ const JetpackConnectHelpButton = ( { translate, onClick } ) => {
 		<LoggedOutFormLinkItem
 			className="jetpack-connect__help-button"
 			href="https://jetpack.com/contact-support"
-			target="_blank" rel="noopener noreferrer"
+			target="_blank"
+			rel="noopener noreferrer"
 			onClick={ onClick }
 		>
 			<Gridicon icon="help-outline" /> { translate( 'Get help connecting your site' ) }
@@ -24,7 +25,7 @@ const JetpackConnectHelpButton = ( { translate, onClick } ) => {
 };
 
 JetpackConnectHelpButton.propTypes = {
-	onClick: PropTypes.func
+	onClick: PropTypes.func,
 };
 
 export default localize( JetpackConnectHelpButton );

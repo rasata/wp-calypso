@@ -62,7 +62,7 @@ class CancelPurchaseButton extends Component {
 		const cancellation_flow = isRefundable( purchase ) ? 'cancel_with_refund' : 'cancel_autorenew';
 		this.props.recordTracksEvent(
 			name,
-			Object.assign( { cancellation_flow, product_slug }, properties )
+			Object.assign( { cancellation_flow, product_slug }, properties ),
 		);
 	};
 
@@ -210,9 +210,9 @@ class CancelPurchaseButton extends Component {
 								purchaseName,
 								subscriptionEndDate,
 							},
-						}
+						},
 					),
-					{ persistent: true }
+					{ persistent: true },
 				);
 
 				page( paths.purchasesRoot() );
@@ -223,8 +223,8 @@ class CancelPurchaseButton extends Component {
 							'Please try again later or contact support.',
 						{
 							args: { purchaseName },
-						}
-					)
+						},
+					),
 				);
 				this.cancellationFailed();
 			}
@@ -290,7 +290,7 @@ class CancelPurchaseButton extends Component {
 			submitSurvey(
 				'calypso-remove-purchase',
 				this.props.selectedSite.ID,
-				enrichedSurveyData( surveyData, moment(), selectedSite, purchase )
+				enrichedSurveyData( surveyData, moment(), selectedSite, purchase ),
 			);
 		}
 
@@ -369,5 +369,5 @@ export default connect(
 		clearPurchases,
 		recordTracksEvent,
 		refreshSitePlans,
-	}
+	},
 )( localize( CancelPurchaseButton ) );

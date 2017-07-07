@@ -23,11 +23,7 @@ import QueryBillingTransactions from 'components/data/query-billing-transactions
 import purchasesPaths from 'me/purchases/paths';
 import { getPastBillingTransactions, getUpcomingBillingTransactions } from 'state/selectors';
 
-const BillingHistory = ( {
-	pastTransactions,
-	upcomingTransactions,
-	translate
-} ) => (
+const BillingHistory = ( { pastTransactions, upcomingTransactions, translate } ) => (
 	<Main className="billing-history">
 		<DocumentHead title={ translate( 'Billing History' ) } />
 		<PageViewTracker path="/me/purchases/billing" title="Me > Billing History" />
@@ -46,17 +42,12 @@ const BillingHistory = ( {
 				<Card className="billing-history__upcoming-charges">
 					<UpcomingChargesTable transactions={ upcomingTransactions } />
 				</Card>
-			</div>
-		}
-		{ config.isEnabled( 'upgrades/credit-cards' ) &&
-			<CreditCards />
-		}
+			</div> }
+		{ config.isEnabled( 'upgrades/credit-cards' ) && <CreditCards /> }
 	</Main>
 );
 
-export default connect(
-	( state ) => ( {
-		pastTransactions: getPastBillingTransactions( state ),
-		upcomingTransactions: getUpcomingBillingTransactions( state ),
-	} ),
-)( localize( BillingHistory ) );
+export default connect( state => ( {
+	pastTransactions: getPastBillingTransactions( state ),
+	upcomingTransactions: getUpcomingBillingTransactions( state ),
+} ) )( localize( BillingHistory ) );

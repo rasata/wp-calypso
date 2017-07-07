@@ -11,7 +11,6 @@ import Ribbon from '../index';
 import Card from 'components/card';
 
 export default React.createClass( {
-
 	displayName: 'Ribbon',
 
 	mixins: [ PureRenderMixin ],
@@ -43,5 +42,5 @@ export default React.createClass( {
 				</Card>
 			</div>
 		);
-	}
+	},
 } );

@@ -23,7 +23,7 @@ const PaymentLogoExamples = React.createClass( {
 				<PaymentLogo type="paypal" />
 			</div>
 		);
-	}
+	},
 } );
 
 module.exports = PaymentLogoExamples;

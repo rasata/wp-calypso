@@ -17,20 +17,19 @@ const route = require( 'lib/route' ),
 
 import { renderWithReduxStore } from 'lib/react-helpers';
 import { areAllSitesSingleUser } from 'state/selectors';
-import { getSelectedSiteId } from 'state/ui/selectors';
+import { getSelectedSiteId } from 'state/ui/selectors';
 import { isJetpackSite, isSingleUserSite } from 'state/sites/selectors';
 import { getCurrentUserId } from 'state/current-user/selectors';
 
 module.exports = {
-
 	posts: function( context ) {
 		const state = context.store.getState();
 		const siteId = getSelectedSiteId( state );
 
 		var Posts = require( 'my-sites/posts/main' ),
 			siteID = route.getSiteFragment( context.path ),
-			author = ( context.params.author === 'my' ) ? getCurrentUserId( state ) : null,
-			statusSlug = ( author ) ? context.params.status : context.params.author,
+			author = context.params.author === 'my' ? getCurrentUserId( state ) : null,
+			statusSlug = author ? context.params.status : context.params.author,
 			search = context.query.s,
 			basePath = route.sectionify( context.path ),
 			analyticsPageTitle = 'Blog Posts',
@@ -51,12 +50,10 @@ module.exports = {
 		debug( 'siteID: `%s`', siteID );
 		debug( 'author: `%s`', author );
 
-		statusSlug = ( ! statusSlug || statusSlug === 'my' || statusSlug === siteID )
-			? ''
-			: statusSlug;
+		statusSlug = ! statusSlug || statusSlug === 'my' || statusSlug === siteID ? '' : statusSlug;
 		debug( 'statusSlug: `%s`', statusSlug );
 
-		search = ( 'undefined' !== typeof search ) ? search : '';
+		search = 'undefined' !== typeof search ? search : '';
 		debug( 'search: `%s`', search );
 
 		if ( shouldRedirectMyPosts() ) {
@@ -91,11 +88,11 @@ module.exports = {
 					null,
 					baseAnalyticsPath,
 					analyticsPageTitle,
-					'Posts'
-				)
+					'Posts',
+				),
 			} ),
 			'primary',
-			context.store
+			context.store,
 		);
-	}
+	},
 };

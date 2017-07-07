@@ -25,9 +25,7 @@ export function domainConnectAuthorize( context, next ) {
 }
 
 export function notFoundError( context, next ) {
-	context.primary = (
-		<DomainConnectNotFoundError />
-	);
+	context.primary = <DomainConnectNotFoundError />;
 	context.secondary = null;
 	next();
 }

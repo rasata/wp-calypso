@@ -46,7 +46,7 @@ import {
 
 import { getCurrentUserEmail } from 'state/current-user/selectors';
 
-const SecurityAccountRecovery = ( props ) => (
+const SecurityAccountRecovery = props => (
 	<Main className="security-account-recovery">
 		<QueryAccountRecoverySettings />
 
@@ -58,9 +58,11 @@ const SecurityAccountRecovery = ( props ) => (
 
 		<CompactCard>
 			<p className="security-account-recovery__text">
-				{ props.translate( 'Keep your account safe by adding a backup email address and phone number. ' +
+				{ props.translate(
+					'Keep your account safe by adding a backup email address and phone number. ' +
 						'If you ever have problems accessing your account, WordPress.com will use what ' +
-						'you enter here to verify your identity.' ) }
+						'you enter here to verify your identity.',
+				) }
 			</p>
 		</CompactCard>
 
@@ -76,8 +78,7 @@ const SecurityAccountRecovery = ( props ) => (
 				<RecoveryEmailValidationNotice
 					onResend={ props.resendAccountRecoveryEmailValidation }
 					hasSent={ props.hasSentEmailValidation }
-				/>
-			}
+				/> }
 		</CompactCard>
 
 		<CompactCard>
@@ -93,14 +94,13 @@ const SecurityAccountRecovery = ( props ) => (
 					onValidate={ props.validateAccountRecoveryPhone }
 					hasSent={ props.hasSentPhoneValidation }
 					isValidating={ props.validatingAccountRecoveryPhone }
-				/>
-			}
+				/> }
 		</CompactCard>
 	</Main>
 );
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		accountRecoveryEmail: getAccountRecoveryEmail( state ),
 		accountRecoveryEmailActionInProgress: isAccountRecoveryEmailActionInProgress( state ),
 		accountRecoveryEmailValidated: isAccountRecoveryEmailValidated( state ),
@@ -122,5 +122,5 @@ export default connect(
 		resendAccountRecoveryEmailValidation,
 		resendAccountRecoveryPhoneValidation,
 		validateAccountRecoveryPhone,
-	}
+	},
 )( localize( SecurityAccountRecovery ) );

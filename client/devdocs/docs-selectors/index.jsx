@@ -14,7 +14,7 @@ import DocsSelectorsSearch from './search';
 export default class DocsSelectors extends PureComponent {
 	static propTypes = {
 		selector: PropTypes.string,
-		search: PropTypes.string
+		search: PropTypes.string,
 	};
 
 	render() {

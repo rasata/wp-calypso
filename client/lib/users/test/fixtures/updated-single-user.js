@@ -7,5 +7,5 @@ module.exports = {
 	nice_name: 'test1',
 	profile_URL: 'http://en.gravatar.com',
 	roles: [ 'administrator' ],
-	site_ID: 1234
+	site_ID: 1234,
 };

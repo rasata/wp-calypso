@@ -6,8 +6,7 @@ var debug = require( 'debug' )( 'calypso:follow-list:site' );
 /**
  * Internal dependencies
  */
-var wpcom = require( 'lib/wp' ),
-	Emitter = require( 'lib/mixins/emitter' );
+var wpcom = require( 'lib/wp' ), Emitter = require( 'lib/mixins/emitter' );
 
 /**
  * FollowList component

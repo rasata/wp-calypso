@@ -14,7 +14,7 @@ const initialState = {
 	isOlarkExpanded: false,
 	isSupportClosed: false,
 	locale: 'en',
-	details: {}
+	details: {},
 };
 
 const olarkStore = createReducerStore( function( state, payload ) {

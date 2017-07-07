@@ -8,14 +8,12 @@ const FlowProgressIndicator = ( { flowLength, positionInFlow, translate } ) => {
 	if ( flowLength > 1 ) {
 		return (
 			<div className="flow-progress-indicator">
-				{
-					translate( 'Step %(stepNumber)d of %(stepTotal)d', {
-						args: {
-							stepNumber: positionInFlow + 1,
-							stepTotal: flowLength
-						}
-					} )
-				}
+				{ translate( 'Step %(stepNumber)d of %(stepTotal)d', {
+					args: {
+						stepNumber: positionInFlow + 1,
+						stepTotal: flowLength,
+					},
+				} ) }
 			</div>
 		);
 	}

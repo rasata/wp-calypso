@@ -23,20 +23,17 @@ const SharingPreviewPaneExample = ( { postId, site, siteId } ) => (
 		<Card>
 			<QuerySites siteId={ siteId } />
 			<QueryPublicizeConnections siteId={ siteId } />
-			{ siteId && (
-				<QueryPosts
-					siteId={ siteId }
-					query={ { number: 1, type: 'post' } } />
-			) }
+			{ siteId && <QueryPosts siteId={ siteId } query={ { number: 1, type: 'post' } } /> }
 			<SharingPreviewPane
 				message="Do you have a trip coming up?"
 				postId={ postId }
-				siteId={ siteId } />
+				siteId={ siteId }
+			/>
 		</Card>
 	</div>
 );
 
-const ConnectedSharingPreviewPaneExample = connect( ( state ) => {
+const ConnectedSharingPreviewPaneExample = connect( state => {
 	const user = getCurrentUser( state );
 	const siteId = get( user, 'primary_blog' );
 	const site = getSite( state, siteId );

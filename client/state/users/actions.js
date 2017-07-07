@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	USER_RECEIVE,
-	USERS_REQUEST,
-} from 'state/action-types';
+import { USER_RECEIVE, USERS_REQUEST } from 'state/action-types';
 
 /**
  * Returns an action object to be used in signalling that a user object has
@@ -16,7 +13,7 @@ import {
 export function receiveUser( user ) {
 	return {
 		type: USER_RECEIVE,
-		user
+		user,
 	};
 }
 

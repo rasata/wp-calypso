@@ -31,14 +31,11 @@ export default createReducer( null, {
 			return state;
 		}
 
-		const zone = { ...state[ zoneIndex ],
+		const zone = {
+			...state[ zoneIndex ],
 			methodIds: LOADING,
 		};
-		return [
-			...state.slice( 0, zoneIndex ),
-			zone,
-			...state.slice( zoneIndex + 1 ),
-		];
+		return [ ...state.slice( 0, zoneIndex ), zone, ...state.slice( zoneIndex + 1 ) ];
 	},
 
 	[ WOOCOMMERCE_SHIPPING_ZONE_METHODS_REQUEST_SUCCESS ]: ( state, { zoneId, data } ) => {
@@ -50,15 +47,12 @@ export default createReducer( null, {
 			return state;
 		}
 
-		const zone = { ...state[ zoneIndex ],
+		const zone = {
+			...state[ zoneIndex ],
 			methodIds: data.map( method => method.id ),
 		};
 
-		return [
-			...state.slice( 0, zoneIndex ),
-			zone,
-			...state.slice( zoneIndex + 1 ),
-		];
+		return [ ...state.slice( 0, zoneIndex ), zone, ...state.slice( zoneIndex + 1 ) ];
 	},
 
 	[ WOOCOMMERCE_SHIPPING_ZONE_UPDATED ]: ( state, { data, originatingAction: { zone } } ) => {
@@ -67,10 +61,12 @@ export default createReducer( null, {
 		}
 
 		if ( 'number' !== typeof zone.id ) {
-			return [ ...state,
-				{ ...data,
+			return [
+				...state,
+				{
+					...data,
 					methodIds: [],
-				}
+				},
 			];
 		}
 
@@ -81,7 +77,8 @@ export default createReducer( null, {
 
 		return [
 			...state.slice( 0, zoneIndex ),
-			{ ...data,
+			{
+				...data,
 				methodIds: state[ zoneIndex ].methodIds,
 			},
 			...state.slice( zoneIndex + 1 ),
@@ -98,13 +95,13 @@ export default createReducer( null, {
 			return state;
 		}
 
-		return [
-			...state.slice( 0, zoneIndex ),
-			...state.slice( zoneIndex + 1 ),
-		];
+		return [ ...state.slice( 0, zoneIndex ), ...state.slice( zoneIndex + 1 ) ];
 	},
 
-	[ WOOCOMMERCE_SHIPPING_ZONE_METHOD_UPDATED ]: ( state, { data, originatingAction: { zoneId } } ) => {
+	[ WOOCOMMERCE_SHIPPING_ZONE_METHOD_UPDATED ]: (
+		state,
+		{ data, originatingAction: { zoneId } },
+	) => {
 		if ( ! isArray( state ) ) {
 			return state;
 		}
@@ -120,14 +117,18 @@ export default createReducer( null, {
 
 		return [
 			...state.slice( 0, zoneIndex ),
-			{ ...state[ zoneIndex ],
+			{
+				...state[ zoneIndex ],
 				methodIds: [ ...state[ zoneIndex ].methodIds, data.id ],
 			},
 			...state.slice( zoneIndex + 1 ),
 		];
 	},
 
-	[ WOOCOMMERCE_SHIPPING_ZONE_METHOD_DELETED ]: ( state, { originatingAction: { zoneId, methodId } } ) => {
+	[ WOOCOMMERCE_SHIPPING_ZONE_METHOD_DELETED ]: (
+		state,
+		{ originatingAction: { zoneId, methodId } },
+	) => {
 		if ( ! isArray( state ) ) {
 			return state;
 		}
@@ -144,7 +145,8 @@ export default createReducer( null, {
 
 		return [
 			...state.slice( 0, zoneIndex ),
-			{ ...state[ zoneIndex ],
+			{
+				...state[ zoneIndex ],
 				methodIds: [
 					...state[ zoneIndex ].methodIds.slice( 0, methodIndex ),
 					...state[ zoneIndex ].methodIds.slice( methodIndex + 1 ),

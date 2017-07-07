@@ -15,16 +15,17 @@ const SharingServiceConnectedAccounts = ( { children, connect, service, translat
 		<ul className="sharing-service-connected-accounts">
 			{ children }
 		</ul>
-		{ 'publicize' === service.type && (
+		{ 'publicize' === service.type &&
 			<Button onClick={ connect }>
-				{ translate( 'Connect a different account', { comment: 'Sharing: Publicize connections' } ) }
-			</Button>
-		) }
+				{ translate( 'Connect a different account', {
+					comment: 'Sharing: Publicize connections',
+				} ) }
+			</Button> }
 	</div>
 );
 
 SharingServiceConnectedAccounts.propTypes = {
-	connect: PropTypes.func,              // Handler to invoke when adding a new connection
+	connect: PropTypes.func, // Handler to invoke when adding a new connection
 	service: PropTypes.object.isRequired, // The service object
 	translate: PropTypes.func,
 };

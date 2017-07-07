@@ -6,7 +6,13 @@
  * @return {String} Formatted variation name.
  */
 export default function formattedVariationName( { attributes }, fallbackName = '' ) {
-	return Array.isArray( attributes ) && attributes.map( function( attribute ) {
-		return attribute.option;
-	} ).join( ' - ' ) || fallbackName;
+	return (
+		( Array.isArray( attributes ) &&
+			attributes
+				.map( function( attribute ) {
+					return attribute.option;
+				} )
+				.join( ' - ' ) ) ||
+		fallbackName
+	);
 }

@@ -16,7 +16,7 @@ import {
 	authorize,
 	goBackToWpAdmin,
 	retryAuth,
-	goToXmlrpcErrorFallbackUrl
+	goToXmlrpcErrorFallbackUrl,
 } from 'state/jetpack-connect/actions';
 import {
 	getAuthorizationData,
@@ -26,7 +26,7 @@ import {
 	hasExpiredSecretError,
 	isRemoteSiteOnSitesList,
 	getAuthAttempts,
-	getSiteIdFromQueryObject
+	getSiteIdFromQueryObject,
 } from 'state/jetpack-connect/selectors';
 import { getCurrentUser } from 'state/current-user/selectors';
 import { recordTracksEvent } from 'state/analytics/actions';
@@ -63,7 +63,7 @@ class JetpackConnectAuthorizeForm extends Component {
 		retryAuth: PropTypes.func,
 		siteSlug: PropTypes.string,
 		user: PropTypes.object,
-	}
+	};
 
 	componentWillMount() {
 		this.props.recordTracksEvent( 'calypso_jpc_authorize_form_view' );
@@ -86,9 +86,7 @@ class JetpackConnectAuthorizeForm extends Component {
 			<Main className="jetpack-connect__main-error">
 				<EmptyContent
 					illustration="/calypso/images/drake/drake-whoops.svg"
-					title={ this.props.translate(
-						'Oops, this URL should not be accessed directly'
-					) }
+					title={ this.props.translate( 'Oops, this URL should not be accessed directly' ) }
 					action={ this.props.translate( 'Get back to Jetpack Connect screen' ) }
 					actionURL="/jetpack/connect"
 				/>
@@ -100,17 +98,9 @@ class JetpackConnectAuthorizeForm extends Component {
 	}
 
 	renderForm() {
-		return (
-			( this.props.user )
-				? <LoggedInForm
-					{ ...this.props }
-					isSSO={ this.isSSO() }
-				/>
-				: <LoggedOutForm
-					{ ...this.props }
-					isSSO={ this.isSSO() }
-				/>
-		);
+		return this.props.user
+			? <LoggedInForm { ...this.props } isSSO={ this.isSSO() } />
+			: <LoggedOutForm { ...this.props } isSSO={ this.isSSO() } />;
 	}
 
 	render() {
@@ -163,5 +153,5 @@ export default connect(
 		recordTracksEvent,
 		requestSites,
 		retryAuth,
-	}
+	},
 )( localize( JetpackConnectAuthorizeForm ) );

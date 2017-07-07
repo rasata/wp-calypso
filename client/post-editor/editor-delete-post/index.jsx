@@ -19,7 +19,7 @@ export default React.createClass( {
 	propTypes: {
 		site: React.PropTypes.object,
 		post: React.PropTypes.object,
-		onTrashingPost: React.PropTypes.func
+		onTrashingPost: React.PropTypes.func,
 	},
 
 	getInitialState: function() {
@@ -59,11 +59,16 @@ export default React.createClass( {
 			message = this.translate( 'Are you sure you want to trash this post?' );
 		}
 
-		accept( message, ( accepted ) => {
-			if ( accepted ) {
-				this.sendToTrash();
-			}
-		}, this.translate( 'Move to trash' ), this.translate( 'Back' ) );
+		accept(
+			message,
+			accepted => {
+				if ( accepted ) {
+					this.sendToTrash();
+				}
+			},
+			this.translate( 'Move to trash' ),
+			this.translate( 'Back' ),
+		);
 	},
 
 	render() {
@@ -72,8 +77,12 @@ export default React.createClass( {
 			return null;
 		}
 
-		const classes = classnames( 'editor-delete-post__button', { 'is-trashing': this.state.isTrashing } );
-		const label = this.state.isTrashing ? this.translate( 'Trashing...' ) : this.translate( 'Move to trash' );
+		const classes = classnames( 'editor-delete-post__button', {
+			'is-trashing': this.state.isTrashing,
+		} );
+		const label = this.state.isTrashing
+			? this.translate( 'Trashing...' )
+			: this.translate( 'Move to trash' );
 
 		return (
 			<div className="editor-delete-post">
@@ -88,5 +97,5 @@ export default React.createClass( {
 				</Button>
 			</div>
 		);
-	}
+	},
 } );

@@ -16,6 +16,6 @@ export default function() {
 		mySitesController.siteSelection,
 		mySitesController.navigation,
 		settingsController.siteSettings,
-		controller.discussion
+		controller.discussion,
 	);
 }

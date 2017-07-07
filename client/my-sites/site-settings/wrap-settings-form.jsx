@@ -17,13 +17,13 @@ import {
 	isSavingSiteSettings,
 	isSiteSettingsSaveSuccessful,
 	getSiteSettingsSaveError,
-	getSiteSettings
+	getSiteSettings,
 } from 'state/site-settings/selectors';
 import {
 	isRequestingJetpackSettings,
 	isUpdatingJetpackSettings,
 	isJetpackSettingsSaveFailure,
-	getJetpackSettings
+	getJetpackSettings,
 } from 'state/selectors';
 import { recordGoogleEvent, recordTracksEvent } from 'state/analytics/actions';
 import { saveSiteSettings } from 'state/site-settings/actions';
@@ -37,7 +37,7 @@ import QueryJetpackSettings from 'components/data/query-jetpack-settings';
 const wrapSettingsForm = getFormSettings => SettingsForm => {
 	class WrappedSettingsForm extends Component {
 		state = {
-			uniqueEvents: {}
+			uniqueEvents: {},
 		};
 
 		componentWillMount() {
@@ -56,17 +56,20 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				this.updateDirtyFields();
 			}
 
-			if (
-				! this.props.isSavingSettings &&
-				prevProps.isSavingSettings
-			) {
+			if ( ! this.props.isSavingSettings && prevProps.isSavingSettings ) {
 				if ( this.props.isSaveRequestSuccessful ) {
-					this.props.successNotice( this.props.translate( 'Settings saved!' ), { id: 'site-settings-save' } );
+					this.props.successNotice( this.props.translate( 'Settings saved!' ), {
+						id: 'site-settings-save',
+					} );
 				} else {
-					let text = this.props.translate( 'There was a problem saving your changes. Please try again.' );
+					let text = this.props.translate(
+						'There was a problem saving your changes. Please try again.',
+					);
 					switch ( this.props.siteSettingsSaveError ) {
 						case 'invalid_ip':
-							text = this.props.translate( 'One of your IP Addresses was invalid. Please try again.' );
+							text = this.props.translate(
+								'One of your IP Addresses was invalid. Please try again.',
+							);
 							break;
 					}
 					this.props.errorNotice( text, { id: 'site-settings-save' } );
@@ -81,7 +84,9 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			// Compute the dirty fields by comparing the persisted and the current fields
 			const previousDirtyFields = this.props.dirtyFields;
 			/*eslint-disable eqeqeq*/
-			const nextDirtyFields = previousDirtyFields.filter( field => ! ( currentFields[ field ] == persistedFields[ field ] ) );
+			const nextDirtyFields = previousDirtyFields.filter(
+				field => ! ( currentFields[ field ] == persistedFields[ field ] ),
+			);
 			/*eslint-enable eqeqeq*/
 
 			// Update the dirty fields state without updating their values
@@ -159,16 +164,19 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 
 		onChangeField = field => event => {
 			this.props.updateFields( {
-				[ field ]: event.target.value
+				[ field ]: event.target.value,
 			} );
 		};
 
 		setFieldValue = ( field, value, autosave = false ) => {
-			this.props.updateFields( {
-				[ field ]: value
-			}, () => {
-				autosave && this.submitForm();
-			} );
+			this.props.updateFields(
+				{
+					[ field ]: value,
+				},
+				() => {
+					autosave && this.submitForm();
+				},
+			);
 		};
 
 		uniqueEventTracker = message => () => {
@@ -200,10 +208,8 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			return (
 				<div>
 					<QuerySiteSettings siteId={ this.props.siteId } />
-					{
-						this.props.jetpackSettingsUISupported &&
-						<QueryJetpackSettings siteId={ this.props.siteId } />
-					}
+					{ this.props.jetpackSettingsUISupported &&
+						<QueryJetpackSettings siteId={ this.props.siteId } /> }
 					<SettingsForm { ...this.props } { ...utils } />
 				</div>
 			);
@@ -223,14 +229,18 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 			};
 
 			const isJetpack = isJetpackSite( state, siteId );
-			const jetpackSettingsUISupported = isJetpack && siteSupportsJetpackSettingsUi( state, siteId );
+			const jetpackSettingsUISupported =
+				isJetpack && siteSupportsJetpackSettingsUi( state, siteId );
 			if ( jetpackSettingsUISupported ) {
 				const jetpackSettings = getJetpackSettings( state, siteId );
 				isSavingSettings = isSavingSettings || isUpdatingJetpackSettings( state, siteId );
-				isSaveRequestSuccessful = isSaveRequestSuccessful && ! isJetpackSettingsSaveFailure( state, siteId );
+				isSaveRequestSuccessful =
+					isSaveRequestSuccessful && ! isJetpackSettingsSaveFailure( state, siteId );
 				settings = { ...settings, ...jetpackSettings };
 				settingsFields.jetpack = keys( jetpackSettings );
-				isRequestingSettings = isRequestingSettings || ( isRequestingJetpackSettings( state, siteId ) && ! jetpackSettings );
+				isRequestingSettings =
+					isRequestingSettings ||
+					( isRequestingJetpackSettings( state, siteId ) && ! jetpackSettings );
 			}
 
 			return {
@@ -241,33 +251,31 @@ const wrapSettingsForm = getFormSettings => SettingsForm => {
 				settings,
 				settingsFields,
 				siteId,
-				jetpackSettingsUISupported
+				jetpackSettingsUISupported,
 			};
 		},
 		dispatch => {
-			const boundActionCreators = bindActionCreators( {
-				errorNotice,
-				recordTracksEvent,
-				removeNotice,
-				saveSiteSettings,
-				successNotice,
-				updateSettings,
-			}, dispatch );
+			const boundActionCreators = bindActionCreators(
+				{
+					errorNotice,
+					recordTracksEvent,
+					removeNotice,
+					saveSiteSettings,
+					successNotice,
+					updateSettings,
+				},
+				dispatch,
+			);
 			const trackEvent = name => dispatch( recordGoogleEvent( 'Site Settings', name ) );
-			return {
+			return {
 				...boundActionCreators,
 				eventTracker: message => () => trackEvent( message ),
 				trackEvent,
 			};
-		}
+		},
 	);
 
-	return flowRight(
-		connectComponent,
-		localize,
-		trackForm,
-		protectForm
-	)( WrappedSettingsForm );
+	return flowRight( connectComponent, localize, trackForm, protectForm )( WrappedSettingsForm );
 };
 
 export default wrapSettingsForm;

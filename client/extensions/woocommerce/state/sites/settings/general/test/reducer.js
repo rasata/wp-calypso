@@ -29,10 +29,7 @@ describe( 'reducer', () => {
 
 		it( 'should store data from the action', () => {
 			const siteId = 123;
-			const settings = [
-				{},
-				{},
-			];
+			const settings = [ {}, {} ];
 			const action = {
 				type: WOOCOMMERCE_SETTINGS_GENERAL_REQUEST_SUCCESS,
 				siteId,
@@ -51,9 +48,9 @@ describe( 'reducer', () => {
 			const emptyState = {
 				123: {
 					settings: {
-						general: []
-					}
-				}
+						general: [],
+					},
+				},
 			};
 			const streetSetting = {
 				group_id: 'general',
@@ -75,10 +72,7 @@ describe( 'reducer', () => {
 				siteId,
 				data: { update: [ streetSetting, citySetting ] },
 			};
-			const updatedSettings = [
-				updatedStreetSetting,
-				citySetting,
-			];
+			const updatedSettings = [ updatedStreetSetting, citySetting ];
 			const updateAction = {
 				type: WOOCOMMERCE_SETTINGS_BATCH_REQUEST_SUCCESS,
 				siteId,

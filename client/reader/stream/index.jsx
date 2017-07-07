@@ -112,7 +112,10 @@ class ReaderStream extends React.Component {
 		const recs = recommendationsStore ? recommendationsStore.get() : null;
 		// do we have enough recs? if we have a store, but not enough recs, we should fetch some more...
 		if ( recommendationsStore ) {
-			if ( ! recs || recs.length < posts.length * ( RECS_PER_BLOCK / getDistanceBetweenRecs( totalSubs ) ) ) {
+			if (
+				! recs ||
+				recs.length < posts.length * ( RECS_PER_BLOCK / getDistanceBetweenRecs( totalSubs ) )
+			) {
 				if ( ! recommendationsStore.isFetchingNextPage() ) {
 					defer( () => fetchNextPage( recommendationsStore.id ) );
 				}

@@ -21,13 +21,13 @@ module.exports = React.createClass( {
 		data: React.PropTypes.array,
 		minTouchBarWidth: React.PropTypes.number,
 		minBarWidth: React.PropTypes.number,
-		barClick: React.PropTypes.func
+		barClick: React.PropTypes.func,
 	},
 
 	getInitialState: function() {
 		return {
 			maxBars: 100, // arbitrarily high number. This will be calculated by resize method
-			width: 650
+			width: 650,
 		};
 	},
 
@@ -35,7 +35,7 @@ module.exports = React.createClass( {
 		return {
 			minTouchBarWidth: 42,
 			minBarWidth: 15,
-			barClick: noop
+			barClick: noop,
 		};
 	},
 
@@ -59,11 +59,10 @@ module.exports = React.createClass( {
 
 	resize: function() {
 		const node = this.refs.chart;
-		let width = node.clientWidth - 82,
-			maxBars;
+		let width = node.clientWidth - 82, maxBars;
 
 		if ( touchDetect.hasTouch() ) {
-			width = ( width <= 0 ) ? 350 : width; // mobile safari bug with zero width
+			width = width <= 0 ? 350 : width; // mobile safari bug with zero width
 			maxBars = Math.floor( width / this.props.minTouchBarWidth );
 		} else {
 			maxBars = Math.floor( width / this.props.minBarWidth );
@@ -71,14 +70,14 @@ module.exports = React.createClass( {
 
 		this.setState( {
 			maxBars: maxBars,
-			width: width
+			width: width,
 		} );
 	},
 
 	getYAxisMax: function( values ) {
 		const max = Math.max.apply( null, values ),
-			operand = Math.pow( 10, ( Math.floor( max ).toString().length - 1 ) );
-		let rounded = ( Math.ceil( ( max + 1 ) / operand ) * operand );
+			operand = Math.pow( 10, Math.floor( max ).toString().length - 1 );
+		let rounded = Math.ceil( ( max + 1 ) / operand ) * operand;
 
 		if ( rounded < 10 ) {
 			rounded = 10;
@@ -106,14 +105,12 @@ module.exports = React.createClass( {
 	},
 
 	isEmptyChart: function( values ) {
-		return ! some( values, ( value ) => value > 0 );
+		return ! some( values, value => value > 0 );
 	},
 
 	render: function() {
-		const values = this.getValues(),
-			yAxisMax = this.getYAxisMax( values ),
-			data = this.getData();
-		let	emptyChart;
+		const values = this.getValues(), yAxisMax = this.getYAxisMax( values ), data = this.getData();
+		let emptyChart;
 
 		// If we have an empty chart, show a message
 		// @todo this message needs to either use a <Notice> or make a custom "chart__notice" class
@@ -123,7 +120,7 @@ module.exports = React.createClass( {
 					<span className="chart__empty_notice">
 						{ this.translate( 'No activity this period', {
 							context: 'Message on empty bar chart in Stats',
-							comment: 'Should be limited to 32 characters to prevent wrapping'
+							comment: 'Should be limited to 32 characters to prevent wrapping',
 						} ) }
 					</span>
 				</div>
@@ -133,9 +130,9 @@ module.exports = React.createClass( {
 		return (
 			<div ref="chart" className="chart">
 				<div className="chart__y-axis-markers">
-					<div className="chart__y-axis-marker is-hundred"></div>
-					<div className="chart__y-axis-marker is-fifty"></div>
-					<div className="chart__y-axis-marker is-zero"></div>
+					<div className="chart__y-axis-marker is-hundred" />
+					<div className="chart__y-axis-marker is-fifty" />
+					<div className="chart__y-axis-marker is-zero" />
 				</div>
 				<div className="chart__y-axis">
 					<div className="chart__y-axis-width-fix">{ this.numberFormat( 100000 ) }</div>
@@ -153,5 +150,5 @@ module.exports = React.createClass( {
 				{ emptyChart }
 			</div>
 		);
-	}
+	},
 } );

@@ -17,7 +17,7 @@ const CustomNameserversRow = React.createClass( {
 		index: React.PropTypes.number,
 		nameserver: React.PropTypes.string,
 		onChange: React.PropTypes.func,
-		onRemove: React.PropTypes.func
+		onRemove: React.PropTypes.func,
 	},
 
 	handleRemove( event ) {
@@ -44,11 +44,13 @@ const CustomNameserversRow = React.createClass( {
 		return (
 			<div className="custom-nameservers-row">
 				<fieldset>
-					<input type="text"
+					<input
+						type="text"
 						placeholder={ this.props.placeholder }
 						onChange={ this.handleChange }
 						onFocus={ this.handleFocus }
-						value={ this.props.nameserver } />
+						value={ this.props.nameserver }
+					/>
 
 					{ this.renderRemoveIcon() }
 				</fieldset>
@@ -64,7 +66,7 @@ const CustomNameserversRow = React.createClass( {
 
 	handleFocus() {
 		this.recordEvent( 'customNameserverInputFocus', this.props.selectedDomainName );
-	}
+	},
 } );
 
 module.exports = CustomNameserversRow;

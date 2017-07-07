@@ -11,17 +11,17 @@ export const countsSchema = {
 							type: 'object',
 							patternProperties: {
 								'^\\w+$': {
-									type: 'integer'
-								}
+									type: 'integer',
+								},
 							},
-							additionalProperties: false
-						}
+							additionalProperties: false,
+						},
 					},
-					additionalProperties: false
-				}
+					additionalProperties: false,
+				},
 			},
-			additionalProperties: false
-		}
+			additionalProperties: false,
+		},
 	},
-	additionalProperties: false
+	additionalProperties: false,
 };

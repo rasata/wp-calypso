@@ -18,15 +18,15 @@ export class EmailVerificationGate extends React.Component {
 		noticeStatus: React.PropTypes.string,
 		//connected
 		userEmail: React.PropTypes.string,
-		needsVerification: React.PropTypes.bool
+		needsVerification: React.PropTypes.bool,
 	};
 
 	static defaultProps = {
 		noticeText: null,
-		noticeStatus: ''
+		noticeStatus: '',
 	};
 
-	handleFocus = ( e ) => {
+	handleFocus = e => {
 		e.target.blur();
 	};
 
@@ -37,7 +37,8 @@ export class EmailVerificationGate extends React.Component {
 					<EmailUnverifiedNotice
 						userEmail={ this.props.userEmail }
 						noticeText={ this.props.noticeText }
-						noticeStatus={ this.props.noticeStatus } />
+						noticeStatus={ this.props.noticeStatus }
+					/>
 					<div className="email-verification-gate__content">
 						{ this.props.children }
 					</div>
@@ -49,12 +50,10 @@ export class EmailVerificationGate extends React.Component {
 	}
 }
 
-export default connect(
-	( state ) => {
-		const user = getCurrentUser( state );
-		return {
-			userEmail: user && user.email,
-			needsVerification: ! isCurrentUserEmailVerified( state )
-		};
-	}
-)( EmailVerificationGate );
+export default connect( state => {
+	const user = getCurrentUser( state );
+	return {
+		userEmail: user && user.email,
+		needsVerification: ! isCurrentUserEmailVerified( state ),
+	};
+} )( EmailVerificationGate );

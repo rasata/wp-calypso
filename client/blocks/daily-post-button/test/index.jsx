@@ -44,9 +44,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ false }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ false }
-				/>
+				/>,
 			);
 			assert.isNull( dailyPostPrompt.type() );
 		} );
@@ -57,9 +57,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ true }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ true }
-				/>
+				/>,
 			);
 			assert.equal( 'li', renderAsLi.type() );
 		} );
@@ -71,9 +71,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ true }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ true }
-				/>
+				/>,
 			);
 			assert.equal( 'span', renderAsSpan.type() );
 		} );
@@ -86,9 +86,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ true }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ true }
-				/>
+				/>,
 			);
 			dailyPostButton.simulate( 'click', { preventDefault: noop } );
 			assert.isTrue( pageSpy.calledWithMatch( /post\/apps.wordpress.com?/ ) );
@@ -101,9 +101,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ true }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ false }
-				/>
+				/>,
 			);
 			dailyPostButton.instance().renderSitesPopover = done;
 			dailyPostButton.simulate( 'click', { preventDefault: noop } );
@@ -118,9 +118,9 @@ describe( 'DailyPostButton', () => {
 					post={ dailyPromptPost }
 					site={ sampleReadingSite }
 					canParticipate={ true }
-					primarySiteSlug= { sampleUserSite.slug }
+					primarySiteSlug={ sampleUserSite.slug }
 					onlyOneSite={ true }
-				/>
+				/>,
 			);
 			prompt.instance().openEditorWithSite( 'apps.wordpress.com' );
 			const pageArgs = pageSpy.lastCall.args[ 0 ];

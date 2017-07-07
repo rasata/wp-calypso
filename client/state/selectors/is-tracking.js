@@ -7,5 +7,5 @@
  */
 
 export default function isTracking( state, trackingTool ) {
-	return !! state.analyticsTracking[ trackingTool ];
+	return !! state.analyticsTracking[ trackingTool ];
 }

@@ -13,29 +13,28 @@ import Card from 'components/card';
 import ExternalLink from 'components/external-link';
 import SectionHeader from 'components/section-header';
 
-export const WarningList = ( {
-	translate,
-	warnings,
-} ) =>
+export const WarningList = ( { translate, warnings } ) => (
 	<div>
-		<SectionHeader label={ translate(
-			"By proceeding you'll lose %d feature:",
-			"By proceeding you'll lose these %d features:",
-			{
-				count: warnings.length,
-				args: warnings.length,
-			}
-		) } />
+		<SectionHeader
+			label={ translate(
+				"By proceeding you'll lose %d feature:",
+				"By proceeding you'll lose these %d features:",
+				{
+					count: warnings.length,
+					args: warnings.length,
+				},
+			) }
+		/>
 		<Card className="eligibility-warnings__warning-list">
-			{ map( warnings, ( { name, description, supportUrl }, index ) =>
+			{ map( warnings, ( { name, description, supportUrl }, index ) => (
 				<div className="eligibility-warnings__warning" key={ index }>
 					<Gridicon icon="cross-small" size={ 24 } />
 					<div className="eligibility-warnings__message">
 						<span className="eligibility-warnings__message-title">
-							{ name }
+							{ name }
 						</span>:&nbsp;
 						<span className="eligibility-warnings__message-description">
-							{ description }
+							{ description }
 						</span>
 					</div>
 					<div className="eligibility-warnings__action">
@@ -44,8 +43,9 @@ export const WarningList = ( {
 						</ExternalLink>
 					</div>
 				</div>
-			) }
+			) ) }
 		</Card>
-	</div>;
+	</div>
+);
 
 export default localize( WarningList );

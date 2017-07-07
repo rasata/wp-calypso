@@ -24,14 +24,14 @@ class QueryStoredCards extends Component {
 
 QueryStoredCards.propTypes = {
 	fetchStoredCards: PropTypes.func.isRequired,
-	isRequesting: PropTypes.bool.isRequired
+	isRequesting: PropTypes.bool.isRequired,
 };
 
 export default connect(
 	state => {
 		return {
-			isRequesting: isFetchingStoredCards( state )
+			isRequesting: isFetchingStoredCards( state ),
 		};
 	},
-	{ fetchStoredCards }
+	{ fetchStoredCards },
 )( QueryStoredCards );

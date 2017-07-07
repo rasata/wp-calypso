@@ -248,4 +248,3 @@ describe( 'Calypso Extensions Data Layer Middleware', () => {
 		expect( handleAction1 ).to.not.equal( handleAction2 );
 	} );
 } );
-

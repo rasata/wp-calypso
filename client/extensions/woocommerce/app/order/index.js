@@ -24,8 +24,8 @@ class Order extends Component {
 	state = {
 		order: {
 			id: this.props.orderId,
-		}
-	}
+		},
+	};
 
 	componentDidMount() {
 		const { siteId, orderId } = this.props;
@@ -41,17 +41,17 @@ class Order extends Component {
 		}
 	}
 
-	onUpdate = ( order ) => {
+	onUpdate = order => {
 		// Merge the new order updates into the existing order updates
-		this.setState( ( prevState ) => {
+		this.setState( prevState => {
 			const updatedOrder = { ...prevState.order, ...order };
 			return { order: updatedOrder };
 		} );
-	}
+	};
 
 	saveOrder = () => {
 		this.props.updateOrder( this.props.siteId, this.state.order );
-	}
+	};
 
 	render() {
 		const { className, isSaving, order, site, translate } = this.props;
@@ -60,13 +60,15 @@ class Order extends Component {
 		}
 
 		const breadcrumbs = [
-			( <a href={ getLink( '/store/orders/:site/', site ) }>{ translate( 'Orders' ) }</a> ),
-			( <span>{ translate( 'Order Details' ) }</span> ),
+			<a href={ getLink( '/store/orders/:site/', site ) }>{ translate( 'Orders' ) }</a>,
+			<span>{ translate( 'Order Details' ) }</span>,
 		];
 		return (
 			<Main className={ className }>
 				<ActionHeader breadcrumbs={ breadcrumbs }>
-					<Button primary onClick={ this.saveOrder } disabled={ isSaving }>{ translate( 'Save Order' ) }</Button>
+					<Button primary onClick={ this.saveOrder } disabled={ isSaving }>
+						{ translate( 'Save Order' ) }
+					</Button>
 				</ActionHeader>
 
 				<div className="order__container">
@@ -94,5 +96,5 @@ export default connect(
 			siteId,
 		};
 	},
-	dispatch => bindActionCreators( { fetchOrder, updateOrder }, dispatch )
+	dispatch => bindActionCreators( { fetchOrder, updateOrder }, dispatch ),
 )( localize( Order ) );

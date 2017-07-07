@@ -35,7 +35,7 @@ function calypsoAlert( editor ) {
 						onClose={ onClose }
 						message={ editor.editorManager.i18n.translate( message ) }
 					/>,
-					node
+					node,
 				);
 			}
 

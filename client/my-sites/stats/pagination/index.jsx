@@ -8,14 +8,14 @@ var React = require( 'react' );
  */
 var PaginationPage = require( './pagination-page' );
 
-module.exports = React.createClass({
+module.exports = React.createClass( {
 	displayName: 'StatModulePagination',
 
 	propTypes: {
 		page: React.PropTypes.number.isRequired,
 		perPage: React.PropTypes.number.isRequired,
 		total: React.PropTypes.number,
-		pageClick: React.PropTypes.func.isRequired
+		pageClick: React.PropTypes.func.isRequired,
 	},
 
 	render: function() {
@@ -29,14 +29,26 @@ module.exports = React.createClass({
 			i;
 
 		if ( pageCount > 1 ) {
-			pageList = [ 1, currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, pageCount ];
+			pageList = [
+				1,
+				currentPage - 2,
+				currentPage - 1,
+				currentPage,
+				currentPage + 1,
+				currentPage + 2,
+				pageCount,
+			];
 			pageList.sort( function( a, b ) {
 				return a - b;
 			} );
 
 			// Remove pages less than 1, or greater than total number of pages, and remove duplicates
 			pageList = pageList.filter( function( pageNumber, index, originalPageList ) {
-				return ( pageNumber >= 1  ) && ( pageNumber <= pageCount ) && ( originalPageList.lastIndexOf( pageNumber ) === index );
+				return (
+					pageNumber >= 1 &&
+					pageNumber <= pageCount &&
+					originalPageList.lastIndexOf( pageNumber ) === index
+				);
 			} );
 
 			for ( i = pageList.length - 2; i >= 0; i-- ) {
@@ -53,13 +65,20 @@ module.exports = React.createClass({
 			pageList.unshift( '<--' );
 
 			pageList = pageList.map( function( pageNumber, index ) {
-				return <PaginationPage key={ index } pageNumber={ pageNumber } currentPage={ currentPage } totalPages={ pageCount } pageClick={ this.props.pageClick } />;
+				return (
+					<PaginationPage
+						key={ index }
+						pageNumber={ pageNumber }
+						currentPage={ currentPage }
+						totalPages={ pageCount }
+						pageClick={ this.props.pageClick }
+					/>
+				);
 			}, this );
 		}
 
 		if ( pageCount > 1 ) {
 			pagination = (
-
 				<div className="stats-pagination">
 					<ul className="stats-pagination__list">
 						{ pageList }
@@ -71,5 +90,5 @@ module.exports = React.createClass({
 		}
 
 		return pagination;
-	}
-});
+	},
+} );

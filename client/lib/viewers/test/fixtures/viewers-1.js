@@ -9,7 +9,7 @@ module.exports = {
 			name: 'Test Person401',
 			nice_name: 'test401',
 			profile_URL: 'http://en.gravatar.com/test401',
-			site_ID: 401
+			site_ID: 401,
 		},
 		{
 			ID: 402,
@@ -19,7 +19,7 @@ module.exports = {
 			name: 'Test Person402',
 			nice_name: 'test402',
 			profile_URL: 'http://en.gravatar.com/test402',
-			site_ID: 402
-		}
-	]
+			site_ID: 402,
+		},
+	],
 };

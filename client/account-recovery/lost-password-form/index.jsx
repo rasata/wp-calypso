@@ -31,22 +31,18 @@ export class LostPasswordFormComponent extends Component {
 		};
 	}
 
-	submitForm = ( event ) => {
+	submitForm = event => {
 		this.props.fetchResetOptionsByLogin( this.state.userLoginFormValue );
 
 		event.preventDefault();
 	};
 
-	onUserLoginChanged = ( event ) => {
+	onUserLoginChanged = event => {
 		this.setState( { userLoginFormValue: event.target.value } );
 	};
 
 	render() {
-		const {
-			translate,
-			isRequesting,
-			requestError,
-		} = this.props;
+		const { translate, isRequesting, requestError } = this.props;
 
 		const { userLoginFormValue } = this.state;
 
@@ -63,7 +59,7 @@ export class LostPasswordFormComponent extends Component {
 						<li>
 							{ translate(
 								'Enter your {{strong}}WordPress.com{{/strong}} username or email address',
-								{ components: { strong: <strong /> } }
+								{ components: { strong: <strong /> } },
 							) }
 						</li>
 						<li>
@@ -72,14 +68,14 @@ export class LostPasswordFormComponent extends Component {
 						<li>
 							{ translate(
 								'Follow instructions and be reunited with your {{strong}}WordPress.com{{/strong}} account',
-								{ components: { strong: <strong /> } }
+								{ components: { strong: <strong /> } },
 							) }
 						</li>
 					</ol>
 					<p>
 						{ translate(
 							'Want more help? We have a full {{link}}guide to resetting your password{{/link}}.',
-							{ components: { link: <a href={ support.ACCOUNT_RECOVERY } /> } }
+							{ components: { link: <a href={ support.ACCOUNT_RECOVERY } /> } },
 						) }
 					</p>
 				</Card>
@@ -95,13 +91,13 @@ export class LostPasswordFormComponent extends Component {
 								autoFocus
 							/>
 						</FormLabel>
-						{
-							requestError && (
+						{ requestError &&
 							<p className="lost-password-form__error-message">
-								{ translate( 'We encountered some problems with that login information. ' +
-									'Please provide another one or try again later.' ) }
-							</p> )
-						}
+								{ translate(
+									'We encountered some problems with that login information. ' +
+										'Please provide another one or try again later.',
+								) }
+							</p> }
 						<FormButton
 							className="lost-password-form__submit-button"
 							type="submit"
@@ -111,7 +107,10 @@ export class LostPasswordFormComponent extends Component {
 							{ translate( 'Get New Password' ) }
 						</FormButton>
 					</form>
-					<a href="/account-recovery/forgot-username" className="lost-password-form__forgot-username-link">
+					<a
+						href="/account-recovery/forgot-username"
+						className="lost-password-form__forgot-username-link"
+					>
 						{ translate( 'Forgot your username?' ) }
 					</a>
 				</Card>
@@ -128,11 +127,11 @@ LostPasswordFormComponent.defaultProps = {
 };
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		isRequesting: isRequestingAccountRecoveryResetOptions( state ),
 		requestError: getAccountRecoveryResetOptionsError( state ),
 	} ),
 	{
 		fetchResetOptionsByLogin,
-	}
+	},
 )( localize( LostPasswordFormComponent ) );

@@ -12,9 +12,9 @@ export const pluginInstructionSchema = {
 					key: { type: 'string' },
 					status: { type: 'string' },
 					error: { type: [ 'object', 'string', 'null' ] },
-				}
-			}
-		}
+				},
+			},
+		},
 	},
-	additionalProperties: false
+	additionalProperties: false,
 };

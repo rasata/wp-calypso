@@ -7,5 +7,5 @@ import { combineReducers } from 'state/utils';
 
 export default combineReducers( {
 	management,
-	suggestions
+	suggestions,
 } );

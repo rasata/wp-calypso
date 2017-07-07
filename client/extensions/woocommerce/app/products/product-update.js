@@ -17,7 +17,11 @@ import SidebarNavigation from 'my-sites/sidebar-navigation';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import { successNotice, errorNotice } from 'state/notices/actions';
 import { getActionList } from 'woocommerce/state/action-list/selectors';
-import { createProduct, fetchProduct, deleteProduct as deleteProductAction } from 'woocommerce/state/sites/products/actions';
+import {
+	createProduct,
+	fetchProduct,
+	deleteProduct as deleteProductAction,
+} from 'woocommerce/state/sites/products/actions';
 import { fetchProductCategories } from 'woocommerce/state/sites/product-categories/actions';
 import { fetchProductVariations } from 'woocommerce/state/sites/product-variations/actions';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
@@ -32,12 +36,16 @@ import {
 	editProductVariation,
 	clearProductVariationEdits,
 } from 'woocommerce/state/ui/products/variations/actions';
-import { getProductVariationsWithLocalEdits } from 'woocommerce/state/ui/products/variations/selectors';
+import {
+	getProductVariationsWithLocalEdits,
+} from 'woocommerce/state/ui/products/variations/selectors';
 import {
 	editProductCategory,
 	clearProductCategoryEdits,
 } from 'woocommerce/state/ui/product-categories/actions';
-import { getProductCategoriesWithLocalEdits } from 'woocommerce/state/ui/product-categories/selectors';
+import {
+	getProductCategoriesWithLocalEdits,
+} from 'woocommerce/state/ui/product-categories/selectors';
 import page from 'page';
 import ProductForm from './product-form';
 import ProductHeader from './product-header';
@@ -75,8 +83,8 @@ class ProductUpdate extends React.Component {
 	componentWillReceiveProps( newProps ) {
 		const { params, site } = this.props;
 		const productId = Number( params.product );
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchProduct( newSiteId, productId );
 			this.props.fetchProductVariations( newSiteId, productId );
@@ -99,8 +107,8 @@ class ProductUpdate extends React.Component {
 	// Once we have trashing management, we can introduce 'trash' instead.
 	onTrash = () => {
 		const { translate, site, product, deleteProduct } = this.props;
-		const areYouSure = translate( 'Are you sure you want to permanently delete \'%(name)s\'?', {
-			args: { name: product.name }
+		const areYouSure = translate( "Are you sure you want to permanently delete '%(name)s'?", {
+			args: { name: product.name },
 		} );
 		accept( areYouSure, function( accepted ) {
 			if ( ! accepted ) {
@@ -113,19 +121,19 @@ class ProductUpdate extends React.Component {
 				return successNotice(
 					translate( '%(product)s successfully deleted.', {
 						args: { product: product.name },
-					} )
+					} ),
 				);
 			};
 			const failureAction = () => {
 				return errorNotice(
 					translate( 'There was a problem deleting %(product)s. Please try again.', {
 						args: { product: product.name },
-					} )
+					} ),
 				);
 			};
 			deleteProduct( site.ID, product.id, successAction, failureAction );
 		} );
-	}
+	};
 
 	onSave = () => {
 		const { product, translate } = this.props;
@@ -134,26 +142,32 @@ class ProductUpdate extends React.Component {
 			translate( '%(product)s successfully updated.', {
 				args: { product: product.name },
 			} ),
-			{ duration: 4000 }
+			{ duration: 4000 },
 		);
 
 		const failureAction = errorNotice(
 			translate( 'There was a problem saving %(product)s. Please try again.', {
 				args: { product: product.name },
-			} )
+			} ),
 		);
 
 		this.props.createProductActionList( successAction, failureAction );
-	}
+	};
 
 	isProductValid( product = this.props.product ) {
-		return product &&
-			product.type &&
-			product.name && product.name.length > 0;
+		return product && product.type && product.name && product.name.length > 0;
 	}
 
 	render() {
-		const { site, product, hasEdits, className, variations, productCategories, actionList } = this.props;
+		const {
+			site,
+			product,
+			hasEdits,
+			className,
+			variations,
+			productCategories,
+			actionList,
+		} = this.props;
 
 		const isValid = 'undefined' !== site && this.isProductValid();
 		const isBusy = Boolean( actionList ); // If there's an action list present, we're trying to save.
@@ -223,7 +237,7 @@ function mapDispatchToProps( dispatch ) {
 			clearProductCategoryEdits,
 			clearProductVariationEdits,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

@@ -84,7 +84,7 @@ class RemovePurchase extends Component {
 		const cancellation_flow = 'remove';
 		this.props.recordTracksEvent(
 			name,
-			Object.assign( { cancellation_flow, product_slug }, properties )
+			Object.assign( { cancellation_flow, product_slug }, properties ),
 		);
 	};
 
@@ -122,7 +122,7 @@ class RemovePurchase extends Component {
 		const steps = stepsForProductAndSurvey(
 			survey,
 			selectedPurchase,
-			isChatAvailable || isChatActive
+			isChatAvailable || isChatActive,
 		);
 		const newStep = stepFunction( surveyStep, steps );
 		this.recordEvent( 'calypso_purchases_cancel_survey_step', { new_step: newStep } );
@@ -208,7 +208,7 @@ class RemovePurchase extends Component {
 						translate( 'The domain {{domain/}} was removed from your account.', {
 							components: { domain: <em>{ productName }</em> },
 						} ),
-						{ persistent: true }
+						{ persistent: true },
 					);
 				} else {
 					notices.success(
@@ -216,7 +216,7 @@ class RemovePurchase extends Component {
 							args: { productName },
 							components: { siteName: <em>{ selectedSite.domain }</em> },
 						} ),
-						{ persistent: true }
+						{ persistent: true },
 					);
 				}
 
@@ -300,7 +300,7 @@ class RemovePurchase extends Component {
 					'This will remove %(domain)s from your account. By removing, ' +
 						'you are canceling the domain registration. This may stop ' +
 						'you from using it again, even with another service.',
-					{ args: { domain: productName } }
+					{ args: { domain: productName } },
 				) }
 			</p>
 		);
@@ -381,7 +381,7 @@ class RemovePurchase extends Component {
 					{ translate(
 						'The domain associated with this plan, {{domain/}}, will not be removed. ' +
 							'It will remain active on your site, unless also removed.',
-						{ components: { domain: <em>{ getIncludedDomain( purchase ) }</em> } }
+						{ components: { domain: <em>{ getIncludedDomain( purchase ) }</em> } },
 					) }
 				</p>
 			);
@@ -397,11 +397,11 @@ class RemovePurchase extends Component {
 					{ isGoogleApps( purchase )
 						? translate(
 								'Your G Suite account will continue working without interruption. ' +
-									'You will be able to manage your G Suite billing directly through Google.'
+									'You will be able to manage your G Suite billing directly through Google.',
 							)
 						: translate(
 								'You will not be able to reuse it again without purchasing a new subscription.',
-								{ comment: "'it' refers to a product purchased by a user" }
+								{ comment: "'it' refers to a product purchased by a user" },
 							) }
 
 				</p>
@@ -441,5 +441,5 @@ export default connect(
 		recordTracksEvent,
 		removePurchase,
 		setAllSitesSelected,
-	}
+	},
 )( localize( RemovePurchase ) );

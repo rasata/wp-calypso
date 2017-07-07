@@ -19,7 +19,10 @@ import FormSelect from 'components/forms/form-select';
 import StoreAddress from 'woocommerce/components/store-address';
 import { changeCurrency } from 'woocommerce/state/ui/payments/currency/actions';
 import { fetchCurrencies } from 'woocommerce/state/sites/currencies/actions';
-import { fetchSettingsGeneral, saveCurrency } from 'woocommerce/state/sites/settings/general/actions';
+import {
+	fetchSettingsGeneral,
+	saveCurrency,
+} from 'woocommerce/state/sites/settings/general/actions';
 import { getCurrencies } from 'woocommerce/state/sites/currencies/selectors';
 import { getCurrencyWithEdits } from 'woocommerce/state/ui/payments/currency/selectors';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
@@ -43,59 +46,46 @@ class SettingsPaymentsLocationCurrency extends Component {
 			this.props.fetchCurrencies( site.ID );
 			this.props.fetchSettingsGeneral( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchCurrencies( newSiteId );
 			this.props.fetchSettingsGeneral( newSiteId );
 		}
-	}
+	};
 
-	renderOption = ( currency ) => {
+	renderOption = currency => {
 		const { currencies } = this.props;
 		const option = find( currencies, { code: currency } );
 		return (
-			<option
-				key={ option.code }
-				value={ option.code } >
+			<option key={ option.code } value={ option.code }>
 				{ decodeEntities( option.symbol ) } - { decodeEntities( option.name ) }
 			</option>
 		);
-	}
+	};
 
-	onChange = ( e ) => {
+	onChange = e => {
 		const { site, translate } = this.props;
 		const newCurrency = e.target.value;
-		this.props.changeCurrency(
-			site.ID,
-			newCurrency
-		);
+		this.props.changeCurrency( site.ID, newCurrency );
 		const successAction = () => {
-			return successNotice(
-				translate( 'Site currency successfully saved.' ),
-				{ duration: 4000 }
-			);
+			return successNotice( translate( 'Site currency successfully saved.' ), { duration: 4000 } );
 		};
 
 		const errorAction = () => {
 			return errorNotice(
-				translate( 'There was a problem saving the currency. Please try again.' )
+				translate( 'There was a problem saving the currency. Please try again.' ),
 			);
 		};
 
-		this.props.saveCurrency(
-			site.ID,
-			newCurrency,
-			successAction,
-			errorAction
-		);
-	}
+		this.props.saveCurrency( site.ID, newCurrency, successAction, errorAction );
+	};
 
 	render() {
 		const { currencies, currency, translate } = this.props;
@@ -104,11 +94,10 @@ class SettingsPaymentsLocationCurrency extends Component {
 			<div className="payments__location-currency">
 				<ExtendedHeader
 					label={ translate( 'Store location and currency' ) }
-					description={
-						translate(
-							'Different options are available based on your location and currency.'
-						)
-					} />
+					description={ translate(
+						'Different options are available based on your location and currency.',
+					) }
+				/>
 				<Card className="payments__address-currency-container">
 					<StoreAddress />
 					<div className="payments__currency-container">
@@ -118,7 +107,8 @@ class SettingsPaymentsLocationCurrency extends Component {
 						<FormSelect
 							className="payments__currency-select"
 							onChange={ this.onChange }
-							value={ currency }>
+							value={ currency }
+						>
 							{ currencies && currencies.length && validCurrencies.map( this.renderOption ) }
 						</FormSelect>
 					</div>
@@ -127,7 +117,6 @@ class SettingsPaymentsLocationCurrency extends Component {
 			</div>
 		);
 	}
-
 }
 
 function mapStateToProps( state ) {
@@ -150,8 +139,10 @@ function mapDispatchToProps( dispatch ) {
 			getCurrencyWithEdits,
 			saveCurrency,
 		},
-		dispatch
+		dispatch,
 	);
 }
 
-export default localize( connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsLocationCurrency ) );
+export default localize(
+	connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsLocationCurrency ),
+);

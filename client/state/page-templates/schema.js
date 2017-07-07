@@ -9,9 +9,9 @@ export const itemsSchema = {
 				required: [ 'label', 'file' ],
 				properties: {
 					label: { type: 'string' },
-					file: { type: 'string' }
-				}
-			}
-		}
-	}
+					file: { type: 'string' },
+				},
+			},
+		},
+	},
 };

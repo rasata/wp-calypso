@@ -2,14 +2,14 @@ export default {
 	site: {
 		slug: 'test',
 		domain: '',
-		name: ''
+		name: '',
 	},
 	plugin: {
-		slug: 'test'
+		slug: 'test',
 	},
 	notices: {
 		completed: [],
-		errors: []
+		errors: [],
 	},
-	action: function() {}
+	action: function() {},
 };

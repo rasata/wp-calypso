@@ -6,8 +6,7 @@ var React = require( 'react' );
 /**
  * Internal dependencies
  */
-var support = require( 'lib/url/support' ),
-	analyticsMixin = require( 'lib/mixins/analytics' );
+var support = require( 'lib/url/support' ), analyticsMixin = require( 'lib/mixins/analytics' );
 
 var EmailForwardingDetails = React.createClass( {
 	mixins: [ analyticsMixin( 'domainManagement', 'emailForwarding' ) ],
@@ -15,12 +14,16 @@ var EmailForwardingDetails = React.createClass( {
 	render: function() {
 		return (
 			<p className="email-forwarding__explanation">
-				{ this.translate( 'Email Forwarding lets you use your custom domain in your email address, so your email address can be just as memorable as your blog.' ) }
+				{ this.translate(
+					'Email Forwarding lets you use your custom domain in your email address, so your email address can be just as memorable as your blog.',
+				) }
 				{ ' ' }
-				<a href={ support.EMAIL_FORWARDING }
-						target="_blank"
-						rel="noopener noreferrer"
-						onClick={ this.handleLearnMoreClick }>
+				<a
+					href={ support.EMAIL_FORWARDING }
+					target="_blank"
+					rel="noopener noreferrer"
+					onClick={ this.handleLearnMoreClick }
+				>
 					{ this.translate( 'Learn more.' ) }
 				</a>
 			</p>
@@ -29,7 +32,7 @@ var EmailForwardingDetails = React.createClass( {
 
 	handleLearnMoreClick() {
 		this.recordEvent( 'learnMoreClick', this.props.selectedDomainName );
-	}
+	},
 } );
 
 module.exports = EmailForwardingDetails;

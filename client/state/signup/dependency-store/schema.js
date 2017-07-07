@@ -10,9 +10,9 @@ export const dependencyStoreSchema = {
 					properties: {
 						product_slug: 'string',
 						free_trial: 'boolean',
-					}
-				}
-			]
+					},
+				},
+			],
 		},
 		designType: 'string',
 		domainItem: {
@@ -26,11 +26,11 @@ export const dependencyStoreSchema = {
 						product_slug: 'string',
 						meta: 'string',
 					},
-				}
-			]
+				},
+			],
 		},
 		surveyQuestion: 'string',
 		surveySiteType: 'string',
-		theme: 'string'
-	}
+		theme: 'string',
+	},
 };

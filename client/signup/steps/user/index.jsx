@@ -41,7 +41,10 @@ export class UserStep extends Component {
 			this.setState( { submitting: false } );
 		}
 
-		if ( this.props.flowName !== nextProps.flowName || this.props.subHeaderText !== nextProps.subHeaderText ) {
+		if (
+			this.props.flowName !== nextProps.flowName ||
+			this.props.subHeaderText !== nextProps.subHeaderText
+		) {
 			this.setSubHeaderText( nextProps );
 		}
 	}
@@ -64,19 +67,19 @@ export class UserStep extends Component {
 		this.setState( { subHeaderText } );
 	}
 
-	save = ( form ) => {
+	save = form => {
 		SignupActions.saveSignupStep( {
 			stepName: this.props.stepName,
-			form: form
+			form: form,
 		} );
 	};
 
-	submit = ( data ) => {
+	submit = data => {
 		SignupActions.submitSignupStep( {
 			processingMessage: this.props.translate( 'Creating your account' ),
 			flowName: this.props.flowName,
 			stepName: this.props.stepName,
-			...data
+			...data,
 		} );
 
 		this.props.goToNextStep();
@@ -84,15 +87,15 @@ export class UserStep extends Component {
 
 	submitForm = ( form, userData, analyticsData ) => {
 		const queryArgs = {
-			jetpackRedirect: get( this.props, 'queryObject.jetpack_redirect' )
+			jetpackRedirect: get( this.props, 'queryObject.jetpack_redirect' ),
 		};
 
 		const formWithoutPassword = {
 			...form,
 			password: {
 				...form.password,
-				value: ''
-			}
+				value: '',
+			},
 		};
 
 		this.props.recordTracksEvent( 'calypso_signup_user_step_submit', analyticsData );
@@ -100,7 +103,7 @@ export class UserStep extends Component {
 		this.submit( {
 			userData,
 			form: formWithoutPassword,
-			queryArgs
+			queryArgs,
 		} );
 	};
 
@@ -121,17 +124,19 @@ export class UserStep extends Component {
 	}
 
 	getRedirectToAfterLoginUrl() {
-		const stepAfterRedirect = signupUtils.getNextStepName( this.props.flowName, this.props.stepName ) ||
+		const stepAfterRedirect =
+			signupUtils.getNextStepName( this.props.flowName, this.props.stepName ) ||
 			signupUtils.getPreviousStepName( this.props.flowName, this.props.stepName );
-		return this.originUrl() + signupUtils.getStepUrl(
-				this.props.flowName,
-				stepAfterRedirect
-			);
+		return this.originUrl() + signupUtils.getStepUrl( this.props.flowName, stepAfterRedirect );
 	}
 
 	originUrl() {
-		return window.location.protocol + '//' + window.location.hostname +
-			( window.location.port ? ':' + window.location.port : '' );
+		return (
+			window.location.protocol +
+			'//' +
+			window.location.hostname +
+			( window.location.port ? ':' + window.location.port : '' )
+		);
 	}
 
 	submitButtonText() {
@@ -182,10 +187,10 @@ export class UserStep extends Component {
 }
 
 export default connect(
-	( state ) => ( {
-		suggestedUsername: getSuggestedUsername( state )
+	state => ( {
+		suggestedUsername: getSuggestedUsername( state ),
 	} ),
 	{
-		recordTracksEvent
-	}
+		recordTracksEvent,
+	},
 )( localize( UserStep ) );

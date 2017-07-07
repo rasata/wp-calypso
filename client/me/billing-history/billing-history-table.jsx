@@ -30,7 +30,13 @@ const BillingHistoryTable = React.createClass( {
 		}
 
 		return (
-			<a href="#" onClick={ this.recordClickEvent( 'Email Receipt in Billing History', this.emailReceipt.bind( this, receiptId ) ) }>
+			<a
+				href="#"
+				onClick={ this.recordClickEvent(
+					'Email Receipt in Billing History',
+					this.emailReceipt.bind( this, receiptId ),
+				) }
+			>
 				{ translate( 'Email Receipt' ) }
 			</a>
 		);
@@ -57,9 +63,10 @@ const BillingHistoryTable = React.createClass( {
 		const { translate } = this.props;
 		const emptyTableText = translate(
 			'You do not currently have any upgrades. ' +
-			'To see what upgrades we offer visit our {{link}}Plans page{{/link}}.', {
-				components: { link: <a href="/plans" /> }
-			}
+				'To see what upgrades we offer visit our {{link}}Plans page{{/link}}.',
+			{
+				components: { link: <a href="/plans" /> },
+			},
 		);
 		const noFilterResultsText = translate( 'No receipts found.' );
 
@@ -70,20 +77,21 @@ const BillingHistoryTable = React.createClass( {
 				header
 				emptyTableText={ emptyTableText }
 				noFilterResultsText={ noFilterResultsText }
-				transactionRenderer={ this.renderTransaction } />
+				transactionRenderer={ this.renderTransaction }
+			/>
 		);
 	},
 } );
 
 export default connect(
-	( state ) => {
-		const sendingBillingReceiptEmail = ( receiptId ) => {
+	state => {
+		const sendingBillingReceiptEmail = receiptId => {
 			return isSendingBillingReceiptEmail( state, receiptId );
 		};
 
 		return {
-			sendingBillingReceiptEmail
+			sendingBillingReceiptEmail,
 		};
 	},
-	{ sendBillingReceiptEmail }
+	{ sendBillingReceiptEmail },
 )( localize( BillingHistoryTable ) );

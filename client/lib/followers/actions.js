@@ -20,24 +20,27 @@ var FollowersActions = {
 		if ( ! silentUpdate ) {
 			Dispatcher.handleViewAction( {
 				type: 'FETCHING_FOLLOWERS',
-				fetchOptions: fetchOptions
+				fetchOptions: fetchOptions,
 			} );
 		}
-		wpcom.undocumented().site( fetchOptions.siteId ).fetchFollowers( fetchOptions, function( error, data ) {
-			Dispatcher.handleServerAction( {
-				type: 'RECEIVE_FOLLOWERS',
-				fetchOptions: fetchOptions,
-				data: data,
-				error: error
+		wpcom
+			.undocumented()
+			.site( fetchOptions.siteId )
+			.fetchFollowers( fetchOptions, function( error, data ) {
+				Dispatcher.handleServerAction( {
+					type: 'RECEIVE_FOLLOWERS',
+					fetchOptions: fetchOptions,
+					data: data,
+					error: error,
+				} );
 			} );
-		} );
 	},
 
 	removeFollower: ( siteId, follower ) => {
 		Dispatcher.handleViewAction( {
 			type: 'REMOVE_FOLLOWER',
 			siteId: siteId,
-			follower: follower
+			follower: follower,
 		} );
 		wpcom.undocumented().site( siteId ).removeFollower( follower.ID, function( error, data ) {
 			if ( error ) {
@@ -45,18 +48,18 @@ var FollowersActions = {
 					type: 'RECEIVE_REMOVE_FOLLOWER_ERROR',
 					siteId: siteId,
 					follower: follower,
-					error: error
+					error: error,
 				} );
 			} else {
 				Dispatcher.handleServerAction( {
 					type: 'RECEIVE_REMOVE_FOLLOWER_SUCCESS',
 					siteId: siteId,
 					follower: follower,
-					data: data
+					data: data,
 				} );
 			}
 		} );
-	}
+	},
 };
 
 module.exports = FollowersActions;

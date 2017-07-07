@@ -21,7 +21,6 @@ import { recordTracksEvent } from 'state/analytics/actions';
 import { getSelectedSite, getSelectedSiteId } from 'state/ui/selectors';
 
 const UpgradeNudge = React.createClass( {
-
 	propTypes: {
 		onClick: React.PropTypes.func,
 		className: React.PropTypes.string,
@@ -58,7 +57,7 @@ const UpgradeNudge = React.createClass( {
 			recordTracks( 'calypso_upgrade_nudge_cta_click', {
 				cta_name: event,
 				cta_feature: feature,
-				cta_size: 'regular'
+				cta_size: 'regular',
 			} );
 		}
 
@@ -70,10 +69,7 @@ const UpgradeNudge = React.createClass( {
 		if ( shouldDisplay ) {
 			return shouldDisplay();
 		}
-		if ( ! site ||
-			typeof site !== 'object' ||
-			typeof site.jetpack !== 'boolean'
-		) {
+		if ( ! site || typeof site !== 'object' || typeof site.jetpack !== 'boolean' ) {
 			return false;
 		}
 		if ( feature && this.props.planHasFeature ) {
@@ -85,7 +81,7 @@ const UpgradeNudge = React.createClass( {
 		if ( feature === 'no-adverts' && site.options.wordads ) {
 			return false;
 		}
-		if ( ! jetpack && site.jetpack || jetpack && ! site.jetpack ) {
+		if ( ( ! jetpack && site.jetpack ) || ( jetpack && ! site.jetpack ) ) {
 			return false;
 		}
 		return true;
@@ -116,7 +112,7 @@ const UpgradeNudge = React.createClass( {
 						<span className="upgrade-nudge__title">
 							{ this.props.title || translate( 'Upgrade to Premium' ) }
 						</span>
-						<span className="upgrade-nudge__message" >
+						<span className="upgrade-nudge__message">
 							{ this.props.message }
 						</span>
 					</div>
@@ -131,20 +127,22 @@ const UpgradeNudge = React.createClass( {
 					<span className="upgrade-nudge__title">
 						{ this.props.title || translate( 'Upgrade to Premium' ) }
 					</span>
-					<span className="upgrade-nudge__message" >
+					<span className="upgrade-nudge__message">
 						{ this.props.message }
 					</span>
 				</div>
 				{ ( this.props.event || this.props.feature ) &&
-					<TrackComponentView eventName={ 'calypso_upgrade_nudge_impression' } eventProperties={ {
-						cta_name: this.props.event,
-						cta_feature: this.props.feature,
-						cta_size: 'regular'
-					} } />
-				}
+					<TrackComponentView
+						eventName={ 'calypso_upgrade_nudge_impression' }
+						eventProperties={ {
+							cta_name: this.props.event,
+							cta_feature: this.props.feature,
+							cta_size: 'regular',
+						} }
+					/> }
 			</Card>
 		);
-	}
+	},
 } );
 
 export default connect(
@@ -152,8 +150,8 @@ export default connect(
 		const siteId = getSelectedSiteId( state );
 		return {
 			site: getSelectedSite( state ),
-			planHasFeature: hasFeature( state, siteId, ownProps.feature )
+			planHasFeature: hasFeature( state, siteId, ownProps.feature ),
 		};
 	},
-	{ recordTracksEvent }
+	{ recordTracksEvent },
 )( localize( UpgradeNudge ) );

@@ -18,6 +18,6 @@ export function getExpectedResponseKeys() {
 		'queue_size',
 		'queue_lag',
 		'full_queue_size',
-		'full_queue_lag'
+		'full_queue_lag',
 	];
 }

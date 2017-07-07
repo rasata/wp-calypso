@@ -81,9 +81,10 @@ export const requestNotice = createReducer( null, {
 	[ ROUTE_SET ]: () => null,
 } );
 
-const updateTwoStepNonce = ( state, { twoStepNonce, nonceType } ) => Object.assign( {}, state, {
-	[ `two_step_nonce_${ nonceType }` ]: twoStepNonce
-} );
+const updateTwoStepNonce = ( state, { twoStepNonce, nonceType } ) =>
+	Object.assign( {}, state, {
+		[ `two_step_nonce_${ nonceType }` ]: twoStepNonce,
+	} );
 
 export const twoFactorAuth = createReducer( null, {
 	[ LOGIN_REQUEST ]: () => null,
@@ -119,27 +120,44 @@ export const twoFactorAuthRequestError = createReducer( null, {
 	[ ROUTE_SET ]: () => null,
 } );
 
-export const twoFactorAuthPushPoll = createReducer( { inProgress: false, success: false }, {
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_START ]: state => ( { ...state, inProgress: true, success: false } ),
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_STOP ]: state => ( { ...state, inProgress: false } ),
-	[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_COMPLETED ]: state => ( { ...state, inProgress: false, success: true } ),
-} );
+export const twoFactorAuthPushPoll = createReducer(
+	{ inProgress: false, success: false },
+	{
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_START ]: state => ( {
+			...state,
+			inProgress: true,
+			success: false,
+		} ),
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_STOP ]: state => ( { ...state, inProgress: false } ),
+		[ TWO_FACTOR_AUTHENTICATION_PUSH_POLL_COMPLETED ]: state => ( {
+			...state,
+			inProgress: false,
+			success: true,
+		} ),
+	},
+);
 
-export const socialAccount = createReducer( { isCreating: false }, {
-	[ SOCIAL_CREATE_ACCOUNT_REQUEST ]: () => ( { isCreating: true } ),
-	[ SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE ]: ( state, { error } ) => ( { isCreating: false, createError: error } ),
-	[ SOCIAL_CREATE_ACCOUNT_REQUEST_SUCCESS ]: ( state, { data: { username, bearerToken } } ) => ( {
-		isCreating: false,
-		username,
-		bearerToken
-	} ),
-	[ SOCIAL_LOGIN_REQUEST_FAILURE ]: ( state, { error } ) => ( {
-		...state,
-		requestError: error
-	} ),
-	[ USER_RECEIVE ]: state => ( { ...state, bearerToken: null, username: null } ),
-	[ LOGIN_REQUEST ]: state => ( { ...state, createError: null } ),
-} );
+export const socialAccount = createReducer(
+	{ isCreating: false },
+	{
+		[ SOCIAL_CREATE_ACCOUNT_REQUEST ]: () => ( { isCreating: true } ),
+		[ SOCIAL_CREATE_ACCOUNT_REQUEST_FAILURE ]: ( state, { error } ) => ( {
+			isCreating: false,
+			createError: error,
+		} ),
+		[ SOCIAL_CREATE_ACCOUNT_REQUEST_SUCCESS ]: ( state, { data: { username, bearerToken } } ) => ( {
+			isCreating: false,
+			username,
+			bearerToken,
+		} ),
+		[ SOCIAL_LOGIN_REQUEST_FAILURE ]: ( state, { error } ) => ( {
+			...state,
+			requestError: error,
+		} ),
+		[ USER_RECEIVE ]: state => ( { ...state, bearerToken: null, username: null } ),
+		[ LOGIN_REQUEST ]: state => ( { ...state, createError: null } ),
+	},
+);
 
 export default combineReducers( {
 	isRequesting,

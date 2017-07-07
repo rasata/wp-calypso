@@ -16,7 +16,6 @@ import Button from 'components/button';
 import FoldableCard from 'components/foldable-card';
 
 export default React.createClass( {
-
 	displayName: 'ConnectedApplicationItem',
 
 	mixins: [ eventRecorder ],
@@ -31,13 +30,13 @@ export default React.createClass( {
 
 	getInitialState: function() {
 		return {
-			showDetail: false
+			showDetail: false,
 		};
 	},
 
 	getDefaultProps: function() {
 		return {
-			isPlaceholder: false
+			isPlaceholder: false,
 		};
 	},
 
@@ -86,27 +85,28 @@ export default React.createClass( {
 		if ( 'global' === scope ) {
 			message = this.translate(
 				'This connection is allowed to manage all of your blogs on WordPress.com, ' +
-				'including any Jetpack blogs that are connected to your WordPress.com account.'
+					'including any Jetpack blogs that are connected to your WordPress.com account.',
 			);
 		} else if ( 'auth' === scope ) {
-			message = this.translate(
-				'This connection is not allowed to manage any of your blogs.'
-			);
+			message = this.translate( 'This connection is not allowed to manage any of your blogs.' );
 		} else if ( false !== site ) {
 			message = this.translate(
-				'This connection is only allowed to access {{siteLink}}%(siteName)s{{/siteLink}}', {
+				'This connection is only allowed to access {{siteLink}}%(siteName)s{{/siteLink}}',
+				{
 					components: {
-						siteLink: <a
-							target="_blank"
-							rel="noopener noreferrer"
-							href={ safeProtocolUrl( this.props.connection.site.site_URL ) }
-							onClick={ this.recordClickEvent( 'Connected Application Scope Blog Link' ) }
-						/>
+						siteLink: (
+							<a
+								target="_blank"
+								rel="noopener noreferrer"
+								href={ safeProtocolUrl( this.props.connection.site.site_URL ) }
+								onClick={ this.recordClickEvent( 'Connected Application Scope Blog Link' ) }
+							/>
+						),
 					},
 					args: {
-						siteName: site.site_name
-					}
-				}
+						siteName: site.site_name,
+					},
+				},
 			);
 		}
 
@@ -121,7 +121,7 @@ export default React.createClass( {
 					{ this.renderAccessScopeBadge() }
 				</h2>
 
-				<p className="connected-application-item__connection-detail-description" >
+				<p className="connected-application-item__connection-detail-description">
 					{ message }
 				</p>
 			</div>
@@ -148,15 +148,20 @@ export default React.createClass( {
 					</a>
 				</p>
 
-				{ this.translate( '{{detailTitle}}Authorized On{{/detailTitle}}{{detailDescription}}%(date)s{{/detailDescription}}', {
-					components: {
-						detailTitle: <h2 />,
-						detailDescription: <p className="connected-application-item__connection-detail-description" />
+				{ this.translate(
+					'{{detailTitle}}Authorized On{{/detailTitle}}{{detailDescription}}%(date)s{{/detailDescription}}',
+					{
+						components: {
+							detailTitle: <h2 />,
+							detailDescription: (
+								<p className="connected-application-item__connection-detail-description" />
+							),
+						},
+						args: {
+							date: this.moment( authorized ).format( 'MMM D, YYYY @ h:mm a' ),
+						},
 					},
-					args: {
-						date: this.moment( authorized ).format( 'MMM D, YYYY @ h:mm a' )
-					}
-				} ) }
+				) }
 				<div>
 					{ this.renderScopeMessage() }
 				</div>
@@ -185,19 +190,21 @@ export default React.createClass( {
 	},
 
 	summary: function() {
-		return(
+		return (
 			<div>
 				{ this.props.isPlaceholder
-					? ( <Button compact disabled>{ this.translate( 'Loading…' ) }</Button> )
-					: ( <Button compact onClick={ this.disconnect }>{ this.translate( 'Disconnect' ) }</Button> )
-				}
-			</div> );
+					? <Button compact disabled>{ this.translate( 'Loading…' ) }</Button>
+					: <Button compact onClick={ this.disconnect }>
+							{ this.translate( 'Disconnect' ) }
+						</Button> }
+			</div>
+		);
 	},
 
 	render: function() {
 		let classes = classNames( {
 			'connected-application-item': true,
-			'is-placeholder': this.props.isPlaceholder
+			'is-placeholder': this.props.isPlaceholder,
 		} );
 
 		return (
@@ -207,7 +214,8 @@ export default React.createClass( {
 				expandedSummary={ this.summary() }
 				clickableHeader
 				compact
-				className={ classes }>
+				className={ classes }
+			>
 				{ this.renderDetail() }
 			</FoldableCard>
 		);

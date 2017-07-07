@@ -18,7 +18,7 @@ import {
  */
 export function olarkTimeout() {
 	return {
-		type: OLARK_TIMEOUT
+		type: OLARK_TIMEOUT,
 	};
 }
 
@@ -29,7 +29,7 @@ export function olarkTimeout() {
  */
 export function olarkReady() {
 	return {
-		type: OLARK_READY
+		type: OLARK_READY,
 	};
 }
 
@@ -40,7 +40,7 @@ export function olarkReady() {
  */
 export function operatorsAvailable() {
 	return {
-		type: OLARK_OPERATORS_AVAILABLE
+		type: OLARK_OPERATORS_AVAILABLE,
 	};
 }
 
@@ -51,7 +51,7 @@ export function operatorsAvailable() {
  */
 export function operatorsAway() {
 	return {
-		type: OLARK_OPERATORS_AWAY
+		type: OLARK_OPERATORS_AWAY,
 	};
 }
 
@@ -72,11 +72,11 @@ export function setChatAvailability( availability ) {
  * @returns {Function}        Action thunk
  */
 export function requestOlark() {
-	return ( dispatch ) => {
+	return dispatch => {
 		dispatch( {
-			type: OLARK_REQUEST
+			type: OLARK_REQUEST,
 		} );
-		return new Promise( ( resolve ) => {
+		return new Promise( resolve => {
 			dispatch( olarkTimeout() );
 			resolve();
 		} );

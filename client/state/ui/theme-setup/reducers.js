@@ -31,4 +31,3 @@ export const themeSetup = ( state = initialState, action ) => {
 };
 
 export default themeSetup;
-

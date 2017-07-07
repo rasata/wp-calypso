@@ -7,18 +7,18 @@ import { localize } from 'i18n-calypso';
 
 const PrivacyProtectionExample = ( { translate, fields, countriesList } ) => {
 	const {
-			firstName: { value: firstName },
-			lastName: { value: lastName },
-			organization: { value: organization },
-			email: { value: email },
-			address1: { value: address1 },
-			address2: { value: address2 },
-			city: { value: city },
-			state: { value: state },
-			postalCode: { value: postalCode },
-			countryCode: { value: countryCode },
-			phone: { value: phone }
-		} = fields,
+		firstName: { value: firstName },
+		lastName: { value: lastName },
+		organization: { value: organization },
+		email: { value: email },
+		address1: { value: address1 },
+		address2: { value: address2 },
+		city: { value: city },
+		state: { value: state },
+		postalCode: { value: postalCode },
+		countryCode: { value: countryCode },
+		phone: { value: phone },
+	} = fields,
 		country = countryCode && find( countriesList.get(), { code: countryCode } ),
 		lines = [];
 	let addressLine = '';
@@ -86,11 +86,11 @@ const PrivacyProtectionExample = ( { translate, fields, countriesList } ) => {
 	}
 
 	return (
-		<p>{ lines.map(
-			( line, index ) => {
+		<p>
+			{ lines.map( ( line, index ) => {
 				return <span key={ `privacy-protection-example-line-${ index }` }>{ line }</span>;
-			}
-		) } </p>
+			} ) }{ ' ' }
+		</p>
 	);
 };
 

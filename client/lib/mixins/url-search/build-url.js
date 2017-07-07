@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var url = require( 'url' ),
-	pick = require( 'lodash/pick' );
+var url = require( 'url' ), pick = require( 'lodash/pick' );
 
 /**
  * Given a URL or path and search terms, returns a path including the search

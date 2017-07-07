@@ -15,7 +15,7 @@ export default {
 		renderWithReduxStore(
 			React.createElement( BillingHistoryComponent ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -27,8 +27,8 @@ export default {
 			renderWithReduxStore(
 				React.createElement( Receipt, { transactionId: receiptId } ),
 				document.getElementById( 'primary' ),
-				context.store
+				context.store,
 			);
 		}
-	}
+	},
 };

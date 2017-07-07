@@ -12,10 +12,7 @@ import getPostRevisions from 'state/selectors/get-post-revisions';
 
 const getPostRevisionChanges = createSelector(
 	( state, siteId, postId, revisionId ) => {
-		const orderedRevisions = orderBy(
-			getPostRevisions( state, siteId, postId ),
-			'date', 'desc',
-		);
+		const orderedRevisions = orderBy( getPostRevisions( state, siteId, postId ), 'date', 'desc' );
 		const revisionIndex = findIndex( orderedRevisions, { id: revisionId } );
 		if ( revisionIndex === -1 ) {
 			return [];
@@ -23,12 +20,12 @@ const getPostRevisionChanges = createSelector(
 		return map(
 			diffWords(
 				get( orderedRevisions, [ revisionIndex + 1, 'content' ], '' ),
-				orderedRevisions[ revisionIndex ].content
+				orderedRevisions[ revisionIndex ].content,
 			),
-			change => omitBy( change, isUndefined )
+			change => omitBy( change, isUndefined ),
 		);
 	},
-	( state ) => [ state.posts.revisions.revisions ],
+	state => [ state.posts.revisions.revisions ],
 );
 
 export default getPostRevisionChanges;

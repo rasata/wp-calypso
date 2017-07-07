@@ -48,9 +48,7 @@ export function getDocumentHeadCappedUnreadCount( state ) {
 		return '';
 	}
 
-	return unreadCount <= UNREAD_COUNT_CAP
-		? String( unreadCount )
-		: `${ UNREAD_COUNT_CAP }+`;
+	return unreadCount <= UNREAD_COUNT_CAP ? String( unreadCount ) : `${ UNREAD_COUNT_CAP }+`;
 }
 
 /**
@@ -61,7 +59,7 @@ export function getDocumentHeadCappedUnreadCount( state ) {
  * @return {String}         Formatted title
  */
 export const getDocumentHeadFormattedTitle = createSelector(
-	( state ) => {
+	state => {
 		let title = '';
 
 		const unreadCount = getDocumentHeadCappedUnreadCount( state );
@@ -71,7 +69,7 @@ export const getDocumentHeadFormattedTitle = createSelector(
 
 		title += compact( [
 			getDocumentHeadTitle( state ),
-			isSiteSection( state ) && getSiteTitle( state, getSelectedSiteId( state ) )
+			isSiteSection( state ) && getSiteTitle( state, getSelectedSiteId( state ) ),
 		] ).join( ' ‹ ' );
 
 		if ( title ) {
@@ -80,11 +78,7 @@ export const getDocumentHeadFormattedTitle = createSelector(
 
 		return title + 'WordPress.com';
 	},
-	( state ) => [
-		state.documentHead,
-		state.ui.section,
-		state.ui.selectedSiteId,
-	]
+	state => [ state.documentHead, state.ui.section, state.ui.selectedSiteId ],
 );
 
 /**

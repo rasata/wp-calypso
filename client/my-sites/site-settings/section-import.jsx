@@ -25,7 +25,7 @@ import HeaderCake from 'components/header-cake';
 class SiteSettingsImport extends Component {
 	static propTypes = {
 		site: PropTypes.object,
-	}
+	};
 
 	state = getImporterState();
 
@@ -68,11 +68,11 @@ class SiteSettingsImport extends Component {
 
 	updateFromAPI = () => {
 		fetchState( this.props.site.ID );
-	}
+	};
 
 	updateState = () => {
 		this.setState( getImporterState() );
-	}
+	};
 
 	render() {
 		const { site, siteSlug, translate } = this.props;
@@ -83,17 +83,18 @@ class SiteSettingsImport extends Component {
 		const { jetpack: isJetpack, options: { admin_url: adminUrl }, slug, title: siteTitle } = site;
 		const title = siteTitle.length ? siteTitle : slug;
 		const description = translate(
-			'Import another site\'s content into ' +
-			'{{strong}}%(title)s{{/strong}}. Once you start an ' +
-			'import, come back here to check on the progress. ' +
-			'Check out our {{a}}import guide{{/a}} ' +
-			'if you need more help.', {
+			"Import another site's content into " +
+				'{{strong}}%(title)s{{/strong}}. Once you start an ' +
+				'import, come back here to check on the progress. ' +
+				'Check out our {{a}}import guide{{/a}} ' +
+				'if you need more help.',
+			{
 				args: { title },
 				components: {
 					a: <a href="https://support.wordpress.com/import/" />,
-					strong: <strong />
-				}
-			}
+					strong: <strong />,
+				},
+			},
 		);
 
 		return (
@@ -101,44 +102,46 @@ class SiteSettingsImport extends Component {
 				<HeaderCake backHref={ '/settings/general/' + siteSlug }>
 					<h1>{ translate( 'Import' ) }</h1>
 				</HeaderCake>
-				{ isJetpack && <EmptyContent
-					illustration="/calypso/images/illustrations/illustration-jetpack.svg"
-					title={ translate( 'Want to import into your site?' ) }
-					line={ translate( 'Visit your site\'s wp-admin for all your import and export needs.' ) }
-					action={ translate( 'Import into %(title)s', { args: { title } } ) }
-					actionURL={ adminUrl + 'import.php' }
-					actionTarget="_blank"
-				/> }
-				{ ! isJetpack && <EmailVerificationGate>
-					<Interval onTick={ this.updateFromAPI } period={ EVERY_FIVE_SECONDS } />
-					<CompactCard>
-						<header>
-							<h1 className="site-settings__importer-section-title importer__section-title">
-								{ translate( 'Import Another Site' ) }
-							</h1>
-							<p className="importer__section-description">{ description }</p>
-						</header>
-					</CompactCard>
+				{ isJetpack &&
+					<EmptyContent
+						illustration="/calypso/images/illustrations/illustration-jetpack.svg"
+						title={ translate( 'Want to import into your site?' ) }
+						line={ translate( "Visit your site's wp-admin for all your import and export needs." ) }
+						action={ translate( 'Import into %(title)s', { args: { title } } ) }
+						actionURL={ adminUrl + 'import.php' }
+						actionTarget="_blank"
+					/> }
+				{ ! isJetpack &&
+					<EmailVerificationGate>
+						<Interval onTick={ this.updateFromAPI } period={ EVERY_FIVE_SECONDS } />
+						<CompactCard>
+							<header>
+								<h1 className="site-settings__importer-section-title importer__section-title">
+									{ translate( 'Import Another Site' ) }
+								</h1>
+								<p className="importer__section-description">{ description }</p>
+							</header>
+						</CompactCard>
 
-					{ this.getImports( WORDPRESS ).map( ( importerStatus, key ) =>
-						<WordPressImporter { ...{ key, site, importerStatus } } /> ) }
+						{ this.getImports( WORDPRESS ).map( ( importerStatus, key ) => (
+							<WordPressImporter { ...{ key, site, importerStatus } } />
+						) ) }
 
-					{ config.isEnabled( 'manage/import/medium' ) &&
-						this.getImports( MEDIUM ).map( ( importerStatus, key ) =>
-							<MediumImporter { ...{ key, site, importerStatus } } /> ) }
+						{ config.isEnabled( 'manage/import/medium' ) &&
+							this.getImports( MEDIUM ).map( ( importerStatus, key ) => (
+								<MediumImporter { ...{ key, site, importerStatus } } />
+							) ) }
 
-					<CompactCard href={ adminUrl + 'import.php' } target="_blank" rel="noopener noreferrer">
-						{ translate( 'Other importers' ) }
-					</CompactCard>
-				</EmailVerificationGate> }
+						<CompactCard href={ adminUrl + 'import.php' } target="_blank" rel="noopener noreferrer">
+							{ translate( 'Other importers' ) }
+						</CompactCard>
+					</EmailVerificationGate> }
 			</Main>
 		);
 	}
 }
 
-export default connect(
-	( state ) => ( {
-		site: getSelectedSite( state ),
-		siteSlug: getSelectedSiteSlug( state ),
-	} )
-)( localize( SiteSettingsImport ) );
+export default connect( state => ( {
+	site: getSelectedSite( state ),
+	siteSlug: getSelectedSiteSlug( state ),
+} ) )( localize( SiteSettingsImport ) );

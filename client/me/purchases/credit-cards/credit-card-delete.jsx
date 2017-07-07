@@ -62,5 +62,5 @@ export default connect(
 		deleteStoredCard,
 		errorNotice,
 		successNotice,
-	}
+	},
 )( localize( CreditCardDelete ) );

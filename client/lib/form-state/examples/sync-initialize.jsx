@@ -17,8 +17,8 @@ class SyncInitialize extends React.Component {
 	componentWillMount() {
 		this.formStore = createFormStore( {
 			syncInitialize: {
-				fieldNames: [ 'firstName', 'lastName' ]
-			}
+				fieldNames: [ 'firstName', 'lastName' ],
+			},
 		} );
 		this.formStore.on( 'change', this.updateFormState.bind( this ) );
 		this.updateFormState();
@@ -32,17 +32,21 @@ class SyncInitialize extends React.Component {
 		return (
 			<div>
 				<form onSubmit={ this.handleSubmit.bind( this ) }>
-					<input name="firstName"
+					<input
+						name="firstName"
 						type="text"
 						placeholder={ i18n.translate( 'First Name' ) }
 						onChange={ this.handleFieldChange.bind( this ) }
-						disabled={ isFieldDisabled( this.state.form, 'firstName' ) } />
+						disabled={ isFieldDisabled( this.state.form, 'firstName' ) }
+					/>
 
-					<input name="lastName"
+					<input
+						name="lastName"
 						type="text"
 						placeholder={ i18n.translate( 'Last Name' ) }
 						onChange={ this.handleFieldChange.bind( this ) }
-						disabled={ isFieldDisabled( this.state.form, 'lastName' ) } />
+						disabled={ isFieldDisabled( this.state.form, 'lastName' ) }
+					/>
 
 					<button type="submit" className="button is-primary">
 						Submit
@@ -59,7 +63,7 @@ class SyncInitialize extends React.Component {
 
 		this.formStore.handleFieldChange( {
 			name: event.target.name,
-			value: event.target.value
+			value: event.target.value,
 		} );
 	}
 

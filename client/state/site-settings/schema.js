@@ -4,7 +4,7 @@ export const items = {
 	patternProperties: {
 		// Site Id
 		'^\\d+$': {
-			type: 'object'
-		}
-	}
+			type: 'object',
+		},
+	},
 };

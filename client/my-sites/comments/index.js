@@ -12,20 +12,10 @@ import config from 'config';
 
 export default function() {
 	if ( config.isEnabled( 'comments/management' ) ) {
-		page( '/comments',
-			controller.siteSelection,
-			controller.sites
-		);
+		page( '/comments', controller.siteSelection, controller.sites );
 
-		page( '/comments/:status',
-			controller.siteSelection,
-			sites,
-		);
+		page( '/comments/:status', controller.siteSelection, sites );
 
-		page( '/comments/:status/:site',
-			controller.siteSelection,
-			controller.navigation,
-			comments
-		);
+		page( '/comments/:status/:site', controller.siteSelection, controller.navigation, comments );
 	}
 }

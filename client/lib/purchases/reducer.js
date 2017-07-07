@@ -19,7 +19,7 @@ const initialState = {
 	isFetchingSitePurchases: false,
 	isFetchingUserPurchases: false,
 	hasLoadedSitePurchasesFromServer: false,
-	hasLoadedUserPurchasesFromServer: false
+	hasLoadedUserPurchasesFromServer: false,
 };
 
 function updatePurchaseById( state, id, properties ) {
@@ -29,7 +29,7 @@ function updatePurchaseById( state, id, properties ) {
 				return assign( {}, purchase, properties );
 			}
 			return purchase;
-		} )
+		} ),
 	} );
 }
 
@@ -85,8 +85,10 @@ function updatePurchases( existingPurchases, action ) {
 		predicate = { siteId: action.siteId };
 	}
 
-	if ( ActionTypes.PURCHASES_USER_FETCH_COMPLETED === action.type ||
-		ActionTypes.PURCHASE_REMOVE_COMPLETED === action.type ) {
+	if (
+		ActionTypes.PURCHASES_USER_FETCH_COMPLETED === action.type ||
+		ActionTypes.PURCHASE_REMOVE_COMPLETED === action.type
+	) {
 		predicate = { userId: action.userId };
 	}
 
@@ -104,13 +106,13 @@ const reducer = ( state, payload ) => {
 			return assign( {}, state, {
 				data: [],
 				hasLoadedSitePurchasesFromServer: false,
-				hasLoadedUserPurchasesFromServer: false
+				hasLoadedUserPurchasesFromServer: false,
 			} );
 		case ActionTypes.PURCHASE_REMOVE:
 			return assign( {}, state, {
 				data: [],
 				isFetchingSitePurchases: false,
-				isFetchingUserPurchases: false
+				isFetchingUserPurchases: false,
 			} );
 		case ActionTypes.PURCHASES_SITE_FETCH:
 			return assign( {}, state, { isFetchingSitePurchases: true } );
@@ -124,21 +126,21 @@ const reducer = ( state, payload ) => {
 				isFetchingSitePurchases: false,
 				isFetchingUserPurchases: false,
 				hasLoadedSitePurchasesFromServer: true,
-				hasLoadedUserPurchasesFromServer: true
+				hasLoadedUserPurchasesFromServer: true,
 			} );
 		case ActionTypes.PURCHASES_SITE_FETCH_COMPLETED:
 			return assign( {}, state, {
 				data: updatePurchases( state.data, action ),
 				error: null,
 				isFetchingSitePurchases: false,
-				hasLoadedSitePurchasesFromServer: true
+				hasLoadedSitePurchasesFromServer: true,
 			} );
 		case ActionTypes.PURCHASES_USER_FETCH_COMPLETED:
 			return assign( {}, state, {
 				data: updatePurchases( state.data, action ),
 				error: null,
 				isFetchingUserPurchases: false,
-				hasLoadedUserPurchasesFromServer: true
+				hasLoadedUserPurchasesFromServer: true,
 			} );
 
 		case ActionTypes.PURCHASE_REMOVE_FAILED:
@@ -151,7 +153,7 @@ const reducer = ( state, payload ) => {
 
 		case ActionTypes.PRIVACY_PROTECTION_CANCEL_FAILED:
 			return updatePurchaseById( state, action.purchaseId, {
-				error: action.error
+				error: action.error,
 			} );
 
 		default:
@@ -159,7 +161,4 @@ const reducer = ( state, payload ) => {
 	}
 };
 
-export {
-	initialState,
-	reducer
-};
+export { initialState, reducer };

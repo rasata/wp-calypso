@@ -17,21 +17,15 @@ const importerStateMap = [
 	[ appStates.READY_FOR_UPLOAD, 'importer-ready-for-upload' ],
 	[ appStates.UPLOAD_SUCCESS, 'uploadSuccess' ],
 	[ appStates.UPLOAD_FAILURE, 'importer-upload-failure' ],
-	[ appStates.UPLOADING, 'importer-uploading' ]
+	[ appStates.UPLOADING, 'importer-uploading' ],
 ];
 
 function apiToAppState( state ) {
-	return find(
-		importerStateMap,
-		( [ , api ] ) => api === state
-	)[ 0 ];
+	return find( importerStateMap, ( [ , api ] ) => api === state )[ 0 ];
 }
 
 function appStateToApi( state ) {
-	return find(
-		importerStateMap,
-		( [ appState ] ) => appState === state
-	)[ 1 ];
+	return find( importerStateMap, ( [ appState ] ) => appState === state )[ 1 ];
 }
 
 function generateSourceAuthorIds( customData ) {
@@ -39,9 +33,10 @@ function generateSourceAuthorIds( customData ) {
 		return customData;
 	}
 
-	return Object.assign( {}, customData, { sourceAuthors: customData
-		.sourceAuthors
-		.map( author => author.id ? author : Object.assign( {}, author, { id: author.login } ) )
+	return Object.assign( {}, customData, {
+		sourceAuthors: customData.sourceAuthors.map(
+			author => ( author.id ? author : Object.assign( {}, author, { id: author.login } ) ),
+		),
 	} );
 }
 
@@ -50,11 +45,15 @@ function replaceUserInfoWithIds( customData ) {
 		return customData;
 	}
 
-	return Object.assign( {}, customData, { sourceAuthors: customData
-		.sourceAuthors
-		.map( author => author.mappedTo ? Object.assign( {}, author, {
-			mappedTo: author.mappedTo.ID
-		} ) : author )
+	return Object.assign( {}, customData, {
+		sourceAuthors: customData.sourceAuthors.map(
+			author =>
+				( author.mappedTo
+					? Object.assign( {}, author, {
+							mappedTo: author.mappedTo.ID,
+						} )
+					: author ),
+		),
 	} );
 }
 
@@ -67,18 +66,19 @@ export function fromApi( state ) {
 		type: `importer-type-${ type }`,
 		progress: fromJS( progress ),
 		customData: fromJS( generateSourceAuthorIds( customData ) ),
-		site: { ID: siteId }
+		site: { ID: siteId },
 	};
 }
 
 export function toApi( state ) {
 	const { importerId, site, type, importerState, customData, progress = undefined } = state;
 
-	return Object.assign( {},
+	return Object.assign(
+		{},
 		{ importerId, progress },
 		{ importStatus: appStateToApi( importerState ) },
 		site && site.ID ? { siteId: site.ID } : {},
 		type && { type: type.replace( 'importer-type-', '' ) },
-		customData ? { customData: replaceUserInfoWithIds( customData ) } : {}
+		customData ? { customData: replaceUserInfoWithIds( customData ) } : {},
 	);
 }

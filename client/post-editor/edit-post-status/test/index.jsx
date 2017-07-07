@@ -21,8 +21,8 @@ describe( 'EditPostStatus', function() {
 	useMockery( mockery => {
 		mockery.registerMock( 'lib/wp', {
 			me: () => ( {
-				get: noop
-			} )
+				get: noop,
+			} ),
 		} );
 	} );
 
@@ -32,7 +32,7 @@ describe( 'EditPostStatus', function() {
 
 	it( 'should hide sticky option for password protected posts', function() {
 		const wrapper = shallow(
-			<EditPostStatus post={ { password: 'password' } } isPostPrivate={ false } type={ 'post' } />
+			<EditPostStatus post={ { password: 'password' } } isPostPrivate={ false } type={ 'post' } />,
 		);
 
 		expect( wrapper.find( '.edit-post-status__sticky' ) ).to.have.lengthOf( 0 );
@@ -40,7 +40,7 @@ describe( 'EditPostStatus', function() {
 
 	it( 'should hide sticky option for private posts', function() {
 		const wrapper = shallow(
-			<EditPostStatus post={ { password: '' } } isPostPrivate={ true } type={ 'post' } />
+			<EditPostStatus post={ { password: '' } } isPostPrivate={ true } type={ 'post' } />,
 		);
 
 		expect( wrapper.find( '.edit-post-status__sticky' ) ).to.have.lengthOf( 0 );
@@ -48,7 +48,12 @@ describe( 'EditPostStatus', function() {
 
 	it( 'should show sticky option for published posts', function() {
 		const wrapper = shallow(
-			<EditPostStatus post={ { password: '' } } type={ 'post' } isPostPrivate={ false } translate={ noop } />
+			<EditPostStatus
+				post={ { password: '' } }
+				type={ 'post' }
+				isPostPrivate={ false }
+				translate={ noop }
+			/>,
 		);
 
 		expect( wrapper.find( '.edit-post-status__sticky' ) ).to.have.lengthOf( 1 );

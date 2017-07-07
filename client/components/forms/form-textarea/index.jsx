@@ -6,14 +6,16 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormTextarea',
 
 	render: function() {
 		return (
-			<textarea { ...omit( this.props, 'className' ) } className={ classnames( this.props.className, 'form-textarea' ) } >
+			<textarea
+				{ ...omit( this.props, 'className' ) }
+				className={ classnames( this.props.className, 'form-textarea' ) }
+			>
 				{ this.props.children }
 			</textarea>
 		);
-	}
+	},
 } );

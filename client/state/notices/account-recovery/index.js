@@ -6,10 +6,7 @@ import { translate } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import {
-	successNotice,
-	errorNotice,
-} from 'state/notices/actions';
+import { successNotice, errorNotice } from 'state/notices/actions';
 
 import {
 	getAccountRecoveryPhone,
@@ -33,10 +30,14 @@ const getUpdateSuccessMessage = ( target, getState ) => {
 			const oldEmail = getAccountRecoveryEmail( getState() );
 
 			if ( ! oldEmail ) {
-				return translate( 'Successfully added. Please check your mailbox for the validation email.' );
+				return translate(
+					'Successfully added. Please check your mailbox for the validation email.',
+				);
 			}
 
-			return translate( 'Successfully updated. Please check your mailbox for the validation email.' );
+			return translate(
+				'Successfully updated. Please check your mailbox for the validation email.',
+			);
 
 		default:
 			return translate( 'Successfully updated the recovery option.', {
@@ -45,7 +46,7 @@ const getUpdateSuccessMessage = ( target, getState ) => {
 	}
 };
 
-const getUpdateErrorMessage = ( target ) => {
+const getUpdateErrorMessage = target => {
 	switch ( target ) {
 		case 'phone':
 			return translate( 'An error occurred while updating your account recovery phone number.' );
@@ -58,7 +59,7 @@ const getUpdateErrorMessage = ( target ) => {
 	}
 };
 
-const getDeleteSuccessMessage = ( target ) => {
+const getDeleteSuccessMessage = target => {
 	switch ( target ) {
 		case 'phone':
 			return translate( 'Successfully removed recovery SMS number.' );
@@ -71,7 +72,7 @@ const getDeleteSuccessMessage = ( target ) => {
 	}
 };
 
-const getDeleteErrorMessage = ( target ) => {
+const getDeleteErrorMessage = target => {
 	switch ( target ) {
 		case 'phone':
 			return translate( 'An error occurred while deleting your account recovery phone number.' );
@@ -84,30 +85,38 @@ const getDeleteErrorMessage = ( target ) => {
 	}
 };
 
-const getResentSuccessMessage = ( target ) => {
+const getResentSuccessMessage = target => {
 	switch ( target ) {
 		case 'phone':
-			return translate( 'The validation code has been resent successfully. Please check your phone.' );
+			return translate(
+				'The validation code has been resent successfully. Please check your phone.',
+			);
 		case 'email':
-			return translate( 'The validation email has been resent successfully. Please check your mailbox.' );
+			return translate(
+				'The validation email has been resent successfully. Please check your mailbox.',
+			);
 		default:
 			return translate( 'The validation has been resent successfully.' );
 	}
 };
 
-const getResentFailedMessage = ( target ) => {
+const getResentFailedMessage = target => {
 	switch ( target ) {
 		case 'phone':
-			return translate( 'We\'ve encountered a problem sending you the validation code. Please try again later.' );
+			return translate(
+				"We've encountered a problem sending you the validation code. Please try again later.",
+			);
 		case 'email':
-			return translate( 'We\'ve encountered a problem sending you the validation email. Please try again later.' );
+			return translate(
+				"We've encountered a problem sending you the validation email. Please try again later.",
+			);
 		default:
-			return translate( 'We\'ve encountered a problem. Please try again later.' );
+			return translate( "We've encountered a problem. Please try again later." );
 	}
 };
 
 export const onAccountRecoverySettingsFetchFailed = dispatchError(
-	translate( 'An error occurred while fetching your account recovery settings.' )
+	translate( 'An error occurred while fetching your account recovery settings.' ),
 );
 
 export const onAccountRecoverySettingsUpdateSuccess = ( dispatch, { target }, getState ) =>
@@ -128,8 +137,16 @@ export const onResentAccountRecoveryEmailValidationSuccess = ( dispatch, { targe
 export const onResentAccountRecoveryEmailValidationFailed = ( dispatch, { target } ) =>
 	dispatch( errorNotice( getResentFailedMessage( target ) ) );
 
-export const onAccountRecoveryPhoneValidationSuccess = ( dispatch ) =>
-	dispatch( successNotice( translate( 'Your recovery SMS number has been validated successfully.' ) ) );
+export const onAccountRecoveryPhoneValidationSuccess = dispatch =>
+	dispatch(
+		successNotice( translate( 'Your recovery SMS number has been validated successfully.' ) ),
+	);
 
-export const onAccountRecoveryPhoneValidationFailed = ( dispatch ) =>
-	dispatch( errorNotice( translate( 'There was a problem validating your recovery SMS number. Please try again later.' ) ) );
+export const onAccountRecoveryPhoneValidationFailed = dispatch =>
+	dispatch(
+		errorNotice(
+			translate(
+				'There was a problem validating your recovery SMS number. Please try again later.',
+			),
+		),
+	);

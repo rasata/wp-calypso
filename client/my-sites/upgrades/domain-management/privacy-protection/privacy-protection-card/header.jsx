@@ -13,8 +13,8 @@ const PrivacyProtectionCardHeader = ( {
 	displayCost,
 	selectedDomainName,
 	selectedSite,
-	translate
- } ) => (
+	translate,
+} ) => (
 	<header className="privacy-protection-card__header">
 		<h3>{ translate( 'Privacy Protection' ) }</h3>
 
@@ -22,29 +22,24 @@ const PrivacyProtectionCardHeader = ( {
 			<h4 className="privacy-protection-card__price-per-user">
 				{ translate( '{{strong}}%(cost)s{{/strong}} per domain / year', {
 					args: {
-						cost: displayCost
+						cost: displayCost,
 					},
 					components: {
-						strong: <strong />
-					}
+						strong: <strong />,
+					},
 				} ) }
 			</h4>
 		</div>
 
-		<AddButton
-			selectedDomainName={ selectedDomainName }
-			selectedSite={ selectedSite } />
+		<AddButton selectedDomainName={ selectedDomainName } selectedSite={ selectedSite } />
 	</header>
 );
 
 PrivacyProtectionCardHeader.propTypes = {
 	displayCost: PropTypes.string.isRequired,
 	selectedDomainName: PropTypes.string.isRequired,
-	selectedSite: PropTypes.oneOfType( [
-		PropTypes.object,
-		PropTypes.bool
-	] ).isRequired,
-	translate: PropTypes.func.isRequired
+	selectedSite: PropTypes.oneOfType( [ PropTypes.object, PropTypes.bool ] ).isRequired,
+	translate: PropTypes.func.isRequired,
 };
 
 export default localize( PrivacyProtectionCardHeader );

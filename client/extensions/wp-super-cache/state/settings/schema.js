@@ -10,7 +10,7 @@ export const itemsSchema = {
 				cache_compression: { type: 'boolean' },
 				cache_direct_pages: {
 					type: 'array',
-					items: { type: 'string' }
+					items: { type: 'string' },
 				},
 				cache_disable_locking: { type: 'boolean' },
 				cache_gc_email_me: { type: 'boolean' },
@@ -62,8 +62,8 @@ export const itemsSchema = {
 						pages: { type: 'boolean' },
 						search: { type: 'boolean' },
 						single: { type: 'boolean' },
-						tag: { type: 'boolean' }
-					}
+						tag: { type: 'boolean' },
+					},
 				},
 				post_count: { type: 'string' },
 				preload_email_volume: { type: 'string' },
@@ -72,8 +72,8 @@ export const itemsSchema = {
 				preload_posts: { type: 'integer' },
 				preload_taxonomies: { type: 'boolean' },
 				refresh_current_only_on_comments: { type: 'boolean' },
-				use_304_headers: { type: 'boolean' }
-			}
-		}
-	}
+				use_304_headers: { type: 'boolean' },
+			},
+		},
+	},
 };

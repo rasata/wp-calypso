@@ -23,37 +23,49 @@ class EmailProvider extends Component {
 		this.state = { token: '', submitting: false };
 	}
 
-	onChange = ( event ) => {
+	onChange = event => {
 		const { value } = event.target;
 		this.setState( { token: trim( value ) } );
-	}
+	};
 
-	onAddDnsRecords = ( event ) => {
+	onAddDnsRecords = event => {
 		event.preventDefault();
 		this.setState( { submitting: true } );
 
 		const { domain, translate, template } = this.props;
 		let variables = {
 			token: this.state.token,
-			domain
+			domain,
 		};
 
 		if ( template.modifyVariables ) {
 			variables = template.modifyVariables( variables );
 		}
 
-		upgradesActions.applyDnsTemplate( domain, template.dnsTemplateProvider, template.dnsTemplateService, variables, ( error ) => {
-			if ( error ) {
-				notices.error( error.message || translate( 'We weren\'t able to add DNS records for this service. Please try again.' ) );
-			} else {
-				notices.success( translate( 'Hooray! We\'ve successfully added DNS records for this service.' ), {
-					duration: 5000
-				} );
-			}
+		upgradesActions.applyDnsTemplate(
+			domain,
+			template.dnsTemplateProvider,
+			template.dnsTemplateService,
+			variables,
+			error => {
+				if ( error ) {
+					notices.error(
+						error.message ||
+							translate( "We weren't able to add DNS records for this service. Please try again." ),
+					);
+				} else {
+					notices.success(
+						translate( "Hooray! We've successfully added DNS records for this service." ),
+						{
+							duration: 5000,
+						},
+					);
+				}
 
-			this.setState( { submitting: false } );
-		} );
-	}
+				this.setState( { submitting: false } );
+			},
+		);
+	};
 
 	render() {
 		const { translate } = this.props,
@@ -71,23 +83,23 @@ class EmailProvider extends Component {
 							name="token"
 							isError={ ! isEmpty( this.state.token ) && ! isDataValid }
 							onChange={ this.onChange }
-							placeholder={ placeholder } />
-						{ this.state.token && ! isDataValid &&
-						<FormInputValidation text={ translate( 'Invalid Token' ) } isError={ true } /> }
+							placeholder={ placeholder }
+						/>
+						{ this.state.token &&
+							! isDataValid &&
+							<FormInputValidation text={ translate( 'Invalid Token' ) } isError={ true } /> }
 					</FormFieldset>
 
 					<FormFooter>
 						<FormButton
 							disabled={ ! isDataValid || this.state.submitting }
-							onClick={ this.onAddDnsRecords }>
-							{ translate(
-								'Set up %(providerName)s',
-								{
-									args: { providerName: name },
-									comment: '%(providerName)s will be replaced with the name of the service ' +
-										'provider that this template is used for, for example G Suite or Office 365'
-								}
-							) }
+							onClick={ this.onAddDnsRecords }
+						>
+							{ translate( 'Set up %(providerName)s', {
+								args: { providerName: name },
+								comment: '%(providerName)s will be replaced with the name of the service ' +
+									'provider that this template is used for, for example G Suite or Office 365',
+							} ) }
 						</FormButton>
 					</FormFooter>
 				</div>

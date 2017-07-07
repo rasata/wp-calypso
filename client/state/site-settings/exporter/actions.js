@@ -28,7 +28,7 @@ import { prepareExportRequest } from './selectors';
 export function setPostType( postType ) {
 	return {
 		type: EXPORT_POST_TYPE_SET,
-		postType
+		postType,
 	};
 }
 
@@ -59,16 +59,16 @@ export function advancedSettingsFetch( siteId ) {
 
 		dispatch( {
 			type: EXPORT_ADVANCED_SETTINGS_FETCH,
-			siteId
+			siteId,
 		} );
 
-		const updateExportSettings =
-			settings => dispatch( advancedSettingsReceive( siteId, settings ) );
+		const updateExportSettings = settings =>
+			dispatch( advancedSettingsReceive( siteId, settings ) );
 
-		const fetchFail =
-			error => dispatch( advancedSettingsFail( siteId, error ) );
+		const fetchFail = error => dispatch( advancedSettingsFail( siteId, error ) );
 
-		return wpcom.undocumented()
+		return wpcom
+			.undocumented()
 			.getExportSettings( siteId )
 			.then( updateExportSettings )
 			.catch( fetchFail );
@@ -79,7 +79,7 @@ export function advancedSettingsReceive( siteId, advancedSettings ) {
 	return {
 		type: EXPORT_ADVANCED_SETTINGS_RECEIVE,
 		siteId,
-		advancedSettings
+		advancedSettings,
 	};
 }
 
@@ -87,7 +87,7 @@ export function advancedSettingsFail( siteId, error ) {
 	return {
 		type: EXPORT_ADVANCED_SETTINGS_FETCH_FAIL,
 		siteId,
-		error
+		error,
 	};
 }
 
@@ -110,13 +110,12 @@ export function startExport( siteId, { exportAll = true } = {} ) {
 
 		const advancedSettings = prepareExportRequest( getState(), siteId, { exportAll } );
 
-		const success =
-			() => dispatch( exportStarted( siteId ) );
+		const success = () => dispatch( exportStarted( siteId ) );
 
-		const failure =
-			error => dispatch( exportFailed( siteId, error ) );
+		const failure = error => dispatch( exportFailed( siteId, error ) );
 
-		return wpcom.undocumented()
+		return wpcom
+			.undocumented()
 			.startExport( siteId, advancedSettings )
 			.then( success )
 			.catch( failure );
@@ -126,18 +125,18 @@ export function startExport( siteId, { exportAll = true } = {} ) {
 export function exportStarted( siteId ) {
 	return {
 		type: EXPORT_STARTED,
-		siteId
+		siteId,
 	};
 }
 
 export function exportStatusFetch( siteId ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		dispatch( {
 			type: EXPORT_STATUS_FETCH,
-			siteId
+			siteId,
 		} );
 
-		const failure = ( error ) => {
+		const failure = error => {
 			dispatch( exportFailed( siteId, error ) );
 		};
 
@@ -152,10 +151,7 @@ export function exportStatusFetch( siteId ) {
 			return failure( response );
 		};
 
-		return wpcom.undocumented()
-			.getExport( siteId, 0 )
-			.then( success )
-			.catch( failure );
+		return wpcom.undocumented().getExport( siteId, 0 ).then( success ).catch( failure );
 	};
 }
 
@@ -163,7 +159,7 @@ export function exportFailed( siteId, error ) {
 	return {
 		type: EXPORT_FAILURE,
 		siteId,
-		error
+		error,
 	};
 }
 
@@ -171,13 +167,13 @@ export function exportComplete( siteId, downloadURL ) {
 	return {
 		type: EXPORT_COMPLETE,
 		siteId,
-		downloadURL
+		downloadURL,
 	};
 }
 
 export function clearExport( siteId ) {
 	return {
 		type: EXPORT_CLEAR,
-		siteId
+		siteId,
 	};
 }

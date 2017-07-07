@@ -12,7 +12,7 @@ import Card from 'components/card';
 import QuerySiteStats from 'components/data/query-site-stats';
 import {
 	isRequestingSiteStatsForQuery,
-	getSiteStatsNormalizedData
+	getSiteStatsNormalizedData,
 } from 'state/stats/lists/selectors';
 import StatsModulePlaceholder from 'my-sites/stats/stats-module/placeholder';
 import ErrorPanel from 'my-sites/stats/stats-error';
@@ -29,7 +29,7 @@ class StoreStatsModule extends Component {
 	};
 
 	state = {
-		loaded: false
+		loaded: false,
 	};
 
 	componentWillReceiveProps( nextProps ) {
@@ -49,7 +49,9 @@ class StoreStatsModule extends Component {
 		const hasEmptyData = loaded && data && data.length === 0;
 		return (
 			<div>
-				{ siteId && statType && <QuerySiteStats statType={ statType } siteId={ siteId } query={ query } /> }
+				{ siteId &&
+					statType &&
+					<QuerySiteStats statType={ statType } siteId={ siteId } query={ query } /> }
 				{ header }
 				{ isLoading && <Card><StatsModulePlaceholder isLoading={ isLoading } /></Card> }
 				{ ! isLoading && hasEmptyData && <Card><ErrorPanel message={ emptyMessage } /></Card> }
@@ -59,11 +61,9 @@ class StoreStatsModule extends Component {
 	}
 }
 
-export default connect(
-	( state, { siteId, statType, query } ) => {
-		return {
-			data: getSiteStatsNormalizedData( state, siteId, statType, query ),
-			requesting: isRequestingSiteStatsForQuery( state, siteId, statType, query ),
-		};
-	}
-)( StoreStatsModule );
+export default connect( ( state, { siteId, statType, query } ) => {
+	return {
+		data: getSiteStatsNormalizedData( state, siteId, statType, query ),
+		requesting: isRequestingSiteStatsForQuery( state, siteId, statType, query ),
+	};
+} )( StoreStatsModule );

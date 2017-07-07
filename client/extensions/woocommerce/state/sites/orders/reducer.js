@@ -35,7 +35,9 @@ export function isLoading( state = {}, action ) {
 		case WOOCOMMERCE_ORDER_REQUEST:
 		case WOOCOMMERCE_ORDER_REQUEST_SUCCESS:
 		case WOOCOMMERCE_ORDER_REQUEST_FAILURE:
-			return Object.assign( {}, state, { [ action.orderId ]: WOOCOMMERCE_ORDER_REQUEST === action.type } );
+			return Object.assign( {}, state, {
+				[ action.orderId ]: WOOCOMMERCE_ORDER_REQUEST === action.type,
+			} );
 		default:
 			return state;
 	}
@@ -55,7 +57,9 @@ export function isQueryLoading( state = {}, action ) {
 		case WOOCOMMERCE_ORDERS_REQUEST:
 		case WOOCOMMERCE_ORDERS_REQUEST_SUCCESS:
 		case WOOCOMMERCE_ORDERS_REQUEST_FAILURE:
-			return Object.assign( {}, state, { [ `{page:${ action.page }}` ]: WOOCOMMERCE_ORDERS_REQUEST === action.type } );
+			return Object.assign( {}, state, {
+				[ `{page:${ action.page }}` ]: WOOCOMMERCE_ORDERS_REQUEST === action.type,
+			} );
 		default:
 			return state;
 	}
@@ -75,7 +79,9 @@ export function isUpdating( state = {}, action ) {
 		case WOOCOMMERCE_ORDER_UPDATE:
 		case WOOCOMMERCE_ORDER_UPDATE_SUCCESS:
 		case WOOCOMMERCE_ORDER_UPDATE_FAILURE:
-			return Object.assign( {}, state, { [ action.orderId ]: WOOCOMMERCE_ORDER_UPDATE === action.type } );
+			return Object.assign( {}, state, {
+				[ action.orderId ]: WOOCOMMERCE_ORDER_UPDATE === action.type,
+			} );
 		default:
 			return state;
 	}

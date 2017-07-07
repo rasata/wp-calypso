@@ -19,9 +19,9 @@ export const pluginsSchema = {
 					network: { type: 'boolean' },
 					autoupdate: { type: 'boolean' },
 					update: { type: 'object' },
-				}
-			}
-		}
+				},
+			},
+		},
 	},
-	additionalProperties: false
+	additionalProperties: false,
 };

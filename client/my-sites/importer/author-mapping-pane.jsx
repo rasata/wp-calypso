@@ -25,80 +25,87 @@ export default React.createClass( {
 		sourceAuthors: PropTypes.arrayOf(
 			PropTypes.shape( {
 				id: PropTypes.string.isRequired,
-				name: PropTypes.string.isRequired
-			} ).isRequired
+				name: PropTypes.string.isRequired,
+			} ).isRequired,
 		).isRequired,
 		sourceTitle: PropTypes.string.isRequired,
-		targetTitle: PropTypes.string.isRequired
+		targetTitle: PropTypes.string.isRequired,
 	},
 
 	getFetchOptions( options = {} ) {
-		return Object.assign( {
-			number: 50,
-			order: 'ASC',
-			order_by: 'display_name',
-			siteId: this.props.siteId
-		}, options );
+		return Object.assign(
+			{
+				number: 50,
+				order: 'ASC',
+				order_by: 'display_name',
+				siteId: this.props.siteId,
+			},
+			options,
+		);
 	},
 
 	getMappingDescription( numSourceUsers, numTargetUsers, targetTitle ) {
 		if ( numTargetUsers === 1 && numSourceUsers === 1 ) {
 			return this.translate(
 				'We found one author on your %(sourceType)s site. ' +
-				'Because you\'re the only author on {{b}}%(destinationSiteTitle)s{{/b}}, ' +
-				'all imported content will be assigned to you. ' +
-				'Click Start Import to proceed.', {
+					"Because you're the only author on {{b}}%(destinationSiteTitle)s{{/b}}, " +
+					'all imported content will be assigned to you. ' +
+					'Click Start Import to proceed.',
+				{
 					args: {
 						sourceType: 'WordPress',
-						destinationSiteTitle: targetTitle
+						destinationSiteTitle: targetTitle,
 					},
 					components: {
-						b: <strong />
-					}
-				}
+						b: <strong />,
+					},
+				},
 			);
 		} else if ( numTargetUsers === 1 && numSourceUsers > 1 ) {
 			return this.translate(
 				'We found multiple authors on your %(sourceType)s site. ' +
-				'Because you\'re the only author on {{b}}%(destinationSiteTitle)s{{/b}}, ' +
-				'all imported content will be assigned to you. ' +
-				'Click Start Import to proceed.', {
+					"Because you're the only author on {{b}}%(destinationSiteTitle)s{{/b}}, " +
+					'all imported content will be assigned to you. ' +
+					'Click Start Import to proceed.',
+				{
 					args: {
 						sourceType: 'WordPress',
-						destinationSiteTitle: targetTitle
+						destinationSiteTitle: targetTitle,
 					},
 					components: {
-						b: <strong />
-					}
-				}
+						b: <strong />,
+					},
+				},
 			);
 		} else if ( numTargetUsers > 1 && numSourceUsers === 1 ) {
 			return this.translate(
 				'We found multiple authors on {{b}}%(destinationSiteTitle)s{{/b}}. ' +
-				'Please reassign the authors of the imported items to an existing ' +
-				'user on {{b}}%(destinationSiteTitle)s{{/b}}, then click Start Import.', {
+					'Please reassign the authors of the imported items to an existing ' +
+					'user on {{b}}%(destinationSiteTitle)s{{/b}}, then click Start Import.',
+				{
 					args: {
 						sourceType: 'WordPress',
-						destinationSiteTitle: targetTitle
+						destinationSiteTitle: targetTitle,
 					},
 					components: {
-						b: <strong />
-					}
-				}
+						b: <strong />,
+					},
+				},
 			);
 		} else if ( numTargetUsers > 1 && numSourceUsers > 1 ) {
 			return this.translate(
 				'We found multiple authors on your %(sourceType)s site. ' +
-				'Please reassign the authors of the imported items to an existing ' +
-				'user on {{b}}%(destinationSiteTitle)s{{/b}}, then click Start Import.', {
+					'Please reassign the authors of the imported items to an existing ' +
+					'user on {{b}}%(destinationSiteTitle)s{{/b}}, then click Start Import.',
+				{
 					args: {
 						sourceType: 'WordPress',
-						destinationSiteTitle: targetTitle
+						destinationSiteTitle: targetTitle,
 					},
 					components: {
-						b: <strong />
-					}
-				}
+						b: <strong />,
+					},
+				},
 			);
 		}
 	},
@@ -111,10 +118,22 @@ export default React.createClass( {
 	},
 
 	render: function() {
-		const { hasSingleAuthor, sourceAuthors, sourceTitle, targetTitle, onMap, onStartImport, siteId } = this.props;
+		const {
+			hasSingleAuthor,
+			sourceAuthors,
+			sourceTitle,
+			targetTitle,
+			onMap,
+			onStartImport,
+			siteId,
+		} = this.props;
 		const canStartImport = hasSingleAuthor || sourceAuthors.some( author => author.mappedTo );
 		const targetUserCount = this.getUserCount();
-		const mappingDescription = this.getMappingDescription( sourceAuthors.length, targetUserCount, targetTitle );
+		const mappingDescription = this.getMappingDescription(
+			sourceAuthors.length,
+			targetUserCount,
+			targetTitle,
+		);
 
 		return (
 			<div className="importer__mapping-pane">
@@ -143,5 +162,5 @@ export default React.createClass( {
 				</Button>
 			</div>
 		);
-	}
+	},
 } );

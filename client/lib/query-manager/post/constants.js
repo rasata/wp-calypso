@@ -10,5 +10,5 @@ export const DEFAULT_POST_QUERY = {
 	type: 'post',
 	status: 'publish',
 	sticky: 'include',
-	search: ''
+	search: '',
 };

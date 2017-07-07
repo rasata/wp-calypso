@@ -51,5 +51,5 @@ function isPiiUrl() {
 
 module.exports = {
 	doNotTrack: doNotTrack,
-	isPiiUrl: isPiiUrl
+	isPiiUrl: isPiiUrl,
 };

@@ -14,8 +14,7 @@ var Dispatcher = require( 'dispatcher' ),
 /**
  * Module variables
  */
-var PreferencesActions = {},
-	_pendingUpdates = 0;
+var PreferencesActions = {}, _pendingUpdates = 0;
 
 function getLocalStorage() {
 	return store.get( PreferencesConstants.LOCALSTORAGE_KEY );
@@ -43,39 +42,40 @@ PreferencesActions.fetch = function() {
 	}
 
 	Dispatcher.handleViewAction( {
-		type: 'FETCH_ME_SETTINGS'
+		type: 'FETCH_ME_SETTINGS',
 	} );
 
 	if ( localStorage ) {
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_ME_SETTINGS',
-			data: { [ PreferencesConstants.USER_SETTING_KEY ]: localStorage }
+			data: { [ PreferencesConstants.USER_SETTING_KEY ]: localStorage },
 		} );
 	}
 
 	wpcom.me().settings().get( function( error, data ) {
 		if ( ! error && data ) {
-			PreferencesActions.mergePreferencesToLocalStorage( data[ PreferencesConstants.USER_SETTING_KEY ] );
+			PreferencesActions.mergePreferencesToLocalStorage(
+				data[ PreferencesConstants.USER_SETTING_KEY ],
+			);
 		}
 
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_ME_SETTINGS',
 			error: error,
-			data: data
+			data: data,
 		} );
 	} );
 };
 
 PreferencesActions.set = function( key, value ) {
-	var preferences = {},
-		settings = {};
+	var preferences = {}, settings = {};
 
 	preferences[ key ] = value;
 	settings[ PreferencesConstants.USER_SETTING_KEY ] = preferences;
 
 	Dispatcher.handleViewAction( {
 		type: 'UPDATE_ME_SETTINGS',
-		data: settings
+		data: settings,
 	} );
 
 	PreferencesActions.mergePreferencesToLocalStorage( preferences );
@@ -89,7 +89,7 @@ PreferencesActions.set = function( key, value ) {
 		Dispatcher.handleServerAction( {
 			type: 'RECEIVE_ME_SETTINGS',
 			error: error,
-			data: data
+			data: data,
 		} );
 	} );
 };

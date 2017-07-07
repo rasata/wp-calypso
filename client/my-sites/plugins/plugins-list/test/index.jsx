@@ -50,7 +50,8 @@ describe( 'PluginsList', () => {
 		before( () => {
 			plugins = [
 				{ sites, slug: 'hello', name: 'Hello Dolly' },
-				{ sites, slug: 'jetpack', name: 'Jetpack' } ];
+				{ sites, slug: 'jetpack', name: 'Jetpack' },
+			];
 
 			props = {
 				plugins,
@@ -58,7 +59,7 @@ describe( 'PluginsList', () => {
 				sites: siteListMock,
 				selectedSite: sites[ 0 ],
 				isPlaceholder: false,
-				pluginUpdateCount: plugins.length
+				pluginUpdateCount: plugins.length,
 			};
 		} );
 
@@ -66,9 +67,12 @@ describe( 'PluginsList', () => {
 			renderedPluginsList = testRenderer(
 				<ReduxProvider store={ createReduxStore() }>
 					<PluginsList { ...props } />
-				</ReduxProvider>
+				</ReduxProvider>,
 			);
-			renderedPluginsList = TestUtils.scryRenderedComponentsWithType( renderedPluginsList, PluginsList )[ 0 ];
+			renderedPluginsList = TestUtils.scryRenderedComponentsWithType(
+				renderedPluginsList,
+				PluginsList,
+			)[ 0 ];
 		} );
 
 		it( 'should be intialized with no selectedPlugins', () => {

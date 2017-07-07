@@ -10,7 +10,6 @@ import PureRenderMixin from 'react-pure-render/mixin';
 import Version from 'components/version';
 
 export default React.createClass( {
-
 	displayName: 'Version',
 
 	mixins: [ PureRenderMixin ],
@@ -22,5 +21,5 @@ export default React.createClass( {
 				<Version icon="plugins" version={ 3.8 } />
 			</div>
 		);
-	}
+	},
 } );

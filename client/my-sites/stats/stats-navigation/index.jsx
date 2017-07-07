@@ -15,7 +15,7 @@ import SegmentedControl from 'components/segmented-control';
 import QueryJetpackPlugins from 'components/data/query-jetpack-plugins';
 import config from 'config';
 
-const StatsNavigation = ( props ) => {
+const StatsNavigation = props => {
 	const { translate, section, slug, siteId, isJetpack, isWooConnect } = props;
 	const siteFragment = slug ? '/' + slug : '';
 	const sectionTitles = {
@@ -39,12 +39,13 @@ const StatsNavigation = ( props ) => {
 					options={ [
 						{
 							value: 'site',
-							label: translate( 'Site' )
+							label: translate( 'Site' ),
 						},
 						{
 							value: 'store',
 							label: translate( 'Store' ),
-							path: `/store/stats/orders/${ section }/${ slug }` }
+							path: `/store/stats/orders/${ section }/${ slug }`,
+						},
 					] }
 				/>
 			);

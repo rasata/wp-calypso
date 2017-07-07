@@ -1,5 +1,4 @@
-var clone = require( 'lodash/clone' ),
-	noop = require( 'lodash/noop' );
+var clone = require( 'lodash/clone' ), noop = require( 'lodash/noop' );
 
 function fakeNormalize( post, transforms, callback ) {
 	callback( null, clone( post ) );

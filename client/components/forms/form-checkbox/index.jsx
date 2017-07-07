@@ -6,14 +6,17 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormInputCheckbox',
 
 	render: function() {
 		var otherProps = omit( this.props, [ 'className', 'type' ] );
 
 		return (
-			<input { ...otherProps } type="checkbox" className={ classnames( this.props.className, 'form-checkbox' ) } />
+			<input
+				{ ...otherProps }
+				type="checkbox"
+				className={ classnames( this.props.className, 'form-checkbox' ) }
+			/>
 		);
-	}
+	},
 } );

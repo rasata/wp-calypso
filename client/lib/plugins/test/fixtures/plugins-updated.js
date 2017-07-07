@@ -18,7 +18,7 @@ module.exports = [
 			slug: 'hello-dolly',
 			url: 'https://wordpress.org/plugins/hello-dolly/',
 		},
-		version: '1.1'
+		version: '1.1',
 	},
 	{
 		active: true,
@@ -31,6 +31,6 @@ module.exports = [
 		network: false,
 		plugin_url: 'http://wordpress.org/plugins/wp-super-cache/',
 		slug: 'wp-super-cache',
-		version: '1.4.4'
-	}
+		version: '1.4.4',
+	},
 ];

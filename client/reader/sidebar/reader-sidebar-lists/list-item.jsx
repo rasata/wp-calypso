@@ -46,7 +46,7 @@ export class ReaderSidebarListsListItem extends Component {
 			ReaderSidebarHelper.pathStartsWithOneOf( [ listRelativeUrl ], this.props.path );
 		const isActionButtonSelected = ReaderSidebarHelper.pathStartsWithOneOf(
 			listManagementUrls,
-			this.props.path
+			this.props.path,
 		);
 
 		const classes = classNames( {

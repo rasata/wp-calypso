@@ -6,14 +6,16 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormLegend',
 
 	render: function() {
 		return (
-			<legend { ...omit( this.props, 'className' ) } className={ classnames( this.props.className, 'form-legend' ) } >
+			<legend
+				{ ...omit( this.props, 'className' ) }
+				className={ classnames( this.props.className, 'form-legend' ) }
+			>
 				{ this.props.children }
 			</legend>
 		);
-	}
+	},
 } );

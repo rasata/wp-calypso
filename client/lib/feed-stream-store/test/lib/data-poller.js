@@ -1,4 +1,4 @@
 module.exports = {
 	add: function() {},
-	remove: function() {}
+	remove: function() {},
 };

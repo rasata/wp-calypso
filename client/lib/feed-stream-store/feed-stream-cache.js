@@ -27,5 +27,5 @@ module.exports = {
 		} else {
 			cache.set( id, store );
 		}
-	}
+	},
 };

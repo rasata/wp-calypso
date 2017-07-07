@@ -12,6 +12,6 @@ module.exports = function() {
 		},
 		getNetworkSites: function() {
 			return [];
-		}
+		},
 	};
 };

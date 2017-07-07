@@ -31,7 +31,6 @@ import RequiredPluginsInstallView from './required-plugins-install-view';
 import SetupTasksView from './setup-tasks-view';
 
 class Dashboard extends Component {
-
 	static propTypes = {
 		className: PropTypes.string,
 		finishedInitialSetup: PropTypes.bool,
@@ -53,9 +52,9 @@ class Dashboard extends Component {
 			this.props.fetchSetupChoices( selectedSite.ID );
 			this.props.fetchOrders( selectedSite.ID, 1 );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { selectedSite } = this.props;
 
 		const newSiteId = newProps.selectedSite ? newProps.selectedSite.ID : null;
@@ -65,7 +64,7 @@ class Dashboard extends Component {
 			this.props.fetchSetupChoices( newSiteId );
 			this.props.fetchOrders( newSiteId, 1 );
 		}
-	}
+	};
 
 	getBreadcrumb = () => {
 		const {
@@ -73,7 +72,7 @@ class Dashboard extends Component {
 			finishedPageSetup,
 			finishedInitialSetup,
 			setStoreAddressDuringInitialSetup,
-			translate
+			translate,
 		} = this.props;
 
 		if ( ! finishedInstallOfRequiredPlugins ) {
@@ -93,7 +92,7 @@ class Dashboard extends Component {
 		}
 
 		return translate( 'Dashboard' );
-	}
+	};
 
 	renderDashboardContent = () => {
 		const {
@@ -106,27 +105,27 @@ class Dashboard extends Component {
 		} = this.props;
 
 		if ( ! finishedInstallOfRequiredPlugins ) {
-			return ( <RequiredPluginsInstallView site={ selectedSite } /> );
+			return <RequiredPluginsInstallView site={ selectedSite } />;
 		}
 
 		if ( ! finishedPageSetup ) {
-			return ( <RequiredPagesSetupView site={ selectedSite } /> );
+			return <RequiredPagesSetupView site={ selectedSite } />;
 		}
 
 		if ( ! setStoreAddressDuringInitialSetup ) {
-			return ( <PreSetupView site={ selectedSite } /> );
+			return <PreSetupView site={ selectedSite } />;
 		}
 
 		if ( ! finishedInitialSetup ) {
-			return ( <SetupTasksView onFinished={ this.onStoreSetupFinished } site={ selectedSite } /> );
+			return <SetupTasksView onFinished={ this.onStoreSetupFinished } site={ selectedSite } />;
 		}
 
 		if ( ! hasOrders ) {
-			return ( <ManageNoOrdersView site={ selectedSite } /> );
+			return <ManageNoOrdersView site={ selectedSite } />;
 		}
 
-		return ( <ManageOrdersView site={ selectedSite } /> );
-	}
+		return <ManageOrdersView site={ selectedSite } />;
+	};
 
 	render = () => {
 		const { className, loading, selectedSite } = this.props;
@@ -142,13 +141,12 @@ class Dashboard extends Component {
 				{ this.renderDashboardContent() }
 			</Main>
 		);
-	}
-
+	};
 }
 
 function mapStateToProps( state ) {
 	const selectedSite = getSelectedSiteWithFallback( state );
-	const loading = ( areOrdersLoading( state ) || areSetupChoicesLoading( state ) );
+	const loading = areOrdersLoading( state ) || areSetupChoicesLoading( state );
 	const hasOrders = getOrders( state ).length > 0;
 	const finishedInitialSetup = getFinishedInitialSetup( state );
 	return {
@@ -168,7 +166,7 @@ function mapDispatchToProps( dispatch ) {
 			fetchOrders,
 			fetchSetupChoices,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

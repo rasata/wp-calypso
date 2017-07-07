@@ -26,9 +26,13 @@ class EditorMediaAdvanced extends Component {
 
 	save() {
 		const { media, appearance } = this.props.item;
-		const markup = MediaMarkup.get( this.props.selectedSite, Object.assign( {}, media, {
-			alt: ReactDom.findDOMNode( this.refs.alt ).value
-		} ), appearance );
+		const markup = MediaMarkup.get(
+			this.props.selectedSite,
+			Object.assign( {}, media, {
+				alt: ReactDom.findDOMNode( this.refs.alt ).value,
+			} ),
+			appearance,
+		);
 
 		this.props.insertMedia( markup );
 	}
@@ -39,7 +43,7 @@ class EditorMediaAdvanced extends Component {
 		const buttons = [
 			<Button primary onClick={ this.save }>
 				{ translate( 'Save' ) }
-			</Button>
+			</Button>,
 		];
 
 		return (
@@ -48,9 +52,7 @@ class EditorMediaAdvanced extends Component {
 					<FormFieldset>
 						<FormLabel>
 							{ translate( 'Alt text' ) }
-							<FormTextInput
-								ref="alt"
-								defaultValue={ item.media.alt } />
+							<FormTextInput ref="alt" defaultValue={ item.media.alt } />
 						</FormLabel>
 					</FormFieldset>
 				</form>
@@ -64,18 +66,16 @@ EditorMediaAdvanced.propTypes = {
 	visible: PropTypes.bool,
 	item: PropTypes.object,
 	onClose: PropTypes.func,
-	insertMedia: PropTypes.func
+	insertMedia: PropTypes.func,
 };
 
 EditorMediaAdvanced.defaultProps = {
 	onClose: () => {},
-	insertMedia: () => {}
+	insertMedia: () => {},
 };
 
-export default connect(
-	state => {
-		return {
-			selectedSite: getSelectedSite( state )
-		};
-	}
-)( localize( EditorMediaAdvanced ) );
+export default connect( state => {
+	return {
+		selectedSite: getSelectedSite( state ),
+	};
+} )( localize( EditorMediaAdvanced ) );

@@ -26,21 +26,23 @@ const VideoEditorControls = ( {
 				<Button
 					className="video-editor__controls-button"
 					disabled={ isPosterUpdating }
-					onClick={ onCancel }>
+					onClick={ onCancel }
+				>
 					{ translate( 'Cancel' ) }
-				</Button>
-			}
+				</Button> }
 			<UploadButton
 				isPosterUpdating={ isPosterUpdating }
 				onClick={ onUploadImageClick }
-				onUploadImage={ onUploadImage }>
+				onUploadImage={ onUploadImage }
+			>
 				{ translate( 'Upload Image' ) }
 			</UploadButton>
 			<Button
 				className="video-editor__controls-button"
 				disabled={ isVideoLoading || isPosterUpdating }
 				onClick={ onSelectFrame }
-				primary>
+				primary
+			>
 				{ translate( 'Select Frame' ) }
 			</Button>
 		</div>

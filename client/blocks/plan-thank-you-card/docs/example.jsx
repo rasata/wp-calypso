@@ -15,7 +15,7 @@ function PlanThankYouCardExample( { primarySiteId } ) {
 	return <PlanThankYouCard siteId={ primarySiteId } />;
 }
 
-const ConnectedPlanThankYouCard = connect( ( state ) => {
+const ConnectedPlanThankYouCard = connect( state => {
 	const primarySiteId = get( getCurrentUser( state ), 'primary_blog', null );
 
 	return {

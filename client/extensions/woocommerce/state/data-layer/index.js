@@ -34,4 +34,3 @@ export default function installActionHandlers() {
 		debug( 'Failed to add action handlers for "woocommerce"' );
 	}
 }
-

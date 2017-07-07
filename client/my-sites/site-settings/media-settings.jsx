@@ -28,7 +28,7 @@ import {
 import {
 	isJetpackModuleActive,
 	isJetpackModuleUnavailableInDevelopmentMode,
-	isJetpackSiteInDevelopmentMode
+	isJetpackSiteInDevelopmentMode,
 } from 'state/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { getSitePlanSlug } from 'state/sites/selectors';
@@ -57,11 +57,12 @@ class MediaSettings extends Component {
 		} = this.props;
 		const isRequestingOrSaving = isRequestingSettings || isSavingSettings;
 
-		return isVideoPressAvailable && (
+		return (
+			isVideoPressAvailable &&
 			<FormFieldset className="site-settings__formfieldset has-divider is-top-only">
 				<div className="site-settings__info-link-container">
 					<InfoPopover position="left">
-						<ExternalLink target="_blank" icon href="https://jetpack.com/support/videopress/" >
+						<ExternalLink target="_blank" icon href="https://jetpack.com/support/videopress/">
 							{ translate( 'Learn more about VideoPress.' ) }
 						</ExternalLink>
 					</InfoPopover>
@@ -77,12 +78,10 @@ class MediaSettings extends Component {
 	}
 
 	renderVideoUpgradeNudge() {
-		const {
-			isVideoPressAvailable,
-			translate,
-		} = this.props;
+		const { isVideoPressAvailable, translate } = this.props;
 
-		return ! isVideoPressAvailable && (
+		return (
+			! isVideoPressAvailable &&
 			<Banner
 				event={ 'jetpack_video_settings' }
 				feature={ FEATURE_VIDEO_UPLOADS_JETPACK_PREMIUM }
@@ -103,7 +102,7 @@ class MediaSettings extends Component {
 			photonModuleUnavailable,
 			selectedSiteId,
 			siteId,
-			translate
+			translate,
 		} = this.props;
 		const labelClassName = isSavingSettings || ! carouselActive ? 'is-disabled' : null;
 		const isRequestingOrSaving = isRequestingSettings || isSavingSettings;
@@ -115,7 +114,7 @@ class MediaSettings extends Component {
 					<FormFieldset>
 						<div className="site-settings__info-link-container">
 							<InfoPopover position="left">
-								<ExternalLink target="_blank" icon href="https://jetpack.com/support/photon" >
+								<ExternalLink target="_blank" icon href="https://jetpack.com/support/photon">
 									{ translate( 'Learn more' ) }
 								</ExternalLink>
 							</InfoPopover>
@@ -126,12 +125,12 @@ class MediaSettings extends Component {
 							label={ translate( 'Speed up images and photos' ) }
 							description={ translate( 'Must be enabled to use tiled galleries.' ) }
 							disabled={ isRequestingOrSaving || photonModuleUnavailable }
-							/>
+						/>
 					</FormFieldset>
 					<FormFieldset className="site-settings__formfieldset has-divider is-top-only">
 						<div className="site-settings__info-link-container">
 							<InfoPopover position="left">
-								<ExternalLink target="_blank" icon href="https://jetpack.com/support/carousel" >
+								<ExternalLink target="_blank" icon href="https://jetpack.com/support/carousel">
 									{ translate( 'Learn more about Carousel.' ) }
 								</ExternalLink>
 							</InfoPopover>
@@ -139,14 +138,17 @@ class MediaSettings extends Component {
 						<JetpackModuleToggle
 							siteId={ siteId }
 							moduleSlug="carousel"
-							label={ translate( 'Transform standard image galleries into full-screen slideshows' ) }
+							label={ translate(
+								'Transform standard image galleries into full-screen slideshows',
+							) }
 							disabled={ isRequestingOrSaving }
 						/>
 						<div className="site-settings__child-settings">
 							<CompactFormToggle
 								checked={ fields.carousel_display_exif || false }
 								disabled={ isRequestingOrSaving || ! carouselActive }
-								onChange={ handleAutosavingToggle( 'carousel_display_exif' ) } >
+								onChange={ handleAutosavingToggle( 'carousel_display_exif' ) }
+							>
 								{ translate( 'Show photo metadata in carousel, when available' ) }
 							</CompactFormToggle>
 							<FormLabel className={ labelClassName } htmlFor="carousel_background_color">
@@ -157,7 +159,8 @@ class MediaSettings extends Component {
 								id="carousel_background_color"
 								value={ fields.carousel_background_color || 'black' }
 								onChange={ onChangeField( 'carousel_background_color' ) }
-								disabled={ isRequestingOrSaving || ! carouselActive } >
+								disabled={ isRequestingOrSaving || ! carouselActive }
+							>
 								<option value="black" key="carousel_background_color_black">
 									{ translate( 'Black' ) }
 								</option>
@@ -176,11 +179,15 @@ class MediaSettings extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const selectedSiteId = getSelectedSiteId( state );
 		const siteInDevMode = isJetpackSiteInDevelopmentMode( state, selectedSiteId );
 		const sitePlanSlug = getSitePlanSlug( state, selectedSiteId );
-		const moduleUnavailableInDevMode = isJetpackModuleUnavailableInDevelopmentMode( state, selectedSiteId, 'photon' );
+		const moduleUnavailableInDevMode = isJetpackModuleUnavailableInDevelopmentMode(
+			state,
+			selectedSiteId,
+			'photon',
+		);
 		const plansIncludingVideoPress = [
 			PLAN_JETPACK_BUSINESS,
 			PLAN_JETPACK_BUSINESS_MONTHLY,
@@ -197,6 +204,6 @@ export default connect(
 		};
 	},
 	{
-		updateSettings
-	}
+		updateSettings,
+	},
 )( localize( MediaSettings ) );

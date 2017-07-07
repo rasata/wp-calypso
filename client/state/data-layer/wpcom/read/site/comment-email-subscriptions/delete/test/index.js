@@ -32,7 +32,7 @@ describe( 'comment-email-subscriptions', () => {
 					apiVersion: '1.2',
 					onSuccess: action,
 					onFailure: action,
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -67,7 +67,7 @@ describe( 'comment-email-subscriptions', () => {
 			receiveCommentEmailUnsubscriptionError(
 				{ dispatch },
 				{ payload: { blogId: 1234 } },
-				nextSpy
+				nextSpy,
 			);
 			expect( dispatch ).to.have.been.calledWithMatch( {
 				notice: {

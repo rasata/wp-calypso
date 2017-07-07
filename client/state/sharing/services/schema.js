@@ -19,14 +19,14 @@ export const itemSchema = {
 				ID: { type: 'string' },
 				connect_URL: { type: 'string' },
 				description: { type: 'string' },
-				genericon: { type: 'object', },
+				genericon: { type: 'object' },
 				icon: { type: 'string' },
 				jetpack_module_required: { type: 'string' },
 				jetpack_support: { type: 'boolean' },
-				label: { type: 'string', },
+				label: { type: 'string' },
 				multiple_external_user_ID_support: { type: 'boolean' },
 				type: { type: 'string' },
-			}
-		}
-	}
+			},
+		},
+	},
 };

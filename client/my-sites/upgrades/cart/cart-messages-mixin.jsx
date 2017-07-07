@@ -35,9 +35,9 @@ module.exports = {
 			{
 				components: {
 					strong: <strong />,
-					a: <a href={ '/checkout/' + this.props.selectedSite.slug } />
-				}
-			}
+					a: <a href={ '/checkout/' + this.props.selectedSite.slug } />,
+				},
+			},
 		);
 	},
 
@@ -46,12 +46,17 @@ module.exports = {
 			'Purchases are currently disabled. Please {{a}}contact us{{/a}} to re-enable purchases.',
 			{
 				components: {
-					a: <a
-						href={ 'https://wordpress.com/error-report/?url=payment@' + this.props.selectedSite.slug }
-						target="_blank"
-						rel="noopener noreferrer" />
-				}
-			}
+					a: (
+						<a
+							href={
+								'https://wordpress.com/error-report/?url=payment@' + this.props.selectedSite.slug
+							}
+							target="_blank"
+							rel="noopener noreferrer"
+						/>
+					),
+				},
+			},
 		);
 	},
 
@@ -60,7 +65,7 @@ module.exports = {
 			return [];
 		}
 
-		return messages.map( ( error ) => {
+		return messages.map( error => {
 			switch ( error.code ) {
 				case 'chargeback':
 					return Object.assign( error, { message: this.getChargebackErrorMessage() } );
@@ -75,7 +80,7 @@ module.exports = {
 	},
 
 	displayCartMessages( newCart ) {
-		const previousCart = ( this.state ) ? this.state.previousCart : null,
+		const previousCart = this.state ? this.state.previousCart : null,
 			messages = getNewMessages( previousCart, newCart );
 
 		messages.errors = this.getPrettyErrorMessages( messages.errors );
@@ -84,13 +89,17 @@ module.exports = {
 
 		if ( ! isEmpty( messages.errors ) ) {
 			notices.error(
-				messages.errors.map( ( error, index ) => ( <p key={ `${ error.code }-${ index }` }>{ error.message }</p> ) ),
-				{ persistent: true }
+				messages.errors.map( ( error, index ) => (
+					<p key={ `${ error.code }-${ index }` }>{ error.message }</p>
+				) ),
+				{ persistent: true },
 			);
 		} else if ( ! isEmpty( messages.success ) ) {
 			notices.success(
-				messages.success.map( ( success, index ) => ( <p key={ `${ success.code }-${ index }` }>{ success.message }</p> ) )
+				messages.success.map( ( success, index ) => (
+					<p key={ `${ success.code }-${ index }` }>{ success.message }</p>
+				) ),
 			);
 		}
-	}
+	},
 };

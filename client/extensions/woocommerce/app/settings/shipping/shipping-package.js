@@ -32,7 +32,7 @@ const ShippingPackage = ( { translate, type, name, dimensions } ) => {
 ShippingPackage.propTypes = {
 	type: PropTypes.string,
 	name: PropTypes.string,
-	dimensions: PropTypes.string
+	dimensions: PropTypes.string,
 };
 
 export default localize( ShippingPackage );

@@ -12,10 +12,7 @@ import SupportUserLoginDialog from './login-dialog';
 import { fetchToken, rebootNormally } from 'lib/user/support-user-interop';
 import { currentUserHasFlag } from 'state/current-user/selectors';
 
-import {
-	supportUserToggleDialog,
-	supportUserSetUsername,
-} from 'state/support/actions';
+import { supportUserToggleDialog, supportUserSetUsername } from 'state/support/actions';
 
 class SupportUser extends Component {
 	componentDidMount() {
@@ -26,7 +23,7 @@ class SupportUser extends Component {
 		KeyboardShortcuts.off( 'open-support-user', this.onKeyboardShortcut );
 	}
 
-	onKeyboardShortcut = ( e ) => {
+	onKeyboardShortcut = e => {
 		if ( this.props.isSupportUser ) {
 			rebootNormally();
 		}
@@ -40,15 +37,10 @@ class SupportUser extends Component {
 		e.preventDefault();
 
 		this.props.toggleDialog();
-	}
+	};
 
 	render() {
-		return (
-			<SupportUserLoginDialog
-				{ ...this.props }
-				onChangeUser={ fetchToken }
-			/>
-		);
+		return <SupportUserLoginDialog { ...this.props } onChangeUser={ fetchToken } />;
 	}
 }
 

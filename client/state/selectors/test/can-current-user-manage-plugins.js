@@ -12,8 +12,8 @@ describe( 'canCurrentUserManagePlugins()', () => {
 	it( 'should return false if no capabilities information exist in state', () => {
 		const state = {
 			currentUser: {
-				capabilities: {}
-			}
+				capabilities: {},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.false;
 	} );
@@ -23,10 +23,10 @@ describe( 'canCurrentUserManagePlugins()', () => {
 			currentUser: {
 				capabilities: {
 					2916284: {
-						edit_pages: true
-					}
-				}
-			}
+						edit_pages: true,
+					},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.false;
 	} );
@@ -41,9 +41,9 @@ describe( 'canCurrentUserManagePlugins()', () => {
 					2916285: {
 						edit_posts: false,
 					},
-					2916286: {}
-				}
-			}
+					2916286: {},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.false;
 	} );
@@ -62,9 +62,9 @@ describe( 'canCurrentUserManagePlugins()', () => {
 					},
 					2916286: {
 						manage_options: false,
-					}
-				}
-			}
+					},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.false;
 	} );
@@ -75,9 +75,9 @@ describe( 'canCurrentUserManagePlugins()', () => {
 				capabilities: {
 					2916284: {
 						manage_options: true,
-					}
-				}
-			}
+					},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.true;
 	} );
@@ -96,9 +96,9 @@ describe( 'canCurrentUserManagePlugins()', () => {
 					},
 					2916286: {
 						manage_options: true,
-					}
-				}
-			}
+					},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.true;
 	} );
@@ -117,9 +117,9 @@ describe( 'canCurrentUserManagePlugins()', () => {
 					},
 					2916286: {
 						manage_options: false,
-					}
-				}
-			}
+					},
+				},
+			},
 		};
 		expect( canCurrentUserManagePlugins( state ) ).be.true;
 	} );

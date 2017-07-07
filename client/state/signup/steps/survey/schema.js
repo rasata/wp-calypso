@@ -4,5 +4,5 @@ export const surveyStepSchema = {
 		vertical: 'string',
 		otherText: 'string',
 		siteType: 'string',
-	}
+	},
 };

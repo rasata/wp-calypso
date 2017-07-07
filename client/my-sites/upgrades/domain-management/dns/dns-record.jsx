@@ -16,7 +16,7 @@ const DnsRecord = React.createClass( {
 	propTypes: {
 		onDeleteDns: React.PropTypes.func.isRequired,
 		dnsRecord: React.PropTypes.object.isRequired,
-		selectedDomainName: React.PropTypes.string.isRequired
+		selectedDomainName: React.PropTypes.string.isRequired,
 	},
 
 	handledBy: function() {
@@ -37,38 +37,39 @@ const DnsRecord = React.createClass( {
 			case 'AAAA':
 				return this.translate( 'Points to %(data)s', {
 					args: {
-						data
-					}
+						data,
+					},
 				} );
 
 			case 'CNAME':
 				return this.translate( 'Alias of %(data)s', {
 					args: {
-						data
-					}
+						data,
+					},
 				} );
 
 			case 'MX':
 				return this.translate( 'Mail handled by %(data)s with priority %(aux)s', {
 					args: {
 						data,
-						aux
-					}
+						aux,
+					},
 				} );
 
 			case 'SRV':
 				return this.translate(
 					'Service %(service)s (%(protocol)s) on target %(target)s:%(port)s, ' +
-					'with priority %(aux)s and weight %(weight)s', {
+						'with priority %(aux)s and weight %(weight)s',
+					{
 						args: {
 							service,
 							protocol,
 							target,
 							port,
 							aux,
-							weight
-						}
-					}
+							weight,
+						},
+					},
 				);
 		}
 
@@ -111,7 +112,8 @@ const DnsRecord = React.createClass( {
 	render: function() {
 		const { dnsRecord } = this.props,
 			classes = classNames( { 'is-disabled': isBeingProcessed( dnsRecord ) } ),
-			isAllowedToBeRemoved = ! this.props.dnsRecord.protected_field || 'MX' === this.props.dnsRecord.type;
+			isAllowedToBeRemoved =
+				! this.props.dnsRecord.protected_field || 'MX' === this.props.dnsRecord.type;
 		return (
 			<li className={ classes }>
 				<div className="dns__list-type">
@@ -126,7 +128,7 @@ const DnsRecord = React.createClass( {
 				</div>
 			</li>
 		);
-	}
+	},
 } );
 
 export default DnsRecord;

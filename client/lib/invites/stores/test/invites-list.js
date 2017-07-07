@@ -6,8 +6,7 @@ const assert = require( 'chai' ).assert;
 /**
  * Internal dependencies
  */
-const Dispatcher = require( 'dispatcher' ),
-	constants = require( 'lib/invites/constants' );
+const Dispatcher = require( 'dispatcher' ), constants = require( 'lib/invites/constants' );
 
 describe( 'List Invites Store', function() {
 	var ListInvitesStore;
@@ -25,11 +24,11 @@ describe( 'List Invites Store', function() {
 						role: 'editor',
 						user: {
 							ID: 1234,
-							name: 'Test One'
-						}
-					}
-				]
-			}
+							name: 'Test One',
+						},
+					},
+				],
+			},
 		},
 		receiveMoreInvites: {
 			type: constants.action.RECEIVE_INVITES,
@@ -43,12 +42,12 @@ describe( 'List Invites Store', function() {
 						role: 'contributor',
 						user: {
 							ID: 1234,
-							name: 'Test Two'
-						}
-					}
-				]
-			}
-		}
+							name: 'Test Two',
+						},
+					},
+				],
+			},
+		},
 	};
 
 	beforeEach( function() {

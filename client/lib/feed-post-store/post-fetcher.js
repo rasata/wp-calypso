@@ -10,18 +10,21 @@ import Immutable from 'immutable';
 import FeedPostStore from './';
 
 function PostFetcher( options ) {
-	assign( this, {
-		onFetch: noop,
-		onPostReceived: noop,
-		onError: noop
-	}, options );
+	assign(
+		this,
+		{
+			onFetch: noop,
+			onPostReceived: noop,
+			onError: noop,
+		},
+		options,
+	);
 
 	this.postsToFetch = Immutable.OrderedSet(); // eslint-disable-line new-cap
 	this.batchQueued = false;
 }
 
 assign( PostFetcher.prototype, {
-
 	add: function( postKey ) {
 		this.postsToFetch = this.postsToFetch.add( Immutable.fromJS( omit( postKey, 'localMoment' ) ) );
 
@@ -31,7 +34,9 @@ assign( PostFetcher.prototype, {
 	},
 
 	remove: function( postKey ) {
-		this.postsToFetch = this.postsToFetch.delete( Immutable.fromJS( omit( postKey, 'localMoment' ) ) );
+		this.postsToFetch = this.postsToFetch.delete(
+			Immutable.fromJS( omit( postKey, 'localMoment' ) ),
+		);
 	},
 
 	run: function() {
@@ -59,12 +64,12 @@ assign( PostFetcher.prototype, {
 				},
 				err => {
 					this.onError( err, postKey );
-				}
+				},
 			);
 		}, this );
 
 		this.postsToFetch = Immutable.OrderedSet(); // eslint-disable-line new-cap
-	}
+	},
 } );
 
 module.exports = PostFetcher;

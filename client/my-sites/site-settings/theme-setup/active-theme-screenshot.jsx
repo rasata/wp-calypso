@@ -17,12 +17,11 @@ const ActiveThemeScreenshot = ( { theme, translate } ) => {
 					<span className="active-theme-screenshot__name">
 						{ translate( 'Current theme: %(name)s', {
 							args: {
-								name: theme.name
-							}
+								name: theme.name,
+							},
 						} ) }
 					</span>
-				</a>
-			}
+				</a> }
 		</div>
 	);
 };

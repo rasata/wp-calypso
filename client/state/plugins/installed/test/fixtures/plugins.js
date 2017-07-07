@@ -11,7 +11,7 @@ export const akismet = {
 	author: 'Automattic',
 	author_url: 'https://automattic.com/wordpress-plugins/',
 	network: false,
-	autoupdate: true
+	autoupdate: true,
 };
 
 export const helloDolly = {
@@ -25,7 +25,7 @@ export const helloDolly = {
 	author: 'Matt Mullenweg',
 	author_url: 'http://ma.tt/',
 	network: false,
-	autoupdate: true
+	autoupdate: true,
 };
 
 export const jetpack = {
@@ -46,13 +46,13 @@ export const jetpack = {
 		plugin: 'jetpack/jetpack.php',
 		new_version: '4.2.2',
 		url: 'https://wordpress.org/plugins/jetpack/',
-		'package': 'https://downloads.wordpress.org/plugin/jetpack.4.2.2.zip',
+		package: 'https://downloads.wordpress.org/plugin/jetpack.4.2.2.zip',
 		tested: '4.6',
 		compatibility: {
 			scalar: {
-				scalar: false
-			}
-		}
+				scalar: false,
+			},
+		},
 	},
 };
 
@@ -68,5 +68,5 @@ export const jetpackUpdated = {
 	author_url: 'http://jetpack.com',
 	network: false,
 	autoupdate: true,
-	log: [ 'Array' ]
+	log: [ 'Array' ],
 };

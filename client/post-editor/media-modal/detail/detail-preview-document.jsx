@@ -20,5 +20,5 @@ export default React.createClass( {
 				<Gridicon icon="pages" size={ 120 } />
 			</div>
 		);
-	}
+	},
 } );

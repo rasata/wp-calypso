@@ -20,15 +20,21 @@ function siteReducer( newState = siteInitialState, action ) {
 			}
 			return Object.assign( {}, state, { previewMarkup: action.markup } );
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_CLEAR:
-			return Object.assign( {}, state, { isUnsaved: false, customizations: {}, previousCustomizations: [] } );
+			return Object.assign( {}, state, {
+				isUnsaved: false,
+				customizations: {},
+				previousCustomizations: [],
+			} );
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_UPDATE:
 			return Object.assign( {}, state, {
 				isUnsaved: true,
 				previousCustomizations: state.previousCustomizations.concat( state.customizations ),
-				customizations: Object.assign( {}, state.customizations, action.customizations )
+				customizations: Object.assign( {}, state.customizations, action.customizations ),
 			} );
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_UNDO:
-			const undoneCustomizations = state.previousCustomizations.length > 0 ? state.previousCustomizations.slice( -1 )[ 0 ] : {};
+			const undoneCustomizations = state.previousCustomizations.length > 0
+				? state.previousCustomizations.slice( -1 )[ 0 ]
+				: {};
 			return Object.assign( {}, state, {
 				isUnsaved: true,
 				previousCustomizations: state.previousCustomizations.slice( 0, -1 ),
@@ -47,7 +53,9 @@ const preview = function( state = {}, action ) {
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_UPDATE:
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_UNDO:
 		case ActionTypes.PREVIEW_CUSTOMIZATIONS_SAVED:
-			return Object.assign( {}, state, { [ action.siteId ]: siteReducer( state[ action.siteId ], action ) } );
+			return Object.assign( {}, state, {
+				[ action.siteId ]: siteReducer( state[ action.siteId ], action ),
+			} );
 	}
 	return state;
 };

@@ -14,7 +14,7 @@ module.exports = {
 	batch: function() {
 		return {
 			add: returnSelf,
-			run: returnSelf
+			run: returnSelf,
 		};
-	}
+	},
 };

@@ -1,15 +1,13 @@
 /**
  * External dependencies
  */
-var qs = require( 'querystring' ),
-	i18n = require( 'i18n-calypso' );
+var qs = require( 'querystring' ), i18n = require( 'i18n-calypso' );
 
 var baseUrl = '//widgets.wp.com/sharing-buttons-preview/';
 
 module.exports = {
 	generatePreviewUrlFromButtons: function( buttons, showMore ) {
-		var numberOfCustomButtons = 0,
-			query = {};
+		var numberOfCustomButtons = 0, query = {};
 
 		// Build the query parameter array of services names to be rendered
 		// by the official sharing buttons preview widget
@@ -33,5 +31,5 @@ module.exports = {
 		}
 
 		return baseUrl + '?' + qs.stringify( query );
-	}
+	},
 };

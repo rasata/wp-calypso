@@ -98,7 +98,7 @@ const FollowButton = React.createClass( {
 				className: menuClasses.join( ' ' ),
 				title: label,
 			},
-			[ followingIcon, followIcon, followLabelElement ]
+			[ followingIcon, followIcon, followLabelElement ],
 		);
 	},
 } );

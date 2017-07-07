@@ -17,15 +17,16 @@ const EmailForwardingLimit = React.createClass( {
 		}
 
 		return (
-			<div className="email-forwarding__limit">{ this.translate(
-				'You are using %(used)s out of %(available)s email forwards.', {
+			<div className="email-forwarding__limit">
+				{ this.translate( 'You are using %(used)s out of %(available)s email forwards.', {
 					args: {
 						used,
-						available: emailForwardingPlanLimit( this.props.selectedSite.plan )
-					}
-				} ) }</div>
+						available: emailForwardingPlanLimit( this.props.selectedSite.plan ),
+					},
+				} ) }
+			</div>
 		);
-	}
+	},
 } );
 
 export default EmailForwardingLimit;

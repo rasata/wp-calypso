@@ -11,16 +11,12 @@ export const siteRolesSchema = {
 					capabilities: {
 						type: 'object',
 						patternProperties: {
-							'^.+$': { type: 'boolean' }
-						}
+							'^.+$': { type: 'boolean' },
+						},
 					},
 				},
-				required: [
-					'name',
-					'display_name',
-					'capabilities'
-				]
-			}
-		}
-	}
+				required: [ 'name', 'display_name', 'capabilities' ],
+			},
+		},
+	},
 };

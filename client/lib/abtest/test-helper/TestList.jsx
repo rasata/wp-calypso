@@ -9,15 +9,13 @@ export default React.createClass( {
 	render: function() {
 		return (
 			<div>
-				<a href={ "/devdocs/client/lib/abtest/README.md" } title="ABTests">ABTests</a>
+				<a href={ '/devdocs/client/lib/abtest/README.md' } title="ABTests">ABTests</a>
 				<Card className="active-tests">
-					{ this.props.tests.map( test => <Test
-						key={ test.name }
-						test={ test }
-						onChangeVariant={ this.props.onChangeVariant }
-					/> ) }
+					{ this.props.tests.map( test => (
+						<Test key={ test.name } test={ test } onChangeVariant={ this.props.onChangeVariant } />
+					) ) }
 				</Card>
 			</div>
 		);
-	}
+	},
 } );

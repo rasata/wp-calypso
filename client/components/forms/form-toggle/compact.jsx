@@ -11,7 +11,6 @@ var React = require( 'react' ),
 var Toggle = require( 'components/forms/form-toggle' );
 
 module.exports = React.createClass( {
-
 	displayName: 'CompactFormToggle',
 
 	render: function() {
@@ -23,5 +22,5 @@ module.exports = React.createClass( {
 				{ this.props.children }
 			</Toggle>
 		);
-	}
+	},
 } );

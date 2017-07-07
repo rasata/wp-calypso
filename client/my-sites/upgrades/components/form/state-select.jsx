@@ -54,26 +54,31 @@ class StateSelect extends Component {
 				{ isEmpty( this.props.countryStates )
 					? <Input ref="input" { ...this.props } />
 					: <div className={ classes }>
-						<FormLabel htmlFor={ `${ this.constructor.name }-${ this.instance }` }>{ this.props.label }</FormLabel>
-						<FormSelect
-							ref="input"
-							id={ `${ this.constructor.name }-${ this.instance }` }
-							name={ this.props.name }
-							value={ this.props.value }
-							disabled={ this.props.disabled }
-							onChange={ this.props.onChange }
-							onClick={ this.recordStateSelectClick }
-							isError={ this.props.isError }
-							inputRef={ this.props.inputRef } >
+							<FormLabel htmlFor={ `${ this.constructor.name }-${ this.instance }` }>
+								{ this.props.label }
+							</FormLabel>
+							<FormSelect
+								ref="input"
+								id={ `${ this.constructor.name }-${ this.instance }` }
+								name={ this.props.name }
+								value={ this.props.value }
+								disabled={ this.props.disabled }
+								onChange={ this.props.onChange }
+								onClick={ this.recordStateSelectClick }
+								isError={ this.props.isError }
+								inputRef={ this.props.inputRef }
+							>
 
-							<option key="--" value="--" disabled="disabled">{ this.props.translate( 'Select State' ) }</option>
-							{ this.props.countryStates.map( ( state ) =>
-								<option key={ state.code } value={ state.code }>{ state.name }</option>
-							) }
-						</FormSelect>
-						{ this.props.errorMessage && <FormInputValidation text={ this.props.errorMessage } isError /> }
-					</div>
-				}
+								<option key="--" value="--" disabled="disabled">
+									{ this.props.translate( 'Select State' ) }
+								</option>
+								{ this.props.countryStates.map( state => (
+									<option key={ state.code } value={ state.code }>{ state.name }</option>
+								) ) }
+							</FormSelect>
+							{ this.props.errorMessage &&
+								<FormInputValidation text={ this.props.errorMessage } isError /> }
+						</div> }
 			</div>
 		);
 	}
@@ -96,7 +101,7 @@ StateSelect.propTypes = {
 
 export default connect(
 	( state, { countryCode } ) => ( {
-		countryStates: countryCode ? getCountryStates( state, countryCode ) : []
+		countryStates: countryCode ? getCountryStates( state, countryCode ) : [],
 	} ),
-	{ recordGoogleEvent }
+	{ recordGoogleEvent },
 )( localize( StateSelect ) );

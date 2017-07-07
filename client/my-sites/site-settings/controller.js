@@ -48,11 +48,7 @@ function canDeleteSite( state, siteId ) {
 }
 
 function renderPage( context, component ) {
-	renderWithReduxStore(
-		component,
-		document.getElementById( 'primary' ),
-		context.store
-	);
+	renderWithReduxStore( component, document.getElementById( 'primary' ), context.store );
 }
 
 const controller = {
@@ -80,7 +76,7 @@ const controller = {
 					if ( ! canDeleteSite( updatedState, updatedSiteId ) ) {
 						return page.redirect( '/settings/general/' + updatedSiteSlug );
 					}
-				}
+				},
 			} );
 		}
 	},
@@ -101,10 +97,7 @@ const controller = {
 			return;
 		}
 
-		renderPage(
-			context,
-			<SiteSettingsComponent section={ section } />
-		);
+		renderPage( context, <SiteSettingsComponent section={ section } /> );
 
 		// analytics tracking
 		if ( 'undefined' !== typeof section ) {
@@ -114,26 +107,17 @@ const controller = {
 	},
 
 	importSite( context ) {
-		renderPage(
-			context,
-			<AsyncLoad require="my-sites/site-settings/section-import" />
-		);
+		renderPage( context, <AsyncLoad require="my-sites/site-settings/section-import" /> );
 	},
 
 	exportSite( context ) {
-		renderPage(
-			context,
-			<AsyncLoad require="my-sites/site-settings/section-export" />
-		);
+		renderPage( context, <AsyncLoad require="my-sites/site-settings/section-export" /> );
 	},
 
 	guidedTransfer( context ) {
 		renderPage(
 			context,
-			<AsyncLoad
-				require="my-sites/guided-transfer"
-				hostSlug={ context.params.host_slug }
-			/>
+			<AsyncLoad require="my-sites/guided-transfer" hostSlug={ context.params.host_slug } />,
 		);
 	},
 
@@ -142,10 +126,7 @@ const controller = {
 
 		redirectIfCantDeleteSite( context );
 
-		renderPage(
-			context,
-			<DeleteSite path={ context.path } />
-		);
+		renderPage( context, <DeleteSite path={ context.path } /> );
 	},
 
 	startOver( context ) {
@@ -153,10 +134,7 @@ const controller = {
 
 		redirectIfCantDeleteSite( context );
 
-		renderPage(
-			context,
-			<StartOver path={ context.path } />
-		);
+		renderPage( context, <StartOver path={ context.path } /> );
 	},
 
 	themeSetup( context ) {
@@ -169,10 +147,7 @@ const controller = {
 			return page( '/settings/general/' + site.slug );
 		}
 
-		renderPage(
-			context,
-			<ThemeSetup activeSiteDomain={ context.params.site_id } />
-		);
+		renderPage( context, <ThemeSetup activeSiteDomain={ context.params.site_id } /> );
 	},
 
 	legacyRedirects( context, next ) {
@@ -186,7 +161,7 @@ const controller = {
 				earnings: '/me/public-profile',
 				'billing-history': purchasesPaths.billingHistory(),
 				'billing-history-v2': purchasesPaths.billingHistory(),
-				'connected-apps': '/me/security/connected-applications'
+				'connected-apps': '/me/security/connected-applications',
 			};
 		if ( ! context ) {
 			return page( '/me/public-profile' );
@@ -200,9 +175,7 @@ const controller = {
 	setScroll( context, next ) {
 		window.scroll( 0, 0 );
 		next();
-	}
-
+	},
 };
 
 export default controller;
-

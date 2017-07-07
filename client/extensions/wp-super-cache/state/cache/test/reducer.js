@@ -19,17 +19,14 @@ import {
 	WP_SUPER_CACHE_TEST_CACHE_FAILURE,
 	WP_SUPER_CACHE_TEST_CACHE_SUCCESS,
 } from '../../action-types';
-import {
-	SERIALIZE,
-	DESERIALIZE,
-} from 'state/action-types';
+import { SERIALIZE, DESERIALIZE } from 'state/action-types';
 import reducer from '../reducer';
 
 describe( 'reducer', () => {
 	const primarySiteId = 123456;
 	const secondarySiteId = 456789;
 
-	useSandbox( ( sandbox ) => {
+	useSandbox( sandbox => {
 		sandbox.stub( console, 'warn' );
 	} );
 
@@ -39,8 +36,8 @@ describe( 'reducer', () => {
 				[ primarySiteId ]: {
 					deleting: true,
 					status: 'pending',
-				}
-			}
+				},
+			},
 		} );
 
 		it( 'should default to an empty object', () => {
@@ -59,7 +56,7 @@ describe( 'reducer', () => {
 				[ primarySiteId ]: {
 					deleting: true,
 					status: 'pending',
-				}
+				},
 			} );
 		} );
 
@@ -77,7 +74,7 @@ describe( 'reducer', () => {
 				[ secondarySiteId ]: {
 					deleting: true,
 					status: 'pending',
-				}
+				},
 			} );
 		} );
 
@@ -91,7 +88,7 @@ describe( 'reducer', () => {
 				[ primarySiteId ]: {
 					deleting: false,
 					status: 'success',
-				}
+				},
 			} );
 		} );
 
@@ -105,7 +102,7 @@ describe( 'reducer', () => {
 				[ primarySiteId ]: {
 					deleting: false,
 					status: 'error',
-				}
+				},
 			} );
 		} );
 
@@ -130,7 +127,7 @@ describe( 'reducer', () => {
 		const previousState = deepFreeze( {
 			testing: {
 				[ primarySiteId ]: true,
-			}
+			},
 		} );
 
 		it( 'should default to an empty object', () => {
@@ -205,7 +202,7 @@ describe( 'reducer', () => {
 		const previousState = deepFreeze( {
 			preloading: {
 				[ primarySiteId ]: true,
-			}
+			},
 		} );
 
 		it( 'should default to an empty object', () => {
@@ -281,20 +278,20 @@ describe( 'reducer', () => {
 			attempts: {
 				first: {
 					status: 'OK',
-				}
-			}
+				},
+			},
 		};
 		const secondaryResults = {
 			attempts: {
 				second: {
 					status: 'FAILED',
-				}
-			}
+				},
+			},
 		};
 		const previousState = deepFreeze( {
 			items: {
 				[ primarySiteId ]: primaryResults,
-			}
+			},
 		} );
 
 		it( 'should default to an empty object', () => {
@@ -348,8 +345,8 @@ describe( 'reducer', () => {
 					},
 					second: {
 						status: 'FAILED',
-					}
-				}
+					},
+				},
 			};
 			const state = reducer( previousState, {
 				type: WP_SUPER_CACHE_TEST_CACHE_SUCCESS,

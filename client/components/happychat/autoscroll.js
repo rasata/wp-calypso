@@ -66,5 +66,5 @@ export default {
 		if ( this._autoscroll_enabled !== enable ) {
 			this._autoscroll_enabled = enable;
 		}
-	}
+	},
 };

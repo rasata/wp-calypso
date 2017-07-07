@@ -7,5 +7,5 @@ import status from './status/reducer';
 
 export default combineReducers( {
 	approve,
-	status
+	status,
 } );

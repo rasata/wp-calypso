@@ -4,7 +4,7 @@ module.exports = {
 	URL: 'http://example.com/site1',
 	canUpdateFiles: true,
 	capabilities: {
-		manage_options: true
+		manage_options: true,
 	},
 	description: 'Just another Sandbox Sites site',
 	domain: 'http://example.com/site1',
@@ -53,7 +53,7 @@ module.exports = {
 		timezone: '',
 		unmapped_url: 'http://example.com/site2',
 		upgraded_filetypes_enabled: true,
-		videopress_enabled: false
+		videopress_enabled: false,
 	},
 	plan: 1,
 	plugins: plugins,
@@ -66,5 +66,5 @@ module.exports = {
 	jp_version: '3.7',
 	user_can_manage: true,
 	visible: true,
-	wpcom_url: 'example.com/site1'
+	wpcom_url: 'example.com/site1',
 };

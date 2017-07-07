@@ -38,11 +38,11 @@ class QueryPluginKeys extends Component {
 QueryPluginKeys.propTypes = {
 	siteId: PropTypes.number.isRequired,
 	hasRequested: PropTypes.bool,
-	fetchInstallInstructions: PropTypes.func
+	fetchInstallInstructions: PropTypes.func,
 };
 
 QueryPluginKeys.defaultProps = {
-	fetchInstallInstructions: () => {}
+	fetchInstallInstructions: () => {},
 };
 
 export default connect(
@@ -52,5 +52,5 @@ export default connect(
 			hasRequested: hasRequested( state, siteId ),
 		};
 	},
-	{ fetchInstallInstructions }
+	{ fetchInstallInstructions },
 )( QueryPluginKeys );

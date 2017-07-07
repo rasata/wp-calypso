@@ -21,7 +21,7 @@ export function requestCommentEmailUnsubscription( { dispatch }, action ) {
 			body: {}, // have to have the empty body for now to make the middleware happy
 			onSuccess: action,
 			onFailure: action,
-		} )
+		} ),
 	);
 }
 
@@ -38,7 +38,7 @@ export function receiveCommentEmailUnsubscription( store, action, next, response
 
 export function receiveCommentEmailUnsubscriptionError( { dispatch }, action, next ) {
 	dispatch(
-		errorNotice( translate( 'Sorry, we had a problem unsubscribing. Please try again.' ) )
+		errorNotice( translate( 'Sorry, we had a problem unsubscribing. Please try again.' ) ),
 	);
 	next( subscribeToNewCommentEmail( action.payload.blogId ) );
 }
@@ -48,7 +48,7 @@ export default {
 		dispatchRequest(
 			requestCommentEmailUnsubscription,
 			receiveCommentEmailUnsubscription,
-			receiveCommentEmailUnsubscriptionError
+			receiveCommentEmailUnsubscriptionError,
 		),
 	],
 };

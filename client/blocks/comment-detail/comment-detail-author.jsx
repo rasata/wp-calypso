@@ -57,20 +57,14 @@ export class CommentDetailAuthor extends Component {
 	} );
 
 	getFormattedDate = () => {
-		const {
-			commentDate,
-			dateFormat,
-			moment,
-			timeFormat,
-			translate,
-		} = this.props;
+		const { commentDate, dateFormat, moment, timeFormat, translate } = this.props;
 
 		const momentDate = moment( commentDate );
 
 		if ( ! dateFormat || ! timeFormat ) {
 			return phpToMomentDatetimeFormat(
 				momentDate,
-				defaultDateFormats[ 0 ] + ' ' + defaultTimeFormats[ 0 ]
+				defaultDateFormats[ 0 ] + ' ' + defaultTimeFormats[ 0 ],
 			);
 		}
 
@@ -78,9 +72,9 @@ export class CommentDetailAuthor extends Component {
 		const time = phpToMomentDatetimeFormat( momentDate, timeFormat );
 
 		return translate( '%(date)s at %(time)s', {
-			args: { date, time }
+			args: { date, time },
 		} );
-	}
+	};
 
 	authorMoreInfo() {
 		if ( ! this.props.showAuthorInfo ) {
@@ -136,15 +130,14 @@ export class CommentDetailAuthor extends Component {
 					<a
 						className={ classNames(
 							'comment-detail__author-more-element comment-detail__author-more-element-block-user',
-							{ 'is-blocked': authorIsBlocked }
+							{ 'is-blocked': authorIsBlocked },
 						) }
 						onClick={ blockUser }
 					>
 						<Gridicon icon="block" />
-						<span>{ authorIsBlocked
-							? translate( 'Unblock user' )
-							: translate( 'Block user' )
-						}</span>
+						<span>
+							{ authorIsBlocked ? translate( 'Unblock user' ) : translate( 'Block user' ) }
+						</span>
 					</a>
 				</div>
 			</div>
@@ -192,14 +185,11 @@ export class CommentDetailAuthor extends Component {
 					{ 'unapproved' === commentStatus &&
 						<div className="comment-detail__status-label is-unapproved">
 							{ translate( 'Pending' ) }
-						</div>
-					}
-					{
-						showAuthorInfo &&
+						</div> }
+					{ showAuthorInfo &&
 						<a className="comment-detail__author-more-info-toggle" onClick={ this.toggleExpanded }>
 							<Gridicon icon="info-outline" />
-						</a>
-					}
+						</a> }
 				</div>
 				{ this.authorMoreInfo() }
 			</div>

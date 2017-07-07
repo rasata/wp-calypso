@@ -15,8 +15,8 @@ import SettingsNavigation from '../navigation';
 
 const ShippingHeader = ( { translate, site } ) => {
 	const breadcrumbs = [
-		( <a href={ getLink( '/store/settings/:site/', site ) }>{ translate( 'Settings' ) }</a> ),
-		( <span>{ translate( 'Shipping' ) }</span> ),
+		<a href={ getLink( '/store/settings/:site/', site ) }>{ translate( 'Settings' ) }</a>,
+		<span>{ translate( 'Shipping' ) }</span>,
 	];
 	return (
 		<div>

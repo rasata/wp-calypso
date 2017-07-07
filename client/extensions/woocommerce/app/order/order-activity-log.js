@@ -13,7 +13,7 @@ import SectionHeader from 'components/section-header';
 class OrderActivityLog extends Component {
 	static propTypes = {
 		order: PropTypes.object,
-	}
+	};
 
 	render() {
 		const { order, translate } = this.props;
@@ -24,7 +24,7 @@ class OrderActivityLog extends Component {
 		return (
 			<div className="order__activity-log">
 				<SectionHeader label={ translate( 'Activity Log' ) } />
-				<Card></Card>
+				<Card />
 			</div>
 		);
 	}

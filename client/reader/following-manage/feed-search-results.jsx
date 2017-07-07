@@ -62,10 +62,9 @@ class FollowingManageSearchFeedsResults extends React.Component {
 		if ( ! searchResults ) {
 			return (
 				<div className={ classNames }>
-					{ times(
-						10,
-						i => <ReaderSubscriptionListItemPlaceholder key={ `placeholder-${ i }` } />,
-					) }
+					{ times( 10, i => (
+						<ReaderSubscriptionListItemPlaceholder key={ `placeholder-${ i }` } />
+					) ) }
 				</div>
 			);
 		} else if ( isEmpty ) {

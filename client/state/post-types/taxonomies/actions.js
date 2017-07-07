@@ -6,7 +6,7 @@ import {
 	POST_TYPES_TAXONOMIES_RECEIVE,
 	POST_TYPES_TAXONOMIES_REQUEST,
 	POST_TYPES_TAXONOMIES_REQUEST_FAILURE,
-	POST_TYPES_TAXONOMIES_REQUEST_SUCCESS
+	POST_TYPES_TAXONOMIES_REQUEST_SUCCESS,
 } from 'state/action-types';
 
 /**
@@ -23,7 +23,7 @@ export function receivePostTypeTaxonomies( siteId, postType, taxonomies ) {
 		type: POST_TYPES_TAXONOMIES_RECEIVE,
 		siteId,
 		postType,
-		taxonomies
+		taxonomies,
 	};
 }
 
@@ -36,11 +36,11 @@ export function receivePostTypeTaxonomies( siteId, postType, taxonomies ) {
  * @return {Function}          Action thunk
  */
 export function requestPostTypeTaxonomies( siteId, postType ) {
-	return ( dispatch ) => {
+	return dispatch => {
 		dispatch( {
 			type: POST_TYPES_TAXONOMIES_REQUEST,
 			siteId,
-			postType
+			postType,
 		} );
 
 		return wpcom
@@ -52,15 +52,15 @@ export function requestPostTypeTaxonomies( siteId, postType ) {
 				dispatch( {
 					type: POST_TYPES_TAXONOMIES_REQUEST_SUCCESS,
 					siteId,
-					postType
+					postType,
 				} );
 			} )
-			.catch( ( error ) => {
+			.catch( error => {
 				dispatch( {
 					type: POST_TYPES_TAXONOMIES_REQUEST_FAILURE,
 					siteId,
 					postType,
-					error
+					error,
 				} );
 			} );
 	};

@@ -35,7 +35,7 @@ const loadingState = {
 				123: {
 					orders: {
 						isLoading: {
-							35: true
+							35: true,
 						},
 						isQueryLoading: {
 							'{page:1}': true,
@@ -45,7 +45,7 @@ const loadingState = {
 						},
 						items: {},
 						queries: {},
-						totalPages: 1
+						totalPages: 1,
 					},
 				},
 			},
@@ -59,7 +59,7 @@ const loadedState = {
 				123: {
 					orders: {
 						isLoading: {
-							35: false
+							35: false,
 						},
 						isQueryLoading: {
 							'{page:1}': false,
@@ -69,10 +69,10 @@ const loadedState = {
 						},
 						items: keyBy( orders, 'id' ),
 						queries: {
-							'{page:1}': [ 35, 26 ]
+							'{page:1}': [ 35, 26 ],
 						},
-						totalPages: 4
-					}
+						totalPages: 4,
+					},
 				},
 				321: {
 					orders: {
@@ -80,7 +80,7 @@ const loadedState = {
 							'{page:1}': false,
 						},
 						items: keyBy( [ ...orders, ...additionalOrders ], 'id' ),
-					}
+					},
 				},
 			},
 		},

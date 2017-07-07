@@ -19,7 +19,7 @@ export const hasSiteComments = createSelector(
 		const comments = get( state, 'comments.items', {} );
 		return some( Object.keys( comments ), key => parseInt( key.split( '-', 1 ), 10 ) === siteId );
 	},
-	state => [ state.comments.items ]
+	state => [ state.comments.items ],
 );
 
 export default hasSiteComments;

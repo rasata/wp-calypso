@@ -14,10 +14,12 @@ describe( 'selectors', () => {
 	} );
 
 	it( 'should return suggestedUsername', () => {
-		expect( getSuggestedUsername( {
-			signup: {
-				optionalDependencies: { suggestedUsername: 'testUsernameSuggestion' }
-			}
-		} ) ).to.be.eql( 'testUsernameSuggestion' );
+		expect(
+			getSuggestedUsername( {
+				signup: {
+					optionalDependencies: { suggestedUsername: 'testUsernameSuggestion' },
+				},
+			} ),
+		).to.be.eql( 'testUsernameSuggestion' );
 	} );
 } );

@@ -16,26 +16,26 @@ export default React.createClass( {
 	propTypes: {
 		noWrap: React.PropTypes.bool,
 		prefix: React.PropTypes.string,
-		suffix: React.PropTypes.string
+		suffix: React.PropTypes.string,
 	},
 
 	render() {
 		return (
-			<div className={ classNames( 'form-text-input-with-affixes', { 'no-wrap': this.props.noWrap } ) }>
-				{ this.props.prefix && (
+			<div
+				className={ classNames( 'form-text-input-with-affixes', { 'no-wrap': this.props.noWrap } ) }
+			>
+				{ this.props.prefix &&
 					<span className="form-text-input-with-affixes__prefix">
 						{ this.props.prefix }
-					</span>
-				) }
+					</span> }
 
 				<FormTextInput { ...omit( this.props, keys( this.constructor.propTypes ) ) } />
 
-				{ this.props.suffix && (
+				{ this.props.suffix &&
 					<span className="form-text-input-with-affixes__suffix">
 						{ this.props.suffix }
-					</span>
-				) }
+					</span> }
 			</div>
 		);
-	}
+	},
 } );

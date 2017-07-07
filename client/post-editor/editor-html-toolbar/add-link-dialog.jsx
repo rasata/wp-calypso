@@ -21,7 +21,6 @@ const REGEXP_URL = /^(https?|ftp):\/\/[A-Z0-9.-]+\.[A-Z]{2,4}[^ "]*$/i;
 const REGEXP_STANDALONE_URL = /^(?:[a-z]+:|#|\?|\.|\/)/;
 
 export class AddLinkDialog extends Component {
-
 	static propTypes = {
 		onClose: PropTypes.func,
 		onInsert: PropTypes.func,
@@ -67,7 +66,7 @@ export class AddLinkDialog extends Component {
 
 	bindLinkUrlRef = input => {
 		this.linkUrl = input;
-	}
+	};
 
 	setLinkUrl = event => {
 		const { selectedPost } = this.state;
@@ -77,20 +76,20 @@ export class AddLinkDialog extends Component {
 				? selectedPost
 				: { id: null, url: null },
 		} );
-	}
+	};
 
 	setLinkText = event => {
 		this.setState( { linkText: event.target.value } );
-	}
+	};
 
 	setLinkNewTab = event => {
 		this.setState( { linkNewTab: event.target.checked } );
-	}
+	};
 
 	onSelectPost = post => {
 		this.setState( {
 			linkUrl: post.URL,
-			selectedPost: { id: post.ID, url: post.URL }
+			selectedPost: { id: post.ID, url: post.URL },
 		} );
 	};
 
@@ -102,42 +101,36 @@ export class AddLinkDialog extends Component {
 			selectedPost: { id: null, url: null },
 		} );
 		this.props.onClose();
-	}
+	};
 
 	onInsertLink = () => {
-		const {
-			linkNewTab,
+		const { linkNewTab, linkText } = this.state;
+		this.props.onInsert(
+			{
+				href: this.correctUrl(),
+				target: linkNewTab ? '_blank' : '',
+			},
 			linkText,
-		} = this.state;
-		this.props.onInsert( {
-			href: this.correctUrl(),
-			target: linkNewTab ? '_blank' : '',
-		}, linkText );
+		);
 		this.onCloseDialog();
-	}
+	};
 
 	render() {
-		const {
-			shouldDisplay,
-			siteId,
-			translate
-		} = this.props;
-		const {
-			linkNewTab,
-			linkText,
-			linkUrl,
-			selectedPost,
-		} = this.state;
+		const { shouldDisplay, siteId, translate } = this.props;
+		const { linkNewTab, linkText, linkUrl, selectedPost } = this.state;
 
-		const buttons = [ {
-			action: 'cancel',
-			label: translate( 'Cancel' ),
-		}, {
-			action: 'add-link',
-			isPrimary: true,
-			label: translate( 'Add Link' ),
-			onClick: this.onInsertLink,
-		} ];
+		const buttons = [
+			{
+				action: 'cancel',
+				label: translate( 'Cancel' ),
+			},
+			{
+				action: 'add-link',
+				isPrimary: true,
+				label: translate( 'Add Link' ),
+				onClick: this.onInsertLink,
+			},
+		];
 
 		return (
 			<Dialog
@@ -162,11 +155,7 @@ export class AddLinkDialog extends Component {
 					<FormLabel htmlFor="link_text">
 						{ translate( 'Link Text' ) }
 					</FormLabel>
-					<FormTextInput
-						name="link_text"
-						onChange={ this.setLinkText }
-						value={ linkText }
-					/>
+					<FormTextInput name="link_text" onChange={ this.setLinkText } value={ linkText } />
 				</FormFieldset>
 				<FormFieldset>
 					<FormLabel>

@@ -29,9 +29,7 @@ let ThemeSetup = ( { site, themeId, theme, translate, activeSiteDomain, toggleDi
 			{ themeId && <QueryTheme siteId="wpcom" themeId={ themeId } /> }
 			<HeaderCake onClick={ onBack }><h1>{ translate( 'Theme Setup' ) }</h1></HeaderCake>
 			{ site && theme
-				? <ThemeSetupCard
-					onClick={ toggleDialog }
-					theme={ theme } />
+				? <ThemeSetupCard onClick={ toggleDialog } theme={ theme } />
 				: <ThemeSetupPlaceholder /> }
 		</div>
 	);
@@ -39,7 +37,7 @@ let ThemeSetup = ( { site, themeId, theme, translate, activeSiteDomain, toggleDi
 
 ThemeSetup = localize( ThemeSetup );
 
-const mapStateToProps = ( state ) => {
+const mapStateToProps = state => {
 	const site = getSelectedSite( state );
 	const themeId = site && getActiveTheme( state, site.ID );
 	const theme = themeId && getTheme( state, 'wpcom', themeId );
@@ -51,4 +49,3 @@ const mapStateToProps = ( state ) => {
 };
 
 export default connect( mapStateToProps, { toggleDialog } )( ThemeSetup );
-

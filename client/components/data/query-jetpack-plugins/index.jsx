@@ -39,7 +39,7 @@ class QueryJetpackPlugins extends Component {
 QueryJetpackPlugins.propTypes = {
 	siteIds: PropTypes.array.isRequired,
 	isRequestingForSites: PropTypes.bool,
-	fetchPlugins: PropTypes.func
+	fetchPlugins: PropTypes.func,
 };
 
 export default connect(
@@ -48,5 +48,5 @@ export default connect(
 			isRequestingForSites: isRequestingForSites( state, props.siteIds ),
 		};
 	},
-	{ fetchPlugins }
+	{ fetchPlugins },
 )( QueryJetpackPlugins );

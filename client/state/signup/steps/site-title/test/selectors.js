@@ -14,12 +14,14 @@ describe( 'selectors', () => {
 	} );
 
 	it( 'should return Site Title from the state', () => {
-		expect( getSiteTitle( {
-			signup: {
-				steps: {
-					siteTitle: 'Site Title'
-				}
-			}
-		} ) ).to.be.eql( 'Site Title' );
+		expect(
+			getSiteTitle( {
+				signup: {
+					steps: {
+						siteTitle: 'Site Title',
+					},
+				},
+			} ),
+		).to.be.eql( 'Site Title' );
 	} );
 } );

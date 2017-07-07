@@ -26,7 +26,7 @@ function wptextpattern( editor ) {
 
 	var spacePatterns = [
 		{ regExp: /^[*-]\s/, cmd: 'InsertUnorderedList' },
-		{ regExp: /^1[.)]\s/, cmd: 'InsertOrderedList' }
+		{ regExp: /^1[.)]\s/, cmd: 'InsertOrderedList' },
 	];
 
 	var enterPatterns = [
@@ -36,12 +36,10 @@ function wptextpattern( editor ) {
 		{ start: '#####', format: 'h5' },
 		{ start: '######', format: 'h6' },
 		{ start: '>', format: 'blockquote' },
-		{ regExp: /^(-){3,}$/, element: 'hr' }
+		{ regExp: /^(-){3,}$/, element: 'hr' },
 	];
 
-	var inlinePatterns = [
-		{ start: '`', end: '`', format: 'code' }
-	];
+	var inlinePatterns = [ { start: '`', end: '`', format: 'code' } ];
 
 	var canUndo;
 	var chars = [];
@@ -58,24 +56,31 @@ function wptextpattern( editor ) {
 		canUndo = null;
 	} );
 
-	editor.on( 'keydown', function( event ) {
-		if ( ( canUndo && event.keyCode === 27 /* ESCAPE */ ) || ( canUndo === 'space' && event.keyCode === VK.BACKSPACE ) ) {
-			editor.undoManager.undo();
-			event.preventDefault();
-			event.stopImmediatePropagation();
-		}
+	editor.on(
+		'keydown',
+		function( event ) {
+			if (
+				( canUndo && event.keyCode === 27 ) /* ESCAPE */ ||
+				( canUndo === 'space' && event.keyCode === VK.BACKSPACE )
+			) {
+				editor.undoManager.undo();
+				event.preventDefault();
+				event.stopImmediatePropagation();
+			}
 
-		if ( event.keyCode === VK.ENTER && ! VK.modifierPressed( event ) ) {
-			enter();
-		}
+			if ( event.keyCode === VK.ENTER && ! VK.modifierPressed( event ) ) {
+				enter();
+			}
 
-		// Wait for the browser to insert the character.
-		if ( event.keyCode === VK.SPACEBAR && ! event.ctrlKey && ! event.metaKey && ! event.altKey ) {
-			setTimeout( space );
-		} else if ( event.keyCode > 47 && ! ( event.keyCode >= 91 && event.keyCode <= 93 ) ) {
-			setTimeout( inline );
-		}
-	}, true );
+			// Wait for the browser to insert the character.
+			if ( event.keyCode === VK.SPACEBAR && ! event.ctrlKey && ! event.metaKey && ! event.altKey ) {
+				setTimeout( space );
+			} else if ( event.keyCode > 47 && ! ( event.keyCode >= 91 && event.keyCode <= 93 ) ) {
+				setTimeout( inline );
+			}
+		},
+		true,
+	);
 
 	function inline() {
 		var rng = editor.selection.getRng();
@@ -120,7 +125,11 @@ function wptextpattern( editor ) {
 			return;
 		}
 
-		if ( node.data.slice( startOffset + pattern.start.length, endOffset ).indexOf( pattern.start.slice( 0, 1 ) ) !== -1 ) {
+		if (
+			node.data
+				.slice( startOffset + pattern.start.length, endOffset )
+				.indexOf( pattern.start.slice( 0, 1 ) ) !== -1
+		) {
 			return;
 		}
 
@@ -163,14 +172,14 @@ function wptextpattern( editor ) {
 	}
 
 	function firstTextNode( node ) {
-		var parent = editor.dom.getParent( node, 'p' ),
-			child;
+		var parent = editor.dom.getParent( node, 'p' ), child;
 
 		if ( ! parent ) {
 			return;
 		}
 
-		while ( child = parent.firstChild ) { // eslint-disable-line no-cond-assign
+		while ( ( child = parent.firstChild ) ) {
+			// eslint-disable-line no-cond-assign
 			if ( child.nodeType !== 3 ) {
 				parent = child;
 			} else {
@@ -194,10 +203,7 @@ function wptextpattern( editor ) {
 	}
 
 	function space() {
-		var rng = editor.selection.getRng(),
-			node = rng.startContainer,
-			parent,
-			text;
+		var rng = editor.selection.getRng(), node = rng.startContainer, parent, text;
 
 		if ( ! node || firstTextNode( node ) !== node ) {
 			return;
@@ -240,7 +246,9 @@ function wptextpattern( editor ) {
 			start = rng.startContainer,
 			node = firstTextNode( start ),
 			i = enterPatterns.length,
-			text, pattern, parent;
+			text,
+			pattern,
+			parent;
 
 		if ( ! node ) {
 			return;

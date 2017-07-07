@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	isEmpty = require( 'lodash/isEmpty' );
+var React = require( 'react' ), isEmpty = require( 'lodash/isEmpty' );
 
 /**
  * Internal dependencies
@@ -20,7 +19,7 @@ module.exports = React.createClass( {
 
 	getInitialState: function() {
 		return {
-			toggled: false
+			toggled: false,
 		};
 	},
 
@@ -35,15 +34,13 @@ module.exports = React.createClass( {
 		event.preventDefault();
 
 		this.setState( {
-			toggled: true
+			toggled: true,
 		} );
 	},
 
 	render: function() {
 		if ( this.state.toggled ) {
-			return (
-				<Input ref="input" { ...this.props } />
-			);
+			return <Input ref="input" { ...this.props } />;
 		}
 
 		return (
@@ -51,5 +48,5 @@ module.exports = React.createClass( {
 				<a href="" onClick={ this.handleClick }>{ this.props.text }</a>
 			</div>
 		);
-	}
+	},
 } );

@@ -24,7 +24,7 @@ export function cancellationEffectHeadline( purchase, translate ) {
 				components: {
 					em: <em />,
 				},
-			}
+			},
 		);
 	}
 
@@ -38,7 +38,7 @@ export function cancellationEffectHeadline( purchase, translate ) {
 			components: {
 				em: <em />,
 			},
-		}
+		},
 	);
 }
 
@@ -52,7 +52,7 @@ function refundableCancellationEffectDetail( purchase, translate ) {
 				args: {
 					cost: refundText,
 				},
-			}
+			},
 		);
 	}
 
@@ -64,7 +64,7 @@ function refundableCancellationEffectDetail( purchase, translate ) {
 				args: {
 					cost: refundText,
 				},
-			}
+			},
 		);
 	}
 
@@ -76,7 +76,7 @@ function refundableCancellationEffectDetail( purchase, translate ) {
 				args: {
 					cost: refundText,
 				},
-			}
+			},
 		);
 	}
 
@@ -86,7 +86,7 @@ function refundableCancellationEffectDetail( purchase, translate ) {
 			args: {
 				cost: refundText,
 			},
-		}
+		},
 	);
 }
 
@@ -100,7 +100,7 @@ function nonrefundableCancellationEffectDetail( purchase, translate ) {
 				args: {
 					subscriptionEndDate,
 				},
-			}
+			},
 		);
 	}
 
@@ -111,7 +111,7 @@ function nonrefundableCancellationEffectDetail( purchase, translate ) {
 				args: {
 					subscriptionEndDate,
 				},
-			}
+			},
 		);
 	}
 
@@ -121,7 +121,7 @@ function nonrefundableCancellationEffectDetail( purchase, translate ) {
 			args: {
 				subscriptionEndDate,
 			},
-		}
+		},
 	);
 }
 

@@ -6,8 +6,7 @@ import React from 'react';
 /**
  * Internal dependencies
  */
-var Toggle = require( 'components/forms/form-toggle' ),
-	support = require( 'lib/url/support' );
+var Toggle = require( 'components/forms/form-toggle' ), support = require( 'lib/url/support' );
 import analyticsMixin from 'lib/mixins/analytics';
 
 const NameserversToggle = React.createClass( {
@@ -15,7 +14,7 @@ const NameserversToggle = React.createClass( {
 
 	propTypes: {
 		onToggle: React.PropTypes.func.isRequired,
-		enabled: React.PropTypes.bool.isRequired
+		enabled: React.PropTypes.bool.isRequired,
 	},
 
 	render() {
@@ -32,7 +31,8 @@ const NameserversToggle = React.createClass( {
 						onChange={ this.handleToggle }
 						type="checkbox"
 						checked={ this.props.enabled }
-						value="active"/>
+						value="active"
+					/>
 				</form>
 				{ this.renderExplanation() }
 			</div>
@@ -43,7 +43,7 @@ const NameserversToggle = React.createClass( {
 		this.recordEvent(
 			'wpcomNameServersToggleButtonClick',
 			this.props.selectedDomainName,
-			! this.props.enabled
+			! this.props.enabled,
 		);
 
 		this.props.onToggle();
@@ -58,17 +58,19 @@ const NameserversToggle = React.createClass( {
 			<p className="name-servers__explanation">
 				{ this.translate(
 					'Name servers point your domain to the right website host, like WordPress.com. ' +
-					'{{a}}Learn more.{{/a}}',
+						'{{a}}Learn more.{{/a}}',
 					{
 						components: {
 							a: (
-								<a href={ support.CHANGE_NAME_SERVERS }
+								<a
+									href={ support.CHANGE_NAME_SERVERS }
 									target="_blank"
 									rel="noopener noreferrer"
-									onClick={ this.handleLearnMoreClick } />
-							)
-						}
-					}
+									onClick={ this.handleLearnMoreClick }
+								/>
+							),
+						},
+					},
 				) }
 			</p>
 		);
@@ -76,7 +78,7 @@ const NameserversToggle = React.createClass( {
 
 	handleLearnMoreClick() {
 		this.recordEvent( 'wpcomNameServersLearnMoreClick', this.props.selectedDomainName );
-	}
+	},
 } );
 
 export default NameserversToggle;

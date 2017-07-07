@@ -18,19 +18,17 @@ class Orders extends Component {
 		const { className, translate } = this.props;
 		return (
 			<Main className={ className }>
-				<ActionHeader breadcrumbs={ ( <span>{ translate( 'Orders' ) }</span> ) } />
+				<ActionHeader breadcrumbs={ <span>{ translate( 'Orders' ) }</span> } />
 				<OrdersList />
 			</Main>
 		);
 	}
 }
 
-export default connect(
-	state => {
-		const site = getSelectedSiteWithFallback( state );
+export default connect( state => {
+	const site = getSelectedSiteWithFallback( state );
 
-		return {
-			site,
-		};
-	}
-)( localize( Orders ) );
+	return {
+		site,
+	};
+} )( localize( Orders ) );

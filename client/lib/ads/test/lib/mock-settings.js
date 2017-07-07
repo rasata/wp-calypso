@@ -12,6 +12,6 @@ module.exports = {
 		city: 'Anytowne',
 		show_to_logged_in: 'yes',
 		tos: 'signed',
-		optimized_ads: true
-	}
+		optimized_ads: true,
+	},
 };

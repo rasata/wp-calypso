@@ -13,7 +13,7 @@ import useFilesystemMocks from 'test/helpers/use-filesystem-mocks';
 var TEST_CART_KEY = 91234567890;
 
 var poller = {
-	add: function() {}
+	add: function() {},
 };
 
 describe( 'cart-synchronizer', function() {
@@ -30,8 +30,7 @@ describe( 'cart-synchronizer', function() {
 
 	describe( '*before* the first fetch from the server', function() {
 		it( 'should *not* allow the value to be read', function() {
-			var wpcom = FakeWPCOM(),
-				synchronizer = CartSynchronizer( TEST_CART_KEY, wpcom, poller );
+			var wpcom = FakeWPCOM(), synchronizer = CartSynchronizer( TEST_CART_KEY, wpcom, poller );
 
 			assert.throws( () => {
 				synchronizer.getLatestValue();

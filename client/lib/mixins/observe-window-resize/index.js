@@ -17,7 +17,7 @@ var ObserveWindowSizeMixin = {
 
 	componentWillUnmount: function() {
 		window.removeEventListener( 'resize', this._handleWindowResize );
-	}
+	},
 
 	/* DO NOT DO THIS. It shares the debounce across all instances of the mixin.
 	_handleWindowResize: throttle( function() {

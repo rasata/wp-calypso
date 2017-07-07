@@ -15,29 +15,32 @@ const debug = debugFactory( 'calypso:restore-last-location' );
 const LAST_PATH = 'last_path';
 const ALLOWED_PATHS_FOR_RESTORING = /^\/(stats|plans|view|posts|pages|media|types|themes|sharing|people|plugins|domains)/i;
 
-const isWhitelistedForRestoring = ( path ) => {
+const isWhitelistedForRestoring = path => {
 	return !! path.match( ALLOWED_PATHS_FOR_RESTORING );
 };
 
 export const restoreLastLocation = () => {
 	let hasInitialized = false;
 
-	return ( next ) => ( action ) => {
+	return next => action => {
 		if ( action.type !== ROUTE_SET || ! action.path || ! action.query ) {
 			return next( action );
 		}
 
 		localforage.getItem( LAST_PATH ).then(
-			( lastPath ) => {
-				if ( ! hasInitialized &&
-						lastPath && lastPath !== '/' &&
-						action.path === '/' && Object.keys( action.query ).length === 0 &&
-						! isOutsideCalypso( lastPath ) &&
-						isWhitelistedForRestoring( lastPath ) ) {
+			lastPath => {
+				if (
+					! hasInitialized &&
+					lastPath &&
+					lastPath !== '/' &&
+					action.path === '/' &&
+					Object.keys( action.query ).length === 0 &&
+					! isOutsideCalypso( lastPath ) &&
+					isWhitelistedForRestoring( lastPath )
+				) {
 					debug( 'redir to', lastPath );
 					page( lastPath );
-				} else if ( action.path !== lastPath &&
-						! isOutsideCalypso( action.path ) ) {
+				} else if ( action.path !== lastPath && ! isOutsideCalypso( action.path ) ) {
 					debug( 'saving', action.path );
 					localforage.setItem( LAST_PATH, action.path );
 				}
@@ -48,7 +51,7 @@ export const restoreLastLocation = () => {
 
 				return next( action );
 			},
-			() => next( action )
+			() => next( action ),
 		);
 	};
 };

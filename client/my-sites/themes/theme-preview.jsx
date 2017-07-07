@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
 
@@ -18,7 +18,7 @@ import {
 	themePreviewVisibility,
 	isThemeActive,
 	isInstallingTheme,
-	isActivatingTheme
+	isActivatingTheme,
 } from 'state/themes/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import { isJetpackSite } from 'state/sites/selectors';
@@ -41,7 +41,7 @@ const ThemePreview = React.createClass( {
 
 	getInitialState() {
 		return {
-			showActionIndicator: false
+			showActionIndicator: false,
 		};
 	},
 
@@ -81,7 +81,7 @@ const ThemePreview = React.createClass( {
 		const buttonHref = primaryOption.getUrl ? primaryOption.getUrl( this.props.themeId ) : null;
 
 		return (
-			<Button primary onClick={ this.onPrimaryButtonClick } href={ buttonHref } >
+			<Button primary onClick={ this.onPrimaryButtonClick } href={ buttonHref }>
 				{ primaryOption.extendedLabel }
 			</Button>
 		);
@@ -94,7 +94,7 @@ const ThemePreview = React.createClass( {
 		}
 		const buttonHref = secondaryButton.getUrl ? secondaryButton.getUrl( this.props.themeId ) : null;
 		return (
-			<Button onClick={ this.onSecondaryButtonClick } href={ buttonHref } >
+			<Button onClick={ this.onSecondaryButtonClick } href={ buttonHref }>
 				{ secondaryButton.extendedLabel }
 			</Button>
 		);
@@ -110,27 +110,29 @@ const ThemePreview = React.createClass( {
 		return (
 			<div>
 				{ this.props.isJetpack && <QueryTheme themeId={ themeId } siteId="wporg" /> }
-				{ this.props.demoUrl && <WebPreview
-					showPreview={ true }
-					showExternal={ true }
-					showSEO={ false }
-					onClose={ this.props.hideThemePreview }
-					previewUrl={ this.props.demoUrl + '?demo=true&iframe=true&theme_preview=true' }
-					externalUrl={ this.props.demoUrl } >
-					{ showActionIndicator && <PulsingDot active={ true } /> }
-					{ ! showActionIndicator && this.renderSecondaryButton() }
-					{ ! showActionIndicator && this.renderPrimaryButton() }
-				</WebPreview> }
+				{ this.props.demoUrl &&
+					<WebPreview
+						showPreview={ true }
+						showExternal={ true }
+						showSEO={ false }
+						onClose={ this.props.hideThemePreview }
+						previewUrl={ this.props.demoUrl + '?demo=true&iframe=true&theme_preview=true' }
+						externalUrl={ this.props.demoUrl }
+					>
+						{ showActionIndicator && <PulsingDot active={ true } /> }
+						{ ! showActionIndicator && this.renderSecondaryButton() }
+						{ ! showActionIndicator && this.renderPrimaryButton() }
+					</WebPreview> }
 			</div>
 		);
-	}
+	},
 } );
 
 // make all actions available to preview.
 const ConnectedThemePreview = connectOptions( ThemePreview );
 
 export default connect(
-	( state ) => {
+	state => {
 		const themeId = themePreviewVisibility( state );
 		if ( ! themeId ) {
 			return { themeId };
@@ -159,8 +161,8 @@ export default connect(
 				'signup',
 				'support',
 				'help',
-			]
+			],
 		};
 	},
-	{ hideThemePreview }
+	{ hideThemePreview },
 )( localize( ConnectedThemePreview ) );

@@ -10,7 +10,7 @@ module.exports = {
 			nice_name: 'test1',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'editor' ],
-			site_ID: 1234
+			site_ID: 1234,
 		},
 
 		{
@@ -22,7 +22,7 @@ module.exports = {
 			nice_name: 'test2',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'administrator' ],
-			site_ID: 1234
+			site_ID: 1234,
 		},
 
 		{
@@ -34,7 +34,7 @@ module.exports = {
 			nice_name: 'test3',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'editor' ],
-			site_ID: 1234
+			site_ID: 1234,
 		},
 
 		{
@@ -46,7 +46,7 @@ module.exports = {
 			nice_name: 'test4',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'editor' ],
-			site_ID: 1234
+			site_ID: 1234,
 		},
 
 		{
@@ -58,7 +58,7 @@ module.exports = {
 			nice_name: 'test5',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'editor' ],
-			site_ID: 1234
-		}
-	]
+			site_ID: 1234,
+		},
+	],
 };

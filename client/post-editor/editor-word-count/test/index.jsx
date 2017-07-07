@@ -22,8 +22,8 @@ describe( 'EditorWordCount', () => {
 	useMockery( mockery => {
 		mockery.registerMock( 'lib/wp', {
 			me: () => ( {
-				get: noop
-			} )
+				get: noop,
+			} ),
 		} );
 	} );
 
@@ -32,7 +32,9 @@ describe( 'EditorWordCount', () => {
 	} );
 
 	it( 'should display word count if selected text is provided', () => {
-		const wrapper = mount( <EditorWordCount selectedText={ 'Selected text' } translate={ translate } /> );
+		const wrapper = mount(
+			<EditorWordCount selectedText={ 'Selected text' } translate={ translate } />,
+		);
 		wrapper.setState( { rawContent: 'Selected text' } );
 		expect( wrapper.text() ).to.equal( '2 words selected / 2 words' );
 	} );

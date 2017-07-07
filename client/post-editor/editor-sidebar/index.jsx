@@ -25,10 +25,11 @@ export default class EditorSidebar extends Component {
 		toggleSidebar: PropTypes.func,
 		setPostDate: PropTypes.func,
 		isPrivate: PropTypes.bool,
-	}
+	};
 
 	render() {
-		const { toggleSidebar,
+		const {
+			toggleSidebar,
 			isNew,
 			onTrashingPost,
 			onPublish,
@@ -63,13 +64,9 @@ export default class EditorSidebar extends Component {
 					isPostPrivate={ isPostPrivate }
 				/>
 				<SidebarFooter>
-					<EditorDeletePost
-						post={ post }
-						onTrashingPost={ onTrashingPost }
-					/>
+					<EditorDeletePost post={ post } onTrashingPost={ onTrashingPost } />
 				</SidebarFooter>
 			</div>
 		);
 	}
-
 }

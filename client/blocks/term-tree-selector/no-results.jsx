@@ -10,7 +10,7 @@ export default React.createClass( {
 	mixins: [ PureRenderMixin ],
 
 	propTypes: {
-		createLink: PropTypes.string
+		createLink: PropTypes.string,
 	},
 
 	render() {
@@ -22,8 +22,15 @@ export default React.createClass( {
 				context: 'Term Selector: term search/listing results',
 				comment: 'This is used when no terms match the given search, or if there are no terms at all.',
 				components: {
-					a: <a className="create-link" href={ createLink } target="_blank" rel="noopener noreferrer" />
-				}
+					a: (
+						<a
+							className="create-link"
+							href={ createLink }
+							target="_blank"
+							rel="noopener noreferrer"
+						/>
+					),
+				},
 			} );
 		}
 
@@ -33,5 +40,5 @@ export default React.createClass( {
 				&nbsp;{ createMessage }
 			</span>
 		);
-	}
+	},
 } );

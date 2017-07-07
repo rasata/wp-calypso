@@ -14,9 +14,9 @@ module.exports = {
 	batch: function() {
 		return {
 			add: returnSelf,
-			run: returnSelf
+			run: returnSelf,
 		};
 	},
 	me: returnSelf,
-	dismissSite: returnSelf
+	dismissSite: returnSelf,
 };

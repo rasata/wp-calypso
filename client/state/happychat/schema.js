@@ -1,14 +1,7 @@
-
 export const eventSchema = {
 	type: 'object',
 	additionalProperties: false,
-	required: [
-		'id',
-		'source',
-		'message',
-		'timestamp',
-		'user_id',
-		'type' ],
+	required: [ 'id', 'source', 'message', 'timestamp', 'user_id', 'type' ],
 	properties: {
 		id: { type: 'string' },
 		source: { type: 'string' },
@@ -19,7 +12,7 @@ export const eventSchema = {
 		user_id: { type: [ 'number', 'string' ] },
 		type: { type: 'string' },
 		links: { type: 'array' },
-	}
+	},
 };
 
 export const geoLocationSchema = {
@@ -29,7 +22,7 @@ export const geoLocationSchema = {
 		country_long: { type: 'string' },
 		country_short: { type: 'string' },
 		region: { type: 'string' },
-	}
+	},
 };
 
 export const timelineSchema = {

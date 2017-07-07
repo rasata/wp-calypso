@@ -49,8 +49,11 @@ export default function pickCanonicalMedia( post ) {
 	}
 
 	// jetpack lies about thumbnails/featured_images so we need to make sure its actually an image
-	if ( post.featured_image && isUrlLikelyAnImage( post.featured_image ) &&
-			isImageLargeEnoughForFeature( post.post_thumbnail ) ) {
+	if (
+		post.featured_image &&
+		isUrlLikelyAnImage( post.featured_image ) &&
+		isImageLargeEnoughForFeature( post.post_thumbnail )
+	) {
 		post.canonical_media = {
 			src: post.featured_image,
 			height: post.post_thumbnail.height,

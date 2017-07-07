@@ -24,17 +24,11 @@ class PlanStorageBar extends Component {
 	};
 
 	static defaultProps = {
-		siteSlug: ''
+		siteSlug: '',
 	};
 
 	render() {
-		const {
-			className,
-			mediaStorage,
-			sitePlanSlug,
-			siteSlug,
-			translate,
-		} = this.props;
+		const { className, mediaStorage, sitePlanSlug, siteSlug, translate } = this.props;
 
 		if ( sitePlanSlug === PLAN_BUSINESS ) {
 			return null;
@@ -46,11 +40,12 @@ class PlanStorageBar extends Component {
 
 		const percent = Math.min(
 			Math.round( mediaStorage.storage_used_bytes / mediaStorage.max_storage_bytes * 1000 ) / 10,
-		100 );
+			100,
+		);
 
 		const classes = classNames( className, 'plan-storage__bar', {
 			'is-alert': percent > ALERT_PERCENT,
-			'is-warn': percent > WARN_PERCENT && percent <= ALERT_PERCENT
+			'is-warn': percent > WARN_PERCENT && percent <= ALERT_PERCENT,
 		} );
 
 		const max = filesize( mediaStorage.max_storage_bytes );
@@ -61,14 +56,15 @@ class PlanStorageBar extends Component {
 					className="plan-storage__bar"
 					value={ percent }
 					total={ 100 }
-					compact={ true } />
+					compact={ true }
+				/>
 
-				<span className="plan-storage__storage-label" >
+				<span className="plan-storage__storage-label">
 					{ translate( '%(percent)f%% of %(max)s used', {
 						args: {
 							percent: percent,
-							max: max
-						}
+							max: max,
+						},
 					} ) }
 				</span>
 

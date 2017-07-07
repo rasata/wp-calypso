@@ -10,11 +10,16 @@ import {
 } from 'state/action-types';
 
 export const requestEmailVerification = function( { dispatch }, action ) {
-	dispatch( http( {
-		apiVersion: '1.1',
-		method: 'POST',
-		path: '/me/send-verification-email',
-	}, action ) );
+	dispatch(
+		http(
+			{
+				apiVersion: '1.1',
+				method: 'POST',
+				path: '/me/send-verification-email',
+			},
+			action,
+		),
+	);
 };
 
 export const handleError = ( { dispatch }, action, next, rawError ) => {
@@ -29,9 +34,7 @@ export const handleSuccess = ( { dispatch } ) => {
 };
 
 export default {
-	[ EMAIL_VERIFY_REQUEST ]: [ dispatchRequest(
-		requestEmailVerification,
-		handleSuccess,
-		handleError
-	) ],
+	[ EMAIL_VERIFY_REQUEST ]: [
+		dispatchRequest( requestEmailVerification, handleSuccess, handleError ),
+	],
 };

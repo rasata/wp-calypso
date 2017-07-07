@@ -17,15 +17,15 @@ const TxtRecord = React.createClass( {
 	statics: {
 		initialFields: {
 			name: '',
-			data: ''
-		}
+			data: '',
+		},
 	},
 
 	propTypes: {
 		fieldValues: React.PropTypes.object.isRequired,
 		onChange: React.PropTypes.func.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		show: React.PropTypes.bool.isRequired
+		show: React.PropTypes.bool.isRequired,
 	},
 
 	fieldNames: [ 'name', 'data' ],
@@ -43,17 +43,16 @@ const TxtRecord = React.createClass( {
 					<FormLabel>{ this.translate( 'Name', { context: 'Dns Record' } ) }</FormLabel>
 					<FormTextInputWithAffixes
 						name="name"
-						placeholder={
-							this.translate(
-								'Enter subdomain (optional)',
-								{ context: 'Placeholder shown when entering the optional subdomain part of a new DNS record' }
-							)
-						}
+						placeholder={ this.translate( 'Enter subdomain (optional)', {
+							context: 'Placeholder shown when entering the optional subdomain part of a new DNS record',
+						} ) }
 						isError={ ! isNameValid }
 						onChange={ this.props.onChange }
 						value={ this.props.fieldValues.name }
-						suffix={ '.' + this.props.selectedDomainName } />
-					{ ! isNameValid && <FormInputValidation text={ this.translate( 'Invalid Name' ) } isError /> }
+						suffix={ '.' + this.props.selectedDomainName }
+					/>
+					{ ! isNameValid &&
+						<FormInputValidation text={ this.translate( 'Invalid Name' ) } isError /> }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -62,13 +61,21 @@ const TxtRecord = React.createClass( {
 						name="data"
 						onChange={ this.props.onChange }
 						value={ this.props.fieldValues.data }
-						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: 'v=spf1 include:example.com ~all' } } ) } />
-					{ hasNonAsciiData && <FormInputValidation text={ this.translate( 'TXT Record has non-ASCII data' ) } isWarning /> }
-					{ ! isDataValid && <FormInputValidation text={ this.translate( 'Invalid TXT Record' ) } isError /> }
+						placeholder={ this.translate( 'e.g. %(example)s', {
+							args: { example: 'v=spf1 include:example.com ~all' },
+						} ) }
+					/>
+					{ hasNonAsciiData &&
+						<FormInputValidation
+							text={ this.translate( 'TXT Record has non-ASCII data' ) }
+							isWarning
+						/> }
+					{ ! isDataValid &&
+						<FormInputValidation text={ this.translate( 'Invalid TXT Record' ) } isError /> }
 				</FormFieldset>
 			</div>
 		);
-	}
+	},
 } );
 
 export default TxtRecord;

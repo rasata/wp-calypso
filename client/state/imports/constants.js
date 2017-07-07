@@ -11,7 +11,7 @@ export const appStates = Object.freeze( {
 	READY_FOR_UPLOAD: 'importer-ready-for-upload',
 	UPLOAD_SUCCESS: 'importer-upload-success',
 	UPLOAD_FAILURE: 'importer-upload-failure',
-	UPLOADING: 'importer-uploading'
+	UPLOADING: 'importer-uploading',
 } );
 
 export const WORDPRESS = 'importer-type-wordpress';

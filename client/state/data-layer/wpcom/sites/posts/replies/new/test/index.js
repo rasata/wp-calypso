@@ -15,7 +15,7 @@ describe( '#writePostComment()', () => {
 		type: 'DUMMY',
 		siteId: 2916284,
 		postId: 1010,
-		commentText: 'comment text'
+		commentText: 'comment text',
 	};
 
 	it( 'should dispatch a http request action to the new post replies endpoint', () => {
@@ -28,7 +28,7 @@ describe( '#writePostComment()', () => {
 		expect( dispatchNewCommentRequestSpy ).to.have.been.calledWith(
 			dispatch,
 			action,
-			'/sites/2916284/posts/1010/replies/new'
+			'/sites/2916284/posts/1010/replies/new',
 		);
 
 		dispatchNewCommentRequestSpy.restore();

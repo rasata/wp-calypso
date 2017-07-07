@@ -14,7 +14,7 @@ export default {
 		renderWithReduxStore(
 			React.createElement( DiscussionMain ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 };

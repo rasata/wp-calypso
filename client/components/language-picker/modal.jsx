@@ -19,12 +19,12 @@ class LanguagePickerModal extends PureComponent {
 	static propTypes = {
 		onSelected: PropTypes.func,
 		onClose: PropTypes.func,
-	}
+	};
 
 	static defaultProps = {
 		onSelected: noop,
 		onClose: noop,
-	}
+	};
 
 	constructor( props ) {
 		super( props );
@@ -39,7 +39,7 @@ class LanguagePickerModal extends PureComponent {
 	componentWillReceiveProps( nextProps ) {
 		if ( nextProps.selected !== this.state.selectedLanguageSlug ) {
 			this.setState( {
-				selectedLanguageSlug: nextProps.selected
+				selectedLanguageSlug: nextProps.selected,
 			} );
 		}
 	}
@@ -76,23 +76,23 @@ class LanguagePickerModal extends PureComponent {
 		}
 	}
 
-	handleSearch = ( search ) => {
+	handleSearch = search => {
 		this.setState( { search } );
-	}
+	};
 
-	handleClick = ( selectedLanguageSlug ) => {
+	handleClick = selectedLanguageSlug => {
 		this.setState( { selectedLanguageSlug } );
-	}
+	};
 
 	handleSelectLanguage = () => {
 		const langSlug = this.state.selectedLanguageSlug;
 		this.props.onSelected( langSlug );
 		this.handleClose();
-	}
+	};
 
 	handleClose = () => {
 		this.props.onClose();
-	}
+	};
 
 	renderTabItems() {
 		const tabs = [ 'popular', '' ];
@@ -102,11 +102,7 @@ class LanguagePickerModal extends PureComponent {
 			const onClick = () => this.setState( { filter } );
 
 			return (
-				<SectionNavTabItem
-					key={ filter }
-					selected={ selected }
-					onClick={ onClick }
-				>
+				<SectionNavTabItem key={ filter } selected={ selected } onClick={ onClick }>
 					{ this.getFilterLabel( filter ) }
 				</SectionNavTabItem>
 			);
@@ -123,10 +119,10 @@ class LanguagePickerModal extends PureComponent {
 		);
 	}
 
-	renderLanguageItem = ( language ) => {
+	renderLanguageItem = language => {
 		const isSelected = language.langSlug === this.state.selectedLanguageSlug;
 		const classes = classNames( 'language-picker__modal-text', {
-			'is-selected': isSelected
+			'is-selected': isSelected,
 		} );
 
 		return (
@@ -138,7 +134,7 @@ class LanguagePickerModal extends PureComponent {
 				<span className={ classes }>{ language.name }</span>
 			</div>
 		);
-	}
+	};
 
 	render() {
 		const { isVisible, translate } = this.props;
@@ -152,13 +148,13 @@ class LanguagePickerModal extends PureComponent {
 		const buttons = [
 			{
 				action: 'cancel',
-				label: translate( 'Cancel' )
+				label: translate( 'Cancel' ),
 			},
 			{
 				action: 'confirm',
 				label: translate( 'Select Language' ),
 				isPrimary: true,
-				onClick: this.handleSelectLanguage
+				onClick: this.handleSelectLanguage,
 			},
 		];
 

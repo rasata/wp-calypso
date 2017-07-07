@@ -15,7 +15,7 @@ export default React.createClass( {
 	displayName: 'StatsOverviewPlaceholder',
 
 	propTypes: {
-		insights: PropTypes.bool
+		insights: PropTypes.bool,
 	},
 
 	render() {
@@ -45,24 +45,28 @@ export default React.createClass( {
 						isLoading={ true }
 						gridicon="visible"
 						label={ this.translate( 'Views', { context: 'noun' } ) }
-						value={ null } />
+						value={ null }
+					/>
 					<StatsTab
 						isLoading={ true }
 						gridicon="user"
 						label={ this.translate( 'Visitors', { context: 'noun' } ) }
-						value={ null } />
+						value={ null }
+					/>
 					<StatsTab
 						isLoading={ true }
 						gridicon="star"
 						label={ this.translate( 'Likes', { context: 'noun' } ) }
-						value={ null } />
+						value={ null }
+					/>
 					<StatsTab
 						isLoading={ true }
 						gridicon="comment"
 						label={ this.translate( 'Comments', { context: 'noun' } ) }
-						value={ null } />
+						value={ null }
+					/>
 				</StatsTabs>
 			</Card>
 		);
-	}
+	},
 } );

@@ -11,8 +11,7 @@ var JQUERY_URL = 'https://s0.wp.com/wp-includes/js/jquery/jquery.js',
 	callbacksForURLsInProgress = {};
 
 var loadScript = function( url, callback ) {
-	var script = document.createElement( 'script' ),
-		loaded = false;
+	var script = document.createElement( 'script' ), loaded = false;
 
 	function handleCompletedRequest( event ) {
 		var errorArgument = null;
@@ -90,5 +89,5 @@ module.exports = {
 	loadScript: loadScript,
 	loadjQueryDependentScript: loadjQueryDependentScript,
 	removeScriptCallback: removeScriptCallback,
-	JQUERY_URL: JQUERY_URL
+	JQUERY_URL: JQUERY_URL,
 };

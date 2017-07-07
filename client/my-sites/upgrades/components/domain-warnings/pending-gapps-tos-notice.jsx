@@ -13,7 +13,9 @@ import NoticeAction from 'components/notice/notice-action';
 import support from 'lib/url/support';
 import { domainManagementEmail } from 'my-sites/upgrades/paths';
 
-const learnMoreLink = <a href={ support.COMPLETING_GOOGLE_APPS_SIGNUP } target="_blank" rel="noopener noreferrer" />,
+const learnMoreLink = (
+	<a href={ support.COMPLETING_GOOGLE_APPS_SIGNUP } target="_blank" rel="noopener noreferrer" />
+),
 	strong = <strong />;
 
 const PendingGappsTosNotice = React.createClass( {
@@ -23,35 +25,38 @@ const PendingGappsTosNotice = React.createClass( {
 		siteSlug: React.PropTypes.string.isRequired,
 		domains: React.PropTypes.array.isRequired,
 		section: React.PropTypes.string.isRequired,
-		isCompact: React.PropTypes.bool
+		isCompact: React.PropTypes.bool,
 	},
 
 	getDefaultProps() {
 		return {
-			isCompact: false
+			isCompact: false,
 		};
 	},
 
 	componentDidMount() {
-		this.recordEvent( 'showPendingAccountNotice',
-			{
-				siteSlug: this.props.siteSlug,
-				severity: this.getNoticeSeverity(),
-				isMultipleDomains: this.props.domains.length > 1,
-				section: this.props.section
-			}
-		);
+		this.recordEvent( 'showPendingAccountNotice', {
+			siteSlug: this.props.siteSlug,
+			severity: this.getNoticeSeverity(),
+			isMultipleDomains: this.props.domains.length > 1,
+			section: this.props.section,
+		} );
 	},
 
 	getGappsLoginUrl( email, domain ) {
-		return `https://accounts.google.com/AccountChooser?Email=${ email }&service=CPanel` +
+		return (
+			`https://accounts.google.com/AccountChooser?Email=${ email }&service=CPanel` +
 			`&continue=https%3A%2F%2Fadmin.google.com%2F${ domain }` +
-			'%2FAcceptTermsOfService%3Fcontinue%3Dhttps%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F1';
+			'%2FAcceptTermsOfService%3Fcontinue%3Dhttps%3A%2F%2Fmail.google.com%2Fmail%2Fu%2F1'
+		);
 	},
 
 	getNoticeSeverity() {
 		const subscribedDaysAgo = days => {
-			return domain => this.moment( domain.googleAppsSubscription.subscribedDate ).isBefore( this.moment().subtract( days, 'days' ) );
+			return domain =>
+				this.moment( domain.googleAppsSubscription.subscribedDate ).isBefore(
+					this.moment().subtract( days, 'days' ),
+				);
 		};
 
 		if ( this.props.domains.some( subscribedDaysAgo( 21 ) ) ) {
@@ -66,7 +71,7 @@ const PendingGappsTosNotice = React.createClass( {
 	getExclamation( severity ) {
 		const translationOptions = {
 			context: 'Beginning of Gapps pending account notice',
-			comment: 'Used as an exclamation in Gapps\' pending account notice'
+			comment: "Used as an exclamation in Gapps' pending account notice",
 		};
 
 		switch ( severity ) {
@@ -77,7 +82,7 @@ const PendingGappsTosNotice = React.createClass( {
 				return this.props.translate( 'Urgent!', translationOptions );
 
 			default:
-				return this.props.translate( 'You\'re almost there!', translationOptions );
+				return this.props.translate( "You're almost there!", translationOptions );
 		}
 	},
 
@@ -89,7 +94,7 @@ const PendingGappsTosNotice = React.createClass( {
 				severity,
 				user,
 				section: this.props.section,
-				siteSlug: this.props.siteSlug
+				siteSlug: this.props.siteSlug,
 			} );
 		};
 	},
@@ -112,17 +117,12 @@ const PendingGappsTosNotice = React.createClass( {
 				status={ `is-${ severity }` }
 				showDismiss={ false }
 				key="pending-gapps-tos-acceptance-domain-compact"
-				text={ this.props.translate(
-					'Email requires action',
-					'Emails require action',
-					{
-						count: this.props.domains.length
-					}
-				) }>
-				<NoticeAction
-					href={ href }
-					onClick={ this.generateFixClickHandler() }>
-						{ this.props.translate( 'Fix' ) }
+				text={ this.props.translate( 'Email requires action', 'Emails require action', {
+					count: this.props.domains.length,
+				} ) }
+			>
+				<NoticeAction href={ href } onClick={ this.generateFixClickHandler() }>
+					{ this.props.translate( 'Fix' ) }
 				</NoticeAction>
 			</Notice>
 		);
@@ -148,55 +148,68 @@ const PendingGappsTosNotice = React.createClass( {
 					{
 						count: users.length,
 						args: { exclamation, emails: users.join( ', ' ) },
-						components: { learnMoreLink, strong }
-					}
-				) }>
+						components: { learnMoreLink, strong },
+					},
+				) }
+			>
 				<NoticeAction
 					href={ this.getGappsLoginUrl( users[ 0 ], domainName ) }
-					onClick={ this.generateLogInClickHandler( { domainName, user: users[ 0 ], severity, isMultipleDomains: false } ) }
-					external>
-						{ this.props.translate( 'Log in' ) }
+					onClick={ this.generateLogInClickHandler( {
+						domainName,
+						user: users[ 0 ],
+						severity,
+						isMultipleDomains: false,
+					} ) }
+					external
+				>
+					{ this.props.translate( 'Log in' ) }
 				</NoticeAction>
 			</Notice>
 		);
 	},
 
 	multipleDomainsNotice() {
-		const severity = this.getNoticeSeverity(),
-			exclamation = this.getExclamation( severity );
+		const severity = this.getNoticeSeverity(), exclamation = this.getExclamation( severity );
 
 		return (
 			<Notice
 				status={ `is-${ severity }` }
 				showDismiss={ false }
-				key="pending-gapps-tos-acceptance-domains">
+				key="pending-gapps-tos-acceptance-domains"
+			>
 				{ this.props.translate(
 					'%(exclamation)s To activate your new email addresses, please log in to G Suite ' +
 						'and finish setting them up. {{learnMoreLink}}Learn more{{/learnMoreLink}}',
 					{
 						args: { exclamation },
-						components: { learnMoreLink }
-					}
+						components: { learnMoreLink },
+					},
 				) }
-				<ul>{
-					this.props.domains.map( ( { name: domainName, googleAppsSubscription: { pendingUsers: users } } ) => {
-						return <li key={ `pending-gapps-tos-acceptance-domain-${ domainName }` }>
-						<strong>{ users.join( ', ' ) } </strong>
-							<a
-								href={ this.getGappsLoginUrl( users[ 0 ], domainName ) }
-								onClick={ this.generateLogInClickHandler( {
-									domainName,
-									severity,
-									isMultipleDomains: true,
-									user: users[ 0 ]
-								} ) }
-								target="_blank"
-								rel="noopener noreferrer">
+				<ul>
+					{ this.props.domains.map( ( {
+						name: domainName,
+						googleAppsSubscription: { pendingUsers: users },
+					} ) => {
+						return (
+							<li key={ `pending-gapps-tos-acceptance-domain-${ domainName }` }>
+								<strong>{ users.join( ', ' ) } </strong>
+								<a
+									href={ this.getGappsLoginUrl( users[ 0 ], domainName ) }
+									onClick={ this.generateLogInClickHandler( {
+										domainName,
+										severity,
+										isMultipleDomains: true,
+										user: users[ 0 ],
+									} ) }
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									{ this.props.translate( 'Log in' ) }
-							</a>
-						</li>;
-					} )
-				}</ul>
+								</a>
+							</li>
+						);
+					} ) }
+				</ul>
 			</Notice>
 		);
 	},

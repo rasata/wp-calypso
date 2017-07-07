@@ -23,15 +23,15 @@ const SrvRecord = React.createClass( {
 			weight: 10,
 			target: '',
 			port: '',
-			protocol: 'tcp'
-		}
+			protocol: 'tcp',
+		},
 	},
 
 	propTypes: {
 		fieldValues: React.PropTypes.object.isRequired,
 		onChange: React.PropTypes.func.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		show: React.PropTypes.bool.isRequired
+		show: React.PropTypes.bool.isRequired,
 	},
 
 	render() {
@@ -54,12 +54,17 @@ const SrvRecord = React.createClass( {
 					<FormLabel>{ this.translate( 'Name', { context: 'Dns Record' } ) }</FormLabel>
 					<FormTextInputWithAffixes
 						name="name"
-						placeholder={ this.translate( 'Enter subdomain (optional)', { context: 'Placeholder shown when entering the optional subdomain part of a new DNS record' } ) }
+						placeholder={ this.translate( 'Enter subdomain (optional)', {
+							context: 'Placeholder shown when entering the optional subdomain part of a new DNS record',
+						} ) }
 						isError={ ! isNameValid }
 						onChange={ this.props.onChange }
 						value={ name }
-						suffix={ '.' + this.props.selectedDomainName } />
-					{ ! isNameValid ? <FormInputValidation text={ this.translate( 'Invalid Name' ) } isError={ true } /> : null }
+						suffix={ '.' + this.props.selectedDomainName }
+					/>
+					{ ! isNameValid
+						? <FormInputValidation text={ this.translate( 'Invalid Name' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -69,17 +74,17 @@ const SrvRecord = React.createClass( {
 						isError={ ! isServiceValid }
 						onChange={ this.props.onChange }
 						value={ service }
-						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: 'sip' } } ) } />
-					{ ! isServiceValid ? <FormInputValidation text={ this.translate( 'Invalid Service' ) } isError={ true } /> : null }
+						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: 'sip' } } ) }
+					/>
+					{ ! isServiceValid
+						? <FormInputValidation text={ this.translate( 'Invalid Service' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
 					<FormLabel>{ this.translate( 'Protocol', { context: 'Dns Record' } ) }</FormLabel>
 
-					<FormSelect
-							name="protocol"
-							onChange={ this.props.onChange }
-							value={ protocol }>
+					<FormSelect name="protocol" onChange={ this.props.onChange } value={ protocol }>
 						{ options }
 					</FormSelect>
 				</FormFieldset>
@@ -91,8 +96,11 @@ const SrvRecord = React.createClass( {
 						isError={ ! isAuxValid }
 						onChange={ this.props.onChange }
 						value={ aux }
-						defaultValue="10" />
-					{ ! isAuxValid ? <FormInputValidation text={ this.translate( 'Invalid Priority' ) } isError={ true } /> : null }
+						defaultValue="10"
+					/>
+					{ ! isAuxValid
+						? <FormInputValidation text={ this.translate( 'Invalid Priority' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -102,8 +110,11 @@ const SrvRecord = React.createClass( {
 						isError={ ! isWeightValid }
 						onChange={ this.props.onChange }
 						value={ weight }
-						defaultValue="10" />
-					{ ! isWeightValid ? <FormInputValidation text={ this.translate( 'Invalid Weight' ) } isError={ true } /> : null }
+						defaultValue="10"
+					/>
+					{ ! isWeightValid
+						? <FormInputValidation text={ this.translate( 'Invalid Weight' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -113,8 +124,16 @@ const SrvRecord = React.createClass( {
 						isError={ ! isTargetValid }
 						onChange={ this.props.onChange }
 						value={ target }
-						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: 'sip.your-provider.com' } } ) } />
-					{ ! isTargetValid ? <FormInputValidation text={ this.translate( 'Invalid Target Host' ) } isError={ true } /> : null }
+						placeholder={ this.translate( 'e.g. %(example)s', {
+							args: { example: 'sip.your-provider.com' },
+						} ) }
+					/>
+					{ ! isTargetValid
+						? <FormInputValidation
+								text={ this.translate( 'Invalid Target Host' ) }
+								isError={ true }
+							/>
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -124,12 +143,18 @@ const SrvRecord = React.createClass( {
 						isError={ ! isPortValid }
 						onChange={ this.props.onChange }
 						value={ port }
-						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: '5060' } } ) } />
-					{ ! isPortValid ? <FormInputValidation text={ this.translate( 'Invalid Target Port' ) } isError={ true } /> : null }
+						placeholder={ this.translate( 'e.g. %(example)s', { args: { example: '5060' } } ) }
+					/>
+					{ ! isPortValid
+						? <FormInputValidation
+								text={ this.translate( 'Invalid Target Port' ) }
+								isError={ true }
+							/>
+						: null }
 				</FormFieldset>
 			</div>
 		);
-	}
+	},
 } );
 
 export default SrvRecord;

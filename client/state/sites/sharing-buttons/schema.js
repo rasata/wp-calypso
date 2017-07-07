@@ -7,7 +7,7 @@ export const items = {
 			type: 'array',
 			items: {
 				type: 'object',
-			}
-		}
-	}
+			},
+		},
+	},
 };

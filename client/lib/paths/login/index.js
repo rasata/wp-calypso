@@ -15,7 +15,5 @@ export function login( { isNative, redirectTo, twoFactorAuthType } = {} ) {
 		}
 	}
 
-	return redirectTo
-		? addQueryArgs( { redirect_to: redirectTo }, url )
-		: url;
+	return redirectTo ? addQueryArgs( { redirect_to: redirectTo }, url ) : url;
 }

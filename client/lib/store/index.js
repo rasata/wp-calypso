@@ -24,14 +24,13 @@ import emitter from 'lib/mixins/emitter';
  * @return {Object} Store built from reducer.
  */
 export const createReducerStore = ( reducer, initialState = {}, waitFor = [] ) => {
-	let state = initialState,
-		ReducerStore = {};
+	let state = initialState, ReducerStore = {};
 
 	emitter( ReducerStore );
 
 	ReducerStore.get = () => state;
 
-	ReducerStore.dispatchToken = Dispatcher.register( ( payload ) => {
+	ReducerStore.dispatchToken = Dispatcher.register( payload => {
 		Dispatcher.waitFor( waitFor );
 
 		const newState = reducer( state, payload );

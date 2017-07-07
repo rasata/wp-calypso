@@ -33,7 +33,7 @@ class FollowButtonContainer extends Component {
 					feed_ID: this.props.feedId,
 					blog_ID: this.props.siteId,
 				},
-				isUndefined
+				isUndefined,
 			);
 
 			this.props.follow( this.props.siteUrl, followData );
@@ -66,5 +66,5 @@ export default connect(
 	{
 		follow,
 		unfollow,
-	}
+	},
 )( FollowButtonContainer );

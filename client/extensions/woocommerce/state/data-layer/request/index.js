@@ -21,7 +21,8 @@ const debug = debugFactory( 'woocommerce:request' );
 export function handleRequest( { dispatch, getState }, action ) {
 	const { method, siteId, path, body, onSuccessAction, onFailureAction } = action;
 
-	return request( siteId )[ method ]( path, body )
+	return request( siteId )
+		[ method ]( path, body )
 		.then( data => {
 			dispatch( {
 				type: WOOCOMMERCE_API_REQUEST_SUCCESS,
@@ -49,4 +50,3 @@ export function handleRequest( { dispatch, getState }, action ) {
 export default {
 	[ WOOCOMMERCE_API_REQUEST ]: [ handleRequest ],
 };
-

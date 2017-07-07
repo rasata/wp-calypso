@@ -17,6 +17,6 @@ export default function() {
 		mySitesController.navigation,
 		settingsController.setScroll,
 		settingsController.siteSettings,
-		controller.security
+		controller.security,
 	);
 }

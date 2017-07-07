@@ -14,7 +14,7 @@ class QueryJetpackJumpstart extends Component {
 	static propTypes = {
 		siteId: PropTypes.number.isRequired,
 		requestingJumpstartStatus: PropTypes.bool,
-		requestJumpstartStatus: PropTypes.func
+		requestJumpstartStatus: PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -43,8 +43,8 @@ class QueryJetpackJumpstart extends Component {
 export default connect(
 	( state, ownProps ) => {
 		return {
-			requestingJumpstartStatus: isRequestingJetpackJumpstartStatus( state, ownProps.siteId )
+			requestingJumpstartStatus: isRequestingJetpackJumpstartStatus( state, ownProps.siteId ),
 		};
 	},
-	{ requestJumpstartStatus }
+	{ requestJumpstartStatus },
 )( QueryJetpackJumpstart );

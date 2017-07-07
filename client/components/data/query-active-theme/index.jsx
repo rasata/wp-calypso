@@ -16,7 +16,7 @@ class QueryActiveTheme extends Component {
 		// Connected props
 		isRequesting: PropTypes.bool.isRequired,
 		requestActiveTheme: PropTypes.func.isRequired,
-	}
+	};
 
 	componentDidMount() {
 		this.request( this.props );
@@ -44,5 +44,5 @@ export default connect(
 	( state, { siteId } ) => ( {
 		isRequesting: isRequestingActiveTheme( state, siteId ),
 	} ),
-	{ requestActiveTheme }
+	{ requestActiveTheme },
 )( QueryActiveTheme );

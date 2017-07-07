@@ -60,7 +60,10 @@ function editorButtonAnalytics( editor ) {
 	 * of `document.body` (not a descendant of `editor.container`).
 	 */
 	function trackBodyClick( event ) {
-		if ( editorEventAncestor( event, '.mce-colorbutton' ) && ! editorEventAncestor( event, '.mce-open' ) ) {
+		if (
+			editorEventAncestor( event, '.mce-colorbutton' ) &&
+			! editorEventAncestor( event, '.mce-open' )
+		) {
 			// This could be a click on the foreground color button to apply
 			// the previously selected foreground color.  Unfortunately this
 			// line is never executed - there must be another event handler

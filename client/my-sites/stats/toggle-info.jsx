@@ -5,20 +5,18 @@ import React, { Component } from 'react';
 
 const toggleInfo = WrappedComponent => class ToggleComponent extends Component {
 	state = {
-		open: false
+		open: false,
 	};
 
 	toggle = event => {
 		event.preventDefault();
 		this.setState( {
-			open: ! this.state.open
+			open: ! this.state.open,
 		} );
 	};
 
 	render() {
-		return (
-			<WrappedComponent { ...this.props } toggle={ this.toggle } opened={ this.state.open } />
-		);
+		return <WrappedComponent { ...this.props } toggle={ this.toggle } opened={ this.state.open } />;
 	}
 };
 

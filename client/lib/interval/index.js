@@ -2,21 +2,16 @@ import React, { PropTypes } from 'react';
 import omit from 'lodash/omit';
 
 import {
-	add, remove,
+	add,
+	remove,
 	EVERY_SECOND,
 	EVERY_FIVE_SECONDS,
 	EVERY_TEN_SECONDS,
 	EVERY_THIRTY_SECONDS,
-	EVERY_MINUTE
+	EVERY_MINUTE,
 } from './runner';
 
-export {
-	EVERY_SECOND,
-	EVERY_FIVE_SECONDS,
-	EVERY_TEN_SECONDS,
-	EVERY_THIRTY_SECONDS,
-	EVERY_MINUTE
-};
+export { EVERY_SECOND, EVERY_FIVE_SECONDS, EVERY_TEN_SECONDS, EVERY_THIRTY_SECONDS, EVERY_MINUTE };
 
 /**
  * Calls a given function on a given interval
@@ -31,18 +26,18 @@ export default React.createClass( {
 			EVERY_FIVE_SECONDS,
 			EVERY_TEN_SECONDS,
 			EVERY_THIRTY_SECONDS,
-			EVERY_MINUTE
+			EVERY_MINUTE,
 		] ).isRequired,
 		pauseWhenHidden: PropTypes.bool,
-		children: PropTypes.element
+		children: PropTypes.element,
 	},
 
 	getDefaultProps: () => ( {
-		pauseWhenHidden: true
+		pauseWhenHidden: true,
 	} ),
 
 	getInitialState: () => ( {
-		id: null
+		id: null,
 	} ),
 
 	componentDidMount() {
@@ -93,6 +88,11 @@ export default React.createClass( {
 	},
 
 	render() {
-		return this.props.children ? React.cloneElement( this.props.children, omit( this.props, [ 'onTick', 'period', 'pauseWhenHidden', 'children' ] ) ) : null;
-	}
+		return this.props.children
+			? React.cloneElement(
+					this.props.children,
+					omit( this.props, [ 'onTick', 'period', 'pauseWhenHidden', 'children' ] ),
+				)
+			: null;
+	},
 } );

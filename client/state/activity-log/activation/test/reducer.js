@@ -38,7 +38,7 @@ describe( '#activationRequesting()', () => {
 
 	it( 'should preserve other sites', () => {
 		const prevState = deepFreeze( {
-			[ OTHER_SITE_ID ]: false
+			[ OTHER_SITE_ID ]: false,
 		} );
 
 		let state = prevState;

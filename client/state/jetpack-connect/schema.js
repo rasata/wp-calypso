@@ -7,11 +7,11 @@ export const jetpackConnectSessionsSchema = {
 			required: [ 'timestamp' ],
 			properties: {
 				timestamp: { type: 'number' },
-				flowType: { type: 'string' }
+				flowType: { type: 'string' },
 			},
-			additionalProperties: false
-		}
-	}
+			additionalProperties: false,
+		},
+	},
 };
 
 export const jetpackConnectAuthorizeSchema = {
@@ -31,7 +31,15 @@ export const jetpackConnectAuthorizeSchema = {
 				plansUrl: { type: 'string' },
 				queryObject: {
 					type: 'object',
-					required: [ '_wp_nonce', 'client_id', 'redirect_uri', 'scope', 'secret', 'site', 'state' ],
+					required: [
+						'_wp_nonce',
+						'client_id',
+						'redirect_uri',
+						'scope',
+						'secret',
+						'site',
+						'state',
+					],
 					properties: {
 						_wp_nonce: { type: 'string' },
 						client_id: { type: 'string' },
@@ -46,16 +54,16 @@ export const jetpackConnectAuthorizeSchema = {
 						site: { type: 'string' },
 						site_icon: { type: 'string' },
 						site_url: { type: 'string' },
-						state: { type: 'string' }
+						state: { type: 'string' },
 					},
-					additionalProperties: false
+					additionalProperties: false,
 				},
 				timestamp: { type: 'number' },
-				siteReceived: { type: 'boolean' }
+				siteReceived: { type: 'boolean' },
 			},
-			additionalProperties: false
-		}
-	}
+			additionalProperties: false,
+		},
+	},
 };
 
 export const jetpackAuthAttemptsSchema = {
@@ -66,15 +74,15 @@ export const jetpackAuthAttemptsSchema = {
 			type: 'object',
 			required: [ 'attempt', 'timestamp' ],
 			attempt: { type: 'number' },
-			timestamp: { type: 'number' }
-		}
-	}
+			timestamp: { type: 'number' },
+		},
+	},
 };
 
 export const jetpackConnectSelectedPlansSchema = {
 	type: 'object',
 	additionalProperties: false,
 	patternProperties: {
-		'^.+$': { type: [ 'string', 'null' ] }
-	}
+		'^.+$': { type: [ 'string', 'null' ] },
+	},
 };

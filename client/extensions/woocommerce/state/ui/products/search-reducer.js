@@ -21,10 +21,12 @@ export default createReducer( null, {
 export function productsSearchRequestSuccess( state, action ) {
 	const prevState = state || {};
 	const { page, products } = action;
-	const productIds = products && products.map( ( p ) => {
-		return p.id;
-	} ) || [];
-	return { ...prevState,
+	const productIds = ( products &&
+		products.map( p => {
+			return p.id;
+		} ) ) || [];
+	return {
+		...prevState,
 		currentPage: page,
 		productIds,
 		requestedPage: null,
@@ -34,7 +36,8 @@ export function productsSearchRequestSuccess( state, action ) {
 export function productsSearchRequest( state, action ) {
 	const prevState = state || {};
 	const { page } = action;
-	return { ...prevState,
+	return {
+		...prevState,
 		requestedPage: page,
 	};
 }

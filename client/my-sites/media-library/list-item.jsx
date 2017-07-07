@@ -68,10 +68,18 @@ export default React.createClass( {
 		}
 
 		switch ( MediaUtils.getMimePrefix( this.props.media ) ) {
-			case 'image': component = ListItemImage; break;
-			case 'video': component = ListItemVideo; break;
-			case 'audio': component = ListItemAudio; break;
-			default: component = ListItemDocument; break;
+			case 'image':
+				component = ListItemImage;
+				break;
+			case 'video':
+				component = ListItemVideo;
+				break;
+			case 'audio':
+				component = ListItemAudio;
+				break;
+			default:
+				component = ListItemDocument;
+				break;
 		}
 
 		return React.createElement( component, this.props );
@@ -92,14 +100,17 @@ export default React.createClass( {
 			'is-placeholder': ! this.props.media,
 			'is-selected': -1 !== this.props.selectedIndex,
 			'is-transient': this.props.media && this.props.media.transient,
-			'is-small': this.props.scale <= 0.125
+			'is-small': this.props.scale <= 0.125,
 		} );
 
 		props = omit( this.props, Object.keys( this.constructor.propTypes ) );
 
-		style = assign( {
-			width: ( this.props.scale * 100 ) + '%'
-		}, this.props.style );
+		style = assign(
+			{
+				width: this.props.scale * 100 + '%',
+			},
+			this.props.style,
+		);
 
 		if ( this.props.media ) {
 			title = this.props.media.file;
@@ -121,5 +132,5 @@ export default React.createClass( {
 				</figure>
 			</div>
 		);
-	}
+	},
 } );

@@ -20,5 +20,5 @@ export default React.createClass( {
 				<ClipboardButtonInput value="https://example.wordpress.com/" />
 			</div>
 		);
-	}
+	},
 } );

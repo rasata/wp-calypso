@@ -32,10 +32,11 @@ const POLL_APP_PUSH_INTERVAL_SECONDS = 5;
  * @param {Object}   store  Global redux store
  * @returns {Promise}		Promise of result from the API
  */
-const doAppPushRequest = ( store ) => {
+const doAppPushRequest = store => {
 	const authType = 'push';
 
-	return request.post( 'https://wordpress.com/wp-login.php?action=two-step-authentication-endpoint' )
+	return request
+		.post( 'https://wordpress.com/wp-login.php?action=two-step-authentication-endpoint' )
 		.withCredentials()
 		.set( 'Content-Type', 'application/x-www-form-urlencoded' )
 		.accept( 'application/json' )
@@ -47,13 +48,15 @@ const doAppPushRequest = ( store ) => {
 			two_step_push_token: getTwoFactorPushToken( store.getState() ),
 			client_id: config( 'wpcom_signup_id' ),
 			client_secret: config( 'wpcom_signup_key' ),
-		} ).then( () => {
+		} )
+		.then( () => {
 			store.dispatch( { type: TWO_FACTOR_AUTHENTICATION_PUSH_POLL_COMPLETED } );
-		} ).catch( error => {
+		} )
+		.catch( error => {
 			store.dispatch( {
 				type: TWO_FACTOR_AUTHENTICATION_UPDATE_NONCE,
 				nonceType: 'push',
-				twoStepNonce: error.response.body.data.two_step_nonce
+				twoStepNonce: error.response.body.data.two_step_nonce,
 			} );
 			return Promise.reject( error );
 		} );
@@ -77,7 +80,7 @@ const doAppPushPolling = store => {
 		retryCount++;
 		setTimeout(
 			() => doAppPushRequest( store ).catch( retry ),
-			( POLL_APP_PUSH_INTERVAL_SECONDS + Math.floor( retryCount / 10 ) ) * 1000 // backoff lineary
+			( POLL_APP_PUSH_INTERVAL_SECONDS + Math.floor( retryCount / 10 ) ) * 1000, // backoff lineary
 		);
 	};
 
@@ -86,7 +89,7 @@ const doAppPushPolling = store => {
 	}
 };
 
-const handleTwoFactorPushPoll = ( store ) => {
+const handleTwoFactorPushPoll = store => {
 	// this is deferred to allow reducer respond to TWO_FACTOR_AUTHENTICATION_PUSH_POLL_START
 	defer( () => doAppPushPolling( store ) );
 };

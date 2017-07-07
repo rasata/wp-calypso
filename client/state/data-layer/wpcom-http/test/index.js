@@ -9,11 +9,7 @@ import { spy } from 'sinon';
  */
 import useNock, { nock } from 'test/helpers/use-nock';
 import { extendAction } from 'state/utils';
-import {
-	failureMeta,
-	queueRequest,
-	successMeta,
-} from '../';
+import { failureMeta, queueRequest, successMeta } from '../';
 
 const processInbound = action => action;
 const processOutbound = ( action, store, data, error ) => ( {

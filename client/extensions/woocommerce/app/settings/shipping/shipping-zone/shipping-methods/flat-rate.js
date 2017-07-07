@@ -17,30 +17,21 @@ import PriceInput from 'woocommerce/components/price-input';
 import { bindActionCreatorsWithSiteId } from 'woocommerce/lib/redux-utils';
 import {
 	setShippingIsTaxable,
-	setShippingCost
+	setShippingCost,
 } from 'woocommerce/state/ui/shipping/zones/methods/flat-rate/actions';
 
 const FreeShippingMethod = ( { id, cost, tax_status, currency, translate, actions } ) => {
 	const isTaxable = 'taxable' === tax_status;
 	const isAdvancedSettings = cost && isString( cost ) && isNaN( cost );
-	const onTaxableChange = () => ( actions.setShippingIsTaxable( id, ! isTaxable ) );
-	const onCostChange = ( event ) => ( actions.setShippingCost( id, event.target.value ) );
+	const onTaxableChange = () => actions.setShippingIsTaxable( id, ! isTaxable );
+	const onCostChange = event => actions.setShippingCost( id, event.target.value );
 
 	const renderCostInput = () => {
 		if ( isAdvancedSettings ) {
-			return (
-				<FormTextInput
-					value={ cost }
-					onChange={ onCostChange } />
-			);
+			return <FormTextInput value={ cost } onChange={ onCostChange } />;
 		}
 
-		return (
-			<PriceInput
-				currency={ currency }
-				value={ cost }
-				onChange={ onCostChange } />
-		);
+		return <PriceInput currency={ currency } value={ cost } onChange={ onCostChange } />;
 	};
 
 	return (
@@ -53,7 +44,8 @@ const FreeShippingMethod = ( { id, cost, tax_status, currency, translate, action
 				<FormCheckbox
 					checked={ isTaxable }
 					className="shipping-methods__checkbox"
-					onChange={ onTaxableChange } />
+					onChange={ onTaxableChange }
+				/>
 				{ translate( 'Taxable' ) }
 			</FormFieldSet>
 		</div>
@@ -68,12 +60,13 @@ FreeShippingMethod.propTypes = {
 	currency: PropTypes.string,
 };
 
-export default connect(
-	null,
-	( dispatch, ownProps ) => ( {
-		actions: bindActionCreatorsWithSiteId( {
+export default connect( null, ( dispatch, ownProps ) => ( {
+	actions: bindActionCreatorsWithSiteId(
+		{
 			setShippingIsTaxable,
-			setShippingCost
-		}, dispatch, ownProps.siteId )
-	} )
-)( localize( FreeShippingMethod ) );
+			setShippingCost,
+		},
+		dispatch,
+		ownProps.siteId,
+	),
+} ) )( localize( FreeShippingMethod ) );

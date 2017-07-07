@@ -82,7 +82,7 @@ class ManageOrdersView extends Component {
 				currency={ currency }
 			/>
 		);
-	}
+	};
 
 	possiblyRenderShareWidget = () => {
 		// TODO - connect to display preferences in a follow-on PR
@@ -94,7 +94,7 @@ class ManageOrdersView extends Component {
 				urlToShare={ site.URL }
 			/>
 		);
-	}
+	};
 
 	render = () => {
 		const { site, translate, orders, user } = this.props;
@@ -104,18 +104,14 @@ class ManageOrdersView extends Component {
 					<h2>
 						{ translate( 'Hi, {{storeOwnerName/}}.', {
 							components: {
-								storeOwnerName: <strong>{ user.display_name || user.username }</strong>
-							}
+								storeOwnerName: <strong>{ user.display_name || user.username }</strong>,
+							},
 						} ) }
-						{ orders.length && (
-							<span>{ translate( 'You have new orders 🎉' ) }</span>
-						) || '' }
+						{ ( orders.length && <span>{ translate( 'You have new orders 🎉' ) }</span> ) || '' }
 					</h2>
 				</div>
 				{ this.possiblyRenderProcessOrdersWidget() }
-				<Card
-					className="dashboard__reports-widget"
-				>
+				<Card className="dashboard__reports-widget">
 					<div className="dashboard__reports-widget-content-wrapper">
 						<img src="/calypso/images/extensions/woocommerce/woocommerce-reports.svg" />
 						<div className="dashboard__reports-widget-content">
@@ -123,7 +119,9 @@ class ManageOrdersView extends Component {
 								{ translate( 'Reports' ) }
 							</h2>
 							<p>
-								{ translate( 'See a detailed breakdown of how your store is doing on the stats screen.' ) }
+								{ translate(
+									'See a detailed breakdown of how your store is doing on the stats screen.',
+								) }
 							</p>
 							<p>
 								<Button href={ getLink( '/store/stats/orders/day/:site', site ) }>
@@ -136,7 +134,7 @@ class ManageOrdersView extends Component {
 				{ this.possiblyRenderShareWidget() }
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
@@ -164,7 +162,7 @@ function mapDispatchToProps( dispatch ) {
 			fetchOrders,
 			fetchSettingsGeneral,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

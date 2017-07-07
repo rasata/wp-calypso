@@ -22,13 +22,16 @@ import {
  * @param {Function} next data-layer-bypassing dispatcher
  * @returns {Object} original action
  */
-export const requestPlans = ( { dispatch }, action ) => dispatch( http( {
-	apiVersion: '1.4',
-	method: 'GET',
-	path: '/plans',
-	onSuccess: action,
-	onFailure: action,
-} ) );
+export const requestPlans = ( { dispatch }, action ) =>
+	dispatch(
+		http( {
+			apiVersion: '1.4',
+			method: 'GET',
+			path: '/plans',
+			onSuccess: action,
+			onFailure: action,
+		} ),
+	);
 
 /**
  * Dispatches returned WordPress.com plan data
@@ -52,9 +55,7 @@ export const receivePlans = ( { dispatch }, action, next, plans ) => {
  * @param {Object} rawError raw error from HTTP request
  */
 export const receiveError = ( { dispatch }, action, next, rawError ) => {
-	const error = rawError instanceof Error
-		? rawError.message
-		: rawError;
+	const error = rawError instanceof Error ? rawError.message : rawError;
 
 	dispatch( plansRequestFailureAction( error ) );
 };

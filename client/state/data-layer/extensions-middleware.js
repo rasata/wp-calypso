@@ -72,4 +72,3 @@ export default store => next => {
 		return configuration.handleAction( action );
 	};
 };
-

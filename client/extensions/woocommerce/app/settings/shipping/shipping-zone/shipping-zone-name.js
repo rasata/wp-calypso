@@ -28,14 +28,15 @@ export const getZoneName = ( zone, locations, translate, returnEmpty = false ) =
 		return translate( 'New shipping zone' );
 	}
 
-	const locationNames = locations.map( ( { name, postcodeFilter } ) => (
-		postcodeFilter ? `${ name } (${ postcodeFilter })` : decodeEntities( name )
-	) );
+	const locationNames = locations.map(
+		( { name, postcodeFilter } ) =>
+			( postcodeFilter ? `${ name } (${ postcodeFilter })` : decodeEntities( name ) ),
+	);
 
 	if ( locationNames.length > 10 ) {
 		const remaining = locationNames.length - 10;
 		const listed = locationNames.slice( 0, 10 );
-		return ( translate(
+		return translate(
 			'%(locationList)s and %(count)s other region',
 			'%(locationList)s and %(count)s other regions',
 			{
@@ -43,16 +44,16 @@ export const getZoneName = ( zone, locations, translate, returnEmpty = false ) =
 				args: {
 					locationList: listed.join( ', ' ),
 					count: remaining,
-				}
-			}
-		) );
+				},
+			},
+		);
 	}
 
 	return locationNames.join( ', ' );
 };
 
 const ShippingZoneName = ( { loaded, zone, locations, actions, translate } ) => {
-	const onNameChange = ( event ) => {
+	const onNameChange = event => {
 		actions.changeShippingZoneName( event.target.value );
 	};
 
@@ -72,7 +73,8 @@ const ShippingZoneName = ( { loaded, zone, locations, actions, translate } ) => 
 				<FormTextInput
 					value={ zoneName }
 					onChange={ onNameChange }
-					placeholder={ getZoneName( zone, locations, translate ) } />
+					placeholder={ getZoneName( zone, locations, translate ) }
+				/>
 			</div>
 		);
 	};
@@ -81,8 +83,11 @@ const ShippingZoneName = ( { loaded, zone, locations, actions, translate } ) => 
 		<div>
 			<ExtendedHeader
 				label={ translate( 'Zone name' ) }
-				description={ translate( 'Give the zone a name of your choosing, or just use the one we created for you.' +
-					' This is not visible to customers.' ) } />
+				description={ translate(
+					'Give the zone a name of your choosing, or just use the one we created for you.' +
+						' This is not visible to customers.',
+				) }
+			/>
 			<Card className="shipping-zone__name-container">
 				{ renderContent() }
 			</Card>
@@ -97,11 +102,12 @@ ShippingZoneName.PropTypes = {
 	locations: PropTypes.array,
 };
 
-export default connect(
-	null,
-	( dispatch, ownProps ) => ( {
-		actions: bindActionCreatorsWithSiteId( {
+export default connect( null, ( dispatch, ownProps ) => ( {
+	actions: bindActionCreatorsWithSiteId(
+		{
 			changeShippingZoneName,
-		}, dispatch, ownProps.siteId ),
-	} )
-)( localize( ShippingZoneName ) );
+		},
+		dispatch,
+		ownProps.siteId,
+	),
+} ) )( localize( ShippingZoneName ) );

@@ -141,5 +141,5 @@ export default localize(
 				</Card>
 			);
 		}
-	}
+	},
 );

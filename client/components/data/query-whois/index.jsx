@@ -26,10 +26,10 @@ class QueryWhois extends Component {
 QueryWhois.propTypes = {
 	domain: PropTypes.string.isRequired,
 	isRequesting: PropTypes.bool.isRequired,
-	requestWhois: PropTypes.func.isRequired
+	requestWhois: PropTypes.func.isRequired,
 };
 
 export default connect(
 	( state, { domain } ) => ( { requesting: isRequestingWhois( state, domain ) } ),
-	{ requestWhois }
+	{ requestWhois },
 )( QueryWhois );

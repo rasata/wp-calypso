@@ -14,5 +14,5 @@ module.exports = {
 	TransferOut: require( './transfer/transfer-out' ),
 	TransferToOtherSite: require( './transfer/transfer-to-other-site' ),
 	TransferToOtherUser: require( './transfer/transfer-to-other-user' ),
-	Transfer: require( './transfer' )
+	Transfer: require( './transfer' ),
 };

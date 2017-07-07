@@ -1,7 +1,19 @@
 /**
  * External dependencies
  */
-import { endsWith, filter, find, includes, mapValues, startsWith, trimStart, without, matches, negate, some } from 'lodash';
+import {
+	endsWith,
+	filter,
+	find,
+	includes,
+	mapValues,
+	startsWith,
+	trimStart,
+	without,
+	matches,
+	negate,
+	some,
+} from 'lodash';
 
 function validateAllFields( fieldValues, domainName ) {
 	return mapValues( fieldValues, ( value, fieldName ) => {
@@ -108,7 +120,8 @@ function isRootDomain( name, domainName ) {
 		domainName,
 		domainName + '.',
 		'@.' + domainName,
-		'@.' + domainName + '.' ];
+		'@.' + domainName + '.',
+	];
 	return ! name || includes( rootDomainVariations, name );
 }
 
@@ -118,7 +131,9 @@ function canBeRootDomain( type ) {
 
 function getFieldWithDot( field ) {
 	// something that looks like domain but doesn't end with a dot
-	return ( typeof field === 'string' && field.match( /^([a-z0-9-_]+\.)+\.?[a-z]+$/i ) ) ? field + '.' : field;
+	return typeof field === 'string' && field.match( /^([a-z0-9-_]+\.)+\.?[a-z]+$/i )
+		? field + '.'
+		: field;
 }
 
 function isWpcomRecord( record ) {
@@ -128,7 +143,7 @@ function isWpcomRecord( record ) {
 function isRootARecord( domain ) {
 	return matches( {
 		type: 'A',
-		name: `${domain}.`
+		name: `${ domain }.`,
 	} );
 }
 
@@ -148,10 +163,10 @@ function addMissingWpcomRecords( domain, records ) {
 	if ( ! some( records, isRootARecord( domain ) ) ) {
 		const defaultRootARecord = {
 			domain,
-			id: `wpcom:A:${domain}.:${domain}`,
-			name: `${domain}.`,
+			id: `wpcom:A:${ domain }.:${ domain }`,
+			name: `${ domain }.`,
 			protected_field: true,
-			type: 'A'
+			type: 'A',
 		};
 
 		return records.concat( [ defaultRootARecord ] );
@@ -167,10 +182,7 @@ function isBeingProcessed( record ) {
 function isDeletingLastMXRecord( recordToDelete, records ) {
 	const currentMXRecords = filter( records, { type: 'MX' } );
 
-	return (
-		recordToDelete.type === 'MX' &&
-		currentMXRecords.length === 1
-	);
+	return recordToDelete.type === 'MX' && currentMXRecords.length === 1;
 }
 
 export {
@@ -179,5 +191,5 @@ export {
 	removeDuplicateWpcomRecords,
 	validateAllFields,
 	isBeingProcessed,
-	isDeletingLastMXRecord
+	isDeletingLastMXRecord,
 };

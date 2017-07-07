@@ -23,20 +23,17 @@ class ReduxFormToggle extends Component {
 			<FormToggle
 				{ ...otherProps }
 				checked={ value || false }
-				onChange={ this.updateToggle( value, onChange ) }>
+				onChange={ this.updateToggle( value, onChange ) }
+			>
 				{ text }
 			</FormToggle>
 		);
-	}
+	};
 
 	updateToggle = ( value, onChange ) => () => onChange( ! value );
 
 	render() {
-		return (
-			<Field
-				component={ this.renderToggle( this.props.text ) }
-				name={ this.props.name } />
-		);
+		return <Field component={ this.renderToggle( this.props.text ) } name={ this.props.name } />;
 	}
 }
 

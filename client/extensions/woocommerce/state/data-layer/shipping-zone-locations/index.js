@@ -3,10 +3,10 @@
  */
 import { dispatchWithProps } from 'woocommerce/state/helpers';
 import { put } from 'woocommerce/state/data-layer/request/actions';
-import { shippingZoneLocationsUpdated } from 'woocommerce/state/sites/shipping-zone-locations/actions';
 import {
-	WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_UPDATE,
-} from 'woocommerce/state/action-types';
+	shippingZoneLocationsUpdated,
+} from 'woocommerce/state/sites/shipping-zone-locations/actions';
+import { WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_UPDATE } from 'woocommerce/state/action-types';
 
 export default {
 	[ WOOCOMMERCE_SHIPPING_ZONE_LOCATIONS_UPDATE ]: [
@@ -21,13 +21,21 @@ export default {
 			};
 
 			const parsedLocations = [];
-			Object.keys( locations ).forEach( ( type ) => {
-				locations[ type ].forEach( ( code ) => {
+			Object.keys( locations ).forEach( type => {
+				locations[ type ].forEach( code => {
 					parsedLocations.push( { type, code } );
 				} );
 			} );
 
-			store.dispatch( put( siteId, 'shipping/zones/' + zoneId + '/locations', parsedLocations, updatedAction, failureAction ) );
+			store.dispatch(
+				put(
+					siteId,
+					'shipping/zones/' + zoneId + '/locations',
+					parsedLocations,
+					updatedAction,
+					failureAction,
+				),
+			);
 		},
 	],
 };

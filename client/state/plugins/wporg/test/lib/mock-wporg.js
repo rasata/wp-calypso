@@ -1,5 +1,4 @@
-var fetchPluginInformationCalls = 0,
-	lastRequestParams = null;
+var fetchPluginInformationCalls = 0, lastRequestParams = null;
 
 module.exports = {
 	deactivatedCallbacks: false,
@@ -11,7 +10,7 @@ module.exports = {
 	getActivity: function() {
 		return {
 			fetchPluginInformation: fetchPluginInformationCalls,
-			lastRequestParams: lastRequestParams
+			lastRequestParams: lastRequestParams,
 		};
 	},
 	fetchPluginInformation: function( pluginSlug, callback ) {
@@ -19,9 +18,9 @@ module.exports = {
 		if ( ! this.deactivatedCallbacks ) {
 			setTimeout( function() {
 				callback( null, {
-					slug: pluginSlug
+					slug: pluginSlug,
 				} );
 			}, 1 );
 		}
-	}
+	},
 };

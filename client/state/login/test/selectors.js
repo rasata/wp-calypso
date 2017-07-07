@@ -36,8 +36,8 @@ describe( 'selectors', () => {
 				login: {
 					twoFactorAuth: {
 						user_id: 123456,
-					}
-				}
+					},
+				},
 			} );
 
 			expect( id ).to.equal( 123456 );
@@ -52,25 +52,31 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return the two factor auth nonce for push if there is such', () => {
-			const nonce = getTwoFactorAuthNonce( {
-				login: {
-					twoFactorAuth: {
-						two_step_nonce_push: 'abcdef123456',
-					}
-				}
-			}, 'push' );
+			const nonce = getTwoFactorAuthNonce(
+				{
+					login: {
+						twoFactorAuth: {
+							two_step_nonce_push: 'abcdef123456',
+						},
+					},
+				},
+				'push',
+			);
 
 			expect( nonce ).to.equal( 'abcdef123456' );
 		} );
 
 		it( 'should return the two factor auth nonce for sms if there is such', () => {
-			const nonce = getTwoFactorAuthNonce( {
-				login: {
-					twoFactorAuth: {
-						two_step_nonce_sms: 'abcdef123456',
-					}
-				}
-			}, 'sms' );
+			const nonce = getTwoFactorAuthNonce(
+				{
+					login: {
+						twoFactorAuth: {
+							two_step_nonce_sms: 'abcdef123456',
+						},
+					},
+				},
+				'sms',
+			);
 
 			expect( nonce ).to.equal( 'abcdef123456' );
 		} );
@@ -82,19 +88,23 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return true if the request is in progress', () => {
-			expect( isRequestingTwoFactorAuth( {
-				login: {
-					isRequestingTwoFactorAuth: true
-				}
-			} ) ).to.be.true;
+			expect(
+				isRequestingTwoFactorAuth( {
+					login: {
+						isRequestingTwoFactorAuth: true,
+					},
+				} ),
+			).to.be.true;
 		} );
 
 		it( 'should return false if the request is not in progress', () => {
-			expect( isRequestingTwoFactorAuth( {
-				login: {
-					isRequestingTwoFactorAuth: false
-				}
-			} ) ).to.be.false;
+			expect(
+				isRequestingTwoFactorAuth( {
+					login: {
+						isRequestingTwoFactorAuth: false,
+					},
+				} ),
+			).to.be.false;
 		} );
 	} );
 
@@ -104,19 +114,23 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return null if there is no error', () => {
-			expect( getRequestError( {
-				login: {
-					requestError: null
-				}
-			} ) ).to.be.null;
+			expect(
+				getRequestError( {
+					login: {
+						requestError: null,
+					},
+				} ),
+			).to.be.null;
 		} );
 
 		it( 'should return an error object for the request if there is an error', () => {
-			expect( getRequestError( {
-				login: {
-					requestError: { message: 'some error' }
-				}
-			} ) ).to.eql( { message: 'some error' } );
+			expect(
+				getRequestError( {
+					login: {
+						requestError: { message: 'some error' },
+					},
+				} ),
+			).to.eql( { message: 'some error' } );
 		} );
 	} );
 
@@ -126,19 +140,23 @@ describe( 'selectors', () => {
 		} );
 
 		it( 'should return null if there is no error', () => {
-			expect( getTwoFactorAuthRequestError( {
-				login: {
-					twoFactorAuthRequestError: null
-				}
-			} ) ).to.be.null;
+			expect(
+				getTwoFactorAuthRequestError( {
+					login: {
+						twoFactorAuthRequestError: null,
+					},
+				} ),
+			).to.be.null;
 		} );
 
 		it( 'should return an error for the request if there is an error', () => {
-			expect( getTwoFactorAuthRequestError( {
-				login: {
-					twoFactorAuthRequestError: 'some error'
-				}
-			} ) ).to.equal( 'some error' );
+			expect(
+				getTwoFactorAuthRequestError( {
+					login: {
+						twoFactorAuthRequestError: 'some error',
+					},
+				} ),
+			).to.equal( 'some error' );
 		} );
 	} );
 
@@ -166,8 +184,8 @@ describe( 'selectors', () => {
 					twoFactorAuth: {
 						user_id: 123456,
 						two_step_nonce: 'abcdef123456',
-					}
-				}
+					},
+				},
 			} );
 
 			expect( twoFactorEnabled ).to.be.true;
@@ -184,8 +202,8 @@ describe( 'selectors', () => {
 				login: {
 					twoFactorAuth: {
 						two_step_supported_auth_types: [ 'authenticator', 'sms' ],
-					}
-				}
+					},
+				},
 			} );
 
 			expect( authTypes ).to.eql( [ 'authenticator', 'sms' ] );
@@ -197,8 +215,8 @@ describe( 'selectors', () => {
 			login: {
 				twoFactorAuth: {
 					two_step_supported_auth_types: [ 'authenticator', 'sms' ],
-				}
-			}
+				},
+			},
 		} );
 
 		it( 'should return null when the state is not there yet', () => {
@@ -221,13 +239,15 @@ describe( 'selectors', () => {
 
 		it( "should return push token when it's set", () => {
 			const token = '12345';
-			expect( getTwoFactorPushToken( {
-				login: {
-					twoFactorAuth: {
-						push_web_token: token
-					}
-				}
-			} ) ).to.eql( token );
+			expect(
+				getTwoFactorPushToken( {
+					login: {
+						twoFactorAuth: {
+							push_web_token: token,
+						},
+					},
+				} ),
+			).to.eql( token );
 		} );
 	} );
 
@@ -238,11 +258,13 @@ describe( 'selectors', () => {
 
 		it( "should return remember me flag when it's set", () => {
 			const rememberMe = true;
-			expect( getRememberMe( {
-				login: {
-					rememberMe
-				}
-			} ) ).to.eql( rememberMe );
+			expect(
+				getRememberMe( {
+					login: {
+						rememberMe,
+					},
+				} ),
+			).to.eql( rememberMe );
 		} );
 	} );
 
@@ -253,13 +275,15 @@ describe( 'selectors', () => {
 
 		it( 'should return polling progresss status', () => {
 			const inProgress = true;
-			expect( getTwoFactorPushPollInProgress( {
-				login: {
-					twoFactorAuthPushPoll: {
-						inProgress
-					}
-				}
-			} ) ).to.eql( inProgress );
+			expect(
+				getTwoFactorPushPollInProgress( {
+					login: {
+						twoFactorAuthPushPoll: {
+							inProgress,
+						},
+					},
+				} ),
+			).to.eql( inProgress );
 		} );
 	} );
 
@@ -270,13 +294,15 @@ describe( 'selectors', () => {
 
 		it( 'should return push polling success status', () => {
 			const success = true;
-			expect( getTwoFactorPushPollSuccess( {
-				login: {
-					twoFactorAuthPushPoll: {
-						success
-					}
-				}
-			} ) ).to.eql( success );
+			expect(
+				getTwoFactorPushPollSuccess( {
+					login: {
+						twoFactorAuthPushPoll: {
+							success,
+						},
+					},
+				} ),
+			).to.eql( success );
 		} );
 	} );
 } );

@@ -1,17 +1,14 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	classNames = require( 'classnames' );
+var React = require( 'react' ), classNames = require( 'classnames' );
 
 module.exports = React.createClass( {
 	displayName: 'EditorFieldset',
 
 	propTypes: {
-		legend: React.PropTypes.oneOfType( [
-			React.PropTypes.string,
-			React.PropTypes.element
-		] ).isRequired
+		legend: React.PropTypes.oneOfType( [ React.PropTypes.string, React.PropTypes.element ] )
+			.isRequired,
 	},
 
 	renderChildren: function() {
@@ -27,5 +24,5 @@ module.exports = React.createClass( {
 				{ this.renderChildren() }
 			</fieldset>
 		);
-	}
+	},
 } );

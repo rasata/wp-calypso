@@ -1,5 +1,4 @@
-var untrailingslashit = require( './untrailingslashit' ),
-	page = require( 'page' );
+var untrailingslashit = require( './untrailingslashit' ), page = require( 'page' );
 
 function appendQueryString( basepath, querystring ) {
 	return basepath + ( querystring ? '?' + querystring : '' );

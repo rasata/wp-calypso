@@ -5,13 +5,13 @@ module.exports = {
 		name: '',
 		canUpdateFiles: true,
 		options: { file_mod_disabled: false },
-		jetpack: true
+		jetpack: true,
 	},
 	plugin: { slug: 'test' },
 	notices: {
 		completed: [],
-		errors: []
+		errors: [],
 	},
 	wporg: true,
-	action: function() {}
+	action: function() {},
 };

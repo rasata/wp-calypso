@@ -26,7 +26,7 @@ export default class Next extends Component {
 		const { next, tour, tourVersion, step } = this.context;
 		const { step: nextStepName } = this.props;
 		next( { tour, tourVersion, step, nextStepName } );
-	}
+	};
 
 	render() {
 		const { children } = this.props;

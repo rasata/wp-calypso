@@ -8,15 +8,8 @@ import { spy } from 'sinon';
 /**
  * Internal dependencies
  */
-import {
-	ANALYTICS_MULTI_TRACK,
-	ANALYTICS_STAT_BUMP,
-} from 'state/action-types';
-import {
-	composeAnalytics,
-	withAnalytics,
-	bumpStat
-} from '../actions.js';
+import { ANALYTICS_MULTI_TRACK, ANALYTICS_STAT_BUMP } from 'state/action-types';
+import { composeAnalytics, withAnalytics, bumpStat } from '../actions.js';
 
 describe( 'middleware', () => {
 	describe( 'actions', () => {
@@ -41,17 +34,17 @@ describe( 'middleware', () => {
 		it( 'should compose multiple analytics calls', () => {
 			const composite = composeAnalytics(
 				bumpStat( 'spline_types', 'ocean' ),
-				bumpStat( 'spline_types', 'river' )
+				bumpStat( 'spline_types', 'river' ),
 			);
 			const expected = [
 				{
 					type: ANALYTICS_STAT_BUMP,
-					payload: { group: 'spline_types', name: 'ocean' }
+					payload: { group: 'spline_types', name: 'ocean' },
 				},
 				{
 					type: ANALYTICS_STAT_BUMP,
-					payload: { group: 'spline_types', name: 'river' }
-				}
+					payload: { group: 'spline_types', name: 'river' },
+				},
 			];
 
 			expect( composite.type ).to.equal( ANALYTICS_MULTI_TRACK );
@@ -62,7 +55,7 @@ describe( 'middleware', () => {
 		it( 'should compose multiple analytics calls without other actions', () => {
 			const composite = composeAnalytics(
 				bumpStat( 'spline_types', 'ocean' ),
-				bumpStat( 'spline_types', 'river' )
+				bumpStat( 'spline_types', 'river' ),
 			);
 			const testAction = { type: 'RETICULATE_SPLINES' };
 			const actual = withAnalytics( composite, testAction );
@@ -75,7 +68,7 @@ describe( 'middleware', () => {
 			const composite = flowRight(
 				withAnalytics( bumpStat( 'spline_types', 'ocean' ) ),
 				withAnalytics( bumpStat( 'spline_types', 'river' ) ),
-				() => ( { type: 'RETICULATE_SPLINES' } )
+				() => ( { type: 'RETICULATE_SPLINES' } ),
 			)();
 
 			expect( composite.meta.analytics ).to.have.lengthOf( 2 );

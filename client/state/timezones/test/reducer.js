@@ -9,12 +9,7 @@ import deepFreeze from 'deep-freeze';
  */
 import { useSandbox } from 'test/helpers/use-sinon';
 
-import timezonesReducer, {
-	byContinents,
-	labels,
-	isRequesting,
-	rawOffsets,
-} from '../reducer';
+import timezonesReducer, { byContinents, labels, isRequesting, rawOffsets } from '../reducer';
 
 import {
 	requestTimezones,
@@ -36,7 +31,7 @@ describe( 'reducer', () => {
 			'byContinents',
 			'labels',
 			'rawOffsets',
-			'isRequesting'
+			'isRequesting',
 		] );
 	} );
 
@@ -53,7 +48,7 @@ describe( 'reducer', () => {
 					'UTC+0': 'UTC',
 					'UTC-12': 'UTC-12',
 					'UTC-11.5': 'UTC-11:30',
-				}
+				},
 			} );
 
 			const expectedState = {
@@ -78,7 +73,7 @@ describe( 'reducer', () => {
 					'UTC+0': 'UTC',
 					'UTC-12': 'UTC-12',
 					'UTC-11.5': 'UTC-11:30',
-				}
+				},
 			} );
 
 			const expectedState = {
@@ -96,7 +91,7 @@ describe( 'reducer', () => {
 				rawOffsets: {
 					'UTC+13.75': 'UTC+13:45',
 					'UTC+14': 'UTC+14',
-				}
+				},
 			};
 			deepFreeze( initialState );
 
@@ -149,7 +144,7 @@ describe( 'reducer', () => {
 					'Asia/Aqtobe': 'Aqtobe',
 					'America/Boa_Vista': 'Boa Vista',
 					'Indian/Comoro': 'Comoro',
-				}
+				},
 			} );
 
 			const expectedState = {
@@ -174,7 +169,7 @@ describe( 'reducer', () => {
 					'Asia/Aqtobe': 'Aqtobe',
 					'America/Boa_Vista': 'Boa Vista',
 					'Indian/Comoro': 'Comoro',
-				}
+				},
 			} );
 
 			const expectedState = {
@@ -193,7 +188,7 @@ describe( 'reducer', () => {
 					'Asia/Aqtobe': 'Aqtobe',
 					'America/Boa_Vista': 'Boa Vista',
 					'Indian/Comoro': 'Comoro',
-				}
+				},
 			};
 			deepFreeze( initialState );
 
@@ -236,31 +231,16 @@ describe( 'reducer', () => {
 
 			const action = timezonesReceive( {
 				byContinents: {
-					Asia: [
-						'Asia/Aqtobe',
-					],
-					America: [
-						'America/Blanc-Sablon',
-						'America/Boa_Vista',
-					],
-					Indian: [
-						'Indian/Comoro',
-					],
+					Asia: [ 'Asia/Aqtobe' ],
+					America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+					Indian: [ 'Indian/Comoro' ],
 				},
-
 			} );
 
 			const expectedState = {
-				Asia: [
-					'Asia/Aqtobe',
-				],
-				America: [
-					'America/Blanc-Sablon',
-					'America/Boa_Vista',
-				],
-				Indian: [
-					'Indian/Comoro',
-				],
+				Asia: [ 'Asia/Aqtobe' ],
+				America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+				Indian: [ 'Indian/Comoro' ],
 			};
 
 			const newState = byContinents( initialState, action );
@@ -269,39 +249,22 @@ describe( 'reducer', () => {
 
 		it( 'should override timezones.byContinents state', () => {
 			const initialState = {
-				Pacific: [
-					'Pacific/Funafuti',
-				]
+				Pacific: [ 'Pacific/Funafuti' ],
 			};
 			deepFreeze( initialState );
 
 			const action = timezonesReceive( {
 				byContinents: {
-					Asia: [
-						'Asia/Aqtobe',
-					],
-					America: [
-						'America/Blanc-Sablon',
-						'America/Boa_Vista',
-					],
-					Indian: [
-						'Indian/Comoro',
-					],
+					Asia: [ 'Asia/Aqtobe' ],
+					America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+					Indian: [ 'Indian/Comoro' ],
 				},
-
 			} );
 
 			const expectedState = {
-				Asia: [
-					'Asia/Aqtobe',
-				],
-				America: [
-					'America/Blanc-Sablon',
-					'America/Boa_Vista',
-				],
-				Indian: [
-					'Indian/Comoro',
-				],
+				Asia: [ 'Asia/Aqtobe' ],
+				America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+				Indian: [ 'Indian/Comoro' ],
 			};
 
 			const newState = byContinents( initialState, action );
@@ -311,18 +274,10 @@ describe( 'reducer', () => {
 		it( 'should persist state', () => {
 			const initialState = {
 				byContinents: {
-					Asia: [
-						'Asia/Aqtobe',
-					],
-					America: [
-						'America/Blanc-Sablon',
-						'America/Boa_Vista',
-					],
-					Indian: [
-						'Indian/Comoro',
-					],
+					Asia: [ 'Asia/Aqtobe' ],
+					America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+					Indian: [ 'Indian/Comoro' ],
 				},
-
 			};
 			deepFreeze( initialState );
 
@@ -335,16 +290,9 @@ describe( 'reducer', () => {
 
 		it( 'should load persisted state', () => {
 			const initialState = {
-				Asia: [
-					'Asia/Aqtobe',
-				],
-				America: [
-					'America/Blanc-Sablon',
-					'America/Boa_Vista',
-				],
-				Indian: [
-					'Indian/Comoro',
-				],
+				Asia: [ 'Asia/Aqtobe' ],
+				America: [ 'America/Blanc-Sablon', 'America/Boa_Vista' ],
+				Indian: [ 'Indian/Comoro' ],
 			};
 			deepFreeze( initialState );
 

@@ -1,4 +1,3 @@
-
 /**
  * External dependencies
  */
@@ -16,7 +15,8 @@ const CalendarButtonExample = () => {
 			primary
 			enableOutsideDays={ false }
 			disabledDays={ [ { before: new Date() } ] }
-			selectedDay={ tomorrow } />
+			selectedDay={ tomorrow }
+		/>
 	);
 };
 

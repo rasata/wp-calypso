@@ -15,7 +15,7 @@ export function setEditorLastDraft( siteId, postId ) {
 	return {
 		type: EDITOR_LAST_DRAFT_SET,
 		siteId,
-		postId
+		postId,
 	};
 }
 

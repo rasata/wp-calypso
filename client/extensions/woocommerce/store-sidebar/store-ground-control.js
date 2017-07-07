@@ -27,13 +27,7 @@ const StoreGroundControl = ( { site, translate } ) => {
 				<Gridicon icon="arrow-left" />
 			</Button>
 			<div className="store-sidebar__ground-control-site">
-				<Site
-					compact
-					site={ site }
-					indicator={ false }
-					homeLink
-					externalLink
-				/>
+				<Site compact site={ site } indicator={ false } homeLink externalLink />
 			</div>
 		</div>
 	);

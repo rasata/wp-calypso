@@ -27,7 +27,7 @@ const isJetpackModuleUnavailableInDevelopmentMode = createSelector(
 
 		return includes( modulesRequiringConnection, moduleSlug );
 	},
-	getJetpackModulesRequiringConnection
+	getJetpackModulesRequiringConnection,
 );
 
 export default isJetpackModuleUnavailableInDevelopmentMode;

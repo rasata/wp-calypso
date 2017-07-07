@@ -8,4 +8,3 @@ module.exports = require( './utils.js' );
 module.exports.getLocaleSlug = function() {
 	return i18n.getLocaleSlug();
 };
-

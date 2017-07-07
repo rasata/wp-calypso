@@ -11,7 +11,7 @@ var MediaLibrarySelectedStore = require( 'lib/media/library-selected-store' ),
 
 function getStateData( siteId ) {
 	return {
-		mediaLibrarySelectedItems: MediaLibrarySelectedStore.getAll( siteId )
+		mediaLibrarySelectedItems: MediaLibrarySelectedStore.getAll( siteId ),
 	};
 }
 
@@ -19,7 +19,7 @@ module.exports = React.createClass( {
 	displayName: 'MediaLibrarySelectedData',
 
 	propTypes: {
-		siteId: React.PropTypes.number.isRequired
+		siteId: React.PropTypes.number.isRequired,
 	},
 
 	getInitialState: function() {
@@ -46,5 +46,5 @@ module.exports = React.createClass( {
 
 	render: function() {
 		return passToChildren( this, this.state );
-	}
+	},
 } );

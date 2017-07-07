@@ -1,12 +1,10 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	assign = require( 'lodash/assign' );
+var React = require( 'react' ), assign = require( 'lodash/assign' );
 
 module.exports = function( element, additionalProps ) {
-	var props = assign( {}, element.props, additionalProps ),
-		childElements;
+	var props = assign( {}, element.props, additionalProps ), childElements;
 
 	delete props.children;
 

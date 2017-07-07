@@ -15,7 +15,7 @@ export default {
 		renderWithReduxStore(
 			React.createElement( WritingMain ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 
@@ -26,7 +26,7 @@ export default {
 				postType: 'post',
 			} ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	},
 };

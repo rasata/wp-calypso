@@ -14,10 +14,7 @@ import emitter from 'lib/mixins/emitter';
  */
 const debug = debugModule( 'calypso:wordads:store' );
 
-var _earnings = {},
-	_loadingError = null,
-	_isLoading = false,
-	EarningsStore;
+var _earnings = {}, _loadingError = null, _isLoading = false, EarningsStore;
 
 EarningsStore = {
 	get: function() {
@@ -28,7 +25,7 @@ EarningsStore = {
 		return {
 			earnings: _earnings.hasOwnProperty( siteId ) ? _earnings[ siteId ] : null,
 			isLoading: _isLoading,
-			error: _loadingError
+			error: _loadingError,
 		};
 	},
 
@@ -42,7 +39,7 @@ EarningsStore = {
 
 	emitChange: function() {
 		this.emit( 'change' );
-	}
+	},
 };
 
 function updateEarnings( siteId, data ) {

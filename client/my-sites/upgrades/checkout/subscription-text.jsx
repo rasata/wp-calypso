@@ -14,14 +14,14 @@ const SubscriptionText = React.createClass( {
 			return (
 				<span className="subscription-text">
 					{ this.translate( 'renews annually', {
-						context: 'Informative text for renewals in /checkout'
+						context: 'Informative text for renewals in /checkout',
 					} ) }
 				</span>
 			);
 		}
 
 		return null;
-	}
+	},
 } );
 
 export default SubscriptionText;

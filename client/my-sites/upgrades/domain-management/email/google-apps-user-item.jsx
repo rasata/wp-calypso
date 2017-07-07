@@ -11,7 +11,7 @@ import ExternalLink from 'components/external-link';
 const GoogleAppsUserItem = React.createClass( {
 	propTypes: {
 		user: React.PropTypes.object.isRequired,
-		onClick: React.PropTypes.func
+		onClick: React.PropTypes.func,
 	},
 
 	shouldComponentUpdate( nextProps ) {
@@ -36,12 +36,13 @@ const GoogleAppsUserItem = React.createClass( {
 					href={ this.getLoginLink() }
 					onClick={ this.props.onClick }
 					target="_blank"
-					rel="noopener noreferrer">
+					rel="noopener noreferrer"
+				>
 					{ this.translate( 'Manage', { context: 'G Suite user item' } ) }
 				</ExternalLink>
 			</li>
 		);
-	}
+	},
 } );
 
 export default GoogleAppsUserItem;

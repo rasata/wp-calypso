@@ -16,10 +16,8 @@ const DnsList = React.createClass( {
 	propTypes: {
 		dns: React.PropTypes.object.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
 	},
 
 	getInitialState: function() {
@@ -29,7 +27,7 @@ const DnsList = React.createClass( {
 	noDialog: function() {
 		return {
 			type: null,
-			onClose: null
+			onClose: null,
 		};
 	},
 
@@ -37,8 +35,8 @@ const DnsList = React.createClass( {
 		this.setState( {
 			dialog: {
 				type,
-				onClose
-			}
+				onClose,
+			},
 		} );
 	},
 
@@ -51,7 +49,7 @@ const DnsList = React.createClass( {
 		const { records } = this.props.dns;
 
 		if ( ! confirmed && isDeletingLastMXRecord( record, records ) ) {
-			this.openDialog( 'deleteEmailForwards', ( result ) => {
+			this.openDialog( 'deleteEmailForwards', result => {
 				if ( result.shouldDeleteEmailForwards ) {
 					this.deleteDns( record, true );
 				}
@@ -60,7 +58,7 @@ const DnsList = React.createClass( {
 			return;
 		}
 
-		deleteDnsAction( this.props.selectedDomainName, record, ( error ) => {
+		deleteDnsAction( this.props.selectedDomainName, record, error => {
 			if ( error ) {
 				notices.error( error.message || this.translate( 'The DNS record has not been deleted.' ) );
 			} else {
@@ -71,19 +69,19 @@ const DnsList = React.createClass( {
 					onClick: () => {
 						notices.removeNotice( notice );
 						this.addDns( record );
-					}
+					},
 				} );
 			}
 		} );
 	},
 
 	addDns: function( record ) {
-		addDnsAction( this.props.selectedDomainName, record, ( error ) => {
+		addDnsAction( this.props.selectedDomainName, record, error => {
 			if ( error ) {
 				notices.error( error.message || this.translate( 'The DNS record could not be restored.' ) );
 			} else {
 				notices.success( this.translate( 'The DNS record has been restored.' ), {
-					duration: 5000
+					duration: 5000,
 				} );
 			}
 		} );
@@ -99,7 +97,8 @@ const DnsList = React.createClass( {
 						dnsRecord={ dnsRecord }
 						onDeleteDns={ this.deleteDns }
 						selectedDomainName={ selectedDomainName }
-						selectedSite={ selectedSite } />
+						selectedSite={ selectedSite }
+					/>
 				);
 			}, this );
 
@@ -109,11 +108,12 @@ const DnsList = React.createClass( {
 					visible={ dialog.type === 'deleteEmailForwards' }
 					onClose={ this.handleDialogClose }
 					selectedDomainName={ selectedDomainName }
-					selectedSite={ selectedSite } />
+					selectedSite={ selectedSite }
+				/>
 				<ul>{ dnsRecordsList }</ul>
 			</div>
 		);
-	}
+	},
 } );
 
 export default DnsList;

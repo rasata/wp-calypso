@@ -11,9 +11,5 @@ import { get } from 'lodash';
  * @return {?array} Activity log item objects. Null if no data.
  */
 export default function getActivityLogs( state, siteId ) {
-	return get( state, [
-		'activityLog',
-		'logItems',
-		siteId,
-	], null );
+	return get( state, [ 'activityLog', 'logItems', siteId ], null );
 }

@@ -20,7 +20,6 @@ import SettingsPaymentsOffSite from './payments-off-site';
 import SettingsPaymentsOnSite from './payments-on-site';
 
 class SettingsPayments extends Component {
-
 	static propTypes = {
 		site: PropTypes.shape( {
 			slug: PropTypes.string,
@@ -32,13 +31,12 @@ class SettingsPayments extends Component {
 		const { site, translate, className } = this.props;
 
 		const breadcrumbs = [
-			( <a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a> ),
-			( <span>{ translate( 'Payments' ) }</span> ),
+			<a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a>,
+			<span>{ translate( 'Payments' ) }</span>,
 		];
 
 		return (
-			<Main
-				className={ classNames( 'settingsPayments', className ) }>
+			<Main className={ classNames( 'settingsPayments', className ) }>
 				<ActionHeader breadcrumbs={ breadcrumbs } />
 				<SettingsNavigation activeSection="payments" />
 				<SettingsPaymentsLocationCurrency />
@@ -48,7 +46,6 @@ class SettingsPayments extends Component {
 			</Main>
 		);
 	}
-
 }
 
 function mapStateToProps( state ) {

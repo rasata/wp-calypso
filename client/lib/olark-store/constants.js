@@ -14,5 +14,5 @@ export const action = keyMirror( {
 	OLARK_LOCALE: null,
 	OLARK_USER_ELIGIBILITY: null,
 	OLARK_SET_CLOSED: null,
-	OLARK_SET_EXPANDED: null
+	OLARK_SET_EXPANDED: null,
 } );

@@ -7,9 +7,7 @@ import { flow, forEach, map, mapKeys, mapValues, omit, pick } from 'lodash';
  * Internal dependencies
  */
 import { countDiffWords, diffWords } from 'lib/text-utils';
-import {
-	POST_REVISIONS_REQUEST,
-} from 'state/action-types';
+import { POST_REVISIONS_REQUEST } from 'state/action-types';
 import { dispatchRequest } from 'state/data-layer/wpcom-http/utils';
 import { http } from 'state/data-layer/wpcom-http/actions';
 import {
@@ -30,16 +28,24 @@ export function normalizeRevision( revision ) {
 	}
 
 	return {
-		...omit( revision, [ 'title', 'content', 'excerpt', 'date', 'date_gmt', 'modified', 'modified_gmt' ] ),
+		...omit( revision, [
+			'title',
+			'content',
+			'excerpt',
+			'date',
+			'date_gmt',
+			'modified',
+			'modified_gmt',
+		] ),
 		...flow(
 			r => pick( r, [ 'title', 'content', 'excerpt' ] ),
-			r => mapValues( r, ( val = {} ) => val.rendered )
+			r => mapValues( r, ( val = {} ) => val.rendered ),
 		)( revision ),
 		...flow(
 			r => pick( r, [ 'date_gmt', 'modified_gmt' ] ),
 			r => mapValues( r, val => `${ val }Z` ),
-			r => mapKeys( r, ( val, key ) => key.slice( 0, -'_gmt'.length ) )
-		)( revision )
+			r => mapKeys( r, ( val, key ) => key.slice( 0, -'_gmt'.length ) ),
+		)( revision ),
 	};
 }
 
@@ -88,17 +94,26 @@ export const receiveSuccess = ( { dispatch }, { siteId, postId }, next, revision
  */
 export const fetchPostRevisions = ( { dispatch }, action ) => {
 	const { siteId, postId } = action;
-	dispatch( http( {
-		path: `/sites/${ siteId }/posts/${ postId }/revisions`,
-		method: 'GET',
-		query: {
-			apiNamespace: 'wp/v2',
-		},
-	}, action ) );
+	dispatch(
+		http(
+			{
+				path: `/sites/${ siteId }/posts/${ postId }/revisions`,
+				method: 'GET',
+				query: {
+					apiNamespace: 'wp/v2',
+				},
+			},
+			action,
+		),
+	);
 };
 
-const dispatchPostRevisionsRequest = dispatchRequest( fetchPostRevisions, receiveSuccess, receiveError );
+const dispatchPostRevisionsRequest = dispatchRequest(
+	fetchPostRevisions,
+	receiveSuccess,
+	receiveError,
+);
 
 export default {
-	[ POST_REVISIONS_REQUEST ]: [ dispatchPostRevisionsRequest ]
+	[ POST_REVISIONS_REQUEST ]: [ dispatchPostRevisionsRequest ],
 };

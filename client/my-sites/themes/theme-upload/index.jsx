@@ -31,7 +31,7 @@ import {
 	getSiteAdminUrl,
 	isJetpackSite,
 	isJetpackSiteMultiSite,
-	hasJetpackSiteJetpackThemesExtendedFeatures
+	hasJetpackSiteJetpackThemesExtendedFeatures,
 } from 'state/sites/selectors';
 import {
 	isUploadInProgress,
@@ -51,20 +51,14 @@ import { getBackPath } from 'state/themes/themes-ui/selectors';
 import { hasFeature } from 'state/sites/plans/selectors';
 import { FEATURE_UNLIMITED_PREMIUM_THEMES } from 'lib/plans/constants';
 import QueryEligibility from 'components/data/query-atat-eligibility';
-import {
-	getEligibility,
-	isEligibleForAutomatedTransfer
-} from 'state/automated-transfer/selectors';
+import { getEligibility, isEligibleForAutomatedTransfer } from 'state/automated-transfer/selectors';
 import isSiteAutomatedTransfer from 'state/selectors/is-site-automated-transfer';
 import WpAdminAutoLogin from 'components/wpadmin-auto-login';
-import {
-	MAX_UPLOADED_THEME_SIZE
-} from 'lib/automated-transfer/constants';
+import { MAX_UPLOADED_THEME_SIZE } from 'lib/automated-transfer/constants';
 
 const debug = debugFactory( 'calypso:themes:theme-upload' );
 
 class Upload extends React.Component {
-
 	static propTypes = {
 		siteId: React.PropTypes.number,
 		selectedSite: React.PropTypes.object,
@@ -84,7 +78,7 @@ class Upload extends React.Component {
 
 	state = {
 		showEligibility: this.props.showEligibility,
-	}
+	};
 
 	componentDidMount() {
 		const { siteId, inProgress } = this.props;
@@ -120,10 +114,10 @@ class Upload extends React.Component {
 			translate( 'Successfully uploaded theme %(name)s', {
 				args: {
 					// using themeId lets us show a message before theme data arrives
-					name: uploadedTheme ? uploadedTheme.name : themeId
-				}
+					name: uploadedTheme ? uploadedTheme.name : themeId,
+				},
 			} ),
-			{ duration: 5000 }
+			{ duration: 5000 },
 		);
 	}
 
@@ -140,7 +134,7 @@ class Upload extends React.Component {
 			unsupported_mime_type: translate( 'Upload problem: Not a valid zip file' ),
 			initiate_failure: translate(
 				'Upload problem: Theme may not be valid. Check that your zip file contains only the theme ' +
-				'you are trying to upload.'
+					'you are trying to upload.',
 			),
 		};
 
@@ -153,7 +147,7 @@ class Upload extends React.Component {
 		notices.error( cause || translate( 'Problem uploading theme' ) + unknownCause );
 	}
 
-	onFileSelect = ( files ) => {
+	onFileSelect = files => {
 		const { translate, siteId } = this.props;
 		const errorMessage = translate( 'Please drop a single zip file' );
 
@@ -167,40 +161,30 @@ class Upload extends React.Component {
 		debug( 'zip file:', file );
 
 		if ( file.size > MAX_UPLOADED_THEME_SIZE ) {
-			notices.error(
-				translate( 'Theme zip is too large. Please upload a theme under 50 MB.' )
-			);
+			notices.error( translate( 'Theme zip is too large. Please upload a theme under 50 MB.' ) );
 
 			return;
 		}
 
-		const action = this.props.isJetpack
-			? this.props.uploadTheme : this.props.initiateThemeTransfer;
+		const action = this.props.isJetpack ? this.props.uploadTheme : this.props.initiateThemeTransfer;
 		action( siteId, file );
-	}
+	};
 
 	renderDropZone() {
 		const { translate, isBusiness, isJetpack } = this.props;
-		const dropText = translate(
-			'Drop files or click here to upload'
-		);
-		const uploadInstructionsText = translate(
-			'Only single .zip files are accepted.'
-		);
+		const dropText = translate( 'Drop files or click here to upload' );
+		const uploadInstructionsText = translate( 'Only single .zip files are accepted.' );
 
 		const themeUploadClass = classNames( 'theme-upload', {
-			'is-disabled': ! isBusiness && ! isJetpack
+			'is-disabled': ! isBusiness && ! isJetpack,
 		} );
 
 		return (
 			<div className={ themeUploadClass }>
 				<div className="theme-upload__dropzone">
 					<DropZone onFilesDrop={ this.onFileSelect } />
-					<FilePicker accept="application/zip" onPick={ this.onFileSelect } >
-						<Gridicon
-							className="theme-upload__dropzone-icon"
-							icon="cloud-upload"
-							size={ 48 } />
+					<FilePicker accept="application/zip" onPick={ this.onFileSelect }>
+						<Gridicon className="theme-upload__dropzone-icon" icon="cloud-upload" size={ 48 } />
 						{ dropText }
 						<span className="theme-upload__dropzone-instructions">{ uploadInstructionsText }</span>
 					</FilePicker>
@@ -210,16 +194,12 @@ class Upload extends React.Component {
 	}
 
 	renderProgressBar() {
-		const {
-			translate,
-			progressTotal,
-			progressLoaded,
-			installing,
-		} = this.props;
+		const { translate, progressTotal, progressLoaded, installing } = this.props;
 
 		const uploadingMessage = translate( 'Uploading your theme…' );
 		const installingMessage = this.props.isJetpack
-			? translate( 'Installing your theme…' ) : translate( 'Configuring your site…' );
+			? translate( 'Installing your theme…' )
+			: translate( 'Configuring your site…' );
 
 		return (
 			<div>
@@ -244,7 +224,7 @@ class Upload extends React.Component {
 	onTryAndCustomizeClick = () => {
 		const { tryandcustomize } = this.props.options;
 		tryandcustomize.action( this.props.themeId );
-	}
+	};
 
 	renderTheme() {
 		const { uploadedTheme: theme, translate, options } = this.props;
@@ -260,7 +240,7 @@ class Upload extends React.Component {
 				</div>
 				<div className="theme-upload__description">{ theme.description }</div>
 				<div className="theme-upload__action-buttons">
-					<Button onClick={ this.onTryAndCustomizeClick } >
+					<Button onClick={ this.onTryAndCustomizeClick }>
 						{ tryandcustomize.label }
 					</Button>
 					<Button primary onClick={ this.onActivateClick }>
@@ -278,7 +258,9 @@ class Upload extends React.Component {
 				{ ! inProgress && ! complete && this.renderDropZone() }
 				{ inProgress && this.renderProgressBar() }
 				{ complete && ! failed && uploadedTheme && this.renderTheme() }
-				{ complete && this.props.isSiteAutomatedTransfer && <WpAdminAutoLogin site={ this.props.selectedSite } /> }
+				{ complete &&
+					this.props.isSiteAutomatedTransfer &&
+					<WpAdminAutoLogin site={ this.props.selectedSite } /> }
 			</Card>
 		);
 	}
@@ -303,7 +285,7 @@ class Upload extends React.Component {
 			themeId,
 			upgradeJetpack,
 			backPath,
-			isMultisite
+			isMultisite,
 		} = this.props;
 
 		const { showEligibility } = this.state;
@@ -319,14 +301,15 @@ class Upload extends React.Component {
 				{ themeId && complete && <QueryCanonicalTheme siteId={ siteId } themeId={ themeId } /> }
 				<ThanksModal source="upload" />
 				<HeaderCake backHref={ backPath }>{ translate( 'Upload theme' ) }</HeaderCake>
-				{ upgradeJetpack && <JetpackManageErrorPage
-					template="updateJetpack"
-					siteId={ siteId }
-					featureExample={ this.renderUploadCard() }
-					version="4.7" /> }
-				{ showEligibility && <EligibilityWarnings
-					backUrl={ backPath }
-					onProceed={ this.onProceedClick } /> }
+				{ upgradeJetpack &&
+					<JetpackManageErrorPage
+						template="updateJetpack"
+						siteId={ siteId }
+						featureExample={ this.renderUploadCard() }
+						version="4.7"
+					/> }
+				{ showEligibility &&
+					<EligibilityWarnings backUrl={ backPath } onProceed={ this.onProceedClick } /> }
 				{ ! upgradeJetpack && ! showEligibility && this.renderUploadCard() }
 			</Main>
 		);
@@ -335,17 +318,13 @@ class Upload extends React.Component {
 
 const ConnectedUpload = connectOptions( Upload );
 
-const UploadWithOptions = ( props ) => {
+const UploadWithOptions = props => {
 	const { siteId, uploadedTheme } = props;
-	return (
-		<ConnectedUpload { ...props }
-			siteId={ siteId }
-			theme={ uploadedTheme } />
-	);
+	return <ConnectedUpload { ...props } siteId={ siteId } theme={ uploadedTheme } />;
 };
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const site = getSelectedSite( state );
 		const themeId = getUploadedThemeId( state, siteId );
@@ -354,10 +333,8 @@ export default connect(
 		// Use this selector to take advantage of eligibility card placeholders
 		// before data has loaded.
 		const isEligible = isEligibleForAutomatedTransfer( state, siteId );
-		const hasEligibilityMessages = ! (
-			isEmpty( eligibilityHolds ) &&
-			isEmpty( eligibilityWarnings )
-		);
+		const hasEligibilityMessages = ! ( isEmpty( eligibilityHolds ) &&
+			isEmpty( eligibilityWarnings ) );
 		return {
 			siteId,
 			isBusiness: hasFeature( state, siteId, FEATURE_UNLIMITED_PREMIUM_THEMES ),

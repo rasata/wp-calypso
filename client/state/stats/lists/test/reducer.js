@@ -16,10 +16,7 @@ import {
 	SITE_STATS_REQUEST_FAILURE,
 	SITE_STATS_REQUEST_SUCCESS,
 } from 'state/action-types';
-import reducer, {
-	items as unwrappedItems,
-	requests
-} from '../reducer';
+import reducer, { items as unwrappedItems, requests } from '../reducer';
 import { withSchemaValidation } from 'state/utils';
 
 const items = withSchemaValidation( unwrappedItems.schema, unwrappedItems );
@@ -31,29 +28,26 @@ const streakResponse = {
 	data: {
 		1461961382: 1,
 		1464110402: 1,
-		1464110448: 1
-	}
+		1464110448: 1,
+	},
 };
 
 const streakResponseDos = {
 	data: {
-		1464110448: 1
-	}
+		1464110448: 1,
+	},
 };
 
 const streakQuery = { startDate: '2015-06-01', endDate: '2016-06-01' };
 const streakQueryDos = { startDate: '2014-06-01', endDate: '2015-06-01' };
 
 describe( 'reducer', () => {
-	useSandbox( ( sandbox ) => {
+	useSandbox( sandbox => {
 		sandbox.stub( console, 'warn' );
 	} );
 
 	it( 'should include expected keys in return value', () => {
-		expect( reducer( undefined, {} ) ).to.have.keys( [
-			'requests',
-			'items'
-		] );
+		expect( reducer( undefined, {} ) ).to.have.keys( [ 'requests', 'items' ] );
 	} );
 
 	describe( 'requests()', () => {
@@ -68,15 +62,18 @@ describe( 'reducer', () => {
 				type: SITE_STATS_REQUEST,
 				siteId: 2916284,
 				statType: 'statsStreak',
-				query: streakQuery
+				query: streakQuery,
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': { requesting: true, status: 'pending' }
-					}
-				}
+						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+					},
+				},
 			} );
 		} );
 
@@ -84,25 +81,34 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': { requesting: true, status: 'pending' }
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+					},
+				},
 			} );
 
 			const state = requests( original, {
 				type: SITE_STATS_REQUEST,
 				siteId: 2916284,
 				statType: 'statsStreak',
-				query: streakQueryDos
+				query: streakQueryDos,
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': { requesting: true, status: 'pending' },
-						'[["endDate","2015-06-01"],["startDate","2014-06-01"]]': { requesting: true, status: 'pending' }
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+						'[["endDate","2015-06-01"],["startDate","2014-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+					},
+				},
 			} );
 		} );
 
@@ -113,15 +119,19 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsStreak',
 				query: streakQuery,
-				date: today
+				date: today,
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': { requesting: false, status: 'success', date: today }
-					}
-				}
+						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': {
+							requesting: false,
+							status: 'success',
+							date: today,
+						},
+					},
+				},
 			} );
 		} );
 
@@ -131,15 +141,18 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsStreak',
 				query: streakQuery,
-				error: new Error()
+				error: new Error(),
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': { requesting: false, status: 'error' }
-					}
-				}
+						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': {
+							requesting: false,
+							status: 'error',
+						},
+					},
+				},
 			} );
 		} );
 
@@ -147,9 +160,12 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': { requesting: true, status: 'pending' }
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+					},
+				},
 			} );
 
 			const state = requests( original, { type: SERIALIZE } );
@@ -161,9 +177,12 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': { requesting: true, status: 'pending' }
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': {
+							requesting: true,
+							status: 'pending',
+						},
+					},
+				},
 			} );
 
 			const state = requests( original, { type: DESERIALIZE } );
@@ -177,9 +196,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 			const state = items( original, { type: SERIALIZE } );
 
@@ -190,9 +209,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 			const state = items( original, { type: DESERIALIZE } );
 
@@ -202,8 +221,8 @@ describe( 'reducer', () => {
 		it( 'should not load invalid persisted state', () => {
 			const original = deepFreeze( {
 				2916284: {
-					'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-				}
+					'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+				},
 			} );
 			const state = items( original, { type: DESERIALIZE } );
 
@@ -222,15 +241,15 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsStreak',
 				query: streakQuery,
-				data: streakResponse
+				data: streakResponse,
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': streakResponse,
+					},
+				},
 			} );
 		} );
 
@@ -238,9 +257,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 
 			const state = items( original, {
@@ -248,7 +267,7 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsStreak',
 				query: streakQueryDos,
-				data: streakResponseDos
+				data: streakResponseDos,
 			} );
 
 			expect( state ).to.eql( {
@@ -256,8 +275,8 @@ describe( 'reducer', () => {
 					statsStreak: {
 						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
 						'[["endDate","2015-06-01"],["startDate","2014-06-01"]]': streakResponseDos,
-					}
-				}
+					},
+				},
 			} );
 		} );
 
@@ -265,9 +284,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 
 			const state = items( original, {
@@ -275,7 +294,7 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsStreak',
 				query: streakQueryDos,
-				data: streakResponseDos
+				data: streakResponseDos,
 			} );
 
 			expect( state[ 2916284 ] ).to.not.equal( original[ 2916284 ] );
@@ -285,9 +304,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 
 			const state = items( original, {
@@ -295,18 +314,18 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsCountryViews',
 				query: streakQuery,
-				data: {}
+				data: {},
 			} );
 
 			expect( state ).to.eql( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
 					},
 					statsCountryViews: {
-						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': {}
-					}
-				}
+						'[["endDate","2016-06-01"],["startDate","2015-06-01"]]': {},
+					},
+				},
 			} );
 		} );
 
@@ -314,9 +333,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 
 			const state = items( original, {
@@ -324,7 +343,7 @@ describe( 'reducer', () => {
 				siteId: 2916284,
 				statType: 'statsCountryViews',
 				query: streakQuery,
-				data: {}
+				data: {},
 			} );
 
 			expect( state[ 2916284 ].statsStreak ).to.equal( original[ 2916284 ].statsStreak );
@@ -334,9 +353,9 @@ describe( 'reducer', () => {
 			const original = deepFreeze( {
 				2916284: {
 					statsStreak: {
-						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse
-					}
-				}
+						'[["endDate","2016-07-01"],["startDate","2016-06-01"]]': streakResponse,
+					},
+				},
 			} );
 
 			const state = items( original, {
@@ -344,7 +363,7 @@ describe( 'reducer', () => {
 				siteId: 3916284,
 				statType: 'statsCountryViews',
 				query: streakQuery,
-				data: {}
+				data: {},
 			} );
 
 			expect( state[ 2916284 ].statsStreak ).to.equal( original[ 2916284 ].statsStreak );

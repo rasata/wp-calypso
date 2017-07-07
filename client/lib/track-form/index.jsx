@@ -7,7 +7,7 @@ import { union } from 'lodash';
 export const trackForm = WrappedComponent => class TrackFormComponent extends Component {
 	state = {
 		dirtyFields: [],
-		fields: {}
+		fields: {},
 	};
 
 	updateFields = ( fields, callback ) => {
@@ -15,8 +15,8 @@ export const trackForm = WrappedComponent => class TrackFormComponent extends Co
 			dirtyFields: union( this.state.dirtyFields, Object.keys( fields ) ),
 			fields: {
 				...this.state.fields,
-				...fields
-			}
+				...fields,
+			},
 		};
 
 		this.setState( newState, callback );
@@ -26,7 +26,7 @@ export const trackForm = WrappedComponent => class TrackFormComponent extends Co
 		const prevFields = keepPrevFields ? this.state.fields : {};
 		const newFields = {
 			...prevFields,
-			...fields
+			...fields,
 		};
 
 		this.setState( { fields: newFields }, callback );
@@ -34,7 +34,7 @@ export const trackForm = WrappedComponent => class TrackFormComponent extends Co
 
 	clearDirtyFields = () => {
 		this.setState( {
-			dirtyFields: []
+			dirtyFields: [],
 		} );
 	};
 

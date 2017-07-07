@@ -19,11 +19,11 @@ import { useSandbox } from 'test/helpers/use-sinon';
 
 describe( 'actions', () => {
 	let spy;
-	useSandbox( ( sandbox ) => spy = sandbox.spy() );
+	useSandbox( sandbox => spy = sandbox.spy() );
 
 	describe( 'requestKeyringServices()', () => {
 		describe( 'successful requests', () => {
-			useNock( ( nock ) => {
+			useNock( nock => {
 				nock( 'https://public-api.wordpress.com:443' )
 					.persist()
 					.get( '/rest/v1.1/meta/external-services/' )
@@ -31,7 +31,7 @@ describe( 'actions', () => {
 						services: {
 							facebook: { ID: 'facebook' },
 							twitter: { ID: 'twitter' },
-						}
+						},
 					} );
 			} );
 
@@ -50,7 +50,7 @@ describe( 'actions', () => {
 						services: {
 							facebook: { ID: 'facebook' },
 							twitter: { ID: 'twitter' },
-						}
+						},
 					} );
 				} );
 			} );
@@ -65,7 +65,7 @@ describe( 'actions', () => {
 		} );
 
 		describe( 'failing requests', () => {
-			useNock( ( nock ) => {
+			useNock( nock => {
 				nock( 'https://public-api.wordpress.com:443' )
 					.persist()
 					.get( '/rest/v1.1/meta/external-services/' )
@@ -87,7 +87,7 @@ describe( 'actions', () => {
 				return requestKeyringServices()( spy ).then( () => {
 					expect( spy ).to.have.been.calledWith( {
 						type: KEYRING_SERVICES_REQUEST_FAILURE,
-						error: sinon.match( { message: 'A server error occurred' } )
+						error: sinon.match( { message: 'A server error occurred' } ),
 					} );
 				} );
 			} );

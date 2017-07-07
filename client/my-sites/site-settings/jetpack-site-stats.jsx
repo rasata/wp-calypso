@@ -30,14 +30,14 @@ import {
 	isActivatingJetpackModule,
 	isJetpackModuleActive,
 	isJetpackModuleUnavailableInDevelopmentMode,
-	isJetpackSiteInDevelopmentMode
+	isJetpackSiteInDevelopmentMode,
 } from 'state/selectors';
 
 class JetpackSiteStats extends Component {
 	static defaultProps = {
 		isSavingSettings: false,
 		isRequestingSettings: true,
-		fields: {}
+		fields: {},
 	};
 
 	static propTypes = {
@@ -63,7 +63,7 @@ class JetpackSiteStats extends Component {
 		};
 	};
 
-	handleStatsActivationButton = ( event ) => {
+	handleStatsActivationButton = event => {
 		const { siteId } = this.props;
 
 		this.props.activateModule( siteId, 'stats' );
@@ -87,7 +87,7 @@ class JetpackSiteStats extends Component {
 			isRequestingSettings,
 			isSavingSettings,
 			moduleUnavailable,
-			statsModuleActive
+			statsModuleActive,
 		} = this.props;
 
 		if ( checked === null ) {
@@ -101,7 +101,9 @@ class JetpackSiteStats extends Component {
 		return (
 			<CompactFormToggle
 				checked={ checked }
-				disabled={ isRequestingSettings || isSavingSettings || moduleUnavailable || ! statsModuleActive }
+				disabled={
+					isRequestingSettings || isSavingSettings || moduleUnavailable || ! statsModuleActive
+				}
 				onChange={ onChange }
 				key={ name }
 			>
@@ -116,9 +118,9 @@ class JetpackSiteStats extends Component {
 		return (
 			<Banner
 				title={ translate( 'Site Stats module is disabled' ) }
-				description={
-					translate( 'Enable this to see detailed information about your traffic, likes, comments, and subscribers.' )
-				}
+				description={ translate(
+					'Enable this to see detailed information about your traffic, likes, comments, and subscribers.',
+				) }
 				callToAction={ translate( 'Enable' ) }
 				onClick={ this.handleStatsActivationButton }
 				event={ 'site_stats_module_enable_banner' }
@@ -128,15 +130,11 @@ class JetpackSiteStats extends Component {
 	}
 
 	renderCardSettings() {
-		const {
-			siteRoles,
-			siteSlug,
-			translate
-		} = this.props;
+		const { siteRoles, siteSlug, translate } = this.props;
 		const header = (
 			<div>
 				<Gridicon icon="checkmark" />
-				{ translate( 'Enabled! You\'re collecting valuable data and insights.' ) }
+				{ translate( "Enabled! You're collecting valuable data and insights." ) }
 			</div>
 		);
 
@@ -150,13 +148,19 @@ class JetpackSiteStats extends Component {
 					<FormFieldset>
 						<div className="site-settings__info-link-container">
 							<InfoPopover position="left">
-								<ExternalLink href="https://jetpack.com/support/wordpress-com-stats/" target="_blank">
+								<ExternalLink
+									href="https://jetpack.com/support/wordpress-com-stats/"
+									target="_blank"
+								>
 									{ translate( 'Learn more about WordPress.com Stats' ) }
 								</ExternalLink>
 							</InfoPopover>
 						</div>
 
-						{ this.renderToggle( 'admin_bar', translate( 'Put a chart showing 48 hours of views in the admin bar' ) ) }
+						{ this.renderToggle(
+							'admin_bar',
+							translate( 'Put a chart showing 48 hours of views in the admin bar' ),
+						) }
 						{ this.renderToggle( 'hide_smile', translate( 'Hide the stats smiley face image' ) ) }
 						<FormSettingExplanation isIndented>
 							{ translate( 'The image helps collect stats, but should work when hidden.' ) }
@@ -167,34 +171,30 @@ class JetpackSiteStats extends Component {
 						<FormLegend>
 							{ translate( 'Count logged in page views from' ) }
 						</FormLegend>
-						{
-							siteRoles &&
-							siteRoles.map(
-								role => this.renderToggle(
+						{ siteRoles &&
+							siteRoles.map( role =>
+								this.renderToggle(
 									'count_roles_' + role.name,
 									role.display_name,
 									this.getCurrentGroupFields( 'count_roles' ).includes( role.name ),
-									this.onChangeToggleGroup( 'count_roles', role.name )
-								)
-							)
-						}
+									this.onChangeToggleGroup( 'count_roles', role.name ),
+								),
+							) }
 					</FormFieldset>
 
 					<FormFieldset>
 						<FormLegend>
 							{ translate( 'Allow stats reports to be viewed by' ) }
 						</FormLegend>
-						{
-							siteRoles &&
-							siteRoles.map(
-								role => this.renderToggle(
+						{ siteRoles &&
+							siteRoles.map( role =>
+								this.renderToggle(
 									'roles_' + role.name,
 									role.display_name,
 									this.getCurrentGroupFields( 'roles' ).includes( role.name ),
-									this.onChangeToggleGroup( 'roles', role.name )
-								)
-							)
-						}
+									this.onChangeToggleGroup( 'roles', role.name ),
+								),
+							) }
 					</FormFieldset>
 				</FoldableCard>
 
@@ -214,10 +214,7 @@ class JetpackSiteStats extends Component {
 	}
 
 	renderCardContent() {
-		const {
-			activatingStatsModule,
-			statsModuleActive
-		} = this.props;
+		const { activatingStatsModule, statsModuleActive } = this.props;
 
 		if ( activatingStatsModule ) {
 			return this.renderPlaceholder();
@@ -232,10 +229,7 @@ class JetpackSiteStats extends Component {
 	}
 
 	render() {
-		const {
-			siteId,
-			translate
-		} = this.props;
+		const { siteId, translate } = this.props;
 
 		return (
 			<div className="site-settings__traffic-settings">
@@ -251,10 +245,14 @@ class JetpackSiteStats extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 		const siteInDevMode = isJetpackSiteInDevelopmentMode( state, siteId );
-		const moduleUnavailableInDevMode = isJetpackModuleUnavailableInDevelopmentMode( state, siteId, 'stats' );
+		const moduleUnavailableInDevMode = isJetpackModuleUnavailableInDevelopmentMode(
+			state,
+			siteId,
+			'stats',
+		);
 
 		return {
 			siteId,
@@ -266,6 +264,6 @@ export default connect(
 		};
 	},
 	{
-		activateModule
-	}
+		activateModule,
+	},
 )( localize( JetpackSiteStats ) );

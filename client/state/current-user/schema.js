@@ -1,10 +1,10 @@
 export const idSchema = {
 	type: [ 'integer', 'null' ],
-	minimum: 0
+	minimum: 0,
 };
 
 export const currencyCodeSchema = {
-	type: [ 'string', 'null' ]
+	type: [ 'string', 'null' ],
 };
 
 export const capabilitiesSchema = {
@@ -30,12 +30,12 @@ export const capabilitiesSchema = {
 				upload_files: { type: 'boolean' },
 				delete_users: { type: 'boolean' },
 				remove_users: { type: 'boolean' },
-				view_stats: { type: 'boolean' }
-			}
-		}
-	}
+				view_stats: { type: 'boolean' },
+			},
+		},
+	},
 };
 
 export const flagsSchema = {
-	type: 'array'
+	type: 'array',
 };

@@ -10,7 +10,7 @@ import { get, isEmpty } from 'lodash';
  * @param  {Object}   state  Global state tree
  * @return {?Number}         The user ID.
  */
-export const getTwoFactorUserId = ( state ) => {
+export const getTwoFactorUserId = state => {
 	return get( state, 'login.twoFactorAuth.user_id', null );
 };
 
@@ -33,7 +33,7 @@ export const getTwoFactorAuthNonce = ( state, nonceType ) => {
  * @param  {Object}   state  Global state tree
  * @return {?String}         The type of 2FA notification. enum: 'sms', 'push', 'none'.
  */
-export const getTwoFactorNotificationSent = ( state ) => {
+export const getTwoFactorNotificationSent = state => {
 	return get( state, 'login.twoFactorAuth.two_step_notification_sent', null );
 };
 
@@ -43,7 +43,8 @@ export const getTwoFactorNotificationSent = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?String}         Push notification token to be used for polling auth state
  */
-export const getTwoFactorPushToken = state => get( state, 'login.twoFactorAuth.push_web_token', null );
+export const getTwoFactorPushToken = state =>
+	get( state, 'login.twoFactorAuth.push_web_token', null );
 
 /***
  * Retrieve the progress status of polling for push authentication
@@ -51,7 +52,8 @@ export const getTwoFactorPushToken = state => get( state, 'login.twoFactorAuth.p
  * @param  {Object}   state  Global state tree
  * @return {Boolean}         Whether the polling for push authentication is in progress
  */
-export const getTwoFactorPushPollInProgress = state => get( state, 'login.twoFactorAuthPushPoll.inProgress', false );
+export const getTwoFactorPushPollInProgress = state =>
+	get( state, 'login.twoFactorAuthPushPoll.inProgress', false );
 
 /***
  * Get whether user logged in successfully via push auth
@@ -59,7 +61,8 @@ export const getTwoFactorPushPollInProgress = state => get( state, 'login.twoFac
  * @param  {Object}   state  Global state tree
  * @return {Boolean}         Whether the polling for push authentication completed successfully
  */
-export const getTwoFactorPushPollSuccess = state => get( state, 'login.twoFactorAuthPushPoll.success', false );
+export const getTwoFactorPushPollSuccess = state =>
+	get( state, 'login.twoFactorAuthPushPoll.success', false );
 
 /**
  * Determines whether two factor authentication is enabled for the logging in user.
@@ -67,7 +70,7 @@ export const getTwoFactorPushPollSuccess = state => get( state, 'login.twoFactor
  * @param  {Object}   state  Global state tree
  * @return {Boolean}        Whether 2FA is enabled
  */
-export const isTwoFactorEnabled = ( state ) => {
+export const isTwoFactorEnabled = state => {
 	const twoFactorAuth = get( state, 'login.twoFactorAuth' );
 
 	return ! isEmpty( twoFactorAuth );
@@ -79,7 +82,7 @@ export const isTwoFactorEnabled = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {Boolean}         Whether a request to authenticate 2FA is being made.
  */
-export const isRequestingTwoFactorAuth = ( state ) => {
+export const isRequestingTwoFactorAuth = state => {
 	return get( state, 'login.isRequestingTwoFactorAuth', false );
 };
 
@@ -89,7 +92,7 @@ export const isRequestingTwoFactorAuth = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?String}         Error for the request.
  */
-export const getTwoFactorAuthRequestError = ( state ) => {
+export const getTwoFactorAuthRequestError = state => {
 	return get( state, 'login.twoFactorAuthRequestError', null );
 };
 
@@ -100,7 +103,7 @@ export const getTwoFactorAuthRequestError = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?Array}          The supported auth types (of `authenticator`, `sms`, `push` ).
  */
-export const getTwoFactorSupportedAuthTypes = ( state ) => {
+export const getTwoFactorSupportedAuthTypes = state => {
 	return get( state, 'login.twoFactorAuth.two_step_supported_auth_types', null );
 };
 
@@ -123,7 +126,7 @@ export const isTwoFactorAuthTypeSupported = ( state, type ) => {
  * @param  {Object}   state  Global state tree
  * @return {Boolean}         Whether a login request is in-progress.
  */
-export const isRequesting = ( state ) => {
+export const isRequesting = state => {
 	return get( state, 'login.isRequesting', false );
 };
 
@@ -133,7 +136,7 @@ export const isRequesting = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?Object}         Error for the request.
  */
-export const getRequestError = ( state ) => {
+export const getRequestError = state => {
 	return get( state, 'login.requestError', null );
 };
 
@@ -143,7 +146,7 @@ export const getRequestError = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?Object}         Notice for the request.
  */
-export const getRequestNotice = ( state ) => {
+export const getRequestNotice = state => {
 	return get( state, 'login.requestNotice', null );
 };
 
@@ -153,7 +156,7 @@ export const getRequestNotice = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?String}         Url to redirect the user to upon successful login
  */
-export const getRedirectTo = ( state ) => {
+export const getRedirectTo = state => {
 	return get( state, 'login.redirectTo', null );
 };
 
@@ -163,7 +166,7 @@ export const getRedirectTo = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {Boolean}         Remember me flag for authentication
  */
-export const getRememberMe = ( state ) => {
+export const getRememberMe = state => {
 	return get( state, 'login.rememberMe', false );
 };
 
@@ -173,7 +176,8 @@ export const getRememberMe = ( state ) => {
  * @param  {Object}   state  Global state tree
  * @return {?Boolean}         Error for the request.
  */
-export const isSocialAccountCreating = ( state ) => get( state, 'login.socialAccount.isCreating', null );
+export const isSocialAccountCreating = state =>
+	get( state, 'login.socialAccount.isCreating', null );
 
 /***
  * Gets Username of the created social account
@@ -181,7 +185,8 @@ export const isSocialAccountCreating = ( state ) => get( state, 'login.socialAcc
  * @param  {Object}   state  Global state tree
  * @return {?String}         Username of the created social account
  */
-export const getCreatedSocialAccountUsername = ( state ) => get( state, 'login.socialAccount.username', null );
+export const getCreatedSocialAccountUsername = state =>
+	get( state, 'login.socialAccount.username', null );
 
 /***
  * Gets Bearer token of the created social account
@@ -189,7 +194,8 @@ export const getCreatedSocialAccountUsername = ( state ) => get( state, 'login.s
  * @param  {Object}   state  Global state tree
  * @return {?String}         Bearer token of the created social account
  */
-export const getCreatedSocialAccountBearerToken = ( state ) => get( state, 'login.socialAccount.bearerToken', null );
+export const getCreatedSocialAccountBearerToken = state =>
+	get( state, 'login.socialAccount.bearerToken', null );
 
 /***
  * Gets error for the create social account request.
@@ -197,7 +203,8 @@ export const getCreatedSocialAccountBearerToken = ( state ) => get( state, 'logi
  * @param  {Object}   state  Global state tree
  * @return {?Object}         Error for the create social account request.
  */
-export const getCreateSocialAccountError = ( state ) => get( state, 'login.socialAccount.createError', null );
+export const getCreateSocialAccountError = state =>
+	get( state, 'login.socialAccount.createError', null );
 
 /***
  * Gets error for the get social account request.
@@ -205,4 +212,5 @@ export const getCreateSocialAccountError = ( state ) => get( state, 'login.socia
  * @param  {Object}   state  Global state tree
  * @return {?Object}         Error for the get social account request.
  */
-export const getRequestSocialAccountError = ( state ) => get( state, 'login.socialAccount.requestError', null );
+export const getRequestSocialAccountError = state =>
+	get( state, 'login.socialAccount.requestError', null );

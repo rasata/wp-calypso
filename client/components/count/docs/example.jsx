@@ -12,7 +12,7 @@ const count = () => (
 		<Count count={ 65365 } />
 		<Count primary count={ 65366 } />
 	</div>
-)
+);
 
 count.displayName = 'Count';
 

@@ -3,8 +3,7 @@
  */
 import { some } from 'lodash';
 import classnames from 'classnames';
-var assign = require( 'lodash/assign' ),
-	React = require( 'react' );
+var assign = require( 'lodash/assign' ), React = require( 'react' );
 
 /**
  * Internal dependencies
@@ -32,7 +31,7 @@ module.exports = React.createClass( {
 	getInitialState: function() {
 		return {
 			country: null,
-			formDisabled: false
+			formDisabled: false,
 		};
 	},
 
@@ -60,7 +59,7 @@ module.exports = React.createClass( {
 		}
 
 		this.setState( {
-			formDisabled: submitState.disabled
+			formDisabled: submitState.disabled,
 		} );
 	},
 
@@ -69,8 +68,7 @@ module.exports = React.createClass( {
 	},
 
 	redirectToPayPal: function( event ) {
-		var cart, transaction, dataForApi,
-			origin = this.getLocationOrigin( window.location );
+		var cart, transaction, dataForApi, origin = this.getLocationOrigin( window.location );
 		event.preventDefault();
 
 		cart = this.props.cart;
@@ -78,7 +76,7 @@ module.exports = React.createClass( {
 
 		this.setSubmitState( {
 			info: this.translate( 'Sending details to PayPal' ),
-			disabled: true
+			disabled: true,
 		} );
 
 		let cancelUrl = origin + '/checkout/';
@@ -93,48 +91,51 @@ module.exports = React.createClass( {
 			successUrl: origin + this.props.redirectTo(),
 			cancelUrl,
 			cart,
-			domainDetails: transaction.domainDetails
+			domainDetails: transaction.domainDetails,
 		} );
 
 		// get PayPal Express URL from rest endpoint
-		wpcom.paypalExpressUrl( dataForApi, function( error, paypalExpressURL ) {
-			var errorMessage;
-			if ( error ) {
-				if ( error.message ) {
-					errorMessage = error.message;
-				} else {
-					errorMessage = this.translate( 'Please specify a country and postal code.' );
+		wpcom.paypalExpressUrl(
+			dataForApi,
+			function( error, paypalExpressURL ) {
+				var errorMessage;
+				if ( error ) {
+					if ( error.message ) {
+						errorMessage = error.message;
+					} else {
+						errorMessage = this.translate( 'Please specify a country and postal code.' );
+					}
+
+					this.setSubmitState( {
+						error: errorMessage,
+						disabled: false,
+					} );
 				}
 
-				this.setSubmitState( {
-					error: errorMessage,
-					disabled: false
-				} );
-			}
-
-			if ( paypalExpressURL ) {
-				this.setSubmitState( {
-					info: this.translate( 'Redirecting you to PayPal' ),
-					disabled: true
-				} );
-				analytics.ga.recordEvent( 'Upgrades', 'Clicked Checkout With Paypal Button' );
-				analytics.tracks.recordEvent( 'calypso_checkout_with_paypal' );
-				window.location = paypalExpressURL;
-			}
-		}.bind( this ) );
+				if ( paypalExpressURL ) {
+					this.setSubmitState( {
+						info: this.translate( 'Redirecting you to PayPal' ),
+						disabled: true,
+					} );
+					analytics.ga.recordEvent( 'Upgrades', 'Clicked Checkout With Paypal Button' );
+					analytics.tracks.recordEvent( 'calypso_checkout_with_paypal' );
+					window.location = paypalExpressURL;
+				}
+			}.bind( this ),
+		);
 	},
 
 	renderButtonText: function() {
 		if ( cartValues.cartItems.hasRenewalItem( this.props.cart ) ) {
 			return this.translate( 'Purchase %(price)s subscription with PayPal', {
 				args: { price: this.props.cart.total_cost_display },
-				context: 'Pay button on /checkout'
+				context: 'Pay button on /checkout',
 			} );
 		}
 
 		return this.translate( 'Pay %(price)s with PayPal', {
 			args: { price: this.props.cart.total_cost_display },
-			context: 'Pay button on /checkout'
+			context: 'Pay button on /checkout',
 		} );
 	},
 
@@ -145,7 +146,7 @@ module.exports = React.createClass( {
 			abtest( 'presaleChatButton' ) === 'showChatButton' &&
 			hasBusinessPlanInCart;
 		const creditCardButtonClasses = classnames( 'credit-card-payment-box__switch-link', {
-			'credit-card-payment-box__switch-link-left': showPaymentChatButton
+			'credit-card-payment-box__switch-link-left': showPaymentChatButton,
 		} );
 		return (
 			<form onSubmit={ this.redirectToPayPal }>
@@ -158,22 +159,31 @@ module.exports = React.createClass( {
 						value={ this.state.country }
 						onChange={ this.handleChange }
 						disabled={ this.state.formDisabled }
-						eventFormName="Checkout Form" />
+						eventFormName="Checkout Form"
+					/>
 					<Input
 						additionalClasses="checkout-field"
 						name="postal-code"
 						label={ this.translate( 'Postal Code', { textOnly: true } ) }
 						onChange={ this.handleChange }
 						disabled={ this.state.formDisabled }
-						eventFormName="Checkout Form" />
+						eventFormName="Checkout Form"
+					/>
 				</div>
 
 				<TermsOfService
-					hasRenewableSubscription={ cartValues.cartItems.hasRenewableSubscription( this.props.cart ) } />
+					hasRenewableSubscription={ cartValues.cartItems.hasRenewableSubscription(
+						this.props.cart,
+					) }
+				/>
 
 				<div className="payment-box-actions">
 					<div className="pay-button">
-						<button type="submit" className="button is-primary button-pay" disabled={ this.state.formDisabled }>
+						<button
+							type="submit"
+							className="button is-primary button-pay"
+							disabled={ this.state.formDisabled }
+						>
 							{ this.renderButtonText() }
 						</button>
 						<SubscriptionText cart={ this.props.cart } />
@@ -183,16 +193,12 @@ module.exports = React.createClass( {
 						<a href="" className={ creditCardButtonClasses } onClick={ this.handleToggle }>
 							{ this.translate( 'or use a credit card', {
 								context: 'Upgrades: PayPal checkout screen',
-								comment: 'Checkout with PayPal -- or use a credit card'
+								comment: 'Checkout with PayPal -- or use a credit card',
 							} ) }
 						</a> }
 
-					{
-						showPaymentChatButton &&
-						<PaymentChatButton
-							paymentType="paypal"
-							cart={ this.props.cart } />
-					}
+					{ showPaymentChatButton &&
+						<PaymentChatButton paymentType="paypal" cart={ this.props.cart } /> }
 				</div>
 
 				<CartCoupon cart={ this.props.cart } />
@@ -206,9 +212,10 @@ module.exports = React.createClass( {
 		return (
 			<PaymentBox
 				classSet="paypal-payment-box"
-				title={ this.translate( 'Secure Payment with PayPal' ) }>
+				title={ this.translate( 'Secure Payment with PayPal' ) }
+			>
 				{ this.content() }
 			</PaymentBox>
 		);
-	}
+	},
 } );

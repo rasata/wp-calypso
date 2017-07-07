@@ -12,7 +12,7 @@ import {
 	IMAGE_EDITOR_SET_FILE_INFO,
 	IMAGE_EDITOR_STATE_RESET,
 	IMAGE_EDITOR_STATE_RESET_ALL,
-	IMAGE_EDITOR_IMAGE_HAS_LOADED
+	IMAGE_EDITOR_IMAGE_HAS_LOADED,
 } from 'state/action-types';
 
 // Doesn't reset image file info (src, fileName, etc).
@@ -20,7 +20,7 @@ import {
 export function resetImageEditorState( additionalData = {} ) {
 	return {
 		type: IMAGE_EDITOR_STATE_RESET,
-		additionalData
+		additionalData,
 	};
 }
 
@@ -29,7 +29,7 @@ export function resetImageEditorState( additionalData = {} ) {
 export function resetAllImageEditorState( additionalData = {} ) {
 	return {
 		type: IMAGE_EDITOR_STATE_RESET_ALL,
-		additionalData
+		additionalData,
 	};
 }
 
@@ -41,21 +41,21 @@ export function imageEditorRotateCounterclockwise() {
 
 export function imageEditorFlip() {
 	return {
-		type: IMAGE_EDITOR_FLIP
+		type: IMAGE_EDITOR_FLIP,
 	};
 }
 
 export function setImageEditorAspectRatio( ratio ) {
 	return {
 		type: IMAGE_EDITOR_SET_ASPECT_RATIO,
-		ratio
+		ratio,
 	};
 }
 
 export function setImageEditorDefaultAspectRatio( ratio ) {
 	return {
 		type: IMAGE_EDITOR_SET_DEFAULT_ASPECT_RATIO,
-		ratio
+		ratio,
 	};
 }
 
@@ -65,7 +65,7 @@ export function setImageEditorFileInfo( src, fileName, mimeType, title ) {
 		src,
 		fileName,
 		mimeType,
-		title
+		title,
 	};
 }
 
@@ -75,7 +75,7 @@ export function setImageEditorCropBounds( topBound, leftBound, bottomBound, righ
 		topBound,
 		leftBound,
 		bottomBound,
-		rightBound
+		rightBound,
 	};
 }
 
@@ -85,7 +85,7 @@ export function imageEditorComputedCrop( topRatio, leftRatio, widthRatio, height
 		topRatio,
 		leftRatio,
 		widthRatio,
-		heightRatio
+		heightRatio,
 	};
 }
 
@@ -95,7 +95,7 @@ export function imageEditorCrop( topRatio, leftRatio, widthRatio, heightRatio ) 
 		topRatio,
 		leftRatio,
 		widthRatio,
-		heightRatio
+		heightRatio,
 	};
 }
 
@@ -103,6 +103,6 @@ export function setImageEditorImageHasLoaded( width, height ) {
 	return {
 		type: IMAGE_EDITOR_IMAGE_HAS_LOADED,
 		width,
-		height
+		height,
 	};
 }

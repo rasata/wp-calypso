@@ -37,14 +37,14 @@ class DomainSearch extends Component {
 	};
 
 	state = {
-		domainRegistrationAvailable: true
+		domainRegistrationAvailable: true,
 	};
 
-	handleDomainsAvailabilityChange = ( isAvailable ) => {
+	handleDomainsAvailabilityChange = isAvailable => {
 		this.setState( { domainRegistrationAvailable: isAvailable } );
 	};
 
-	handleAddRemoveDomain = ( suggestion ) => {
+	handleAddRemoveDomain = suggestion => {
 		if ( ! cartItems.hasDomainInCart( this.props.cart, suggestion.domain_name ) ) {
 			this.addDomain( suggestion );
 		} else {
@@ -52,7 +52,7 @@ class DomainSearch extends Component {
 		}
 	};
 
-	handleAddMapping = ( domain ) => {
+	handleAddMapping = domain => {
 		upgradesActions.addItem( cartItems.domainMapping( { domain } ) );
 		page( '/checkout/' + this.props.selectedSiteSlug );
 	};
@@ -77,13 +77,18 @@ class DomainSearch extends Component {
 		this.props.recordAddDomainButtonClick( suggestion.domain_name, 'domains' );
 
 		const items = [
-			cartItems.domainRegistration( { domain: suggestion.domain_name, productSlug: suggestion.product_slug } )
+			cartItems.domainRegistration( {
+				domain: suggestion.domain_name,
+				productSlug: suggestion.product_slug,
+			} ),
 		];
 
 		if ( cartItems.isNextDomainFree( this.props.cart ) ) {
-			items.push( cartItems.domainPrivacyProtection( {
-				domain: suggestion.domain_name
-			} ) );
+			items.push(
+				cartItems.domainPrivacyProtection( {
+					domain: suggestion.domain_name,
+				} ),
+			);
 		}
 
 		upgradesActions.addItems( items );
@@ -98,7 +103,7 @@ class DomainSearch extends Component {
 	render() {
 		const { selectedSite, selectedSiteSlug, translate } = this.props,
 			classes = classnames( 'main-column', {
-				'domain-search-page-wrapper': this.state.domainRegistrationAvailable
+				'domain-search-page-wrapper': this.state.domainRegistrationAvailable,
 			} );
 		let content;
 
@@ -109,7 +114,8 @@ class DomainSearch extends Component {
 					title={ translate( 'Domain registration is unavailable' ) }
 					line={ translate( "We're hard at work on the issue. Please check back shortly." ) }
 					action={ translate( 'Back to Plans' ) }
-					actionURL={ '/plans/' + selectedSiteSlug } />
+					actionURL={ '/plans/' + selectedSiteSlug }
+				/>
 			);
 		} else {
 			content = (
@@ -118,7 +124,8 @@ class DomainSearch extends Component {
 						<UpgradesNavigation
 							path={ this.props.context.path }
 							cart={ this.props.cart }
-							selectedSite={ selectedSite } />
+							selectedSite={ selectedSite }
+						/>
 
 						<RegisterDomainStep
 							path={ this.props.context.path }
@@ -131,7 +138,8 @@ class DomainSearch extends Component {
 							selectedSite={ selectedSite }
 							offerMappingOption
 							basePath={ this.props.basePath }
-							products={ this.props.productsList } />
+							products={ this.props.productsList }
+						/>
 					</div>
 				</span>
 			);
@@ -148,7 +156,7 @@ class DomainSearch extends Component {
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		selectedSite: getSelectedSite( state ),
 		selectedSiteId: getSelectedSiteId( state ),
 		selectedSiteSlug: getSelectedSiteSlug( state ),
@@ -159,5 +167,5 @@ export default connect(
 	{
 		recordAddDomainButtonClick,
 		recordRemoveDomainButtonClick,
-	}
+	},
 )( localize( DomainSearch ) );

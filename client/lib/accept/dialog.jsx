@@ -15,7 +15,7 @@ const AcceptDialog = React.createClass( {
 		message: PropTypes.node,
 		onClose: PropTypes.func.isRequired,
 		confirmButtonText: PropTypes.node,
-		cancelButtonText: PropTypes.node
+		cancelButtonText: PropTypes.node,
 	},
 
 	getInitialState: function() {
@@ -34,13 +34,17 @@ const AcceptDialog = React.createClass( {
 		return [
 			{
 				action: 'cancel',
-				label: this.props.cancelButtonText ? this.props.cancelButtonText : this.props.translate( 'Cancel' ),
+				label: this.props.cancelButtonText
+					? this.props.cancelButtonText
+					: this.props.translate( 'Cancel' ),
 			},
 			{
 				action: 'accept',
-				label: this.props.confirmButtonText ? this.props.confirmButtonText : this.props.translate( 'OK' ),
-				isPrimary: true
-			}
+				label: this.props.confirmButtonText
+					? this.props.confirmButtonText
+					: this.props.translate( 'OK' ),
+				isPrimary: true,
+			},
 		];
 	},
 
@@ -54,11 +58,12 @@ const AcceptDialog = React.createClass( {
 				buttons={ this.getActionButtons() }
 				onClose={ this.onClose }
 				className="accept-dialog"
-				isVisible>
+				isVisible
+			>
 				{ this.props.message }
 			</Dialog>
 		);
-	}
+	},
 } );
 
 export default localize( AcceptDialog );

@@ -1,8 +1,8 @@
-import i18n from 'i18n-calypso'
+import i18n from 'i18n-calypso';
 
 export const streamLabels = {
 	timeline: () => i18n.translate( 'Timeline' ),
-	email: () => i18n.translate( 'Email' )
+	email: () => i18n.translate( 'Email' ),
 };
 
 export const settingLabels = {
@@ -17,10 +17,8 @@ export const settingLabels = {
 	scheduled_publicize: () => i18n.translate( 'Post Publicized' ),
 };
 
-export const getLabelForStream = stream => stream in streamLabels
-	? streamLabels[ stream ].call()
-	: null;
+export const getLabelForStream = stream =>
+	( stream in streamLabels ? streamLabels[ stream ].call() : null );
 
-export const getLabelForSetting = setting => setting in settingLabels
-	? settingLabels[ setting ].call()
-	: null;
+export const getLabelForSetting = setting =>
+	( setting in settingLabels ? settingLabels[ setting ].call() : null );

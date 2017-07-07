@@ -14,10 +14,10 @@ import wpcom from 'lib/wp';
 
 function getNextPageParams( store ) {
 	const params = {
-			orderBy: store.orderBy,
-			number: store.perPage,
-			meta: 'post,discover_original_post'
-		},
+		orderBy: store.orderBy,
+		number: store.perPage,
+		meta: 'post,discover_original_post',
+	},
 		lastDate = store.getLastItemWithDate();
 
 	if ( lastDate ) {
@@ -43,7 +43,7 @@ export function fetchNextPage( id ) {
 
 	Dispatcher.handleViewAction( {
 		type: ActionType.FETCH_NEXT_PAGE,
-		id
+		id,
 	} );
 
 	const params = getNextPageParams( store );
@@ -66,29 +66,29 @@ export function receivePage( id, error, data ) {
 	if ( ! error && data && data.posts ) {
 		forEach( data.posts, function( post ) {
 			if ( post && get( post, 'meta.data.discover_original_post' ) ) {
-					// Looks like the original post for a Discover post (meta=discover_original_post)
+				// Looks like the original post for a Discover post (meta=discover_original_post)
 				FeedPostStoreActions.receivePost( null, post.meta.data.discover_original_post, {
 					blogId: post.meta.data.discover_original_post.site_ID,
-					postId: post.meta.data.discover_original_post.ID
+					postId: post.meta.data.discover_original_post.ID,
 				} );
 			}
 
 			if ( post && get( post, 'meta.data.post' ) ) {
 				FeedPostStoreActions.receivePost( null, post.meta.data.post, {
 					feedId: post.feed_ID,
-					postId: post.ID
+					postId: post.ID,
 				} );
 			} else if ( post && post.feed_ID && post.feed_item_ID ) {
-					// 1.2 style
+				// 1.2 style
 				FeedPostStoreActions.receivePost( null, post, {
 					feedId: post.feed_ID,
-					postId: post.feed_item_ID
+					postId: post.feed_item_ID,
 				} );
 			} else if ( post && post.site_ID ) {
-					// this looks like a full post object
+				// this looks like a full post object
 				FeedPostStoreActions.receivePost( null, post, {
 					blogId: post.site_ID,
-					postId: post.ID
+					postId: post.ID,
 				} );
 			}
 		} );
@@ -98,7 +98,7 @@ export function receivePage( id, error, data ) {
 		type: ActionType.RECEIVE_PAGE,
 		id,
 		error,
-		data
+		data,
 	} );
 }
 
@@ -107,35 +107,35 @@ export function receiveUpdates( id, error, data ) {
 		type: ActionType.RECEIVE_UPDATES,
 		id,
 		error,
-		data
+		data,
 	} );
 }
 
 export function showUpdates( id ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SHOW_UPDATES,
-		id
+		id,
 	} );
 }
 
 export function selectNextItem( id ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SELECT_NEXT_ITEM,
-		id
+		id,
 	} );
 }
 
 export function selectPrevItem( id ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SELECT_PREV_ITEM,
-		id
+		id,
 	} );
 }
 
 export function selectFirstItem( id ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SELECT_FIRST_ITEM,
-		id
+		id,
 	} );
 }
 
@@ -143,7 +143,7 @@ export function selectItem( id, postKey ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SELECT_ITEM,
 		id,
-		postKey
+		postKey,
 	} );
 }
 
@@ -156,14 +156,14 @@ export function fillGap( id, gap ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.FILL_GAP,
 		id,
-		gap
+		gap,
 	} );
 
 	const params = {
 		before: gap.to.toISOString(),
 		after: gap.from.toISOString(),
 		number: store.gapFillCount,
-		orderBy: store.orderBy
+		orderBy: store.orderBy,
 	};
 
 	store.onGapFetch( params );
@@ -177,7 +177,7 @@ export function receiveGap( id, gap, error, data ) {
 		id,
 		gap,
 		error,
-		data
+		data,
 	} );
 }
 
@@ -186,9 +186,9 @@ export function dismissPost( id, post ) {
 		type: ActionType.DISMISS_FEED_STREAM_POST,
 		postKey: {
 			blogId: post.site_ID,
-			postId: post.ID
+			postId: post.ID,
 		},
-		id
+		id,
 	} );
 	wpcom.undocumented().me().dismissSite( post.site_ID );
 }
@@ -196,6 +196,6 @@ export function dismissPost( id, post ) {
 export function shufflePosts( id ) {
 	Dispatcher.handleViewAction( {
 		type: ActionType.SHUFFLE_POSTS,
-		id
+		id,
 	} );
 }

@@ -16,8 +16,8 @@ export const storedCardsSchema = {
 			payment_partner: { type: 'string' },
 			remember: { type: 'string' },
 			stored_details_id: { type: 'string' },
-			user_id: { type: 'string' }
-		}
+			user_id: { type: 'string' },
+		},
 	},
-	additionalProperties: false
+	additionalProperties: false,
 };

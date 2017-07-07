@@ -77,5 +77,5 @@ module.exports.action = keyMirror( {
 	WHOIS_FETCH: null,
 	WHOIS_FETCH_COMPLETED: null,
 	WHOIS_FETCH_FAILED: null,
-	WHOIS_UPDATE_COMPLETED: null
+	WHOIS_UPDATE_COMPLETED: null,
 } );

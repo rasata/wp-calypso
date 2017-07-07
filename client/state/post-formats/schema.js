@@ -12,8 +12,8 @@ export const postFormatsItemsSchema = {
 				'^[0-9a-z\-_]+$': {
 					type: 'string',
 					description: 'Label of the post format',
-				}
-			}
-		}
-	}
+				},
+			},
+		},
+	},
 };

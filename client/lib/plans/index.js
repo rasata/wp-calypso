@@ -2,28 +2,19 @@
  * External dependencies
  */
 import moment from 'moment';
-import {
-	find,
-	get,
-	includes,
-	invoke
-} from 'lodash';
+import { find, get, includes, invoke } from 'lodash';
 
 /**
  * Internal dependencies
  */
 import { isEnabled } from 'config';
-import {
-	isFreeJetpackPlan,
-	isJetpackPlan,
-	isMonthly
-} from 'lib/products-values';
+import { isFreeJetpackPlan, isJetpackPlan, isMonthly } from 'lib/products-values';
 import {
 	FEATURES_LIST,
 	PLANS_LIST,
 	PLAN_FREE,
 	PLAN_JETPACK_FREE,
-	PLAN_PERSONAL
+	PLAN_PERSONAL,
 } from 'lib/plans/constants';
 
 /**
@@ -56,15 +47,18 @@ export function getFeatureTitle( feature ) {
 }
 
 export function canUpgradeToPlan( planKey, site ) {
-	const plan = get( site, [ 'plan', 'expired' ], false ) ? PLAN_FREE : get( site, [ 'plan', 'product_slug' ], PLAN_FREE );
+	const plan = get( site, [ 'plan', 'expired' ], false )
+		? PLAN_FREE
+		: get( site, [ 'plan', 'product_slug' ], PLAN_FREE );
 	return get( getPlan( planKey ), 'availableFor', () => false )( plan );
 }
 
 export function getUpgradePlanSlugFromPath( path, site ) {
-	return find( Object.keys( PLANS_LIST ), planKey => (
-		( planKey === path || getPlanPath( planKey ) === path ) &&
-		canUpgradeToPlan( planKey, site )
-	) );
+	return find(
+		Object.keys( PLANS_LIST ),
+		planKey =>
+			( planKey === path || getPlanPath( planKey ) === path ) && canUpgradeToPlan( planKey, site ),
+	);
 }
 
 export function getPlanPath( plan ) {
@@ -112,7 +106,13 @@ export function shouldFetchSitePlans( sitePlans, selectedSite ) {
 	return ! sitePlans.hasLoadedFromServer && ! sitePlans.isRequesting && selectedSite;
 }
 
-export function filterPlansBySiteAndProps( plans, site, hideFreePlan, intervalType, showJetpackFreePlan ) {
+export function filterPlansBySiteAndProps(
+	plans,
+	site,
+	hideFreePlan,
+	intervalType,
+	showJetpackFreePlan,
+) {
 	const hasPersonalPlan = site && site.plan.product_slug === PLAN_PERSONAL;
 
 	return plans.filter( function( plan ) {

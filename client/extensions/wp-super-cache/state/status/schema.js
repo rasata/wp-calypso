@@ -4,7 +4,7 @@ export const itemsSchema = {
 	patternProperties: {
 		// Site Id
 		'^\\d+$': {
-			type: 'object'
-		}
-	}
+			type: 'object',
+		},
+	},
 };

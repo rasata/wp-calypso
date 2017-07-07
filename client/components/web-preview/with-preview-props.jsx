@@ -17,22 +17,22 @@ class WithPreviewProps extends Component {
 		isPreviewable: PropTypes.bool.isRequired,
 		children: PropTypes.func.isRequired,
 		dispatch: PropTypes.func.isRequired,
-	}
+	};
 
 	render() {
-		const { children, ...rest } = this.props;
+		const { children, ...rest } = this.props;
 		return children( makeProps( rest ) );
 	}
 }
 
-function makeProps( { url, isPreviewable, dispatch } ) {
+function makeProps( { url, isPreviewable, dispatch } ) {
 	return isPreviewable
 		? { onClick: openWebPreview.bind( null, url, dispatch ) }
 		: {
-			href: url,
-			target: '_blank',
-			rel: 'noopener noreferrer',
-		};
+				href: url,
+				target: '_blank',
+				rel: 'noopener noreferrer',
+			};
 }
 
 function openWebPreview( url, dispatch ) {

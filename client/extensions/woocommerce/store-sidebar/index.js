@@ -11,7 +11,9 @@ import React, { Component, PropTypes } from 'react';
  * Internal dependencies
  */
 import { fetchSetupChoices } from 'woocommerce/state/sites/setup-choices/actions';
-import { getSetStoreAddressDuringInitialSetup } from 'woocommerce/state/sites/setup-choices/selectors';
+import {
+	getSetStoreAddressDuringInitialSetup,
+} from 'woocommerce/state/sites/setup-choices/selectors';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import Sidebar from 'layout/sidebar';
@@ -24,22 +26,26 @@ import StoreGroundControl from './store-ground-control';
 class StoreSidebar extends Component {
 	static propTypes = {
 		path: PropTypes.string.isRequired,
-		sidebarItems: PropTypes.arrayOf( PropTypes.shape( {
-			icon: PropTypes.string,
-			isPrimary: PropTypes.bool.isRequired,
-			label: PropTypes.string.isRequired,
-			parentSlug: PropTypes.string,
-			path: PropTypes.string.isRequired,
-			slug: PropTypes.string.isRequired,
-		} ) ),
-		sidebarItemButtons: PropTypes.arrayOf( PropTypes.shape( {
-			label: PropTypes.string.isRequired,
-			parentSlug: PropTypes.string.isRequired,
-			path: PropTypes.string.isRequired,
-			slug: PropTypes.string.isRequired,
-		} ) ),
+		sidebarItems: PropTypes.arrayOf(
+			PropTypes.shape( {
+				icon: PropTypes.string,
+				isPrimary: PropTypes.bool.isRequired,
+				label: PropTypes.string.isRequired,
+				parentSlug: PropTypes.string,
+				path: PropTypes.string.isRequired,
+				slug: PropTypes.string.isRequired,
+			} ),
+		),
+		sidebarItemButtons: PropTypes.arrayOf(
+			PropTypes.shape( {
+				label: PropTypes.string.isRequired,
+				parentSlug: PropTypes.string.isRequired,
+				path: PropTypes.string.isRequired,
+				slug: PropTypes.string.isRequired,
+			} ),
+		),
 		site: PropTypes.object,
-	}
+	};
 
 	componentDidMount = () => {
 		const { site } = this.props;
@@ -47,9 +53,9 @@ class StoreSidebar extends Component {
 		if ( site && site.ID ) {
 			this.props.fetchSetupChoices( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
 		const newSiteId = newProps.site ? newProps.site.ID : null;
@@ -58,13 +64,13 @@ class StoreSidebar extends Component {
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchSetupChoices( newSiteId );
 		}
-	}
+	};
 
 	onNavigate = () => {
 		window.scrollTo( 0, 0 );
-	}
+	};
 
-	isItemLinkSelected = ( paths ) => {
+	isItemLinkSelected = paths => {
 		if ( ! Array.isArray( paths ) ) {
 			paths = [ paths ];
 		}
@@ -72,7 +78,7 @@ class StoreSidebar extends Component {
 		return paths.some( function( path ) {
 			return path === this.props.path || 0 === this.props.path.indexOf( path + '/' );
 		}, this );
-	}
+	};
 
 	renderSidebarMenuItems = ( items, buttons, isDisabled ) => {
 		const { site, finishedAddressSetup, page } = this.props;
@@ -81,19 +87,21 @@ class StoreSidebar extends Component {
 			if ( ! item.showDuringSetup && ! finishedAddressSetup ) {
 				return null;
 			}
-			const isChild = ( 'undefined' !== typeof item.parentSlug );
+			const isChild = 'undefined' !== typeof item.parentSlug;
 			const itemLink = getLink( item.path, site );
-			const itemButton = buttons.filter( button => button.parentSlug === item.slug ).map( button => {
-				return (
-					<SidebarButton
-						disabled={ isDisabled }
-						href={ getLink( button.path, site ) }
-						key={ button.slug }
-					>
-						{ button.label }
-					</SidebarButton>
-				);
-			} );
+			const itemButton = buttons
+				.filter( button => button.parentSlug === item.slug )
+				.map( button => {
+					return (
+						<SidebarButton
+							disabled={ isDisabled }
+							href={ getLink( button.path, site ) }
+							key={ button.slug }
+						>
+							{ button.label }
+						</SidebarButton>
+					);
+				} );
 
 			// If this item has a parentSlug, only render it if 1) the parent is
 			// currently selected, 2) it is currently selected, or 3) any of its
@@ -121,14 +129,12 @@ class StoreSidebar extends Component {
 
 			const selected = this.isItemLinkSelected( itemLink ) || page.parentPath === item.path;
 			// Build the classnames for the item
-			const itemClasses = classNames( item.slug,
-				{
-					'has-selected-child': this.isItemLinkSelected( childLinks ),
-					'is-child-item': isChild,
-					'is-placeholder': isDisabled,
-					selected,
-				}
-			);
+			const itemClasses = classNames( item.slug, {
+				'has-selected-child': this.isItemLinkSelected( childLinks ),
+				'is-child-item': isChild,
+				'is-placeholder': isDisabled,
+				selected,
+			} );
 
 			// Render the item
 			return (
@@ -141,11 +147,11 @@ class StoreSidebar extends Component {
 					onNavigate={ this.onNavigate }
 					preloadSectionName={ item.slug }
 				>
-				{ itemButton }
+					{ itemButton }
 				</SidebarItem>
 			);
 		}, this );
-	}
+	};
 
 	render = () => {
 		const { sidebarItems, sidebarItemButtons, site } = this.props;
@@ -155,21 +161,29 @@ class StoreSidebar extends Component {
 				<StoreGroundControl site={ site } />
 				<SidebarMenu>
 					<ul>
-						{ this.renderSidebarMenuItems( sidebarItems.filter( item => item.isPrimary ), sidebarItemButtons, ! site ) }
+						{ this.renderSidebarMenuItems(
+							sidebarItems.filter( item => item.isPrimary ),
+							sidebarItemButtons,
+							! site,
+						) }
 						<SidebarSeparator />
-						{ this.renderSidebarMenuItems( sidebarItems.filter( item => ! item.isPrimary ), sidebarItemButtons, ! site ) }
+						{ this.renderSidebarMenuItems(
+							sidebarItems.filter( item => ! item.isPrimary ),
+							sidebarItemButtons,
+							! site,
+						) }
 					</ul>
 				</SidebarMenu>
 			</Sidebar>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state ) {
 	const finishedAddressSetup = getSetStoreAddressDuringInitialSetup( state );
 	return {
 		finishedAddressSetup,
-		site: getSelectedSiteWithFallback( state )
+		site: getSelectedSiteWithFallback( state ),
 	};
 }
 
@@ -178,7 +192,7 @@ function mapDispatchToProps( dispatch ) {
 		{
 			fetchSetupChoices,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

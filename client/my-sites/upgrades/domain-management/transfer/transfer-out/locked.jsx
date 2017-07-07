@@ -18,8 +18,8 @@ const Locked = React.createClass( {
 	getInitialState() {
 		return {
 			submitting: false,
-			showDialog: false
-		}
+			showDialog: false,
+		};
 	},
 
 	unlockAndRequestTransferCode: function() {
@@ -29,11 +29,11 @@ const Locked = React.createClass( {
 			siteId: this.props.selectedSite.ID,
 			domainName: this.props.selectedDomainName,
 			unlock: true,
-			disablePrivacy: privateDomain && hasPrivacyProtection
+			disablePrivacy: privateDomain && hasPrivacyProtection,
 		};
 
 		this.setState( { submitting: true } );
-		requestTransferCode( options, ( error ) => {
+		requestTransferCode( options, error => {
 			if ( this.isMounted() ) {
 				// Component might be unmounted since it's state has just changed to unlocked.
 				this.setState( { submitting: false } );
@@ -47,11 +47,11 @@ const Locked = React.createClass( {
 			siteId: this.props.selectedSite.ID,
 			domainName: this.props.selectedDomainName,
 			unlock: false,
-			disablePrivacy: false
+			disablePrivacy: false,
 		};
 
 		this.setState( { submitting: true } );
-		requestTransferCode( options, ( error ) => {
+		requestTransferCode( options, error => {
 			if ( this.isMounted() ) {
 				// Component might be unmounted since it's state has just changed to unlocked.
 				this.setState( { submitting: false } );
@@ -73,8 +73,8 @@ const Locked = React.createClass( {
 			<p>
 				{ this.translate(
 					'This Top Level Domain (TLD) requires that we manually request a ' +
-					'transfer code on your behalf. After we have received it, we will ' +
-					'email it to you.'
+						'transfer code on your behalf. After we have received it, we will ' +
+						'email it to you.',
 				) }
 			</p>
 		);
@@ -89,34 +89,43 @@ const Locked = React.createClass( {
 		const { privateDomain } = getSelectedDomain( this.props );
 		return (
 			<div>
-				<SectionHeader label={ this.translate( 'Transfer Domain' ) }/>
+				<SectionHeader label={ this.translate( 'Transfer Domain' ) } />
 				<Card className="transfer-card">
 					<div>
 						<p>
 							{ privateDomain
-								? this.translate( 'To transfer your domain, we must unlock it and remove Privacy Protection. ' +
-									'Your contact information will be publicly available during the transfer period.' )
-								: this.translate( 'To transfer your domain, we must unlock it.' )
-							} <a
-									href={ support.TRANSFER_DOMAIN_REGISTRATION }
-									target="_blank" rel="noopener noreferrer">{ this.translate( 'Learn More.' ) }</a>
+								? this.translate(
+										'To transfer your domain, we must unlock it and remove Privacy Protection. ' +
+											'Your contact information will be publicly available during the transfer period.',
+									)
+								: this.translate( 'To transfer your domain, we must unlock it.' ) }
+							{ ' ' }
+							<a
+								href={ support.TRANSFER_DOMAIN_REGISTRATION }
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								{ this.translate( 'Learn More.' ) }
+							</a>
 						</p>
 						<p className="transfer__small-text">
-							<a href="" onClick={ this.handleGiveMeTheCodeClick }>{ this.translate( 'I just want the transfer code for now.' ) }</a>
+							<a href="" onClick={ this.handleGiveMeTheCodeClick }>
+								{ this.translate( 'I just want the transfer code for now.' ) }
+							</a>
 						</p>
 						{ this.isManualTransferRequired() && this.renderManualTransferInfo() }
 						<Button
 							className="transfer__action-button"
 							onClick={ this.handleTransferClick }
 							primary
-							disabled={ this.state.submitting }>
+							disabled={ this.state.submitting }
+						>
 							{ this.translate( 'Update Settings And Continue' ) }
 						</Button>
 					</div>
 				</Card>
 			</div>
 		);
-	}
-
+	},
 } );
 export default Locked;

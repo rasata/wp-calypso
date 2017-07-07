@@ -14,7 +14,7 @@ class QueryJetpackModules extends Component {
 	static propTypes = {
 		siteId: PropTypes.number.isRequired,
 		requestingModules: PropTypes.bool,
-		fetchModuleList: PropTypes.func
+		fetchModuleList: PropTypes.func,
 	};
 
 	componentWillMount() {
@@ -43,8 +43,8 @@ class QueryJetpackModules extends Component {
 export default connect(
 	( state, ownProps ) => {
 		return {
-			requestingModules: isFetchingJetpackModules( state, ownProps.siteId )
+			requestingModules: isFetchingJetpackModules( state, ownProps.siteId ),
 		};
 	},
-	{ fetchModuleList }
+	{ fetchModuleList },
 )( QueryJetpackModules );

@@ -11,7 +11,7 @@ import { moment, translate } from 'i18n-calypso';
 import Main from 'components/main';
 import Navigation from './store-stats-navigation';
 import SidebarNavigation from 'my-sites/sidebar-navigation';
-import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
+import { getSelectedSiteId, getSelectedSiteSlug } from 'state/ui/selectors';
 import Chart from './store-stats-chart';
 import StatsPeriodNavigation from 'my-sites/stats/stats-period-navigation';
 import DatePicker from 'my-sites/stats/stats-date-picker';
@@ -25,7 +25,7 @@ import {
 	topProducts,
 	topCategories,
 	topCoupons,
-	UNITS
+	UNITS,
 } from 'woocommerce/app/store-stats/constants';
 import { getUnitPeriod, getEndPeriod } from './utils';
 
@@ -69,7 +69,7 @@ class StoreStats extends Component {
 					widgets={ sparkWidgetList1 }
 				/>
 			</div>
-			);
+		);
 		const widgetList2 = (
 			<div className="store-stats__widgets-column spark-widgets" key="sparkwidgets2">
 				<WidgetList
@@ -104,7 +104,7 @@ class StoreStats extends Component {
 						period={ unit }
 						// this is needed to counter the +1d adjustment made in DatePicker for weeks
 						date={
-							( unit === 'week' )
+							unit === 'week'
 								? moment( selectedDate, 'YYYY-MM-DD' ).subtract( 1, 'days' ).format( 'YYYY-MM-DD' )
 								: selectedDate
 						}
@@ -147,9 +147,7 @@ class StoreStats extends Component {
 	}
 }
 
-export default connect(
-	state => ( {
-		slug: getSelectedSiteSlug( state ),
-		siteId: getSelectedSiteId( state ),
-	} )
-)( StoreStats );
+export default connect( state => ( {
+	slug: getSelectedSiteSlug( state ),
+	siteId: getSelectedSiteId( state ),
+} ) )( StoreStats );

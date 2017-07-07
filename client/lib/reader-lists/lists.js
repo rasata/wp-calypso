@@ -37,7 +37,7 @@ ListStore = {
 
 	setIsFetching( val ) {
 		isFetching = val;
-	}
+	},
 };
 
 emitter( ListStore );
@@ -60,8 +60,7 @@ function markUpdatedList( newList ) {
 }
 
 function markPending( owner, slug ) {
-	var key = keyForList( owner, slug ),
-		list = lists[ key ];
+	var key = keyForList( owner, slug ), list = lists[ key ];
 
 	if ( ! list ) {
 		list = {
@@ -69,7 +68,7 @@ function markPending( owner, slug ) {
 			slug: slug,
 			title: slug,
 			ID: null,
-			_state: 'pending'
+			_state: 'pending',
 		};
 		lists[ key ] = list;
 		ListStore.emit( 'change' );

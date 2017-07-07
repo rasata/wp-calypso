@@ -19,7 +19,6 @@ import { addQueryArgs } from 'lib/route';
 const debug = debugFactory( 'calypso:activity-log:item' );
 
 class ActivityLogItem extends Component {
-
 	static propTypes = {
 		allowRestore: PropTypes.bool.isRequired,
 		siteId: PropTypes.number.isRequired,
@@ -109,7 +108,7 @@ class ActivityLogItem extends Component {
 							slug: PropTypes.string,
 							uri: PropTypes.string,
 							version: PropTypes.string,
-						} )
+						} ),
 					),
 					PropTypes.shape( {
 						name: PropTypes.string,
@@ -143,10 +142,7 @@ class ActivityLogItem extends Component {
 
 	// TODO: Add analytics
 	handleClickRestore = () => {
-		const {
-			requestRestore,
-			log,
-		} = this.props;
+		const { requestRestore, log } = this.props;
 		requestRestore( log.ts_utc );
 	};
 
@@ -154,16 +150,16 @@ class ActivityLogItem extends Component {
 
 	getIcon() {
 		const { log } = this.props;
-		const {
-			group,
-			name,
-		} = log;
+		const { group, name } = log;
 
 		switch ( name ) {
 			// Inline return makes alphabetizing and searching easier :)
-			case 'post__published': return 'create';
-			case 'post__trashed': return 'trash';
-			case 'user__registered': return 'user-add';
+			case 'post__published':
+				return 'create';
+			case 'post__trashed':
+				return 'trash';
+			case 'user__registered':
+				return 'user-add';
 		}
 
 		switch ( group ) {
@@ -221,9 +217,7 @@ class ActivityLogItem extends Component {
 			return null;
 		}
 
-		const avatar_URL = actor.avatar_url
-			? addQueryArgs( { s: 40 }, actor.avatar_url )
-			: null;
+		const avatar_URL = actor.avatar_url ? addQueryArgs( { s: 40 }, actor.avatar_url ) : null;
 
 		return (
 			<div className="activity-log-item__actor">
@@ -242,9 +236,7 @@ class ActivityLogItem extends Component {
 
 	renderContent() {
 		const { log } = this.props;
-		const {
-			name,
-		} = log;
+		const { name } = log;
 
 		const subTitle = null;
 
@@ -258,16 +250,8 @@ class ActivityLogItem extends Component {
 
 	// FIXME: Just for demonstration purposes
 	renderDescription() {
-		const {
-			log,
-			moment,
-			translate,
-			applySiteOffset,
-		} = this.props;
-		const {
-			name,
-			ts_utc,
-		} = log;
+		const { log, moment, translate, applySiteOffset } = this.props;
+		const { name, ts_utc } = log;
 
 		return (
 			<div>
@@ -276,7 +260,7 @@ class ActivityLogItem extends Component {
 						args: {
 							date: applySiteOffset( moment.utc( ts_utc ) ).format( 'LLL' ),
 							eventName: name,
-						}
+						},
 					} ) }
 				</div>
 				<div className="activity-log-item__id">ID { ts_utc }</div>
@@ -294,13 +278,11 @@ class ActivityLogItem extends Component {
 	}
 
 	renderIcon() {
-		const classes = classNames(
-			'activity-log-item__icon',
-			this.getStatus(),
-		);
+		const classes = classNames( 'activity-log-item__icon', this.getStatus() );
 		const icon = this.getIcon();
 
-		return ( icon &&
+		return (
+			icon &&
 			<div className={ classes }>
 				<Gridicon icon={ icon } size={ 24 } />
 			</div>
@@ -308,10 +290,7 @@ class ActivityLogItem extends Component {
 	}
 
 	renderSummary() {
-		const {
-			allowRestore,
-			translate,
-		} = this.props;
+		const { allowRestore, translate } = this.props;
 
 		if ( ! allowRestore ) {
 			return null;
@@ -329,11 +308,7 @@ class ActivityLogItem extends Component {
 	}
 
 	renderTime() {
-		const {
-			moment,
-			log,
-			applySiteOffset,
-		} = this.props;
+		const { moment, log, applySiteOffset } = this.props;
 
 		return (
 			<div className="activity-log-item__time">
@@ -344,13 +319,10 @@ class ActivityLogItem extends Component {
 
 	render() {
 		const { className } = this.props;
-		const classes = classNames(
-			'activity-log-item',
-			className
-		);
+		const classes = classNames( 'activity-log-item', className );
 
 		return (
-			<div className={ classes } >
+			<div className={ classes }>
 				<div className="activity-log-item__type">
 					{ this.renderTime() }
 					{ this.renderIcon() }

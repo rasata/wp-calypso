@@ -17,7 +17,7 @@ const getReaderFollowedTags = createSelector(
 			? sortBy( filter( state.reader.tags.items, tag => tag.isFollowing ), 'slug' )
 			: null; // no data loaded
 	},
-	state => [ state.reader.tags.items ]
+	state => [ state.reader.tags.items ],
 );
 
 export default getReaderFollowedTags;

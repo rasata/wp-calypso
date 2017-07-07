@@ -31,6 +31,6 @@ export default {
 		if ( shuffledVerticals ) {
 			return shuffledVerticals;
 		}
-		return shuffledVerticals = shuffle( verticals );
-	}
+		return ( shuffledVerticals = shuffle( verticals ) );
+	},
 };

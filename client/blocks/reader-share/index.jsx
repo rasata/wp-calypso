@@ -223,7 +223,7 @@ class ReaderShare extends React.Component {
 									<SocialLogo icon="facebook" /><span>Facebook</span>
 								</PopoverMenuItem>
 							</PopoverMenu> ),
-			]
+			],
 		);
 	}
 }

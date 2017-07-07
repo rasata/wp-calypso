@@ -17,7 +17,6 @@ import { getPaymentCurrencySettings } from 'woocommerce/state/sites/settings/gen
 import { getSelectedSiteId } from 'state/ui/selectors';
 
 class PriceInput extends Component {
-
 	static propTypes = {
 		value: PropTypes.oneOfType( [ PropTypes.number, PropTypes.string ] ),
 		currency: PropTypes.string,
@@ -44,22 +43,27 @@ class PriceInput extends Component {
 
 	render() {
 		const { value, currency, currencySetting } = this.props;
-		const props = { ...omit( this.props, [ 'value', 'currency', 'currencySetting', 'siteId', 'fetchSettingsGeneral' ] ) };
+		const props = {
+			...omit( this.props, [
+				'value',
+				'currency',
+				'currencySetting',
+				'siteId',
+				'fetchSettingsGeneral',
+			] ),
+		};
 		const displayCurrency = ! currency && currencySetting ? currencySetting.value : currency;
 		const currencyObject = getCurrencyObject( value, displayCurrency );
 		if ( ! currencyObject ) {
-			return (
-				<FormTextInput
-					value={ value }
-					{ ...omit( props, [ 'noWrap' ] ) } />
-			);
+			return <FormTextInput value={ value } { ...omit( props, [ 'noWrap' ] ) } />;
 		}
 
 		return (
 			<FormCurrencyInput
 				currencySymbolPrefix={ currencyObject.symbol }
 				value={ value }
-				{ ...props } />
+				{ ...props }
+			/>
 		);
 	}
 }
@@ -78,7 +82,7 @@ function mapDispatchToProps( dispatch ) {
 		{
 			fetchSettingsGeneral,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

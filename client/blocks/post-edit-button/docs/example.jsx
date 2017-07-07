@@ -26,5 +26,5 @@ export default React.createClass( {
 				<PostEditButton post={ post } site={ site } />
 			</div>
 		);
-	}
+	},
 } );

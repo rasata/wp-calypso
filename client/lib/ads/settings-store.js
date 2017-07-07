@@ -63,7 +63,7 @@ WordadsSettingsStore = {
 
 	emitChange: function() {
 		this.emit( 'change' );
-	}
+	},
 };
 
 function updateSettings( siteId, data ) {

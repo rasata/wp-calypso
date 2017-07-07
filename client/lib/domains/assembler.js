@@ -19,7 +19,7 @@ function createDomainObjects( dataTransferObject ) {
 		return domains;
 	}
 
-	domains = dataTransferObject.map( ( domain ) => {
+	domains = dataTransferObject.map( domain => {
 		return {
 			autoRenewalMoment: domain.auto_renewal_date && i18n.moment( domain.auto_renewal_date ),
 			currentUserCanManage: domain.current_user_can_manage,
@@ -70,5 +70,5 @@ function ensurePrimaryDomainIsFirst( domains ) {
 }
 
 module.exports = {
-	createDomainObjects
+	createDomainObjects,
 };

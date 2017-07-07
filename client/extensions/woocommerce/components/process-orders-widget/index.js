@@ -14,9 +14,9 @@ import { getLink } from 'woocommerce/lib/nav-utils';
 
 const ProcessOrdersWidget = ( { className, site, orders, currency, ordersRevenue, translate } ) => {
 	const classes = classNames( 'card', 'process-orders-widget__container', className );
-	const currencyValue = currency && currency.value || '';
+	const currencyValue = ( currency && currency.value ) || '';
 	return (
-		<div className={ classes } >
+		<div className={ classes }>
 			<div>
 				<span>{ orders.length }</span>
 				<span className="process-orders-widget__order-label">

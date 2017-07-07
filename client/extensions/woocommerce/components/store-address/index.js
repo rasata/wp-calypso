@@ -17,32 +17,34 @@ import { successNotice, errorNotice } from 'state/notices/actions';
 import { fetchSettingsGeneral } from 'woocommerce/state/sites/settings/general/actions';
 import { getCountryData } from 'woocommerce/lib/countries';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
-import { getStoreLocation, areSettingsGeneralLoading } from 'woocommerce/state/sites/settings/general/selectors';
+import {
+	getStoreLocation,
+	areSettingsGeneralLoading,
+} from 'woocommerce/state/sites/settings/general/selectors';
 import { setAddress } from 'woocommerce/state/sites/settings/actions';
 import FormLabel from 'components/forms/form-label';
 
 class StoreAddress extends Component {
-
 	componentDidMount = () => {
 		const { site } = this.props;
 
 		if ( site && site.ID ) {
 			this.props.fetchSettingsGeneral( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchSettingsGeneral( newSiteId );
 		}
 
 		this.setState( { address: newProps.address } );
-	}
+	};
 
 	constructor( props ) {
 		super( props );
@@ -52,7 +54,7 @@ class StoreAddress extends Component {
 		};
 	}
 
-	onChange = ( event ) => {
+	onChange = event => {
 		const addressEdits = { ...this.state.addressEdits };
 		const addressKey = event.target.name;
 		const newValue = event.target.value;
@@ -64,21 +66,23 @@ class StoreAddress extends Component {
 		}
 
 		this.setState( { addressEdits } );
-	}
+	};
 
 	onShowDialog = () => {
 		this.setState( {
 			showDialog: true,
 			addressEdits: { ...this.props.address },
 		} );
-	}
+	};
 
-	onCloseDialog = ( action ) => {
+	onCloseDialog = action => {
 		const { translate, site, onSetAddress } = this.props;
 		if ( 'save' === action ) {
 			const onFailure = () => {
 				this.setState( { showDialog: false } );
-				return errorNotice( translate( 'There was a problem saving the store address. Please try again.' ) );
+				return errorNotice(
+					translate( 'There was a problem saving the store address. Please try again.' ),
+				);
 			};
 			const onSuccess = () => {
 				if ( onSetAddress ) {
@@ -99,14 +103,14 @@ class StoreAddress extends Component {
 				this.state.addressEdits.postcode,
 				this.state.addressEdits.country,
 				onSuccess,
-				onFailure
+				onFailure,
 			);
 		} else {
 			this.setState( {
 				showDialog: false,
 			} );
 		}
-	}
+	};
 
 	render() {
 		const { className, site, loading, translate } = this.props;
@@ -120,10 +124,10 @@ class StoreAddress extends Component {
 		if ( ! site || loading ) {
 			display = (
 				<div>
-					<p></p>
-					<p></p>
-					<p></p>
-					<p></p>
+					<p />
+					<p />
+					<p />
+					<p />
 				</div>
 			);
 		} else {
@@ -135,7 +139,11 @@ class StoreAddress extends Component {
 			);
 		}
 
-		const classes = classNames( 'store-address', { 'is-placeholder': ! site || loading }, className );
+		const classes = classNames(
+			'store-address',
+			{ 'is-placeholder': ! site || loading },
+			className,
+		);
 		return (
 			<Card className={ classes }>
 				<FormLabel>{ translate( 'Store location' ) }</FormLabel>
@@ -144,7 +152,8 @@ class StoreAddress extends Component {
 					isVisible={ this.state.showDialog }
 					onClose={ this.onCloseDialog }
 					additionalClassNames="woocommerce store-location__edit-dialog"
-					><AddressView address={ this.state.addressEdits } isEditable onChange={ this.onChange } />
+				>
+					<AddressView address={ this.state.addressEdits } isEditable onChange={ this.onChange } />
 				</Dialog>
 				{ display }
 			</Card>
@@ -169,7 +178,7 @@ function mapDispatchToProps( dispatch ) {
 			fetchSettingsGeneral,
 			setAddress,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

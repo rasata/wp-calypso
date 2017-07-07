@@ -19,8 +19,7 @@ import { DEFAULT_TERM_QUERY } from './constants';
  */
 function isDefaultOrNullQueryValue( value, key ) {
 	return (
-		null == value || // Double-equals null checks undefined, null
-		DEFAULT_TERM_QUERY[ key ] === value
+		null == value || DEFAULT_TERM_QUERY[ key ] === value // Double-equals null checks undefined, null
 	);
 }
 

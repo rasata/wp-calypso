@@ -23,9 +23,11 @@ export default React.createClass( {
 	},
 
 	getSitesWithIcons() {
-		return this.props.sites.filter( function( site ) {
-			return site.icon;
-		} ).slice( 0, MAX_ICONS );
+		return this.props.sites
+			.filter( function( site ) {
+				return site.icon;
+			} )
+			.slice( 0, MAX_ICONS );
 	},
 
 	getIcons() {
@@ -37,12 +39,12 @@ export default React.createClass( {
 
 	render() {
 		const icons = this.getIcons();
-		const classes = `all-sites-icon has-${this.getMaxSites().length}-icons`;
+		const classes = `all-sites-icon has-${ this.getMaxSites().length }-icons`;
 
 		return (
 			<div className={ classes }>
 				{ icons }
 			</div>
 		);
-	}
+	},
 } );

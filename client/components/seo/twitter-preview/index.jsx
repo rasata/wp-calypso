@@ -7,24 +7,16 @@ const baseDomain = url =>
 
 export class TwitterPreview extends PureComponent {
 	render() {
-		const {
-			url,
-			title,
-			type,
-			description,
-			image
-		} = this.props;
+		const { url, title, type, description, image } = this.props;
 
 		var previewImageStyle = {
-			backgroundImage: 'url(' + image + ')'
-		}
+			backgroundImage: 'url(' + image + ')',
+		};
 
 		return (
 			<div className="twitter-card-preview__container">
 				<div className={ `twitter-card-preview twitter-card-preview__${ type }` }>
-					{ image &&
-						<div className="twitter-card-preview__image" style={ previewImageStyle } />
-					}
+					{ image && <div className="twitter-card-preview__image" style={ previewImageStyle } /> }
 					<div className="twitter-card-preview__body">
 						<div className="twitter-card-preview__title">
 							{ title }
@@ -47,7 +39,7 @@ TwitterPreview.propTypes = {
 	title: PropTypes.string,
 	type: PropTypes.string,
 	description: PropTypes.string,
-	image: PropTypes.string
+	image: PropTypes.string,
 };
 
 export default TwitterPreview;

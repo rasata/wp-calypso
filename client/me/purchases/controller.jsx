@@ -40,7 +40,7 @@ export default {
 
 		renderPage(
 			context,
-			<AddCardDetails purchaseId={ parseInt( context.params.purchaseId, 10 ) } />
+			<AddCardDetails purchaseId={ parseInt( context.params.purchaseId, 10 ) } />,
 		);
 	},
 
@@ -57,7 +57,7 @@ export default {
 
 		renderPage(
 			context,
-			<CancelPrivacyProtection purchaseId={ parseInt( context.params.purchaseId, 10 ) } />
+			<CancelPrivacyProtection purchaseId={ parseInt( context.params.purchaseId, 10 ) } />,
 		);
 	},
 
@@ -68,7 +68,7 @@ export default {
 
 		renderPage(
 			context,
-			<CancelPurchase purchaseId={ parseInt( context.params.purchaseId, 10 ) } />
+			<CancelPurchase purchaseId={ parseInt( context.params.purchaseId, 10 ) } />,
 		);
 	},
 
@@ -79,7 +79,7 @@ export default {
 
 		renderPage(
 			context,
-			<ConfirmCancelDomain purchaseId={ parseInt( context.params.purchaseId, 10 ) } />
+			<ConfirmCancelDomain purchaseId={ parseInt( context.params.purchaseId, 10 ) } />,
 		);
 	},
 
@@ -93,7 +93,7 @@ export default {
 			<EditCardDetails
 				cardId={ context.params.cardId }
 				purchaseId={ parseInt( context.params.purchaseId, 10 ) }
-			/>
+			/>,
 		);
 	},
 
@@ -115,7 +115,7 @@ export default {
 			<ManagePurchase
 				purchaseId={ parseInt( context.params.purchaseId, 10 ) }
 				destinationType={ context.params.destinationType }
-			/>
+			/>,
 		);
 	},
 
@@ -133,7 +133,7 @@ export default {
 			<Main>
 				<PurchasesHeader section={ 'purchases' } />
 				<NoSitesMessage />
-			</Main>
+			</Main>,
 		);
 	},
 };

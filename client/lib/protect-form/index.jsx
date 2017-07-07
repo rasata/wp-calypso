@@ -11,7 +11,9 @@ import { includes, without } from 'lodash';
  * Module variables
  */
 const debug = debugModule( 'calypso:protect-form' );
-const confirmText = i18n.translate( 'You have unsaved changes. Are you sure you want to leave this page?' );
+const confirmText = i18n.translate(
+	'You have unsaved changes. Are you sure you want to leave this page?',
+);
 const beforeUnloadText = i18n.translate( 'You have unsaved changes.' );
 let formsChanged = [];
 let listenerCount = 0;
@@ -83,8 +85,8 @@ export const protectForm = WrappedComponent => {
  */
 export class ProtectFormGuard extends Component {
 	static propTypes = {
-		isChanged: PropTypes.bool.isRequired
-	}
+		isChanged: PropTypes.bool.isRequired,
+	};
 
 	componentDidMount() {
 		addBeforeUnloadListener();

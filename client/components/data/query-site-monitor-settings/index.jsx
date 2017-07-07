@@ -15,7 +15,7 @@ class QuerySiteMonitorSettings extends Component {
 		siteId: PropTypes.number.isRequired,
 		// Connected props
 		requestingSiteMonitorSettings: PropTypes.bool,
-		requestSiteMonitorSettings: PropTypes.func
+		requestSiteMonitorSettings: PropTypes.func,
 	};
 
 	componentDidMount() {
@@ -43,5 +43,5 @@ export default connect(
 	( state, { siteId } ) => ( {
 		requestingSiteMonitorSettings: isRequestingSiteMonitorSettings( state, siteId ),
 	} ),
-	{ requestSiteMonitorSettings }
+	{ requestSiteMonitorSettings },
 )( QuerySiteMonitorSettings );

@@ -34,30 +34,26 @@ class SettingsPaymentsMethodList extends Component {
 		if ( site && site.ID ) {
 			this.props.fetchPaymentMethods( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 
-		const newSiteId = newProps.site && newProps.site.ID || null;
-		const oldSiteId = site && site.ID || null;
+		const newSiteId = ( newProps.site && newProps.site.ID ) || null;
+		const oldSiteId = ( site && site.ID ) || null;
 
 		if ( oldSiteId !== newSiteId ) {
 			this.props.fetchPaymentMethods( newSiteId );
 		}
-	}
+	};
 
-	renderMethodItem = ( method ) => {
-		return (
-			<PaymentMethodItem method={ method } key={ method.title } />
-		);
-	}
+	renderMethodItem = method => {
+		return <PaymentMethodItem method={ method } key={ method.title } />;
+	};
 
 	showPlaceholder = () => {
-		return (
-			<PaymentMethodItemPlaceholder />
-		);
-	}
+		return <PaymentMethodItemPlaceholder />;
+	};
 
 	render() {
 		const { isLoading, methodType, paymentMethods, translate } = this.props;
@@ -68,13 +64,11 @@ class SettingsPaymentsMethodList extends Component {
 					<ListItemField className="payments__methods-column-method">
 						{ translate( 'Method' ) }
 					</ListItemField>
-					{ methodType !== 'offline' && (
+					{ methodType !== 'offline' &&
 						<ListItemField className="payments__methods-column-fees">
 							{ translate( 'Fees' ) }
-						</ListItemField>
-					) }
-					<ListItemField className="payments__methods-column-settings">
-					</ListItemField>
+						</ListItemField> }
+					<ListItemField className="payments__methods-column-settings" />
 				</ListHeader>
 				{ isLoading && this.showPlaceholder() }
 				{ paymentMethods && paymentMethods.map( this.renderMethodItem ) }
@@ -99,10 +93,10 @@ function mapDispatchToProps( dispatch ) {
 		{
 			fetchPaymentMethods,
 		},
-		dispatch
+		dispatch,
 	);
 }
 
 export default localize(
-	connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsMethodList )
+	connect( mapStateToProps, mapDispatchToProps )( SettingsPaymentsMethodList ),
 );

@@ -50,12 +50,12 @@ class TaxonomyManagerListItem extends Component {
 
 	state = {
 		showDeleteDialog: false,
-		showTooltip: false
+		showTooltip: false,
 	};
 
 	deleteItem = () => {
 		this.setState( {
-			showDeleteDialog: true
+			showDeleteDialog: true,
 		} );
 	};
 
@@ -67,7 +67,7 @@ class TaxonomyManagerListItem extends Component {
 			this.props.deleteTerm( siteId, taxonomy, term.ID, term.slug );
 		}
 		this.setState( {
-			showDeleteDialog: false
+			showDeleteDialog: false,
 		} );
 	};
 
@@ -94,17 +94,13 @@ class TaxonomyManagerListItem extends Component {
 		const { term, translate } = this.props;
 		const name = this.getName();
 		const postCount = get( term, 'post_count', 0 );
-		return translate(
-			'%(postCount)d \'%(name)s\' post',
-			'%(postCount)d \'%(name)s\' posts',
-			{
-				count: postCount,
-				args: {
-					postCount,
-					name
-				}
-			}
-		);
+		return translate( "%(postCount)d '%(name)s' post", "%(postCount)d '%(name)s' posts", {
+			count: postCount,
+			args: {
+				postCount,
+				name,
+			},
+		} );
 	};
 
 	showTooltip = () => {
@@ -124,7 +120,7 @@ class TaxonomyManagerListItem extends Component {
 		const { canSetAsDefault, isDefault, onClick, term, translate, isJetpack } = this.props;
 		const name = this.getName();
 		const className = classNames( 'taxonomy-manager__item', {
-			'is-default': isDefault
+			'is-default': isDefault,
 		} );
 		const deleteDialogButtons = [
 			{ action: 'cancel', label: translate( 'Cancel' ) },
@@ -139,17 +135,17 @@ class TaxonomyManagerListItem extends Component {
 				<span className="taxonomy-manager__label" onClick={ onClick }>
 					<span>{ name }</span>
 					{ isDefault &&
-					<span className="taxonomy-manager__default-label">
+						<span className="taxonomy-manager__default-label">
 							{ translate( 'default', { context: 'label for terms marked as default' } ) }
-						</span>
-					}
+						</span> }
 				</span>
-				{ ! isUndefined( term.post_count ) && <Count
-					ref="count"
-					count={ term.post_count }
-					onMouseEnter={ this.showTooltip }
-					onMouseLeave={ this.hideTooltip }
-				/> }
+				{ ! isUndefined( term.post_count ) &&
+					<Count
+						ref="count"
+						count={ term.post_count }
+						onMouseEnter={ this.showTooltip }
+						onMouseLeave={ this.hideTooltip }
+					/> }
 				<Tooltip
 					context={ this.refs && this.refs.count }
 					isVisible={ this.state.showTooltip }
@@ -165,34 +161,38 @@ class TaxonomyManagerListItem extends Component {
 					{ ( ! canSetAsDefault || ! isDefault ) &&
 						<PopoverMenuItem onClick={ this.deleteItem } icon="trash">
 							{ translate( 'Delete' ) }
-						</PopoverMenuItem>
-					}
+						</PopoverMenuItem> }
 					{ ! isJetpack &&
 						<WithPreviewProps
-								url={ this.getTaxonomyLink() }
-								isPreviewable={ this.props.isPreviewable }>
-							{ ( props ) =>
-								<PopoverMenuItem { ...props }
-										icon={ this.props.isPreviewable
-											? 'visible' : 'external' }>
+							url={ this.getTaxonomyLink() }
+							isPreviewable={ this.props.isPreviewable }
+						>
+							{ props => (
+								<PopoverMenuItem
+									{ ...props }
+									icon={ this.props.isPreviewable ? 'visible' : 'external' }
+								>
 									{ translate( 'View Posts' ) }
 								</PopoverMenuItem>
-							}
-						</WithPreviewProps>
-					}
+							) }
+						</WithPreviewProps> }
 					{ canSetAsDefault && ! isDefault && <PopoverMenuSeparator /> }
-					{ canSetAsDefault && ! isDefault &&
+					{ canSetAsDefault &&
+						! isDefault &&
 						<PopoverMenuItem onClick={ this.setAsDefault } icon="checkmark-circle">
 							{ translate( 'Set as default' ) }
-						</PopoverMenuItem>
-					}
+						</PopoverMenuItem> }
 				</EllipsisMenu>
 				<Dialog
 					isVisible={ this.state.showDeleteDialog }
 					buttons={ deleteDialogButtons }
 					onClose={ this.closeDeleteDialog }
 				>
-					<p>{ translate( 'Are you sure you want to permanently delete \'%(name)s\'?', { args: { name } } ) }</p>
+					<p>
+						{ translate( "Are you sure you want to permanently delete '%(name)s'?", {
+							args: { name },
+						} ) }
+					</p>
 				</Dialog>
 			</div>
 		);
@@ -223,5 +223,5 @@ export default connect(
 		saveSiteSettings,
 		recordGoogleEvent,
 		bumpStat,
-	}
+	},
 )( localize( TaxonomyManagerListItem ) );

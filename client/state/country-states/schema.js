@@ -8,17 +8,14 @@ export const itemSchema = {
 				type: 'object',
 				properties: {
 					code: {
-						type: 'string'
+						type: 'string',
 					},
 					name: {
-						type: 'string'
-					}
+						type: 'string',
+					},
 				},
-				required: [
-					'code',
-					'name'
-				]
-			}
-		}
-	}
+				required: [ 'code', 'name' ],
+			},
+		},
+	},
 };

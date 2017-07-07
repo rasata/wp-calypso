@@ -11,12 +11,7 @@ import sortBy from 'lodash/sortBy';
  * Internal dependencies
  */
 import { isIncludedWithPlan } from 'lib/purchases';
-import {
-	getDomainProductRanking,
-	isCredits,
-	isDomainProduct,
-	isPlan
-} from 'lib/products-values';
+import { getDomainProductRanking, isCredits, isDomainProduct, isPlan } from 'lib/products-values';
 
 /**
  * Sorts all products in the following order:
@@ -35,17 +30,13 @@ import {
  */
 
 function sortProducts( products ) {
-	var planItems,
-		includedItems,
-		domainItems,
-		creditItems,
-		otherItems;
+	var planItems, includedItems, domainItems, creditItems, otherItems;
 
 	planItems = products.filter( isPlan );
 
 	includedItems = products.filter( isIncludedWithPlan );
 
-	domainItems = difference( products, includedItems )
+	domainItems = difference( products, includedItems );
 	domainItems = domainItems.filter( isDomainProduct );
 	domainItems = toPairs( groupBy( domainItems, 'meta' ) );
 	domainItems = sortBy( domainItems, function( pair ) {

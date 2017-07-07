@@ -98,9 +98,9 @@ const CancelPrivacyProtection = React.createClass( {
 						'You have successfully canceled privacy protection for %(domain)s.',
 						{
 							args: { domain },
-						}
+						},
 					),
-					{ persistent: true }
+					{ persistent: true },
 				);
 
 				page( paths.managePurchase( this.props.selectedSite.slug, id ) );
@@ -126,7 +126,7 @@ const CancelPrivacyProtection = React.createClass( {
 					{
 						components: { strong: <strong />, br: <br /> },
 						args: { domain: purchase.meta },
-					}
+					},
 				) }
 			</p>
 		);
@@ -232,5 +232,5 @@ export default connect(
 		selectedPurchase: getByPurchaseId( state, props.purchaseId ),
 		selectedSite: getSelectedSiteSelector( state ),
 	} ),
-	{ cancelPrivacyProtection }
+	{ cancelPrivacyProtection },
 )( localize( CancelPrivacyProtection ) );

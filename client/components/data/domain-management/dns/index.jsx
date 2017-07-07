@@ -13,10 +13,7 @@ import DomainsStore from 'lib/domains/store';
 import upgradesActions from 'lib/upgrades/actions';
 import { getSelectedSite } from 'state/ui/selectors';
 
-const stores = [
-	DomainsStore,
-	DnsStore
-];
+const stores = [ DomainsStore, DnsStore ];
 
 function getStateFromStores( props ) {
 	let domains;
@@ -29,7 +26,7 @@ function getStateFromStores( props ) {
 		domains,
 		dns: DnsStore.getByDomainName( props.selectedDomainName ),
 		selectedDomainName: props.selectedDomainName,
-		selectedSite: props.selectedSite
+		selectedSite: props.selectedSite,
 	};
 }
 

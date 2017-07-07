@@ -12,11 +12,7 @@ import { groupBy, map, get, filter } from 'lodash';
  */
 import Main from 'components/main';
 import { getSelectedSiteId } from 'state/ui/selectors';
-import {
-	getSiteSlug,
-	getSiteTitle,
-	isJetpackSite,
-} from 'state/sites/selectors';
+import { getSiteSlug, getSiteTitle, isJetpackSite } from 'state/sites/selectors';
 import StatsFirstView from '../stats-first-view';
 import SidebarNavigation from 'my-sites/sidebar-navigation';
 import StatsNavigation from '../stats-navigation';
@@ -94,7 +90,7 @@ class ActivityLog extends Component {
 		window.scrollTo( 0, 0 );
 	}
 
-	handleRequestRestore = ( requestedRestoreTimestamp ) => {
+	handleRequestRestore = requestedRestoreTimestamp => {
 		this.setState( {
 			requestedRestoreTimestamp,
 			showRestoreConfirmDialog: true,
@@ -104,14 +100,15 @@ class ActivityLog extends Component {
 	handleRestoreDialogClose = () => this.setState( { showRestoreConfirmDialog: false } );
 
 	handleRestoreDialogConfirm = () => {
-		const {
-			rewindRestore,
-			siteId,
-		} = this.props;
+		const { rewindRestore, siteId } = this.props;
 
 		const { requestedRestoreTimestamp } = this.state;
 
-		debug( 'Restore requested for site %d to time %d', this.props.siteId, requestedRestoreTimestamp );
+		debug(
+			'Restore requested for site %d to time %d',
+			this.props.siteId,
+			requestedRestoreTimestamp,
+		);
 		this.setState( { showRestoreConfirmDialog: false } );
 		rewindRestore( siteId, requestedRestoreTimestamp );
 	};
@@ -126,7 +123,7 @@ class ActivityLog extends Component {
 	 */
 	getSiteOffsetFunc() {
 		const { timezone, gmtOffset } = this.props;
-		return ( moment ) => {
+		return moment => {
 			if ( timezone ) {
 				return moment.tz( timezone );
 			}
@@ -138,65 +135,42 @@ class ActivityLog extends Component {
 	}
 
 	renderBanner() {
-		const {
-			restoreProgress,
-			siteId,
-		} = this.props;
+		const { restoreProgress, siteId } = this.props;
 
 		if ( ! restoreProgress ) {
 			return null;
 		}
 
-		const {
-			errorCode,
-			failureReason,
-			percent,
-			status,
-			siteTitle,
-			timestamp,
-		} = restoreProgress;
+		const { errorCode, failureReason, percent, status, siteTitle, timestamp } = restoreProgress;
 
 		if ( status === 'finished' ) {
 			return (
 				<div>
 					<QueryActivityLog siteId={ siteId } />
-					{ errorCode ? (
-						<ErrorBanner
-							errorCode={ errorCode }
-							failureReason={ failureReason }
-							requestRestore={ this.handleRequestRestore }
-							siteId={ siteId }
-							siteTitle={ siteTitle }
-							timestamp={ timestamp } />
-					) : (
-						<SuccessBanner
-							siteId={ siteId }
-							timestamp={ timestamp } />
-					) }
+					{ errorCode
+						? <ErrorBanner
+								errorCode={ errorCode }
+								failureReason={ failureReason }
+								requestRestore={ this.handleRequestRestore }
+								siteId={ siteId }
+								siteTitle={ siteTitle }
+								timestamp={ timestamp }
+							/>
+						: <SuccessBanner siteId={ siteId } timestamp={ timestamp } /> }
 				</div>
 			);
 		}
-		return (
-			<ProgressBanner
-				percent={ percent }
-				status={ status }
-				timestamp={ timestamp }
-			/>
-		);
+		return <ProgressBanner percent={ percent } status={ status } timestamp={ timestamp } />;
 	}
 
 	renderErrorMessage() {
-		const {
-			isPressable,
-			rewindStatusError,
-			translate,
-		} = this.props;
+		const { isPressable, rewindStatusError, translate } = this.props;
 
 		// Do not match null
 		// FIXME: This is for internal testing
 		if ( false === isPressable ) {
 			return (
-				<ActivityLogBanner status="info" icon={ null } >
+				<ActivityLogBanner status="info" icon={ null }>
 					{ translate( 'Rewind is currently only available for Pressable sites' ) }
 				</ActivityLogBanner>
 			);
@@ -204,7 +178,7 @@ class ActivityLog extends Component {
 
 		if ( rewindStatusError ) {
 			return (
-				<ActivityLogBanner status="error" icon={ null } >
+				<ActivityLogBanner status="error" icon={ null }>
 					{ translate( 'Rewind error: %s', { args: rewindStatusError.message } ) }
 					<br />
 					{ translate( 'Do you have an appropriate plan?' ) }
@@ -214,15 +188,7 @@ class ActivityLog extends Component {
 	}
 
 	renderContent() {
-		const {
-			isPressable,
-			isRewindActive,
-			logs,
-			moment,
-			siteId,
-			slug,
-			startDate,
-		} = this.props;
+		const { isPressable, isRewindActive, logs, moment, siteId, slug, startDate } = this.props;
 
 		const applySiteOffset = this.getSiteOffsetFunc();
 
@@ -233,9 +199,8 @@ class ActivityLog extends Component {
 		} );
 
 		const logsGroupedByDay = map(
-			groupBy(
-				logsForMonth,
-				log => applySiteOffset( moment.utc( log.ts_utc ) ).endOf( 'day' ).valueOf()
+			groupBy( logsForMonth, log =>
+				applySiteOffset( moment.utc( log.ts_utc ) ).endOf( 'day' ).valueOf(),
 			),
 			( daily_logs, tsEndOfSiteDay ) => (
 				<ActivityLogDay
@@ -248,13 +213,13 @@ class ActivityLog extends Component {
 					tsEndOfSiteDay={ +tsEndOfSiteDay }
 					applySiteOffset={ applySiteOffset }
 				/>
-			)
+			),
 		);
 
 		const startOfMonth = moment.utc( startDate ).startOf( 'month' );
 		const query = {
 			period: 'month',
-			date: startOfMonth.format( 'YYYY-MM-DD' )
+			date: startOfMonth.format( 'YYYY-MM-DD' ),
 		};
 
 		return (
@@ -265,12 +230,7 @@ class ActivityLog extends Component {
 					url={ `/stats/activity/${ slug }` }
 					recordGoogleEvent={ this.changePeriod }
 				>
-					<DatePicker
-						isActivity={ true }
-						period="month"
-						date={ startOfMonth }
-						query={ query }
-					/>
+					<DatePicker isActivity={ true } period="month" date={ startOfMonth } query={ query } />
 				</StatsPeriodNavigation>
 				{ this.renderBanner() }
 				{ ! isRewindActive && !! isPressable && <ActivityLogRewindToggle siteId={ siteId } /> }
@@ -282,16 +242,8 @@ class ActivityLog extends Component {
 	}
 
 	render() {
-		const {
-			isJetpack,
-			siteId,
-			siteTitle,
-			slug,
-		} = this.props;
-		const {
-			requestedRestoreTimestamp,
-			showRestoreConfirmDialog,
-		} = this.state;
+		const { isJetpack, siteId, siteTitle, slug } = this.props;
+		const { requestedRestoreTimestamp, showRestoreConfirmDialog } = this.state;
 		const applySiteOffset = this.getSiteOffsetFunc();
 
 		return (
@@ -301,11 +253,7 @@ class ActivityLog extends Component {
 				<QuerySiteSettings siteId={ siteId } />
 				<StatsFirstView />
 				<SidebarNavigation />
-				<StatsNavigation
-					isJetpack={ isJetpack }
-					slug={ slug }
-					section="activity"
-				/>
+				<StatsNavigation isJetpack={ isJetpack } slug={ slug } section="activity" />
 				{ this.renderErrorMessage() }
 				{ this.renderContent() }
 				<ActivityLogConfirmDialog
@@ -322,7 +270,7 @@ class ActivityLog extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 
 		return {
@@ -340,8 +288,9 @@ export default connect(
 			timezone: getSiteTimezoneValue( state, siteId ),
 			gmtOffset: getSiteGmtOffset( state, siteId ),
 		};
-	}, {
+	},
+	{
 		recordGoogleEvent,
 		rewindRestore: rewindRestoreAction,
-	}
+	},
 )( localize( ActivityLog ) );

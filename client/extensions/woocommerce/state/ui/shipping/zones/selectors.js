@@ -8,14 +8,17 @@ import { get, find, findIndex, flatten, isNumber, map, remove, some } from 'loda
  */
 import createSelector from 'lib/create-selector';
 import { getSelectedSiteId } from 'state/ui/selectors';
-import { getAPIShippingZones, areShippingZonesLoaded } from 'woocommerce/state/sites/shipping-zones/selectors';
+import {
+	getAPIShippingZones,
+	areShippingZonesLoaded,
+} from 'woocommerce/state/sites/shipping-zones/selectors';
 import { getShippingZoneMethods } from './methods/selectors';
 
 export const getShippingZonesEdits = ( state, siteId ) => {
 	return get( state, [ 'extensions', 'woocommerce', 'ui', 'shipping', siteId, 'zones' ] );
 };
 
-const orderShippingZones = ( zones ) => {
+const orderShippingZones = zones => {
 	return [ ...zones ].sort( ( z1, z2 ) => {
 		//newly added zones should be on top and sorted by creation order
 		if ( ! isNumber( z1.id ) && ! isNumber( z2.id ) ) {
@@ -69,7 +72,7 @@ export const getShippingZones = createSelector(
 		// Overlay the current edits on top of (a copy of) the wc-api zones
 		const { creates, updates, deletes } = edits;
 		deletes.forEach( ( { id } ) => remove( zones, { id } ) );
-		updates.forEach( ( update ) => {
+		updates.forEach( update => {
 			const index = findIndex( zones, { id: update.id } );
 			if ( -1 === index ) {
 				return;
@@ -86,7 +89,7 @@ export const getShippingZones = createSelector(
 			loaded && getAPIShippingZones( state, siteId ),
 			loaded && getShippingZonesEdits( state, siteId ),
 		];
-	}
+	},
 );
 
 /**
@@ -117,7 +120,7 @@ export const getCurrentlyEditingShippingZone = createSelector(
 			edits,
 			edits && null !== edits.currentlyEditingId && getShippingZones( state, siteId ),
 		];
-	}
+	},
 );
 
 /**
@@ -140,7 +143,7 @@ export const areAnyShippingMethodsEnabled = ( state, siteId = getSelectedSiteId(
  * @return {Boolean} Whether this zone is considered "editable". As a rule, every zone is editable,
  * except the "Rest Of The World" zone, which always has id = 0.
  */
-const isEditableShippingZone = ( zoneId ) => ! isNumber( zoneId ) || 0 !== zoneId;
+const isEditableShippingZone = zoneId => ! isNumber( zoneId ) || 0 !== zoneId;
 
 /**
  * @param {Number|Object} zoneId Zone ID (can be a temporal ID)

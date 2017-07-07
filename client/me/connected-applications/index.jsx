@@ -21,14 +21,13 @@ var ConnectedAppItem = require( 'me/connected-application-item' ),
 	successNotice = require( 'state/notices/actions' ).successNotice;
 
 const ConnectedApplications = React.createClass( {
-
 	displayName: 'ConnectedApplications',
 
 	mixins: [ observe( 'connectedAppsData' ) ],
 
 	getDefaultProps: function() {
 		return {
-			applicationID: 0
+			applicationID: 0,
 		};
 	},
 
@@ -43,23 +42,29 @@ const ConnectedApplications = React.createClass( {
 	revokeConnection: function( applicationID, callback ) {
 		var application = this.props.connectedAppsData.getApplication( applicationID );
 		if ( 'undefined' !== typeof application ) {
-			this.props.connectedAppsData.revoke( parseInt( applicationID, 10 ), function( error ) {
-				debug( 'API call to revoke application is completed.' );
-				if ( error ) {
-					debug( 'There was an error revoking an application.' );
-					notices.clearNotices( 'notices' );
-					callback( error );
-				} else {
-					debug( 'Application connection was successfully revoked.' );
-					this.props.successNotice(
-						this.translate( '%(applicationTitle)s no longer has access to your WordPress.com account.', {
-							args: {
-								applicationTitle: application.title
-							}
-						} )
-					);
-				}
-			}.bind( this ) );
+			this.props.connectedAppsData.revoke(
+				parseInt( applicationID, 10 ),
+				function( error ) {
+					debug( 'API call to revoke application is completed.' );
+					if ( error ) {
+						debug( 'There was an error revoking an application.' );
+						notices.clearNotices( 'notices' );
+						callback( error );
+					} else {
+						debug( 'Application connection was successfully revoked.' );
+						this.props.successNotice(
+							this.translate(
+								'%(applicationTitle)s no longer has access to your WordPress.com account.',
+								{
+									args: {
+										applicationTitle: application.title,
+									},
+								},
+							),
+						);
+					}
+				}.bind( this ),
+			);
 		}
 	},
 
@@ -67,29 +72,38 @@ const ConnectedApplications = React.createClass( {
 		return (
 			<EmptyContent
 				title={ this.translate( "You haven't connected any apps yet." ) }
-				line={ this.translate( 'You can get started with the {{link}}WordPress mobile apps!{{/link}}', {
-					components: {
-						link: <a href="https://apps.wordpress.org/" target="_blank" rel="noopener noreferrer" title="WordPress Mobile Apps" />
-					}
-				} ) }
+				line={ this.translate(
+					'You can get started with the {{link}}WordPress mobile apps!{{/link}}',
+					{
+						components: {
+							link: (
+								<a
+									href="https://apps.wordpress.org/"
+									target="_blank"
+									rel="noopener noreferrer"
+									title="WordPress Mobile Apps"
+								/>
+							),
+						},
+					},
+				) }
 			/>
 		);
 	},
 
 	renderPlaceholders: function() {
-		var i,
-			placeholders = [];
+		var i, placeholders = [];
 
 		for ( i = 0; i < 5; i++ ) {
 			placeholders.push(
 				<ConnectedAppItem
 					connection={ {
 						ID: i,
-						title: this.translate( 'Loading Connected Applications' )
+						title: this.translate( 'Loading Connected Applications' ),
 					} }
 					key={ i }
 					isPlaceholder
-				/>
+				/>,
 			);
 		}
 
@@ -98,21 +112,21 @@ const ConnectedApplications = React.createClass( {
 
 	renderConnectedApps: function() {
 		return this.props.connectedAppsData.initialized
-		? this.props.connectedAppsData.get().map( function( connection ) {
-				return (
-					<ConnectedAppItem
-						connection={ connection }
-						key={ connection.ID }
-						connectedApplications={ this.props.connectedAppsData }
-						revoke={ this.revokeConnection } />
-				);
-			}, this )
-		: this.renderPlaceholders();
+			? this.props.connectedAppsData.get().map( function( connection ) {
+					return (
+						<ConnectedAppItem
+							connection={ connection }
+							key={ connection.ID }
+							connectedApplications={ this.props.connectedAppsData }
+							revoke={ this.revokeConnection }
+						/>
+					);
+				}, this )
+			: this.renderPlaceholders();
 	},
 
 	renderConnectedAppsList: function() {
-		var connectedApps,
-			hasConnectedApps = this.props.connectedAppsData.get().length;
+		var connectedApps, hasConnectedApps = this.props.connectedAppsData.get().length;
 
 		if ( this.props.connectedAppsData.initialized ) {
 			connectedApps = hasConnectedApps ? this.renderConnectedApps() : this.renderEmptyContent();
@@ -138,10 +152,9 @@ const ConnectedApplications = React.createClass( {
 				{ this.renderConnectedAppsList() }
 			</Main>
 		);
-	}
+	},
 } );
 
-export default connect(
-	null,
-	dispatch => bindActionCreators( { successNotice }, dispatch )
-)( ConnectedApplications );
+export default connect( null, dispatch => bindActionCreators( { successNotice }, dispatch ) )(
+	ConnectedApplications,
+);

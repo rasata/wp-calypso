@@ -13,7 +13,7 @@ describe( 'PageViewTracker', () => {
 
 	useFakeDom();
 	useFakeTimers( fakeClock => {
-		clock = fakeClock
+		clock = fakeClock;
 	} );
 
 	it( 'should immediately fire off event when given no delay', () => {
@@ -33,7 +33,7 @@ describe( 'PageViewTracker', () => {
 
 		clock.tick( 500 );
 
-		expect( recorder ).to.have.been.calledOnce
+		expect( recorder ).to.have.been.calledOnce;
 	} );
 
 	it( 'should pass the appropriate event information', () => {

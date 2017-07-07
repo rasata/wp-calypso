@@ -13,7 +13,6 @@ import SidebarMenu from 'layout/sidebar/menu';
 import SidebarItem from 'layout/sidebar/item';
 
 export default React.createClass( {
-
 	displayName: 'DevdocsSidebar',
 
 	mixins: [ PureRenderMixin ],
@@ -91,5 +90,5 @@ export default React.createClass( {
 				</SidebarMenu>
 			</Sidebar>
 		);
-	}
+	},
 } );

@@ -10,21 +10,19 @@ export default React.createClass( {
 
 	getDefaultProps: function() {
 		return {
-			status: 'inactive'
+			status: 'inactive',
 		};
 	},
 
 	propTypes: {
-		status: React.PropTypes.string
+		status: React.PropTypes.string,
 	},
 
 	render: function() {
-		var last = null,
-			status = this.props.status,
-			classes;
+		var last = null, status = this.props.status, classes;
 
 		if ( 'failed' === status ) {
-			last = ( <div className="is-problem" /> );
+			last = <div className="is-problem" />;
 		} else if ( 'success' === status ) {
 			return (
 				<div className="progress-indicator is-complete">
@@ -38,7 +36,7 @@ export default React.createClass( {
 			'is-in-progress': 'in-progress' === status,
 			'is-processing': 'processing' === status,
 			'is-complete': 'success' === status || 'complete' === status,
-			'is-inactive': 'inactive' === status
+			'is-inactive': 'inactive' === status,
 		} );
 
 		return (
@@ -48,5 +46,5 @@ export default React.createClass( {
 				{ last }
 			</div>
 		);
-	}
+	},
 } );

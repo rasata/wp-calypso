@@ -12,6 +12,6 @@ export default function() {
 
 		setLoggedIn: function( newIsLoggedIn ) {
 			isLoggedIn = newIsLoggedIn;
-		}
+		},
 	};
-};
+}

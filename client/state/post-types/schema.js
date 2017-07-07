@@ -16,9 +16,9 @@ export const items = {
 					capabilities: { type: 'object' },
 					api_queryable: { type: 'boolean' },
 					hierarchical: { type: 'boolean' },
-					supports: { type: 'object' }
-				}
-			}
-		}
-	}
+					supports: { type: 'object' },
+				},
+			},
+		},
+	},
 };

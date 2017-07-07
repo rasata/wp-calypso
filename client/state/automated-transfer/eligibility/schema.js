@@ -26,5 +26,5 @@ export const eligibility = {
 		lastUpdate,
 		eligibilityHolds,
 		eligibilityWarnings,
-	}
+	},
 };

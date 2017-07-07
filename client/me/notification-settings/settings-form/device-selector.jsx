@@ -16,21 +16,19 @@ class NotificationSettingsFormDeviceSelector extends PureComponent {
 	static propTypes = {
 		devices: PropTypes.array.isRequired,
 		selectedDeviceId: PropTypes.number.isRequired,
-		onChange: PropTypes.func.isRequired
+		onChange: PropTypes.func.isRequired,
 	};
 
 	render() {
 		const { devices } = this.props;
 		if ( size( devices ) === 1 ) {
-			return ( <StreamHeader title={ first( devices ).name } /> );
+			return <StreamHeader title={ first( devices ).name } />;
 		}
 
 		return (
 			<div className="notification-settings-form-header">
 				<div className="notification-settings-form-header__title">
-					<FormSelect
-						value={ this.props.selectedDeviceId }
-						onChange={ this.props.onChange } >
+					<FormSelect value={ this.props.selectedDeviceId } onChange={ this.props.onChange }>
 						{ map( devices, ( { id, name } ) => (
 							<option key={ id } value={ id }>{ name }</option>
 						) ) }
@@ -41,8 +39,6 @@ class NotificationSettingsFormDeviceSelector extends PureComponent {
 	}
 }
 
-export default connect(
-	state => ( {
-		devices: getUserDevices( state )
-	} )
-)( NotificationSettingsFormDeviceSelector );
+export default connect( state => ( {
+	devices: getUserDevices( state ),
+} ) )( NotificationSettingsFormDeviceSelector );

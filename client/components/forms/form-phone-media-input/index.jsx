@@ -15,13 +15,13 @@ export default React.createClass( {
 
 	getDefaultProps: function() {
 		return {
-			isError: false
+			isError: false,
 		};
 	},
 
 	render: function() {
 		const classes = classnames( this.props.className, {
-			'is-error': this.props.isError
+			'is-error': this.props.isError,
 		} );
 		return (
 			<div className={ classnames( this.props.additionalClasses, 'phone' ) }>
@@ -31,10 +31,12 @@ export default React.createClass( {
 						{ ...omit( this.props, [ 'className', 'countryCode' ] ) }
 						ref="input"
 						countryCode={ this.props.countryCode.toUpperCase() }
-						className={ classes } />
+						className={ classes }
+					/>
 				</div>
-				{ this.props.errorMessage && <FormInputValidation text={ this.props.errorMessage } isError /> }
+				{ this.props.errorMessage &&
+					<FormInputValidation text={ this.props.errorMessage } isError /> }
 			</div>
 		);
-	}
+	},
 } );

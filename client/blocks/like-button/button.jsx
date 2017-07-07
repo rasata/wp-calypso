@@ -110,10 +110,10 @@ class LikeButton extends PureComponent {
 					className: classNames( containerClasses ),
 					onClick: ! isLink && this.toggleLiked,
 				},
-				isNull
+				isNull,
 			),
 			<LikeIcons size={ this.props.iconSize } />,
-			labelElement
+			labelElement,
 		);
 	}
 }

@@ -29,12 +29,7 @@ const debug = debugFactory( 'calypso:url-search' );
  * @returns {string} The built search url
  */
 export const buildSearchUrl = ( { uri, search, queryKey = 's' } ) => {
-	const parsedUrl = pick(
-		url.parse( uri, true ),
-		'pathname',
-		'hash',
-		'query',
-	);
+	const parsedUrl = pick( url.parse( uri, true ), 'pathname', 'hash', 'query' );
 
 	if ( search ) {
 		parsedUrl.query[ queryKey ] = search;
@@ -50,19 +45,19 @@ const UrlSearch = Component => class extends React.Component {
 	static defaultProps = {
 		search: '',
 		queryKey: 's',
-	}
+	};
 
 	state = {
-		searchOpen: false
+		searchOpen: false,
 	};
 
 	componentWillReceiveProps( { search } ) {
 		return ! search && this.setState( { searchOpen: false } );
 	}
 
-	doSearch = ( query ) => {
+	doSearch = query => {
 		this.setState( {
-			searchOpen: ( false !== query )
+			searchOpen: false !== query,
 		} );
 
 		if ( this.onSearch ) {
@@ -73,7 +68,7 @@ const UrlSearch = Component => class extends React.Component {
 		const searchURL = buildSearchUrl( {
 			uri: window.location.href,
 			search: query,
-			queryKey: this.props.queryKey
+			queryKey: this.props.queryKey,
 		} );
 
 		debug( 'search for: %s', query );
@@ -87,14 +82,14 @@ const UrlSearch = Component => class extends React.Component {
 	};
 
 	getSearchOpen = () => {
-		return ( this.state.searchOpen !== false || this.props.search );
-	}
+		return this.state.searchOpen !== false || this.props.search;
+	};
 
 	render() {
 		return (
 			<Component
 				{ ...this.props }
-				doSearch = { this.doSearch }
+				doSearch={ this.doSearch }
 				getSearchOpen={ this.getSearchOpen }
 			/>
 		);

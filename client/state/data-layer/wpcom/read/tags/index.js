@@ -29,7 +29,7 @@ export function requestTags( store, action ) {
 			apiVersion: '1.2',
 			onSuccess: action,
 			onFailure: action,
-		} )
+		} ),
 	);
 }
 
@@ -49,7 +49,7 @@ export function receiveTagsSuccess( store, action, next, apiResponse ) {
 		receiveTags( {
 			payload: tags,
 			resetFollowingData: !! apiResponse.tags,
-		} )
+		} ),
 	);
 }
 

@@ -25,7 +25,7 @@ export const trackPromise = ( requestKey, promise ) => {
 		},
 		() => {
 			inflight.delete( requestKey );
-		}
+		},
 	);
 	// return the original promise so any subsequent thens don't flow through our handlers
 	return promise;

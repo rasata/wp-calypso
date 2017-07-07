@@ -50,5 +50,5 @@ export default connect(
 			requestingStatus: isRequestingStatus( state, siteId ),
 		};
 	},
-	{ requestStatus }
+	{ requestStatus },
 )( QueryStatus );

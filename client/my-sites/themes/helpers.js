@@ -26,7 +26,7 @@ function appendActionTracking( option, name ) {
 		action: t => {
 			action && action( t );
 			trackClick( 'more button', name );
-		}
+		},
 	} );
 }
 

@@ -187,9 +187,8 @@ class FollowingManage extends Component {
 		const sitesQueryWithoutProtocol = withoutHttp( sitesQuery );
 		const showFollowByUrl = this.shouldShowFollowByUrl();
 		const isFollowByUrlWithNoSearchResults = showFollowByUrl && searchResultsCount === 0;
-		const filteredRecommendedSites = reject(
-			recommendedSites,
-			site => includes( blockedSites, site.blogId ),
+		const filteredRecommendedSites = reject( recommendedSites, site =>
+			includes( blockedSites, site.blogId ),
 		);
 
 		return (
@@ -264,14 +263,16 @@ class FollowingManage extends Component {
 }
 
 export default connect( ( state, { sitesQuery } ) => ( {
-	searchResults: getReaderFeedsForQuery(
-		state,
-		{ query: sitesQuery, excludeFollowed: true, sort: SORT_BY_RELEVANCE },
-	),
-	searchResultsCount: getReaderFeedsCountForQuery(
-		state,
-		{ query: sitesQuery, excludeFollowed: true, sort: SORT_BY_RELEVANCE },
-	),
+	searchResults: getReaderFeedsForQuery( state, {
+		query: sitesQuery,
+		excludeFollowed: true,
+		sort: SORT_BY_RELEVANCE,
+	} ),
+	searchResultsCount: getReaderFeedsCountForQuery( state, {
+		query: sitesQuery,
+		excludeFollowed: true,
+		sort: SORT_BY_RELEVANCE,
+	} ),
 	recommendedSites: getReaderRecommendedSites( state, recommendationsSeed ),
 	recommendedSitesPagingOffset: getReaderRecommendedSitesPagingOffset( state, recommendationsSeed ),
 	blockedSites: getBlockedSites( state ),

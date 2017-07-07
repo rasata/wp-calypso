@@ -35,7 +35,7 @@ describe( 'cancellation-effect', function() {
 			it( 'should return translation of cancel and return', function() {
 				const headline = cancellationEffect.cancellationEffectHeadline( purchase, translate );
 				expect( headline.text ).to.equal(
-					'Are you sure you want to cancel and remove %(purchaseName)s from {{em}}%(domain)s{{/em}}? '
+					'Are you sure you want to cancel and remove %(purchaseName)s from {{em}}%(domain)s{{/em}}? ',
 				);
 			} );
 		} );
@@ -48,7 +48,7 @@ describe( 'cancellation-effect', function() {
 			it( 'should return translation of cancel', function() {
 				const headline = cancellationEffect.cancellationEffectHeadline( purchase, translate );
 				expect( headline.text ).to.equal(
-					'Are you sure you want to cancel %(purchaseName)s for {{em}}%(domain)s{{/em}}? '
+					'Are you sure you want to cancel %(purchaseName)s for {{em}}%(domain)s{{/em}}? ',
 				);
 			} );
 		} );
@@ -64,7 +64,7 @@ describe( 'cancellation-effect', function() {
 				productsValues.isTheme = () => true;
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
-					"Your site's appearance will revert to its previously selected theme and you will be refunded %(cost)s."
+					"Your site's appearance will revert to its previously selected theme and you will be refunded %(cost)s.",
 				);
 			} );
 
@@ -74,7 +74,7 @@ describe( 'cancellation-effect', function() {
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
 					'You will be refunded %(cost)s, but your G Suite account will continue working without interruption. ' +
-						'You will be able to manage your G Suite billing directly through Google.'
+						'You will be able to manage your G Suite billing directly through Google.',
 				);
 			} );
 
@@ -85,7 +85,7 @@ describe( 'cancellation-effect', function() {
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
 					'All plan features - spam filtering, backups, and security screening ' +
-						'- will be removed from your site and you will be refunded %(cost)s.'
+						'- will be removed from your site and you will be refunded %(cost)s.',
 				);
 			} );
 
@@ -95,7 +95,7 @@ describe( 'cancellation-effect', function() {
 				productsValues.isJetpackPlan = () => false;
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
-					'All plan features and custom changes will be removed from your site and you will be refunded %(cost)s.'
+					'All plan features and custom changes will be removed from your site and you will be refunded %(cost)s.',
 				);
 			} );
 		} );
@@ -110,7 +110,7 @@ describe( 'cancellation-effect', function() {
 				productsValues.isGoogleApps = () => true;
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
-					'Your G Suite account remains active until it expires on %(subscriptionEndDate)s.'
+					'Your G Suite account remains active until it expires on %(subscriptionEndDate)s.',
 				);
 			} );
 
@@ -119,7 +119,7 @@ describe( 'cancellation-effect', function() {
 				productsValues.isDomainMapping = () => true;
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
-					'Your domain mapping remains active until it expires on %(subscriptionEndDate)s.'
+					'Your domain mapping remains active until it expires on %(subscriptionEndDate)s.',
 				);
 			} );
 
@@ -128,7 +128,7 @@ describe( 'cancellation-effect', function() {
 				productsValues.isDomainMapping = () => false;
 				const headline = cancellationEffect.cancellationEffectDetail( purchase, translate );
 				expect( headline.text ).to.equal(
-					"Your plan's features remain active until your subscription expires on %(subscriptionEndDate)s."
+					"Your plan's features remain active until your subscription expires on %(subscriptionEndDate)s.",
 				);
 			} );
 		} );

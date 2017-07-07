@@ -127,16 +127,21 @@ export const ReaderSidebar = createReactClass( {
 							</li>
 							{ config.isEnabled( 'reader/conversations' ) &&
 								<li
-									className={ ReaderSidebarHelper.itemLinkClass( '/read/conversations', this.props.path, {
-										'sidebar-streams__conversations': true
-									} ) }
-									>
+									className={ ReaderSidebarHelper.itemLinkClass(
+										'/read/conversations',
+										this.props.path,
+										{
+											'sidebar-streams__conversations': true,
+										},
+									) }
+								>
 									<a href="/read/conversations">
 										<Gridicon icon="comment" size={ 24 } />
-										<span className="menu-link-text">{ this.props.translate( 'Conversations' ) }</span>
+										<span className="menu-link-text">
+											{ this.props.translate( 'Conversations' ) }
+										</span>
 									</a>
-								</li>
-							}
+								</li> }
 
 							<ReaderSidebarTeams teams={ this.props.teams } path={ this.props.path } />
 
@@ -169,7 +174,7 @@ export const ReaderSidebar = createReactClass( {
 								className={ ReaderSidebarHelper.itemLinkClass(
 									'/activities/likes',
 									this.props.path,
-									{ 'sidebar-activity__likes': true }
+									{ 'sidebar-activity__likes': true },
 								) }
 							>
 								<a href="/activities/likes">
@@ -235,16 +240,14 @@ export const shouldRenderAppPromo = ( options = {} ) => {
 		isUserOnChromeOs = /\bCrOS\b/.test( navigator.userAgent ),
 	} = options;
 
-	return every(
-		[
-			! isDesktopPromoDisabled,
-			isUserLocaleEnglish,
-			! isViewportMobile,
-			! isUserOnChromeOs,
-			isDesktopPromoConfiguredToRun,
-			! isUserDesktopAppUser,
-		]
-	);
+	return every( [
+		! isDesktopPromoDisabled,
+		isUserLocaleEnglish,
+		! isViewportMobile,
+		! isUserOnChromeOs,
+		isDesktopPromoConfiguredToRun,
+		! isUserDesktopAppUser,
+	] );
 };
 
 export default connect(
@@ -264,7 +267,7 @@ export default connect(
 				toggleTagsVisibility: toggleReaderSidebarTags,
 				setNextLayoutFocus,
 			},
-			dispatch
+			dispatch,
 		);
-	}
+	},
 )( localize( ReaderSidebar ) );

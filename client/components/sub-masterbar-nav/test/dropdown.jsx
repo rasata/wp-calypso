@@ -14,12 +14,12 @@ import Item from '../item';
 describe( 'Dropdown', () => {
 	const options = [
 		{ label: 'sites', uri: '/sites', icon: 'star' },
-		{ label: 'more', uri: '/more', icon: 'star' }
+		{ label: 'more', uri: '/more', icon: 'star' },
 	];
 
 	it( 'should render a dropdown given a list of options and the current selection', () => {
 		const wrapper = shallow(
-			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />
+			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />,
 		);
 
 		const select = wrapper.find( '.sub-masterbar-nav__select' );
@@ -40,7 +40,7 @@ describe( 'Dropdown', () => {
 
 	it( 'should be toggled by clicking the selected item', () => {
 		const wrapper = shallow(
-			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />
+			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />,
 		);
 
 		expect( wrapper.hasClass( 'is-collapsed' ) ).to.equal( true );
@@ -56,7 +56,7 @@ describe( 'Dropdown', () => {
 
 	it( 'should close after invoking onSelect from its children', () => {
 		const wrapper = shallow(
-			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />
+			<Dropdown selected={ { label: 'Select option', icon: 'home' } } options={ options } />,
 		);
 
 		wrapper.find( '.sub-masterbar-nav__select' ).simulate( 'click' );

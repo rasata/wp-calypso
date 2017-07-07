@@ -24,7 +24,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const isRequesting = isRequestingSettings( state, primarySiteId );
 
@@ -38,10 +38,10 @@ describe( 'selectors', () => {
 						settings: {
 							requesting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingSettings( state, secondarySiteId );
 
@@ -55,10 +55,10 @@ describe( 'selectors', () => {
 						settings: {
 							requesting: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingSettings( state, primarySiteId );
 
@@ -72,10 +72,10 @@ describe( 'selectors', () => {
 						settings: {
 							requesting: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRequesting = isRequestingSettings( state, primarySiteId );
 
@@ -89,8 +89,8 @@ describe( 'selectors', () => {
 				extensions: {
 					wpSuperCache: {
 						settings: undefined,
-					}
-				}
+					},
+				},
 			};
 			const isRestoring = isRestoringSettings( state, primarySiteId );
 
@@ -104,10 +104,10 @@ describe( 'selectors', () => {
 						settings: {
 							restoring: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRestoring = isRestoringSettings( state, secondarySiteId );
 
@@ -121,10 +121,10 @@ describe( 'selectors', () => {
 						settings: {
 							restoring: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRestoring = isRestoringSettings( state, primarySiteId );
 
@@ -138,10 +138,10 @@ describe( 'selectors', () => {
 						settings: {
 							restoring: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isRestoring = isRestoringSettings( state, primarySiteId );
 
@@ -156,11 +156,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isSaving = isSavingSettings( state, secondarySiteId );
 
@@ -173,11 +173,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isSaving = isSavingSettings( state, primarySiteId );
 
@@ -190,11 +190,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isSaving = isSavingSettings( state, primarySiteId );
 
@@ -209,11 +209,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isSettingsSaveSuccessful( state, secondarySiteId );
 
@@ -226,11 +226,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isSettingsSaveSuccessful( state, primarySiteId );
 
@@ -243,11 +243,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isSettingsSaveSuccessful( state, primarySiteId );
 
@@ -262,7 +262,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const settings = getSettings( state, primarySiteId );
 
@@ -276,10 +276,10 @@ describe( 'selectors', () => {
 						settings: {
 							items: {
 								[ primarySiteId ]: primarySettings,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const settings = getSettings( state, secondarySiteId );
 
@@ -293,10 +293,10 @@ describe( 'selectors', () => {
 						settings: {
 							items: {
 								[ primarySiteId ]: primarySettings,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const settings = getSettings( state, primarySiteId );
 
@@ -311,11 +311,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getSettingsSaveStatus( state, secondarySiteId );
 
@@ -328,11 +328,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const status = getSettingsSaveStatus( state, primarySiteId );
 
@@ -345,11 +345,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const status = getSettingsSaveStatus( state, primarySiteId );
 
@@ -362,11 +362,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						settings: {
 							saveStatus: {
-								[ primarySiteId ]: { saving: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { saving: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getSettingsSaveStatus( state, primarySiteId );
 

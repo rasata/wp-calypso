@@ -114,7 +114,7 @@ class PurchaseItem extends Component {
 			'purchase-item',
 			{ 'is-expired': purchase && 'expired' === purchase.expiryStatus },
 			{ 'is-placeholder': isPlaceholder },
-			{ 'is-included-with-plan': purchase && isIncludedWithPlan( purchase ) }
+			{ 'is-included-with-plan': purchase && isIncludedWithPlan( purchase ) },
 		);
 
 		let icon;

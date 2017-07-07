@@ -5,7 +5,14 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import Gridicon from 'gridicons';
 
-const BulkSelect = ( { totalElements, selectedElements, className, disabled, readOnly, onToggle } ) => {
+const BulkSelect = ( {
+	totalElements,
+	selectedElements,
+	className,
+	disabled,
+	readOnly,
+	onToggle,
+} ) => {
 	const hasAllElementsSelected = selectedElements && selectedElements === totalElements;
 	const hasSomeElementsSelected = selectedElements && selectedElements < totalElements;
 	const inputClasses = classNames( 'bulk-select__box', { 'is-checked': hasAllElementsSelected } );
@@ -27,11 +34,11 @@ const BulkSelect = ( { totalElements, selectedElements, className, disabled, rea
 					className={ inputClasses }
 					checked={ hasAllElementsSelected }
 					disabled={ disabled }
-					readOnly />
-				{ hasSomeElementsSelected ? <Gridicon
-					className={ iconClasses }
-					icon="minus-small"
-					size={ 18 } /> : null }
+					readOnly
+				/>
+				{ hasSomeElementsSelected
+					? <Gridicon className={ iconClasses } icon="minus-small" size={ 18 } />
+					: null }
 			</span>
 		</span>
 	);

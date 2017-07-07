@@ -26,7 +26,7 @@ describe( 'utils', () => {
 		it( 'should parse simple object to csv', () => {
 			const data = buildExportArray( {
 				label: 'Chicken',
-				value: 10
+				value: 10,
 			} );
 
 			expect( data ).to.eql( [ [ '"Chicken"', 10 ] ] );
@@ -35,7 +35,7 @@ describe( 'utils', () => {
 		it( 'should escape simple object to csv', () => {
 			const data = buildExportArray( {
 				label: 'Chicken and "Ribs"',
-				value: 10
+				value: 10,
 			} );
 
 			expect( data ).to.eql( [ [ '"Chicken and ""Ribs""', 10 ] ] );
@@ -45,24 +45,29 @@ describe( 'utils', () => {
 			const data = buildExportArray( {
 				label: 'BBQ',
 				value: 10,
-				children: [ {
-					label: 'Chicken',
-					value: 5
-				}, {
-					label: 'Ribs',
-					value: 2,
-					children: [ {
-						label: 'Babyback',
-						value: 1
-					} ]
-				} ]
+				children: [
+					{
+						label: 'Chicken',
+						value: 5,
+					},
+					{
+						label: 'Ribs',
+						value: 2,
+						children: [
+							{
+								label: 'Babyback',
+								value: 1,
+							},
+						],
+					},
+				],
 			} );
 
 			expect( data ).to.eql( [
 				[ '"BBQ"', 10 ],
 				[ '"BBQ > Chicken"', 5 ],
 				[ '"BBQ > Ribs"', 2 ],
-				[ '"BBQ > Ribs > Babyback"', 1 ]
+				[ '"BBQ > Ribs > Babyback"', 1 ],
 			] );
 		} );
 	} );
@@ -73,7 +78,7 @@ describe( 'utils', () => {
 
 			expect( period ).to.eql( {
 				startOf: '2016-06-01',
-				endOf: '2016-06-01'
+				endOf: '2016-06-01',
 			} );
 		} );
 
@@ -82,7 +87,7 @@ describe( 'utils', () => {
 
 			expect( period ).to.eql( {
 				startOf: '2016-05-30',
-				endOf: '2016-06-05'
+				endOf: '2016-06-05',
 			} );
 		} );
 
@@ -91,7 +96,7 @@ describe( 'utils', () => {
 
 			expect( period ).to.eql( {
 				startOf: '2016-06-01',
-				endOf: '2016-06-30'
+				endOf: '2016-06-30',
 			} );
 		} );
 
@@ -100,7 +105,7 @@ describe( 'utils', () => {
 
 			expect( period ).to.eql( {
 				startOf: '2016-01-01',
-				endOf: '2016-12-31'
+				endOf: '2016-12-31',
 			} );
 		} );
 	} );
@@ -109,7 +114,7 @@ describe( 'utils', () => {
 		it( 'should return a JSON string of a query', () => {
 			const serializedQuery = getSerializedStatsQuery( {
 				startDate: '2016-06-01',
-				endDate: '2016-07-01'
+				endDate: '2016-07-01',
 			} );
 
 			expect( serializedQuery ).to.equal( '[["endDate","2016-07-01"],["startDate","2016-06-01"]]' );
@@ -118,12 +123,12 @@ describe( 'utils', () => {
 		it( 'should return the same JSON string of a query regardless of query object order', () => {
 			const serializedQuery = getSerializedStatsQuery( {
 				startDate: '2016-06-01',
-				endDate: '2016-07-01'
+				endDate: '2016-07-01',
 			} );
 
 			const serializedQueryTwo = getSerializedStatsQuery( {
 				endDate: '2016-07-01',
-				startDate: '2016-06-01'
+				startDate: '2016-06-01',
 			} );
 
 			expect( serializedQuery ).to.eql( serializedQueryTwo );
@@ -151,13 +156,16 @@ describe( 'utils', () => {
 			expect( isAllowed ).to.be.true;
 		} );
 
-		it( 'should return false for a period that doesn\'t include today', () => {
+		it( "should return false for a period that doesn't include today", () => {
 			const isAllowed = isAutoRefreshAllowedForQuery( { period: 'week', date: '2016-06-01' } );
 			expect( isAllowed ).to.be.false;
 		} );
 
 		it( 'should return true for a period that includes today', () => {
-			const isAllowed = isAutoRefreshAllowedForQuery( { period: 'day', date: moment().format( 'YYYY-MM-DD' ) } );
+			const isAllowed = isAutoRefreshAllowedForQuery( {
+				period: 'day',
+				date: moment().format( 'YYYY-MM-DD' ),
+			} );
 			expect( isAllowed ).to.be.true;
 		} );
 	} );
@@ -177,20 +185,22 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should return parsed camelCased stats object', () => {
-				const parsedData = normalizers.stats( { stats: {
-					posts: 2,
-					views: 300,
-					visitors: 400,
-					views_best_day: '2010-09-29',
-					views_best_day_total: 100
-				} } );
+				const parsedData = normalizers.stats( {
+					stats: {
+						posts: 2,
+						views: 300,
+						visitors: 400,
+						views_best_day: '2010-09-29',
+						views_best_day_total: 100,
+					},
+				} );
 
 				expect( parsedData ).to.eql( {
 					posts: 2,
 					views: 300,
 					visitors: 400,
 					viewsBestDay: '2010-09-29',
-					viewsBestDayTotal: 100
+					viewsBestDayTotal: 100,
 				} );
 			} );
 		} );
@@ -215,28 +225,32 @@ describe( 'utils', () => {
 							ID: 11111111,
 							url: null,
 							follow_data: null,
-							date_subscribed: '2015-04-07T18:53:05+00:00'
-						}
-					]
+							date_subscribed: '2015-04-07T18:53:05+00:00',
+						},
+					],
 				} );
 
 				expect( parsedData ).to.eql( {
 					total_email: 5,
 					total_wpcom: 120,
-					subscribers: [ {
-						label: 'wapuu@wordpress.org',
-						iconClassName: 'avatar-user',
-						icon: null,
-						link: null,
-						value: {
-							type: 'relative-date',
-							value: '2015-04-07T18:53:05+00:00'
+					subscribers: [
+						{
+							label: 'wapuu@wordpress.org',
+							iconClassName: 'avatar-user',
+							icon: null,
+							link: null,
+							value: {
+								type: 'relative-date',
+								value: '2015-04-07T18:53:05+00:00',
+							},
+							actions: [
+								{
+									type: 'follow',
+									data: false,
+								},
+							],
 						},
-						actions: [ {
-							type: 'follow',
-							data: false
-						} ]
-					} ]
+					],
 				} );
 			} );
 		} );
@@ -255,15 +269,15 @@ describe( 'utils', () => {
 					posts: [
 						{
 							id: 0,
-							followers: 20
+							followers: 20,
 						},
 						{
 							id: 1111,
 							title: 'My title',
 							followers: 10,
-							url: 'https://en.blog.wordpress.com/chicken'
-						}
-					]
+							url: 'https://en.blog.wordpress.com/chicken',
+						},
+					],
 				} );
 
 				expect( parsedData ).to.eql( {
@@ -273,15 +287,15 @@ describe( 'utils', () => {
 					posts: [
 						{
 							label: 'All Posts',
-							value: 20
+							value: 20,
 						},
 						{
 							label: 'My title',
 							labelIcon: 'external',
 							link: 'https://en.blog.wordpress.com/chicken',
-							value: 10
-						}
-					]
+							value: 10,
+						},
+					],
 				} );
 			} );
 		} );
@@ -301,7 +315,7 @@ describe( 'utils', () => {
 							link: '?user_id=1662656',
 							gravatar: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
 							follow_data: null,
-						}
+						},
 					],
 					posts: [
 						{
@@ -309,36 +323,40 @@ describe( 'utils', () => {
 							name: 'My title',
 							comments: 10,
 							link: 'https://en.blog.wordpress.com/chicken',
-						}
-					]
+						},
+					],
 				} );
 
 				expect( parsedData ).to.eql( {
-					posts: [ {
-						actions: [
-							{
-								data: 'https://en.blog.wordpress.com/chicken',
-								type: 'link'
-							}
-						],
-						label: 'My title',
-						page: null,
-						value: 10
-					} ],
-					authors: [ {
-						actions: [
-							{
-								data: false,
-								type: 'follow'
-							}
-						],
-						className: 'module-content-list-item-large',
-						icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?d=mm',
-						iconClassName: 'avatar-user',
-						label: 'John',
-						link: 'nulledit-comments.php?user_id=1662656',
-						value: 12
-					} ]
+					posts: [
+						{
+							actions: [
+								{
+									data: 'https://en.blog.wordpress.com/chicken',
+									type: 'link',
+								},
+							],
+							label: 'My title',
+							page: null,
+							value: 10,
+						},
+					],
+					authors: [
+						{
+							actions: [
+								{
+									data: false,
+									type: 'follow',
+								},
+							],
+							className: 'module-content-list-item-large',
+							icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?d=mm',
+							iconClassName: 'avatar-user',
+							label: 'John',
+							link: 'nulledit-comments.php?user_id=1662656',
+							value: 12,
+						},
+					],
 				} );
 			} );
 		} );
@@ -363,114 +381,146 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should properly parse day period response', () => {
-				const parsedData = normalizers.statsTopPosts( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
-							postviews: [ {
-								id: 0,
-								href: 'http://en.blog.wordpress.com',
-								date: null,
-								title: 'Home Page / Archives',
-								type: 'homepage',
-								views: 3939
-							} ],
-							total_views: 0
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsTopPosts(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								postviews: [
+									{
+										id: 0,
+										href: 'http://en.blog.wordpress.com',
+										date: null,
+										title: 'Home Page / Archives',
+										type: 'homepage',
+										views: 3939,
+									},
+								],
+								total_views: 0,
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
-				expect( parsedData ).to.eql( [ {
-					label: 'Home Page / Archives',
-					value: 3939,
-					page: '/stats/post/0/en.blog.wordpress.com',
-					actions: [ {
-						type: 'link',
-						data: 'http://en.blog.wordpress.com'
-					} ],
-					labelIcon: null,
-					children: null,
-					className: null
-				} ] );
+				expect( parsedData ).to.eql( [
+					{
+						label: 'Home Page / Archives',
+						value: 3939,
+						page: '/stats/post/0/en.blog.wordpress.com',
+						actions: [
+							{
+								type: 'link',
+								data: 'http://en.blog.wordpress.com',
+							},
+						],
+						labelIcon: null,
+						children: null,
+						className: null,
+					},
+				] );
 			} );
 
 			it( 'should properly add published className for posts published in period', () => {
-				const parsedData = normalizers.statsTopPosts( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
-							postviews: [ {
-								id: 777,
-								href: 'http://en.blog.wordpress.com/2017/01/12/wordpress-com-lightroom/',
-								date: '2017-01-12 15:55:34',
-								title: 'New WordPress.com for Lightroom Makes Publishing Your Photos Easy',
-								type: 'post',
-								views: 774
-							} ],
-							total_views: 0
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsTopPosts(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								postviews: [
+									{
+										id: 777,
+										href: 'http://en.blog.wordpress.com/2017/01/12/wordpress-com-lightroom/',
+										date: '2017-01-12 15:55:34',
+										title: 'New WordPress.com for Lightroom Makes Publishing Your Photos Easy',
+										type: 'post',
+										views: 774,
+									},
+								],
+								total_views: 0,
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
-				expect( parsedData ).to.eql( [ {
-					label: 'New WordPress.com for Lightroom Makes Publishing Your Photos Easy',
-					value: 774,
-					page: '/stats/post/777/en.blog.wordpress.com',
-					actions: [ {
-						type: 'link',
-						data: 'http://en.blog.wordpress.com/2017/01/12/wordpress-com-lightroom/'
-					} ],
-					labelIcon: null,
-					children: null,
-					className: 'published'
-				}
+				expect( parsedData ).to.eql( [
+					{
+						label: 'New WordPress.com for Lightroom Makes Publishing Your Photos Easy',
+						value: 774,
+						page: '/stats/post/777/en.blog.wordpress.com',
+						actions: [
+							{
+								type: 'link',
+								data: 'http://en.blog.wordpress.com/2017/01/12/wordpress-com-lightroom/',
+							},
+						],
+						labelIcon: null,
+						children: null,
+						className: 'published',
+					},
 				] );
 			} );
 
 			it( 'should properly parse summarized response', () => {
-				const parsedData = normalizers.statsTopPosts( {
-					date: '2017-01-12',
-					summary: {
-						postviews: [ {
-							id: 0,
-							href: 'http://en.blog.wordpress.com',
-							date: null,
-							title: 'Home Page / Archives',
-							type: 'homepage',
-							views: 3939
-						} ],
-						total_views: 0
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12',
-					summarize: 1
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsTopPosts(
+					{
+						date: '2017-01-12',
+						summary: {
+							postviews: [
+								{
+									id: 0,
+									href: 'http://en.blog.wordpress.com',
+									date: null,
+									title: 'Home Page / Archives',
+									type: 'homepage',
+									views: 3939,
+								},
+							],
+							total_views: 0,
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+						summarize: 1,
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
-				expect( parsedData ).to.eql( [ {
-					label: 'Home Page / Archives',
-					value: 3939,
-					page: '/stats/post/0/en.blog.wordpress.com',
-					actions: [ {
-						type: 'link',
-						data: 'http://en.blog.wordpress.com'
-					} ],
-					labelIcon: null,
-					children: null,
-					className: null
-				} ] );
+				expect( parsedData ).to.eql( [
+					{
+						label: 'Home Page / Archives',
+						value: 3939,
+						page: '/stats/post/0/en.blog.wordpress.com',
+						actions: [
+							{
+								type: 'link',
+								data: 'http://en.blog.wordpress.com',
+							},
+						],
+						labelIcon: null,
+						children: null,
+						className: null,
+					},
+				] );
 			} );
 		} );
 
@@ -494,30 +544,35 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should properly parse day period response', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					days: {
-						'2015-12-25': {
-							views: [ {
-								country_code: 'US',
-								views: 1
-							} ],
-							other_views: 0,
-							total_views: 1
-						}
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						days: {
+							'2015-12-25': {
+								views: [
+									{
+										country_code: 'US',
+										views: 1,
+									},
+								],
+								other_views: 0,
+								total_views: 1,
+							},
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
+								country_full: 'United States',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
-							country_full: 'United States',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2015-12-25'
-				} );
+					{
+						period: 'day',
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -525,36 +580,41 @@ describe( 'utils', () => {
 						countryCode: 'US',
 						value: 1,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 
 			it( 'should properly parse week period response', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					days: {
-						'2015-12-21': {
-							views: [ {
-								country_code: 'US',
-								views: 10
-							} ],
-							other_views: 0,
-							total_views: 10
-						}
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						days: {
+							'2015-12-21': {
+								views: [
+									{
+										country_code: 'US',
+										views: 10,
+									},
+								],
+								other_views: 0,
+								total_views: 10,
+							},
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
+								country_full: 'United States',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
-							country_full: 'United States',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'week',
-					date: '2015-12-25'
-				} );
+					{
+						period: 'week',
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -562,35 +622,40 @@ describe( 'utils', () => {
 						countryCode: 'US',
 						value: 10,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 
 			it( 'should properly parse summarized response', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					summary: {
-						views: [ {
-							country_code: 'US',
-							views: 100
-						} ],
-						other_views: 0,
-						total_views: 100
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						summary: {
+							views: [
+								{
+									country_code: 'US',
+									views: 100,
+								},
+							],
+							other_views: 0,
+							total_views: 100,
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
+								country_full: 'United States',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
-							country_full: 'United States',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'day',
-					summarize: 1,
-					date: '2015-12-25'
-				} );
+					{
+						period: 'day',
+						summarize: 1,
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -598,36 +663,41 @@ describe( 'utils', () => {
 						countryCode: 'US',
 						value: 100,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 
 			it( 'should properly parse month period response', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					days: {
-						'2015-12-01': {
-							views: [ {
-								country_code: 'US',
-								views: 100
-							} ],
-							other_views: 0,
-							total_views: 100
-						}
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						days: {
+							'2015-12-01': {
+								views: [
+									{
+										country_code: 'US',
+										views: 100,
+									},
+								],
+								other_views: 0,
+								total_views: 100,
+							},
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
+								country_full: 'United States',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
-							country_full: 'United States',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'month',
-					date: '2015-12-25'
-				} );
+					{
+						period: 'month',
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -635,76 +705,87 @@ describe( 'utils', () => {
 						countryCode: 'US',
 						value: 100,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 
 			it( 'should sanitize ’ from country names', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					days: {
-						'2015-12-01': {
-							views: [ {
-								country_code: 'US',
-								views: 100
-							} ],
-							other_views: 0,
-							total_views: 100
-						}
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						days: {
+							'2015-12-01': {
+								views: [
+									{
+										country_code: 'US',
+										views: 100,
+									},
+								],
+								other_views: 0,
+								total_views: 100,
+							},
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://s-ssl.wordpress.com/i/stats/square-grey.png',
+								country_full: 'US’A',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://s-ssl.wordpress.com/i/stats/square-grey.png',
-							country_full: 'US’A',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'month',
-					date: '2015-12-25'
-				} );
+					{
+						period: 'month',
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
-						label: 'US\'A',
+						label: "US'A",
 						countryCode: 'US',
 						value: 100,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 
 			it( 'should ignore country_codes with no country-info', () => {
-				const parsedData = normalizers.statsCountryViews( {
-					date: '2015-12-25',
-					days: {
-						'2015-12-01': {
-							views: [ {
-								country_code: 'US',
-								views: 100
-							}, {
-								country_code: 'DERP',
-								views: 100
-							} ],
-							other_views: 0,
-							total_views: 100
-						}
+				const parsedData = normalizers.statsCountryViews(
+					{
+						date: '2015-12-25',
+						days: {
+							'2015-12-01': {
+								views: [
+									{
+										country_code: 'US',
+										views: 100,
+									},
+									{
+										country_code: 'DERP',
+										views: 100,
+									},
+								],
+								other_views: 0,
+								total_views: 100,
+							},
+						},
+						'country-info': {
+							US: {
+								flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
+								flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
+								country_full: 'United States',
+								map_region: '021',
+							},
+						},
 					},
-					'country-info': {
-						US: {
-							flag_icon: 'https://secure.gravatar.com/blavatar/5a83891a81b057fed56930a6aaaf7b3c?s=48',
-							flat_flag_icon: 'https://secure.gravatar.com/blavatar/9f4faa5ad0c723474f7a6d810172447c?s=48',
-							country_full: 'United States',
-							map_region: '021'
-						}
-					}
-				}, {
-					period: 'month',
-					date: '2015-12-25'
-				} );
+					{
+						period: 'month',
+						date: '2015-12-25',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -712,8 +793,8 @@ describe( 'utils', () => {
 						countryCode: 'US',
 						value: 100,
 						region: '021',
-						backgroundImage: '/calypso/images/flags/us.svg'
-					}
+						backgroundImage: '/calypso/images/flags/us.svg',
+					},
 				] );
 			} );
 		} );
@@ -737,7 +818,7 @@ describe( 'utils', () => {
 					highest_day_percent: 10,
 					highest_day_of_week: 6,
 					highest_hour_percent: 5,
-					hourly_views: []
+					hourly_views: [],
 				} );
 
 				expect( stats ).to.eql( {
@@ -745,7 +826,7 @@ describe( 'utils', () => {
 					hour: '11:00 AM',
 					hourPercent: 5,
 					percent: 10,
-					hourlyViews: []
+					hourlyViews: [],
 				} );
 			} );
 		} );
@@ -765,25 +846,29 @@ describe( 'utils', () => {
 
 			it( 'should return an a properly parsed services array', () => {
 				const parsedData = normalizers.statsPublicize( {
-					services: [ {
-						service: 'twitter',
-						followers: 528
-					}, {
-						service: 'facebook',
-						followers: 282
-					} ]
+					services: [
+						{
+							service: 'twitter',
+							followers: 528,
+						},
+						{
+							service: 'facebook',
+							followers: 282,
+						},
+					],
 				} );
 
 				expect( parsedData ).to.eql( [
 					{
 						label: 'Twitter',
 						icon: 'https://secure.gravatar.com/blavatar/7905d1c4e12c54933a44d19fcd5f9356?s=48',
-						value: 528
-					}, {
+						value: 528,
+					},
+					{
 						label: 'Facebook',
 						icon: 'https://secure.gravatar.com/blavatar/2343ec78a04c6ea9d80806345d31fd78?s=48',
-						value: 282
-					}
+						value: 282,
+					},
 				] );
 			} );
 		} );
@@ -808,37 +893,44 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should properly parse day period response', () => {
-				const parsedData = normalizers.statsVideoPlays( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
-							plays: [
-								{
-									plays: 32,
-									post_id: 111111111,
-									title: 'Press This!',
-									url: 'http://en.blog.wordpress.com/wp-admin/media.php?action=edit&attachment_id=111111111'
-								}
-							]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsVideoPlays(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								plays: [
+									{
+										plays: 32,
+										post_id: 111111111,
+										title: 'Press This!',
+										url: 'http://en.blog.wordpress.com/wp-admin/media.php?action=edit&attachment_id=111111111',
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
-						actions: [ {
-							data: 'http://en.blog.wordpress.com/wp-admin/media.php?action=edit&attachment_id=111111111',
-							type: 'link'
-						} ],
+						actions: [
+							{
+								data: 'http://en.blog.wordpress.com/wp-admin/media.php?action=edit&attachment_id=111111111',
+								type: 'link',
+							},
+						],
 						label: 'Press This!',
 						page: '/stats/day/videodetails/en.blog.wordpress.com?post=111111111',
-						value: 32
-					}
+						value: 32,
+					},
 				] );
 			} );
 		} );
@@ -852,15 +944,12 @@ describe( 'utils', () => {
 
 			it( 'should return an a properly parsed data array', () => {
 				const parsedData = normalizers.statsVideo( {
-					data: [
-						[ '2016-11-12', 1 ],
-						[ '2016-11-13', 0 ]
-					],
+					data: [ [ '2016-11-12', 1 ], [ '2016-11-13', 0 ] ],
 					pages: [
 						'https://vip.wordpress.com/category/themes/',
 						'http://freewordpressthemes.ru/p2-theme-for-the-blog-inspired-twitter.html',
-						'http://www.themepremium.com/blog-with-the-speed-of-your-thought-with-the-p2-theme/'
-					]
+						'http://www.themepremium.com/blog-with-the-speed-of-your-thought-with-the-p2-theme/',
+					],
 				} );
 
 				expect( parsedData ).to.eql( {
@@ -868,7 +957,7 @@ describe( 'utils', () => {
 						{
 							period: '2016-11-13',
 							value: 0,
-						}
+						},
 					],
 					pages: [
 						{
@@ -882,8 +971,8 @@ describe( 'utils', () => {
 						{
 							label: 'http://www.themepremium.com/blog-with-the-speed-of-your-thought-with-the-p2-theme/',
 							link: 'http://www.themepremium.com/blog-with-the-speed-of-your-thought-with-the-p2-theme/',
-						}
-					]
+						},
+					],
 				} );
 			} );
 		} );
@@ -908,60 +997,79 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should return an a properly parsed data array', () => {
-				const parsedData = normalizers.statsTopAuthors( {
-					date: '2017-01-17',
-					days: {
-						'2017-01-17': {
-							authors: [
-								{
-									name: 'Timmy Crawford',
-									avatar: 'https://0.gravatar.com/avatar/9929daa7594d5afa910a777ccb9e88e4?s=64&size=G',
-									posts: [
-										{ id: 30, title: 'Chicken', url: 'http://en.blog.wordpress.com/chicken', views: 6 },
-										{ id: 32, title: 'Ribs', url: 'http://en.blog.wordpress.com/ribs', views: 10 }
-									]
-								}
-							]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-17',
-					domain: 'en.blog.wordpress.com'
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsTopAuthors(
+					{
+						date: '2017-01-17',
+						days: {
+							'2017-01-17': {
+								authors: [
+									{
+										name: 'Timmy Crawford',
+										avatar: 'https://0.gravatar.com/avatar/9929daa7594d5afa910a777ccb9e88e4?s=64&size=G',
+										posts: [
+											{
+												id: 30,
+												title: 'Chicken',
+												url: 'http://en.blog.wordpress.com/chicken',
+												views: 6,
+											},
+											{
+												id: 32,
+												title: 'Ribs',
+												url: 'http://en.blog.wordpress.com/ribs',
+												views: 10,
+											},
+										],
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-17',
+						domain: 'en.blog.wordpress.com',
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
 						children: [
 							{
-								actions: [ {
-									data: 'http://en.blog.wordpress.com/chicken',
-									type: 'link'
-								} ],
+								actions: [
+									{
+										data: 'http://en.blog.wordpress.com/chicken',
+										type: 'link',
+									},
+								],
 								children: null,
 								label: 'Chicken',
 								page: '/stats/post/30/en.blog.wordpress.com',
-								value: 6
+								value: 6,
 							},
 							{
-								actions: [ {
-									data: 'http://en.blog.wordpress.com/ribs',
-									type: 'link'
-								} ],
+								actions: [
+									{
+										data: 'http://en.blog.wordpress.com/ribs',
+										type: 'link',
+									},
+								],
 								children: null,
 								label: 'Ribs',
 								page: '/stats/post/32/en.blog.wordpress.com',
-								value: 10
+								value: 10,
 							},
 						],
 						className: 'module-content-list-item-large',
 						icon: 'https://0.gravatar.com/avatar/9929daa7594d5afa910a777ccb9e88e4?d=mm',
 						iconClassName: 'avatar-user',
 						label: 'Timmy Crawford',
-						value: undefined
-					}
+						value: undefined,
+					},
 				] );
 			} );
 		} );
@@ -984,30 +1092,44 @@ describe( 'utils', () => {
 					tags: [
 						{
 							tags: [
-								{ type: 'category', name: 'Uncategorized', link: 'http://example.wordpress.com/category/uncategorized/' }
+								{
+									type: 'category',
+									name: 'Uncategorized',
+									link: 'http://example.wordpress.com/category/uncategorized/',
+								},
 							],
-							views: 2381
+							views: 2381,
 						},
 						{
 							tags: [
-								{ type: 'tag', name: 'supertag-chicken', link: 'http://example.wordpress.com/tag/supertag-chicken/' },
-								{ type: 'tag', name: 'supertag-ribs', link: 'http://example.wordpress.com/tag/supertag-ribs/' }
+								{
+									type: 'tag',
+									name: 'supertag-chicken',
+									link: 'http://example.wordpress.com/tag/supertag-chicken/',
+								},
+								{
+									type: 'tag',
+									name: 'supertag-ribs',
+									link: 'http://example.wordpress.com/tag/supertag-ribs/',
+								},
 							],
-							views: 740
+							views: 740,
 						},
-					]
+					],
 				} );
 
 				expect( parsedData ).to.eql( [
 					{
 						children: undefined,
-						label: [ {
-							label: 'Uncategorized',
-							labelIcon: 'folder',
-							link: 'http://example.wordpress.com/category/uncategorized/'
-						} ],
+						label: [
+							{
+								label: 'Uncategorized',
+								labelIcon: 'folder',
+								link: 'http://example.wordpress.com/category/uncategorized/',
+							},
+						],
 						link: 'http://example.wordpress.com/category/uncategorized/',
-						value: 2381
+						value: 2381,
 					},
 					{
 						children: [
@@ -1016,31 +1138,31 @@ describe( 'utils', () => {
 								labelIcon: 'tag',
 								link: 'http://example.wordpress.com/tag/supertag-chicken/',
 								children: null,
-								value: null
+								value: null,
 							},
 							{
 								label: 'supertag-ribs',
 								labelIcon: 'tag',
 								link: 'http://example.wordpress.com/tag/supertag-ribs/',
 								children: null,
-								value: null
-							}
+								value: null,
+							},
 						],
 						label: [
 							{
 								label: 'supertag-chicken',
 								labelIcon: 'tag',
-								link: null
+								link: null,
 							},
 							{
 								label: 'supertag-ribs',
 								labelIcon: 'tag',
-								link: null
-							}
+								link: null,
+							},
 						],
 						link: null,
-						value: 740
-					}
+						value: 740,
+					},
 				] );
 			} );
 		} );
@@ -1062,38 +1184,105 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should return an a properly parsed data array', () => {
-				const parsedData = normalizers.statsClicks( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
+				const parsedData = normalizers.statsClicks(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								clicks: [
+									{
+										icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
+										name: 'en.support.wordpress.com',
+										url: null,
+										views: 45,
+										children: [
+											{
+												name: 'en.support.wordpress.com',
+												url: 'https://en.support.wordpress.com/',
+												views: 5,
+											},
+										],
+									},
+									{
+										children: null,
+										icon: 'https://secure.gravatar.com/blavatar/3dbcb399a9112e3bb46f706b01c80062?s=48',
+										name: 'en.forums.wordpress.com',
+										url: 'https://en.forums.wordpress.com/',
+										views: 6,
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+				);
+
+				expect( parsedData ).to.eql( [
+					{
+						children: [
+							{
+								children: null,
+								label: 'en.support.wordpress.com',
+								labelIcon: 'external',
+								link: 'https://en.support.wordpress.com/',
+								value: 5,
+							},
+						],
+						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
+						label: 'en.support.wordpress.com',
+						labelIcon: null,
+						link: null,
+						value: 45,
+					},
+					{
+						children: null,
+						icon: 'https://secure.gravatar.com/blavatar/3dbcb399a9112e3bb46f706b01c80062?s=48',
+						label: 'en.forums.wordpress.com',
+						labelIcon: 'external',
+						link: 'https://en.forums.wordpress.com/',
+						value: 6,
+					},
+				] );
+			} );
+
+			it( 'should return an a properly parsed summary data array', () => {
+				const parsedData = normalizers.statsClicks(
+					{
+						date: '2017-01-12',
+						summary: {
 							clicks: [
 								{
 									icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
 									name: 'en.support.wordpress.com',
 									url: null,
-									views: 45,
+									views: 50,
 									children: [
 										{
 											name: 'en.support.wordpress.com',
 											url: 'https://en.support.wordpress.com/',
-											views: 5
-										}
-									]
+											views: 50,
+										},
+									],
 								},
 								{
 									children: null,
 									icon: 'https://secure.gravatar.com/blavatar/3dbcb399a9112e3bb46f706b01c80062?s=48',
 									name: 'en.forums.wordpress.com',
 									url: 'https://en.forums.wordpress.com/',
-									views: 6
-								}
-							]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				} );
+									views: 10,
+								},
+							],
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+						summarize: 1,
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -1103,75 +1292,14 @@ describe( 'utils', () => {
 								label: 'en.support.wordpress.com',
 								labelIcon: 'external',
 								link: 'https://en.support.wordpress.com/',
-								value: 5
-							}
-						],
-						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
-						label: 'en.support.wordpress.com',
-						labelIcon: null,
-						link: null,
-						value: 45
-					},
-					{
-						children: null,
-						icon: 'https://secure.gravatar.com/blavatar/3dbcb399a9112e3bb46f706b01c80062?s=48',
-						label: 'en.forums.wordpress.com',
-						labelIcon: 'external',
-						link: 'https://en.forums.wordpress.com/',
-						value: 6
-					}
-				] );
-			} );
-
-			it( 'should return an a properly parsed summary data array', () => {
-				const parsedData = normalizers.statsClicks( {
-					date: '2017-01-12',
-					summary: {
-						clicks: [
-							{
-								icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
-								name: 'en.support.wordpress.com',
-								url: null,
-								views: 50,
-								children: [
-									{
-										name: 'en.support.wordpress.com',
-										url: 'https://en.support.wordpress.com/',
-										views: 50
-									}
-								]
+								value: 50,
 							},
-							{
-								children: null,
-								icon: 'https://secure.gravatar.com/blavatar/3dbcb399a9112e3bb46f706b01c80062?s=48',
-								name: 'en.forums.wordpress.com',
-								url: 'https://en.forums.wordpress.com/',
-								views: 10
-							}
-						]
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12',
-					summarize: 1
-				} );
-
-				expect( parsedData ).to.eql( [
-					{
-						children: [
-							{
-								children: null,
-								label: 'en.support.wordpress.com',
-								labelIcon: 'external',
-								link: 'https://en.support.wordpress.com/',
-								value: 50
-							}
 						],
 						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
 						label: 'en.support.wordpress.com',
 						labelIcon: null,
 						link: null,
-						value: 50
+						value: 50,
 					},
 					{
 						children: null,
@@ -1179,8 +1307,8 @@ describe( 'utils', () => {
 						label: 'en.forums.wordpress.com',
 						labelIcon: 'external',
 						link: 'https://en.forums.wordpress.com/',
-						value: 10
-					}
+						value: 10,
+					},
 				] );
 			} );
 		} );
@@ -1202,91 +1330,10 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should return an a properly parsed summary data array', () => {
-				const parsedData = normalizers.statsReferrers( {
-					date: '2017-01-12',
-					summary: {
-						groups: [
-							{
-								group: 'WordPress.com Reader',
-								name: 'WordPress.com Reader',
-								url: 'https://wordpress.com',
-								icon: 'https://secure.gravatar.com/blavatar/236c008da9dc0edb4b3464ecebb3fc1d?s=48',
-								results: {
-									views: 500
-								},
-								total: 500
-							},
-							{
-								group: 'en.support.wordpress.com',
-								icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
-								name: 'en.support.wordpress.com',
-								results: [
-									{ name: 'homepage', url: 'https://en.support.wordpress.com/', views: 200 },
-									{ name: 'start', url: 'https://en.support.wordpress.com/start/', views: 100 }
-								],
-								total: 300
-							}
-						]
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12',
-					domain: 'en.blog.wordpress.com',
-					summarize: 1
-				}, 100 );
-
-				expect( parsedData ).to.eql( [
+				const parsedData = normalizers.statsReferrers(
 					{
-						actionMenu: 0,
-						actions: [],
-						children: undefined,
-						icon: 'https://secure.gravatar.com/blavatar/236c008da9dc0edb4b3464ecebb3fc1d?s=48',
-						label: 'WordPress.com Reader',
-						labelIcon: 'external',
-						link: 'https://wordpress.com',
-						value: 500
-					},
-					{
-						actionMenu: 1,
-						actions: [
-							{
-								data: {
-									domain: 'en.support.wordpress.com',
-									siteID: 100
-								},
-								type: 'spam'
-							}
-						],
-						children: [
-							{
-								children: undefined,
-								label: 'homepage',
-								labelIcon: 'external',
-								link: 'https://en.support.wordpress.com/',
-								value: 200
-							},
-							{
-								children: undefined,
-								label: 'start',
-								labelIcon: 'external',
-								link: 'https://en.support.wordpress.com/start/',
-								value: 100
-							}
-						],
-						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
-						label: 'en.support.wordpress.com',
-						labelIcon: null,
-						link: undefined,
-						value: 300
-					},
-				] );
-			} );
-
-			it( 'should return an a properly parsed data array', () => {
-				const parsedData = normalizers.statsReferrers( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
+						date: '2017-01-12',
+						summary: {
 							groups: [
 								{
 									group: 'WordPress.com Reader',
@@ -1294,29 +1341,31 @@ describe( 'utils', () => {
 									url: 'https://wordpress.com',
 									icon: 'https://secure.gravatar.com/blavatar/236c008da9dc0edb4b3464ecebb3fc1d?s=48',
 									results: {
-										views: 407
+										views: 500,
 									},
-									total: 407
+									total: 500,
 								},
 								{
 									group: 'en.support.wordpress.com',
 									icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
 									name: 'en.support.wordpress.com',
 									results: [
-										{ name: 'homepage', url: 'https://en.support.wordpress.com/', views: 42 },
-										{ name: 'start', url: 'https://en.support.wordpress.com/start/', views: 10 }
+										{ name: 'homepage', url: 'https://en.support.wordpress.com/', views: 200 },
+										{ name: 'start', url: 'https://en.support.wordpress.com/start/', views: 100 },
 									],
-									total: 207
-								}
-							]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12',
-					domain: 'en.blog.wordpress.com'
-				},
-				100 );
+									total: 300,
+								},
+							],
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+						domain: 'en.blog.wordpress.com',
+						summarize: 1,
+					},
+					100,
+				);
 
 				expect( parsedData ).to.eql( [
 					{
@@ -1327,7 +1376,7 @@ describe( 'utils', () => {
 						label: 'WordPress.com Reader',
 						labelIcon: 'external',
 						link: 'https://wordpress.com',
-						value: 407
+						value: 500,
 					},
 					{
 						actionMenu: 1,
@@ -1335,10 +1384,10 @@ describe( 'utils', () => {
 							{
 								data: {
 									domain: 'en.support.wordpress.com',
-									siteID: 100
+									siteID: 100,
 								},
-								type: 'spam'
-							}
+								type: 'spam',
+							},
 						],
 						children: [
 							{
@@ -1346,21 +1395,107 @@ describe( 'utils', () => {
 								label: 'homepage',
 								labelIcon: 'external',
 								link: 'https://en.support.wordpress.com/',
-								value: 42
+								value: 200,
 							},
 							{
 								children: undefined,
 								label: 'start',
 								labelIcon: 'external',
 								link: 'https://en.support.wordpress.com/start/',
-								value: 10
-							}
+								value: 100,
+							},
 						],
 						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
 						label: 'en.support.wordpress.com',
 						labelIcon: null,
 						link: undefined,
-						value: 207
+						value: 300,
+					},
+				] );
+			} );
+
+			it( 'should return an a properly parsed data array', () => {
+				const parsedData = normalizers.statsReferrers(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								groups: [
+									{
+										group: 'WordPress.com Reader',
+										name: 'WordPress.com Reader',
+										url: 'https://wordpress.com',
+										icon: 'https://secure.gravatar.com/blavatar/236c008da9dc0edb4b3464ecebb3fc1d?s=48',
+										results: {
+											views: 407,
+										},
+										total: 407,
+									},
+									{
+										group: 'en.support.wordpress.com',
+										icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
+										name: 'en.support.wordpress.com',
+										results: [
+											{ name: 'homepage', url: 'https://en.support.wordpress.com/', views: 42 },
+											{ name: 'start', url: 'https://en.support.wordpress.com/start/', views: 10 },
+										],
+										total: 207,
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+						domain: 'en.blog.wordpress.com',
+					},
+					100,
+				);
+
+				expect( parsedData ).to.eql( [
+					{
+						actionMenu: 0,
+						actions: [],
+						children: undefined,
+						icon: 'https://secure.gravatar.com/blavatar/236c008da9dc0edb4b3464ecebb3fc1d?s=48',
+						label: 'WordPress.com Reader',
+						labelIcon: 'external',
+						link: 'https://wordpress.com',
+						value: 407,
+					},
+					{
+						actionMenu: 1,
+						actions: [
+							{
+								data: {
+									domain: 'en.support.wordpress.com',
+									siteID: 100,
+								},
+								type: 'spam',
+							},
+						],
+						children: [
+							{
+								children: undefined,
+								label: 'homepage',
+								labelIcon: 'external',
+								link: 'https://en.support.wordpress.com/',
+								value: 42,
+							},
+							{
+								children: undefined,
+								label: 'start',
+								labelIcon: 'external',
+								link: 'https://en.support.wordpress.com/start/',
+								value: 10,
+							},
+						],
+						icon: 'https://secure.gravatar.com/blavatar/94ea57385f5018d2b84169cab22d3b33?s=48',
+						label: 'en.support.wordpress.com',
+						labelIcon: null,
+						link: undefined,
+						value: 207,
 					},
 				] );
 			} );
@@ -1383,88 +1518,94 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should return an a properly parsed data array', () => {
-				const parsedData = normalizers.statsSearchTerms( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
-							encrypted_search_terms: 221,
-							search_terms: [
-								{
-									term: 'chicken',
-									views: 3
-								},
-								{
-									term: 'ribs',
-									views: 10
-								}
-							]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				} );
+				const parsedData = normalizers.statsSearchTerms(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								encrypted_search_terms: 221,
+								search_terms: [
+									{
+										term: 'chicken',
+										views: 3,
+									},
+									{
+										term: 'ribs',
+										views: 10,
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
 						className: 'user-selectable',
 						label: 'chicken',
-						value: 3
+						value: 3,
 					},
 					{
 						className: 'user-selectable',
 						label: 'ribs',
-						value: 10
+						value: 10,
 					},
 					{
 						label: 'Unknown Search Terms',
 						labelIcon: 'external',
 						link: 'http://en.support.wordpress.com/stats/#search-engine-terms',
-						value: 221
-					}
+						value: 221,
+					},
 				] );
 			} );
 
 			it( 'should return an a properly parsed summarized data array', () => {
-				const parsedData = normalizers.statsSearchTerms( {
-					date: '2017-01-12',
-					summary: {
-						encrypted_search_terms: 400,
-						search_terms: [
-							{
-								term: 'chicken',
-								views: 200
-							},
-							{
-								term: 'ribs',
-								views: 100
-							}
-						]
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12',
-					summarize: 1,
-					num: 90
-				} );
+				const parsedData = normalizers.statsSearchTerms(
+					{
+						date: '2017-01-12',
+						summary: {
+							encrypted_search_terms: 400,
+							search_terms: [
+								{
+									term: 'chicken',
+									views: 200,
+								},
+								{
+									term: 'ribs',
+									views: 100,
+								},
+							],
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+						summarize: 1,
+						num: 90,
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
 						className: 'user-selectable',
 						label: 'chicken',
-						value: 200
+						value: 200,
 					},
 					{
 						className: 'user-selectable',
 						label: 'ribs',
-						value: 100
+						value: 100,
 					},
 					{
 						label: 'Unknown Search Terms',
 						labelIcon: 'external',
 						link: 'http://en.support.wordpress.com/stats/#search-engine-terms',
-						value: 400
-					}
+						value: 400,
+					},
 				] );
 			} );
 		} );
@@ -1484,10 +1625,7 @@ describe( 'utils', () => {
 			it( 'should return an a properly parsed data array', () => {
 				const parsedData = normalizers.statsVisits( {
 					fields: [ 'period', 'views', 'visitors' ],
-					data: [
-						[ '2016-12-22', 0, 0 ],
-						[ '2016-12-23', 10, 6 ]
-					]
+					data: [ [ '2016-12-22', 0, 0 ], [ '2016-12-23', 10, 6 ] ],
 				} );
 
 				expect( parsedData ).to.eql( [
@@ -1503,7 +1641,7 @@ describe( 'utils', () => {
 						posts: null,
 						views: 0,
 						visitors: 0,
-						visits: null
+						visits: null,
 					},
 					{
 						classNames: [],
@@ -1517,18 +1655,15 @@ describe( 'utils', () => {
 						posts: null,
 						views: 10,
 						visitors: 6,
-						visits: null
-					}
+						visits: null,
+					},
 				] );
 			} );
 
 			it( 'should parse the weekends properly', () => {
 				const parsedData = normalizers.statsVisits( {
 					fields: [ 'period', 'views', 'visitors' ],
-					data: [
-						[ '2016W11W07', 0, 0 ],
-						[ '2016W10W31', 10, 6 ]
-					]
+					data: [ [ '2016W11W07', 0, 0 ], [ '2016W10W31', 10, 6 ] ],
 				} );
 
 				expect( parsedData ).to.eql( [
@@ -1544,7 +1679,7 @@ describe( 'utils', () => {
 						posts: null,
 						views: 0,
 						visitors: 0,
-						visits: null
+						visits: null,
 					},
 					{
 						classNames: [],
@@ -1558,8 +1693,8 @@ describe( 'utils', () => {
 						posts: null,
 						views: 10,
 						visitors: 6,
-						visits: null
-					}
+						visits: null,
+					},
 				] );
 			} );
 		} );
@@ -1584,35 +1719,44 @@ describe( 'utils', () => {
 			} );
 
 			it( 'should properly parse day period response', () => {
-				const parsedData = normalizers.statsPodcastDownloads( {
-					date: '2017-01-12',
-					days: {
-						'2017-01-12': {
-							downloads: [ {
-								url: 'http://en.blog.wordpress.com/awesome',
-								post_id: 10,
-								title: 'My awesome podcast',
-								downloads: 3939
-							} ]
-						}
-					}
-				}, {
-					period: 'day',
-					date: '2017-01-12'
-				}, 10, {
-					slug: 'en.blog.wordpress.com'
-				} );
+				const parsedData = normalizers.statsPodcastDownloads(
+					{
+						date: '2017-01-12',
+						days: {
+							'2017-01-12': {
+								downloads: [
+									{
+										url: 'http://en.blog.wordpress.com/awesome',
+										post_id: 10,
+										title: 'My awesome podcast',
+										downloads: 3939,
+									},
+								],
+							},
+						},
+					},
+					{
+						period: 'day',
+						date: '2017-01-12',
+					},
+					10,
+					{
+						slug: 'en.blog.wordpress.com',
+					},
+				);
 
 				expect( parsedData ).to.eql( [
 					{
-						actions: [ {
-							data: 'http://en.blog.wordpress.com/awesome',
-							type: 'link'
-						} ],
+						actions: [
+							{
+								data: 'http://en.blog.wordpress.com/awesome',
+								type: 'link',
+							},
+						],
 						label: 'My awesome podcast',
 						page: '/stats/day/podcastdownloads/en.blog.wordpress.com?post=10',
-						value: 3939
-					}
+						value: 3939,
+					},
 				] );
 			} );
 		} );

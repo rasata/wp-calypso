@@ -24,18 +24,14 @@ export default function UpdateTemplate( {
 	switch ( status ) {
 		case 'trashing':
 		case 'deleting':
-			trashText = ( status === 'deleting' ) ? s.deleting : s.trashing;
-			updateText = (
-				<span>{ trashText } <Ellipsis /></span>
-			);
+			trashText = status === 'deleting' ? s.deleting : s.trashing;
+			updateText = <span>{ trashText } <Ellipsis /></span>;
 			updateClass += ' conf-alert--trashing';
 			break;
 
 		case 'trash':
 			undoClick = resetToPreviousState;
-			undoTemplate = (
-				<a className="undo" onClick={ undoClick }><span>{ s.undo }</span></a>
-			);
+			undoTemplate = <a className="undo" onClick={ undoClick }><span>{ s.undo }</span></a>;
 			updateText = s.trashed;
 			updateClass += ' conf-alert--trashed';
 			break;
@@ -46,9 +42,7 @@ export default function UpdateTemplate( {
 			break;
 
 		case 'updating':
-			updateText = (
-				<span>{ s.updating } <Ellipsis /></span>
-			);
+			updateText = <span>{ s.updating } <Ellipsis /></span>;
 			updateClass += ' conf-alert--updating';
 			break;
 
@@ -58,14 +52,12 @@ export default function UpdateTemplate( {
 			break;
 
 		case 'restoring':
-			updateText = ( <span>{ s.restoring } <Ellipsis /></span> );
+			updateText = <span>{ s.restoring } <Ellipsis /></span>;
 			updateClass += ' conf-alert--updating';
 			break;
 
 		default:
-			updateText = previousStatus === 'trash'
-				? s.restored
-				: s.updated;
+			updateText = previousStatus === 'trash' ? s.restored : s.updated;
 	}
 
 	return (

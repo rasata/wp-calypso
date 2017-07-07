@@ -17,7 +17,7 @@ describe( 'index', () => {
 			const initialData = {
 				type: 'A',
 				name: 'example.foo.com',
-				data: '123.45.78.9'
+				data: '123.45.78.9',
 			};
 
 			const errors = validateAllFields( initialData );

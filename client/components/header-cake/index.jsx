@@ -13,24 +13,15 @@ import HeaderCakeBack from './back';
 export default class HeaderCake extends Component {
 	render() {
 		const { backText, backHref, actionText, actionIcon, actionHref, actionOnClick } = this.props;
-		const classes = classNames(
-			'header-cake',
-			this.props.className,
-			{ 'is-compact': this.props.isCompact }
-		);
+		const classes = classNames( 'header-cake', this.props.className, {
+			'is-compact': this.props.isCompact,
+		} );
 
 		return (
 			<Card className={ classes }>
-				<HeaderCakeBack
-					text={ backText }
-					href={ backHref }
-					onClick={ this.props.onClick }
-				/>
+				<HeaderCakeBack text={ backText } href={ backHref } onClick={ this.props.onClick } />
 
-				<div
-					className="header-cake__title"
-					onClick={ this.props.onTitleClick }
-				>
+				<div className="header-cake__title" onClick={ this.props.onTitleClick }>
 					{ this.props.children }
 				</div>
 
@@ -39,7 +30,8 @@ export default class HeaderCake extends Component {
 					href={ actionHref || backHref }
 					onClick={ actionOnClick }
 					icon={ actionIcon }
-					spacer={ ! actionOnClick } />
+					spacer={ ! actionOnClick }
+				/>
 			</Card>
 		);
 	}
@@ -59,5 +51,5 @@ HeaderCake.propTypes = {
 };
 
 HeaderCake.defaultProps = {
-	isCompact: false
+	isCompact: false,
 };

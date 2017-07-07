@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	isFunction = require( 'lodash/isFunction' );
+var React = require( 'react' ), isFunction = require( 'lodash/isFunction' );
 import debug from 'debug';
 
 /**
@@ -24,7 +23,7 @@ var DEFAULT_FILES = [
 	'docs/coding-guidelines.md',
 	'docs/coding-guidelines/javascript.md',
 	'docs/coding-guidelines/css.md',
-	'docs/coding-guidelines/html.md'
+	'docs/coding-guidelines/html.md',
 ];
 
 /**
@@ -36,12 +35,12 @@ const log = debug( 'calypso:devdocs' );
 module.exports = React.createClass( {
 	displayName: 'Devdocs',
 	propTypes: {
-		term: React.PropTypes.string
+		term: React.PropTypes.string,
 	},
 
 	getDefaultProps: function() {
 		return {
-			term: ''
+			term: '',
 		};
 	},
 
@@ -51,7 +50,7 @@ module.exports = React.createClass( {
 			results: [],
 			defaultResults: [],
 			inputValue: '',
-			searching: false
+			searching: false,
 		};
 	},
 
@@ -61,13 +60,16 @@ module.exports = React.createClass( {
 			return;
 		}
 
-		DocService.list( DEFAULT_FILES, function( err, results ) {
-			if ( !err && this.isMounted() ) {
-				this.setState( {
-					defaultResults: results
-				} );
-			}
-		}.bind( this ) );
+		DocService.list(
+			DEFAULT_FILES,
+			function( err, results ) {
+				if ( ! err && this.isMounted() ) {
+					this.setState( {
+						defaultResults: results,
+					} );
+				}
+			}.bind( this ),
+		);
 	},
 
 	componentDidMount: function() {
@@ -87,14 +89,19 @@ module.exports = React.createClass( {
 	},
 
 	notFound: function() {
-		return this.state.inputValue && this.state.term && ! this.state.results.length && ! this.state.searching;
+		return (
+			this.state.inputValue &&
+			this.state.term &&
+			! this.state.results.length &&
+			! this.state.searching
+		);
 	},
 
 	onSearchChange: function( term ) {
 		this.setState( {
 			inputValue: term,
 			term: term,
-			searching: !! term
+			searching: !! term,
 		} );
 	},
 
@@ -102,16 +109,19 @@ module.exports = React.createClass( {
 		if ( ! term ) {
 			return;
 		}
-		DocService.search( term, function( err, results ) {
-			if ( err ) {
-				log( 'search error: %o', err );
-			}
+		DocService.search(
+			term,
+			function( err, results ) {
+				if ( err ) {
+					log( 'search error: %o', err );
+				}
 
-			this.setState( {
-				results: results,
-				searching: false
-			} );
-		}.bind( this ) );
+				this.setState( {
+					results: results,
+					searching: false,
+				} );
+			}.bind( this ),
+		);
 	},
 
 	results: function() {
@@ -145,7 +155,7 @@ module.exports = React.createClass( {
 
 	snippet: function( result ) {
 		// split around <mark> tags to avoid setting unescaped inner HTML
-		var parts = result.snippet.split(/(<mark>.*?<\/mark>)/);
+		var parts = result.snippet.split( /(<mark>.*?<\/mark>)/ );
 
 		return (
 			<div className="devdocs__result-snippet" key={ 'snippet' + result.path }>
@@ -178,5 +188,5 @@ module.exports = React.createClass( {
 				</div>
 			</Main>
 		);
-	}
+	},
 } );

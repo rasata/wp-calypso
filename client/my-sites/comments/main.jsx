@@ -25,23 +25,13 @@ export class CommentsManagement extends Component {
 	};
 
 	render() {
-		const {
-			basePath,
-			siteId,
-			siteSlug,
-			status,
-			translate,
-		} = this.props;
+		const { basePath, siteId, siteSlug, status, translate } = this.props;
 
 		return (
 			<Main className="comments" wideLayout>
 				<PageViewTracker path={ basePath } title="Manage Comments" />
 				<DocumentHead title={ translate( 'Manage Comments' ) } />
-				<CommentList
-					siteId={ siteId }
-					siteSlug={ siteSlug }
-					status={ status }
-				/>
+				<CommentList siteId={ siteId } siteSlug={ siteSlug } status={ status } />
 			</Main>
 		);
 	}

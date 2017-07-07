@@ -15,18 +15,18 @@ import FormSectionHeading from 'components/forms/form-section-heading';
 import olarkStore from 'lib/olark-store';
 import { title, upcoming, closed } from './messages';
 
-const Notice = localize( ( { translate, closedFrom, closedTo, reason } ) =>
+const Notice = localize( ( { translate, closedFrom, closedTo, reason } ) => (
 	<div className="chat-closure-notice">
-		<FormSectionHeading>{ title( { translate, closedFrom, closedTo, reason } ) }</FormSectionHeading>
+		<FormSectionHeading>
+			{ title( { translate, closedFrom, closedTo, reason } ) }
+		</FormSectionHeading>
 		<div>
-			{
-				i18n.moment().isBefore( closedFrom )
-					? upcoming( { translate, closedFrom, closedTo, reason } )
-					: closed( { translate, closedFrom, closedTo, reason } )
-			}
+			{ i18n.moment().isBefore( closedFrom )
+				? upcoming( { translate, closedFrom, closedTo, reason } )
+				: closed( { translate, closedFrom, closedTo, reason } ) }
 		</div>
 	</div>
-);
+) );
 
 export default class ChatClosureNotice extends Component {
 	constructor( props ) {
@@ -45,7 +45,7 @@ export default class ChatClosureNotice extends Component {
 
 	updateOlarkState = () => {
 		this.setState( { olark: olarkStore.get() } );
-	}
+	};
 
 	render() {
 		const closedFrom = i18n.moment( this.props.from );
@@ -60,11 +60,7 @@ export default class ChatClosureNotice extends Component {
 			return null;
 		}
 
-		return <Notice
-			reason={ this.props.reason }
-			closedFrom={ closedFrom }
-			closedTo={ closedTo }
-		/>;
+		return <Notice reason={ this.props.reason } closedFrom={ closedFrom } closedTo={ closedTo } />;
 	}
 }
 

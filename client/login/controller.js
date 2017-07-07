@@ -26,12 +26,7 @@ export default {
 	},
 
 	magicLoginUse( context, next ) {
-		const {
-			client_id,
-			email,
-			token,
-			tt,
-		} = context.query;
+		const { client_id, email, token, tt } = context.query;
 
 		context.primary = (
 			<HandleEmailedLinkForm

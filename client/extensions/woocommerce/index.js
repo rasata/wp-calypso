@@ -145,9 +145,12 @@ function getStoreSidebarItemButtons() {
 function addStorePage( storePage, storeNavigation ) {
 	page( storePage.path, siteSelection, storeNavigation, function( context ) {
 		renderWithReduxStore(
-			React.createElement( storePage.container, { className: 'woocommerce', params: context.params } ),
+			React.createElement( storePage.container, {
+				className: 'woocommerce',
+				params: context.params,
+			} ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
 	} );
 }
@@ -161,7 +164,7 @@ function createStoreNavigation( context, next, storePage ) {
 			sidebarItemButtons: getStoreSidebarItemButtons(),
 		} ),
 		document.getElementById( 'secondary' ),
-		context.store
+		context.store,
 	);
 
 	next();
@@ -171,7 +174,9 @@ export default function() {
 	// Add pages that use the store navigation
 	getStorePages().forEach( function( storePage ) {
 		if ( config.isEnabled( storePage.configKey ) ) {
-			addStorePage( storePage, ( context, next ) => createStoreNavigation( context, next, storePage ) );
+			addStorePage( storePage, ( context, next ) =>
+				createStoreNavigation( context, next, storePage ),
+			);
 		}
 	} );
 

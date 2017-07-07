@@ -9,4 +9,4 @@ import { get } from 'lodash';
  * @param  {Object}  state Global state tree.
  * @return {?Object}       The validation is in progress or not.
  */
-export default ( state ) => get( state, 'accountRecovery.reset.validate.error', null );
+export default state => get( state, 'accountRecovery.reset.validate.error', null );

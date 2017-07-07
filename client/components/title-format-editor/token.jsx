@@ -8,10 +8,9 @@ export const Token = props => {
 	// the way the component renders in
 	// the draft-js editor
 	return (
-		<span
-			className="title-format-editor__token"
-			onClick={ onClick( props.entityKey ) }
-		>{ props.children }</span>
+		<span className="title-format-editor__token" onClick={ onClick( props.entityKey ) }>
+			{ props.children }
+		</span>
 	);
 };
 

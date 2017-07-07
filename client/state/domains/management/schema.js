@@ -12,5 +12,5 @@ export const domainWhoisSchema = {
 		state: { type: 'string' },
 		postal_code: { type: 'string' },
 		country_code: { type: 'string' },
-	}
+	},
 };

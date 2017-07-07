@@ -11,7 +11,8 @@ import find from 'lodash/find';
 import CompactCard from 'components/card/compact';
 import Notice from 'components/notice';
 import Button from 'components/button';
-import PendingGappsTosNotice from 'my-sites/upgrades/components/domain-warnings/pending-gapps-tos-notice';
+import PendingGappsTosNotice
+	from 'my-sites/upgrades/components/domain-warnings/pending-gapps-tos-notice';
 import paths from 'my-sites/upgrades/paths';
 import analyticsMixin from 'lib/mixins/analytics';
 import SectionHeader from 'components/section-header';
@@ -26,11 +27,9 @@ const GoogleAppsUsers = React.createClass( {
 		domains: React.PropTypes.object.isRequired,
 		googleAppsUsers: React.PropTypes.array.isRequired,
 		selectedDomainName: React.PropTypes.string,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired,
-		user: React.PropTypes.object.isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
+		user: React.PropTypes.object.isRequired,
 	},
 
 	getDomainsAsList() {
@@ -40,15 +39,17 @@ const GoogleAppsUsers = React.createClass( {
 	},
 
 	canAddUsers() {
-		return this.getDomainsAsList().some( domain =>
-			domain.googleAppsSubscription.ownedByUserId === this.props.user.ID
+		return this.getDomainsAsList().some(
+			domain => domain.googleAppsSubscription.ownedByUserId === this.props.user.ID,
 		);
 	},
 
 	isNewUser( user ) {
 		const domain = find( this.props.domains.list, { name: user.domain } );
 
-		return this.moment().subtract( 1, 'day' ).isBefore( domain.googleAppsSubscription.subscribedDate );
+		return this.moment()
+			.subtract( 1, 'day' )
+			.isBefore( domain.googleAppsSubscription.subscribedDate );
 	},
 
 	generateClickHandler( user ) {
@@ -64,19 +65,16 @@ const GoogleAppsUsers = React.createClass( {
 	renderDomain( domain, users ) {
 		return (
 			<div key={ `google-apps-user-${ domain }` } className="google-apps-users-card">
-				<SectionHeader
-					label={ domain }>
-					{ this.canAddUsers() && (
+				<SectionHeader label={ domain }>
+					{ this.canAddUsers() &&
 						<Button
 							primary
 							compact
-							href={ paths.domainManagementAddGoogleApps(
-								this.props.selectedSite.slug, domain
-							) }
-							onClick={ this.goToAddGoogleApps }>
+							href={ paths.domainManagementAddGoogleApps( this.props.selectedSite.slug, domain ) }
+							onClick={ this.goToAddGoogleApps }
+						>
 							{ this.translate( 'Add G Suite User' ) }
-						</Button>
-					) }
+						</Button> }
 				</SectionHeader>
 				<CompactCard className="google-apps-users-card__user-list">
 					<ul className="google-apps-users-card__user-list-inner">
@@ -91,13 +89,17 @@ const GoogleAppsUsers = React.createClass( {
 		if ( user.error ) {
 			let status = 'is-warning',
 				text = user.error,
-				supportLink = <a href={ support.CALYPSO_CONTACT }><strong>{ this.translate( 'Please contact support' ) }</strong></a>;
+				supportLink = (
+					<a href={ support.CALYPSO_CONTACT }>
+						<strong>{ this.translate( 'Please contact support' ) }</strong>
+					</a>
+				);
 
 			if ( this.isNewUser( user ) ) {
 				status = null;
 				text = this.translate(
 					'We are setting up %(email)s for you. It should start working immediately, but may take up to 24 hours.',
-					{ args: { email: user.email } }
+					{ args: { email: user.email } },
 				);
 				supportLink = null;
 			}
@@ -106,7 +108,8 @@ const GoogleAppsUsers = React.createClass( {
 				<Notice
 					key={ `google-apps-user-notice-${ user.domain }-${ index }` }
 					showDismiss={ false }
-					status={ status }>
+					status={ status }
+				>
 					{ text } { supportLink }
 				</Notice>
 			);
@@ -116,7 +119,8 @@ const GoogleAppsUsers = React.createClass( {
 			<GoogleAppsUserItem
 				key={ `google-apps-user-${ user.domain }-${ index }` }
 				user={ user }
-				onClick={ this.generateClickHandler( user ) }/>
+				onClick={ this.generateClickHandler( user ) }
+			/>
 		);
 	},
 
@@ -131,13 +135,15 @@ const GoogleAppsUsers = React.createClass( {
 						key="pending-gapps-tos-notice"
 						siteSlug={ this.props.selectedSite.slug }
 						domains={ pendingDomains }
-						section="google-apps" />
-				}
+						section="google-apps"
+					/> }
 
-				{ Object.keys( usersByDomain ).map( ( domain ) => this.renderDomain( domain, usersByDomain[ domain ] ) ) }
+				{ Object.keys( usersByDomain ).map( domain =>
+					this.renderDomain( domain, usersByDomain[ domain ] ),
+				) }
 			</div>
 		);
-	}
+	},
 } );
 
 export default GoogleAppsUsers;

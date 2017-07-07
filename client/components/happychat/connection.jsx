@@ -25,7 +25,7 @@ class HappychatConnection extends Component {
 
 export default connect(
 	state => ( {
-		isUninitialized: isHappychatConnectionUninitialized( state )
+		isUninitialized: isHappychatConnectionUninitialized( state ),
 	} ),
-	{ connectChat }
+	{ connectChat },
 )( HappychatConnection );

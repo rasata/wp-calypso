@@ -20,7 +20,7 @@ export default React.createClass( {
 		countPlaceholderLength: React.PropTypes.bool,
 		onChange: React.PropTypes.func,
 		acceptableLength: React.PropTypes.number,
-		showRemainingCharacters: React.PropTypes.bool
+		showRemainingCharacters: React.PropTypes.bool,
 	},
 
 	getDefaultProps() {
@@ -44,13 +44,13 @@ export default React.createClass( {
 			panelText = this.translate( '%d character remaining', '%d characters remaining', {
 				context: 'Input length',
 				args: [ this.props.acceptableLength - length ],
-				count: this.props.acceptableLength - length
+				count: this.props.acceptableLength - length,
 			} );
 		} else {
 			panelText = this.translate( '%d character', '%d characters', {
 				context: 'Input length',
 				args: [ length ],
-				count: length
+				count: length,
 			} );
 		}
 
@@ -64,7 +64,8 @@ export default React.createClass( {
 
 	render() {
 		const classes = classNames( 'counted-textarea', this.props.className, {
-			'is-exceeding-acceptable-length': this.props.acceptableLength && this.props.value.length > this.props.acceptableLength
+			'is-exceeding-acceptable-length': this.props.acceptableLength &&
+				this.props.value.length > this.props.acceptableLength,
 		} );
 
 		return (
@@ -76,11 +77,12 @@ export default React.createClass( {
 						'acceptableLength',
 						'showRemainingCharacters',
 						'children',
-						'countPlaceholderLength'
+						'countPlaceholderLength',
 					) }
-					className="counted-textarea__input" />
+					className="counted-textarea__input"
+				/>
 				{ this.renderCountPanel() }
 			</div>
 		);
-	}
+	},
 } );

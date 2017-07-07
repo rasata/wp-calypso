@@ -6,16 +6,16 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormButtonsBar',
 
 	render: function() {
 		return (
 			<div
 				{ ...omit( this.props, 'className' ) }
-				className={ classnames( this.props.className, 'form-buttons-bar' ) } >
+				className={ classnames( this.props.className, 'form-buttons-bar' ) }
+			>
 				{ this.props.children }
 			</div>
 		);
-	}
+	},
 } );

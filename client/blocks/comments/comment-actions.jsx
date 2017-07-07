@@ -33,7 +33,7 @@ const CommentActions = ( {
 	spamComment,
 	editComment,
 	editCommentCancel,
- } ) => {
+} ) => {
 	const showReplyButton = post && post.discussion && post.discussion.comments_open === true;
 	const showCancelReplyButton = activeReplyCommentID === commentId;
 	const showCancelEditButton = activeEditCommentId === commentId;
@@ -50,18 +50,15 @@ const CommentActions = ( {
 				<button className="comments__comment-actions-reply" onClick={ handleReply }>
 					<Gridicon icon="reply" size={ 18 } />
 					<span className="comments__comment-actions-reply-label">{ translate( 'Reply' ) }</span>
-				</button>
-			}
+				</button> }
 			{ showCancelReplyButton &&
 				<button className="comments__comment-actions-cancel-reply" onClick={ onReplyCancel }>
 					{ translate( 'Cancel reply' ) }
-				</button>
-			}
+				</button> }
 			{ showCancelEditButton &&
 				<button className="comments__comment-actions-cancel-reply" onClick={ editCommentCancel }>
 					{ translate( 'Cancel' ) }
-				</button>
-			}
+				</button> }
 			<CommentLikeButtonContainer
 				className="comments__comment-actions-like"
 				tagName="button"
@@ -87,32 +84,36 @@ const CommentActions = ( {
 					<EllipsisMenu toggleTitle={ translate( 'More' ) }>
 						<PopoverMenuItem
 							className={ classnames( 'comments__comment-actions-approve', {
-								'is-approved': isApproved
+								'is-approved': isApproved,
 							} ) }
 							icon="checkmark"
-							onClick={ ! isApproved ? approveComment : unapproveComment }>
+							onClick={ ! isApproved ? approveComment : unapproveComment }
+						>
 							{ isApproved ? translate( 'Approved' ) : translate( 'Approve' ) }
 						</PopoverMenuItem>
-						<PopoverMenuItem icon="trash" onClick={ trashComment }>{ translate( 'Trash' ) }</PopoverMenuItem>
-						<PopoverMenuItem icon="spam" onClick={ spamComment }>{ translate( 'Spam' ) }</PopoverMenuItem>
+						<PopoverMenuItem icon="trash" onClick={ trashComment }>
+							{ translate( 'Trash' ) }
+						</PopoverMenuItem>
+						<PopoverMenuItem icon="spam" onClick={ spamComment }>
+							{ translate( 'Spam' ) }
+						</PopoverMenuItem>
 						<PopoverMenuSeparator />
-						<PopoverMenuItem icon="pencil" onClick={ editComment }>{ translate( 'Edit' ) }</PopoverMenuItem>
+						<PopoverMenuItem icon="pencil" onClick={ editComment }>
+							{ translate( 'Edit' ) }
+						</PopoverMenuItem>
 					</EllipsisMenu>
-				</div>
-			}
+				</div> }
 		</div>
 	);
 };
 
 const mapDispatchToProps = ( dispatch, ownProps ) => {
-	const {
-		post: { site_ID: siteId, ID: postId },
-		commentId
-	} = ownProps;
+	const { post: { site_ID: siteId, ID: postId }, commentId } = ownProps;
 
 	return {
 		approveComment: () => dispatch( changeCommentStatus( siteId, postId, commentId, 'approved' ) ),
-		unapproveComment: () => dispatch( changeCommentStatus( siteId, postId, commentId, 'unapproved' ) ),
+		unapproveComment: () =>
+			dispatch( changeCommentStatus( siteId, postId, commentId, 'unapproved' ) ),
 		trashComment: () => dispatch( changeCommentStatus( siteId, postId, commentId, 'trash' ) ),
 		spamComment: () => dispatch( changeCommentStatus( siteId, postId, commentId, 'spam' ) ),
 	};

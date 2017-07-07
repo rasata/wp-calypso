@@ -15,7 +15,7 @@ export default React.createClass( {
 
 	propTypes: {
 		value: PropTypes.string,
-		label: PropTypes.string
+		label: PropTypes.string,
 	},
 
 	render() {
@@ -41,5 +41,5 @@ export default React.createClass( {
 				</li>
 			</ul>
 		);
-	}
+	},
 } );

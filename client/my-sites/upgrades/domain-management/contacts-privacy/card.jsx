@@ -20,11 +20,9 @@ const ContactsPrivacyCard = React.createClass( {
 		privateDomain: React.PropTypes.bool.isRequired,
 		hasPrivacyProtection: React.PropTypes.bool.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired,
-		currentUserCanManage: React.PropTypes.bool.isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
+		currentUserCanManage: React.PropTypes.bool.isRequired,
 	},
 
 	render() {
@@ -36,26 +34,38 @@ const ContactsPrivacyCard = React.createClass( {
 					<p className="settings-explanation">
 						{ this.props.translate(
 							'Domain owners are required to make their contact information available to the public. ' +
-							'{{a}}Learn more.{{/a}}',
+								'{{a}}Learn more.{{/a}}',
 							{
 								components: {
-									a: <a href={ support.PUBLIC_VS_PRIVATE } target="_blank" rel="noopener noreferrer" />
-								}
-							}
+									a: (
+										<a
+											href={ support.PUBLIC_VS_PRIVATE }
+											target="_blank"
+											rel="noopener noreferrer"
+										/>
+									),
+								},
+							},
 						) }
 					</p>
 
 					{ this.props.currentUserCanManage && this.getNotice() }
 
-					<ContactDisplay
-						contactInformation={ this.props.contactInformation } />
+					<ContactDisplay contactInformation={ this.props.contactInformation } />
 				</CompactCard>
 			</div>
 		);
 	},
 
 	getNotice() {
-		const { privacyAvailable, hasPrivacyProtection, privateDomain, translate, selectedSite, selectedDomainName } = this.props;
+		const {
+			privacyAvailable,
+			hasPrivacyProtection,
+			privateDomain,
+			translate,
+			selectedSite,
+			selectedDomainName,
+		} = this.props;
 
 		if ( ! privacyAvailable ) {
 			return false;
@@ -66,12 +76,12 @@ const ContactsPrivacyCard = React.createClass( {
 				<Notice status="is-success" showDismiss={ false }>
 					{ translate(
 						'{{strong}}Privacy Protection{{/strong}} is turned on for this domain. ' +
-						'Your contact information is {{strong}}private{{/strong}}. ',
+							'Your contact information is {{strong}}private{{/strong}}. ',
 						{
 							components: {
-								strong: <strong />
-							}
-						}
+								strong: <strong />,
+							},
+						},
 					) }
 				</Notice>
 			);
@@ -80,15 +90,22 @@ const ContactsPrivacyCard = React.createClass( {
 				<Notice status="is-warning" showDismiss={ false }>
 					{ translate(
 						'{{strong}}Privacy Protection{{/strong}} is temporarily ' +
-						'disabled for this domain while the domain is being transferred. ' +
-						'Your contact information is {{strong}}public{{/strong}}. ' +
-						'{{a}}Cancel Transfer and Enable Privacy Protection{{/a}}',
+							'disabled for this domain while the domain is being transferred. ' +
+							'Your contact information is {{strong}}public{{/strong}}. ' +
+							'{{a}}Cancel Transfer and Enable Privacy Protection{{/a}}',
 						{
 							components: {
 								strong: <strong />,
-								a: <a href={ paths.domainManagementTransferOut( selectedSite.slug, selectedDomainName ) } />
-							}
-						}
+								a: (
+									<a
+										href={ paths.domainManagementTransferOut(
+											selectedSite.slug,
+											selectedDomainName,
+										) }
+									/>
+								),
+							},
+						},
 					) }
 				</Notice>
 			);
@@ -98,20 +115,25 @@ const ContactsPrivacyCard = React.createClass( {
 			<Notice status="is-warning" showDismiss={ false }>
 				{ translate(
 					'{{strong}}Privacy Protection{{/strong}} is turned off for this domain. ' +
-					'Your contact information is {{strong}}public{{/strong}}. ' +
-					'{{a}}Enable Privacy Protection{{/a}}',
+						'Your contact information is {{strong}}public{{/strong}}. ' +
+						'{{a}}Enable Privacy Protection{{/a}}',
 					{
 						components: {
 							strong: <strong />,
-							a: <a
-								href={ paths.domainManagementPrivacyProtection(
-									selectedSite.slug, selectedDomainName ) } />
-						}
-					}
+							a: (
+								<a
+									href={ paths.domainManagementPrivacyProtection(
+										selectedSite.slug,
+										selectedDomainName,
+									) }
+								/>
+							),
+						},
+					},
 				) }
 			</Notice>
 		);
-	}
+	},
 } );
 
 module.exports = localize( ContactsPrivacyCard );

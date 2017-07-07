@@ -39,16 +39,13 @@ module.exports = React.createClass( {
 		renderItem: React.PropTypes.func.isRequired,
 		renderLoadingPlaceholders: React.PropTypes.func.isRequired,
 		renderTrailingItems: React.PropTypes.func,
-		context: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] )
+		context: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] ),
 	},
 
 	getDefaultProps() {
 		return {
 			itemsPerRow: 1,
-			renderTrailingItems: () => {}
+			renderTrailingItems: () => {},
 		};
 	},
 
@@ -86,7 +83,7 @@ module.exports = React.createClass( {
 				topPlaceholderHeight: 0,
 				lastRenderedIndex: this.scrollHelper.initialLastRenderedIndex(),
 				bottomPlaceholderHeight: 0,
-				scrollTop: 0
+				scrollTop: 0,
 			};
 		}
 		debug( 'infinite list mounting', newState );
@@ -104,7 +101,7 @@ module.exports = React.createClass( {
 		}
 		debug( 'setting scrollTop:', this.state.scrollTop );
 		this.updateScroll( {
-			triggeredByScroll: false
+			triggeredByScroll: false,
 		} );
 		if ( this._contextLoaded() ) {
 			this._scrollContainer.addEventListener( 'scroll', this.onScroll );
@@ -118,7 +115,7 @@ module.exports = React.createClass( {
 		if ( ! this.isScrolling ) {
 			this.cancelAnimationFrame();
 			this.updateScroll( {
-				triggeredByScroll: false
+				triggeredByScroll: false,
 			} );
 		}
 
@@ -156,7 +153,7 @@ module.exports = React.createClass( {
 		if ( ! this.isScrolling ) {
 			this.cancelAnimationFrame();
 			this.updateScroll( {
-				triggeredByScroll: false
+				triggeredByScroll: false,
 			} );
 		}
 	},
@@ -178,7 +175,7 @@ module.exports = React.createClass( {
 			topPlaceholderHeight: 0,
 			lastRenderedIndex: this.scrollHelper.initialLastRenderedIndex(),
 			bottomPlaceholderHeight: 0,
-			scrollTop: 0
+			scrollTop: 0,
 		} );
 	},
 
@@ -226,7 +223,7 @@ module.exports = React.createClass( {
 			return;
 		}
 		this.updateScroll( {
-			triggeredByScroll: true
+			triggeredByScroll: true,
 		} );
 	},
 
@@ -247,7 +244,7 @@ module.exports = React.createClass( {
 						this.updateScroll( { triggeredByScroll: false } );
 					}
 					this.isScrolling = false;
-				}
+				},
 			} );
 		}
 	},
@@ -275,7 +272,7 @@ module.exports = React.createClass( {
 				topPlaceholderHeight: this.scrollHelper.topPlaceholderHeight,
 				lastRenderedIndex: this.scrollHelper.lastRenderedIndex,
 				bottomPlaceholderHeight: this.scrollHelper.bottomPlaceholderHeight,
-				scrollTop: this.lastScrollTop
+				scrollTop: this.lastScrollTop,
 			};
 
 			// Force one more check on next animation frame,
@@ -311,7 +308,10 @@ module.exports = React.createClass( {
 			firstIndex = this.state.firstRenderedIndex,
 			lastIndex = this.state.lastRenderedIndex,
 			offsetTop = options && options.offsetTop ? options.offsetTop : 0;
-		let windowHeight, rect, children, i,
+		let windowHeight,
+			rect,
+			children,
+			i,
 			offsetBottom = options && options.offsetBottom ? options.offsetBottom : 0;
 
 		offsetBottom = offsetBottom || 0;
@@ -325,10 +325,11 @@ module.exports = React.createClass( {
 				windowHeight = window.innerHeight || document.documentElement.clientHeight;
 				if (
 					( rect.top < 0 && Math.abs( rect.top ) < rect.height - offsetTop ) ||
-					( rect.top > 0 && rect.top < windowHeight - offsetBottom ) ) {
+					( rect.top > 0 && rect.top < windowHeight - offsetBottom )
+				) {
 					visibleItemIndexes.push( {
 						index: firstIndex + i - 1,
-						bounds: rect
+						bounds: rect,
 					} );
 				}
 			}
@@ -339,16 +340,17 @@ module.exports = React.createClass( {
 	render() {
 		const propsToTransfer = omit( this.props, Object.keys( this.constructor.propTypes ) ),
 			spacerClassName = 'infinite-list__spacer';
-		let i,
-			lastRenderedIndex = this.state.lastRenderedIndex,
-			itemsToRender = [];
+		let i, lastRenderedIndex = this.state.lastRenderedIndex, itemsToRender = [];
 
 		if ( lastRenderedIndex === -1 || lastRenderedIndex > this.props.items.length - 1 ) {
-			debug( 'resetting lastRenderedIndex, currently at %s, %d items', lastRenderedIndex, this.props.items.length );
+			debug(
+				'resetting lastRenderedIndex, currently at %s, %d items',
+				lastRenderedIndex,
+				this.props.items.length,
+			);
 			lastRenderedIndex = Math.min(
-				this.state.firstRenderedIndex +
-				this.scrollHelper.initialLastRenderedIndex(),
-				this.props.items.length - 1
+				this.state.firstRenderedIndex + this.scrollHelper.initialLastRenderedIndex(),
+				this.props.items.length - 1,
 			);
 			debug( 'reset lastRenderedIndex to %s', lastRenderedIndex );
 		}
@@ -365,14 +367,18 @@ module.exports = React.createClass( {
 
 		return (
 			<div { ...propsToTransfer }>
-				<div ref="topPlaceholder"
+				<div
+					ref="topPlaceholder"
 					className={ spacerClassName }
-					style={ { height: this.state.topPlaceholderHeight } } />
+					style={ { height: this.state.topPlaceholderHeight } }
+				/>
 				{ itemsToRender }
 				{ this.props.renderTrailingItems() }
-				<div ref="bottomPlaceholder"
+				<div
+					ref="bottomPlaceholder"
 					className={ spacerClassName }
-					style={ { height: this.state.bottomPlaceholderHeight } } />
+					style={ { height: this.state.bottomPlaceholderHeight } }
+				/>
 			</div>
 		);
 	},
@@ -414,6 +420,5 @@ module.exports = React.createClass( {
 	 */
 	_contextLoaded() {
 		return this.props.context || this.props.context === false || ! ( 'context' in this.props );
-	}
-
+	},
 } );

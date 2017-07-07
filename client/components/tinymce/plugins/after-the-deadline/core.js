@@ -13,7 +13,18 @@ import { translate } from 'i18n-calypso';
 
 function AtDCore() {
 	/* these are the categories of errors AtD should ignore */
-	this.ignore_types = [ 'Bias Language', 'Cliches', 'Complex Expression', 'Diacritical Marks', 'Double Negatives', 'Hidden Verbs', 'Jargon Language', 'Passive voice', 'Phrases to Avoid', 'Redundant Expression' ];
+	this.ignore_types = [
+		'Bias Language',
+		'Cliches',
+		'Complex Expression',
+		'Diacritical Marks',
+		'Double Negatives',
+		'Hidden Verbs',
+		'Jargon Language',
+		'Passive voice',
+		'Phrases to Avoid',
+		'Redundant Expression',
+	];
 
 	/* these are the phrases AtD should ignore */
 	this.ignore_strings = {};
@@ -40,9 +51,7 @@ AtDCore.prototype.setIgnoreStrings = function( strings ) {
 };
 
 AtDCore.prototype.showTypes = function( strings ) {
-	var show_types = strings.split( /,\s*/g ),
-		types = {},
-		ignore_types = [];
+	var show_types = strings.split( /,\s*/g ), types = {}, ignore_types = [];
 
 	/* set some default types that we want to make optional */
 
@@ -84,7 +93,9 @@ AtDCore.prototype.makeError = function( error_s, tokens, type, seps ) {
 	struct.tokens = tokens;
 
 	if ( new RegExp( '\\b' + error_s + '\\b' ).test( error_s ) ) {
-		struct.regexp = new RegExp( '(?!' + error_s + '<)\\b' + error_s.replace( /\s+/g, seps ) + '\\b' );
+		struct.regexp = new RegExp(
+			'(?!' + error_s + '<)\\b' + error_s.replace( /\s+/g, seps ) + '\\b',
+		);
 	} else if ( new RegExp( error_s + '\\b' ).test( error_s ) ) {
 		struct.regexp = new RegExp( '(?!' + error_s + '<)' + error_s.replace( /\s+/g, seps ) + '\\b' );
 	} else if ( new RegExp( '\\b' + error_s ).test( error_s ) ) {
@@ -113,13 +124,17 @@ AtDCore.prototype.addToErrorStructure = function( errors, list, type, seps ) {
 		}
 
 		if ( pre === '' ) {
-			errors[ '__' + first ].defaults.push( parent.makeError( error.word, tokens, type, seps, pre ) );
+			errors[ '__' + first ].defaults.push(
+				parent.makeError( error.word, tokens, type, seps, pre ),
+			);
 		} else {
 			if ( errors[ '__' + first ].pretoks[ '__' + pre ] === undefined ) {
 				errors[ '__' + first ].pretoks[ '__' + pre ] = [];
 			}
 
-			errors[ '__' + first ].pretoks[ '__' + pre ].push( parent.makeError( error.word, tokens, type, seps, pre ) );
+			errors[ '__' + first ].pretoks[ '__' + pre ].push(
+				parent.makeError( error.word, tokens, type, seps, pre ),
+			);
 		}
 	} );
 };
@@ -147,9 +162,22 @@ AtDCore.prototype._getSeparators = function() {
 };
 
 AtDCore.prototype.processXML = function( responseXML ) {
-	var types, errors, grammarErrors, spellingErrors, enrichment, i,
-		errorString, errorType, errorDescription, errorContext, suggestion,
-		suggestions, j, errorUrl, errorStruct, ecount;
+	var types,
+		errors,
+		grammarErrors,
+		spellingErrors,
+		enrichment,
+		i,
+		errorString,
+		errorType,
+		errorDescription,
+		errorContext,
+		suggestion,
+		suggestions,
+		j,
+		errorUrl,
+		errorStruct,
+		ecount;
 
 	/* types of errors to ignore */
 	types = {};
@@ -173,7 +201,8 @@ AtDCore.prototype.processXML = function( responseXML ) {
 		if ( errors[ i ].getElementsByTagName( 'string' ).item( 0 ).firstChild !== null ) {
 			errorString = errors[ i ].getElementsByTagName( 'string' ).item( 0 ).firstChild.data;
 			errorType = errors[ i ].getElementsByTagName( 'type' ).item( 0 ).firstChild.data;
-			errorDescription = errors[ i ].getElementsByTagName( 'description' ).item( 0 ).firstChild.data;
+			errorDescription = errors[ i ].getElementsByTagName( 'description' ).item( 0 ).firstChild
+				.data;
 
 			if ( errors[ i ].getElementsByTagName( 'precontext' ).item( 0 ).firstChild !== null ) {
 				errorContext = errors[ i ].getElementsByTagName( 'precontext' ).item( 0 ).firstChild.data;
@@ -190,7 +219,9 @@ AtDCore.prototype.processXML = function( responseXML ) {
 				suggestion.suggestions = [];
 
 				/* used to find suggestions when a highlighted error is clicked on */
-				suggestion.matcher = new RegExp( '^' + errorString.replace( /\s+/, this._getSeparators() ) + '$' );
+				suggestion.matcher = new RegExp(
+					'^' + errorString.replace( /\s+/, this._getSeparators() ) + '$',
+				);
 
 				suggestion.context = errorContext;
 				suggestion.string = errorString;
@@ -199,7 +230,10 @@ AtDCore.prototype.processXML = function( responseXML ) {
 				this.suggestions.push( suggestion );
 
 				if ( errors[ i ].getElementsByTagName( 'suggestions' ).item( 0 ) !== null ) {
-					suggestions = errors[ i ].getElementsByTagName( 'suggestions' ).item( 0 ).getElementsByTagName( 'option' );
+					suggestions = errors[ i ]
+						.getElementsByTagName( 'suggestions' )
+						.item( 0 )
+						.getElementsByTagName( 'option' );
 					for ( j = 0; j < suggestions.length; j++ ) {
 						suggestion.suggestions.push( suggestions[ j ].firstChild.data );
 					}
@@ -226,19 +260,26 @@ AtDCore.prototype.processXML = function( responseXML ) {
 				}
 
 				if ( errorDescription === 'Cliches' ) {
-					suggestion.description = 'Clichés'; /* done here for backwards compatability with current user settings */
+					suggestion.description =
+						'Clichés'; /* done here for backwards compatability with current user settings */
 				}
 
 				if ( errorDescription === 'Spelling' ) {
-					suggestion.description = translate( 'Spelling', { comment: 'Proofreading error description' } );
+					suggestion.description = translate( 'Spelling', {
+						comment: 'Proofreading error description',
+					} );
 				}
 
 				if ( errorDescription === 'Repeated Word' ) {
-					suggestion.description = translate( 'Repeated Word', { comment: 'Proofreading error description' } );
+					suggestion.description = translate( 'Repeated Word', {
+						comment: 'Proofreading error description',
+					} );
 				}
 
 				if ( errorDescription === 'Did you mean...' ) {
-					suggestion.description = translate( 'Did you mean…', { comment: 'Proofreading error description' } );
+					suggestion.description = translate( 'Did you mean…', {
+						comment: 'Proofreading error description',
+					} );
 				}
 			} // end if ignore[errorString] == undefined
 		} // end if
@@ -260,10 +301,14 @@ AtDCore.prototype.findSuggestion = function( element ) {
 	var text = element.innerHTML,
 		context = ( this.getAttrib( element, 'pre' ) + '' ).replace( /[\\,!\\?\\."\s]/g, '' ),
 		len = this.suggestions.length,
-		errorDescription, i;
+		errorDescription,
+		i;
 
 	for ( i = 0; i < len; i++ ) {
-		if ( ( context === '' || context === this.suggestions[ i ].context ) && this.suggestions[ i ].matcher.test( text ) ) {
+		if (
+			( context === '' || context === this.suggestions[ i ].context ) &&
+			this.suggestions[ i ].matcher.test( text )
+		) {
 			errorDescription = this.suggestions[ i ];
 			break;
 		}
@@ -290,11 +335,11 @@ TokenIterator.prototype.next = function() {
 
 	/* strip single quotes from token, AtD does this when presenting errors */
 	if ( current !== '' ) {
-		if ( current[ 0 ] === '\'' ) {
+		if ( current[ 0 ] === "'" ) {
 			current = current.substring( 1, current.length );
 		}
 
-		if ( current[ current.length - 1 ] === '\'' ) {
+		if ( current[ current.length - 1 ] === "'" ) {
 			current = current.substring( 0, current.length - 1 );
 		}
 	}
@@ -307,7 +352,7 @@ TokenIterator.prototype.hasNext = function() {
 };
 
 TokenIterator.prototype.hasNextN = function( n ) {
-	return ( this.index + n ) < this.tokens.length;
+	return this.index + n < this.tokens.length;
 };
 
 TokenIterator.prototype.skip = function( m, n ) {
@@ -324,9 +369,7 @@ TokenIterator.prototype.getCount = function() {
 };
 
 TokenIterator.prototype.peek = function( n ) {
-	var peepers = [],
-		end = this.index + n,
-		x;
+	var peepers = [], end = this.index + n, x;
 
 	for ( x = this.index; x < end; x++ ) {
 		peepers.push( this.tokens[ x ] );
@@ -340,11 +383,12 @@ TokenIterator.prototype.peek = function( n ) {
 AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 	var seps = new RegExp( this._getSeparators() ),
 		nl = [],
-		ecount = 0, /* track number of highlighted errors */
+		ecount = 0 /* track number of highlighted errors */,
 		parent = this,
 		bogus = this._isTinyMCE ? ' data-mce-bogus="1"' : '',
 		emptySpan = '<span class="mceItemHidden"' + bogus + '>&nbsp;</span>',
-		textOnlyMode, iterator;
+		textOnlyMode,
+		iterator;
 
 	/**
 	 * Split a text node into an ordered list of siblings:
@@ -400,11 +444,30 @@ AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 
 	this.map( nl, function( n ) {
 		var foundStrings = {},
-			v, tokens, previous, doReplaces, token, current, defaults, done, prev, curr, newNode, x, regexp, result, i, contents, y, nnode;
+			v,
+			tokens,
+			previous,
+			doReplaces,
+			token,
+			current,
+			defaults,
+			done,
+			prev,
+			curr,
+			newNode,
+			x,
+			regexp,
+			result,
+			i,
+			contents,
+			y,
+			nnode;
 
 		if ( n.nodeType === 3 ) {
 			v = n.nodeValue; /* we don't want to mangle the HTML so use the actual encoded string */
-			tokens = n.nodeValue.split( seps ); /* split on the unencoded string so we get access to quotes as " */
+			tokens = n.nodeValue.split(
+				seps,
+			); /* split on the unencoded string so we get access to quotes as " */
 			previous = '';
 
 			doReplaces = [];
@@ -424,14 +487,22 @@ AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 					curr = v.substr( prev.length, v.length );
 
 					function checkErrors( error ) {
-						if ( error !== undefined && ! error.used && foundStrings[ '__' + error.string ] === undefined && error.regexp.test( curr ) ) {
+						if (
+							error !== undefined &&
+							! error.used &&
+							foundStrings[ '__' + error.string ] === undefined &&
+							error.regexp.test( curr )
+						) {
 							foundStrings[ '__' + error.string ] = 1;
-							doReplaces.push( [ error.regexp, '<span class="' + error.type + '" pre="' + previous + '"' + bogus + '>$&</span>' ] );
+							doReplaces.push( [
+								error.regexp,
+								'<span class="' + error.type + '" pre="' + previous + '"' + bogus + '>$&</span>',
+							] );
 
 							error.used = true;
 							done = true;
 						}
-					};
+					}
 
 					if ( current !== undefined ) {
 						previous = previous + ' ';
@@ -466,8 +537,14 @@ AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 
 							/* sometimes IE likes to ignore the space between two spans, solution is to insert a placeholder span with
 							   a non-breaking space.  The markup removal code substitutes this span for a space later */
-							if ( parent.isIE() && node.nodeValue.length > 0 && node.nodeValue.substr( 0, 1 ) === ' ' ) {
-								return parent.create( emptySpan + node.nodeValue.substr( 1, node.nodeValue.length - 1 ).replace( regexp, result ), false );
+							if (
+								parent.isIE() && node.nodeValue.length > 0 && node.nodeValue.substr( 0, 1 ) === ' '
+							) {
+								return parent.create(
+									emptySpan +
+										node.nodeValue.substr( 1, node.nodeValue.length - 1 ).replace( regexp, result ),
+									false,
+								);
 							}
 
 							if ( textOnlyMode ) {
@@ -498,8 +575,18 @@ AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 
 						for ( y = 0; y < contents.length; y++ ) {
 							if ( contents[ y ].nodeType === 3 && regexp.test( contents[ y ].nodeValue ) ) {
-								if ( parent.isIE() && contents[ y ].nodeValue.length > 0 && contents[ y ].nodeValue.substr( 0, 1 ) === ' ' ) {
-									nnode = parent.create( emptySpan + contents[ y ].nodeValue.substr( 1, contents[ y ].nodeValue.length - 1 ).replace( regexp, result ), true );
+								if (
+									parent.isIE() &&
+									contents[ y ].nodeValue.length > 0 &&
+									contents[ y ].nodeValue.substr( 0, 1 ) === ' '
+								) {
+									nnode = parent.create(
+										emptySpan +
+											contents[ y ].nodeValue
+												.substr( 1, contents[ y ].nodeValue.length - 1 )
+												.replace( regexp, result ),
+										true,
+									);
 								} else {
 									nnode = parent.create( contents[ y ].nodeValue.replace( regexp, result ), true );
 								}
@@ -514,7 +601,7 @@ AtDCore.prototype.markMyWords = function( container_nodes, errors ) {
 						}
 
 						return node;
-					}; // jshint ignore:line
+					} // jshint ignore:line
 
 					newNode = bringTheHurt( newNode );
 				}
@@ -541,7 +628,12 @@ AtDCore.prototype.removeWords = function( node, w ) {
 
 	this.map( this.findSpans( node ).reverse(), function( n ) {
 		var nnode;
-		if ( n && ( parent.isMarkedNode( n ) || parent.hasClass( n, 'mceItemHidden' ) || parent.isEmptySpan( n ) ) ) {
+		if (
+			n &&
+			( parent.isMarkedNode( n ) ||
+				parent.hasClass( n, 'mceItemHidden' ) ||
+				parent.isEmptySpan( n ) )
+		) {
 			if ( n.innerHTML === '&nbsp;' ) {
 				nnode = document.createTextNode( ' ' ); /* hax0r */
 				parent.replaceWith( n, nnode );
@@ -591,10 +683,7 @@ AtDCore.prototype.applySuggestion = function( element, suggestion ) {
  * Check for an error
  */
 AtDCore.prototype.hasErrorMessage = function( xmlr ) {
-	return (
-		xmlr !== undefined &&
-		xmlr.getElementsByTagName( 'message' ).item( 0 ) !== null
-	);
+	return xmlr !== undefined && xmlr.getElementsByTagName( 'message' ).item( 0 ) !== null;
 };
 
 AtDCore.prototype.getErrorMessage = function( xmlr ) {

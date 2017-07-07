@@ -71,5 +71,5 @@ export const error = ( state = false, action ) => {
 export default combineReducers( {
 	items,
 	requesting,
-	error
+	error,
 } );

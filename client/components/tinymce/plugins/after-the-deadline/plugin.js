@@ -39,8 +39,7 @@ const SERVICE_LOCALIZED_SUBDOMAINS = [ 'en', 'pt', 'de', 'es', 'fr' ];
 const IGNORE_PREFERENCE_NAME = 'editorProofreadIgnore';
 
 function plugin( editor ) {
-	var suggestionsMenu, started, atdCore, dom,
-		each = tinymce.each;
+	var suggestionsMenu, started, atdCore, dom, each = tinymce.each;
 
 	const SuggestionsMenu = tinymce.ui.Menu.extend( {
 		init( settings ) {
@@ -48,7 +47,7 @@ function plugin( editor ) {
 			settings.autofix = false;
 
 			this.throttledReposition = throttle( this.reposition.bind( this ), 200 );
-			this.on( 'autohide', ( event ) => event.preventDefault() );
+			this.on( 'autohide', event => event.preventDefault() );
 			this.boundHideIfNotMarked = this.hideIfNotMarked.bind( this );
 
 			this._super( settings );
@@ -92,7 +91,7 @@ function plugin( editor ) {
 			pos.y += targetPos.y;
 
 			this.moveTo( pos.x, pos.y + this.settings.target.offsetHeight );
-		}
+		},
 	} );
 
 	/* initializes the functions used by the AtD Core UI Module */
@@ -143,7 +142,9 @@ function plugin( editor ) {
 	}
 
 	function isMarkedNode( node ) {
-		return ( node.className && /\bhidden(GrammarError|SpellError|Suggestion)\b/.test( node.className ) );
+		return (
+			node.className && /\bhidden(GrammarError|SpellError|Suggestion)\b/.test( node.className )
+		);
 	}
 
 	function markMyWords( errors ) {
@@ -152,7 +153,10 @@ function plugin( editor ) {
 
 	// If no more suggestions, finish.
 	function checkIfFinished() {
-		if ( ! editor.dom.select( 'span.hiddenSpellError, span.hiddenGrammarError, span.hiddenSuggestion' ).length ) {
+		if (
+			! editor.dom.select( 'span.hiddenSpellError, span.hiddenGrammarError, span.hiddenSuggestion' )
+				.length
+		) {
 			if ( suggestionsMenu ) {
 				suggestionsMenu.hide();
 			}
@@ -163,13 +167,18 @@ function plugin( editor ) {
 
 	function ignoreWord( target, word, all ) {
 		if ( all ) {
-			each( editor.dom.select( 'span.hiddenSpellError, span.hiddenGrammarError, span.hiddenSuggestion' ), function( node ) {
-				var text = node.innerText || node.textContent;
+			each(
+				editor.dom.select(
+					'span.hiddenSpellError, span.hiddenGrammarError, span.hiddenSuggestion',
+				),
+				function( node ) {
+					var text = node.innerText || node.textContent;
 
-				if ( text === word ) {
-					dom.remove( node, true );
-				}
-			} );
+					if ( text === word ) {
+						dom.remove( node, true );
+					}
+				},
+			);
 		} else {
 			editor.dom.remove( target, true );
 		}
@@ -185,7 +194,8 @@ function plugin( editor ) {
 			nodes = editor.dom.select( 'span' ),
 			i = nodes.length;
 
-		while ( i-- ) { // reversed
+		while ( i-- ) {
+			// reversed
 			node = nodes[ i ];
 
 			if ( node.className && regex.test( node.className ) ) {
@@ -205,7 +215,7 @@ function plugin( editor ) {
 		// Attempt to find a supported localized subdomain which matches the
 		// currently configured locale slug
 		const localeSlug = getLocaleSlug();
-		const subdomain = find( SERVICE_LOCALIZED_SUBDOMAINS, ( locale ) => {
+		const subdomain = find( SERVICE_LOCALIZED_SUBDOMAINS, locale => {
 			// Match on full localeSlug ("en") or with variant ("pt-BR")
 			return localeSlug === locale || 0 === localeSlug.indexOf( locale + '-' );
 		} );
@@ -259,13 +269,13 @@ function plugin( editor ) {
 			items.push( {
 				text: translate( 'No suggestions', { comment: 'Editor proofreading no suggestions' } ),
 				classes: 'atd-menu-title',
-				disabled: true
+				disabled: true,
 			} );
 		} else {
 			items.push( {
 				text: errorDescription.description,
 				classes: 'atd-menu-title',
-				disabled: true
+				disabled: true,
 			} );
 
 			if ( errorDescription.suggestions.length ) {
@@ -277,7 +287,7 @@ function plugin( editor ) {
 						onclick: function() {
 							atdCore.applySuggestion( target, suggestion );
 							checkIfFinished();
-						}
+						},
 					} );
 				} );
 			}
@@ -294,9 +304,9 @@ function plugin( editor ) {
 						url: errorDescription.moreinfo,
 						width: 480,
 						height: 380,
-						inline: true
+						inline: true,
 					} );
-				}
+				},
 			} );
 		}
 
@@ -306,8 +316,8 @@ function plugin( editor ) {
 				text: translate( 'Ignore suggestion', { comment: 'Editor proofreading menu item' } ),
 				onclick: function() {
 					ignoreWord( target, text );
-				}
-			}
+				},
+			},
 		] );
 
 		if ( editor.getParam( 'atd_ignore_enable' ) ) {
@@ -316,14 +326,14 @@ function plugin( editor ) {
 				onclick: function() {
 					setAlwaysIgnore( text );
 					ignoreWord( target, text, true );
-				}
+				},
 			} );
 		} else {
 			items.push( {
 				text: translate( 'Ignore all', { comment: 'Editor proofreading menu item' } ),
 				onclick: function() {
 					ignoreWord( target, text, true );
-				}
+				},
 			} );
 		}
 
@@ -343,8 +353,7 @@ function plugin( editor ) {
 
 		// add a command to request a document check and process the results.
 		editor.addCommand( 'mceWritingImprovementTool', function( callback ) {
-			var results,
-				errorCount = 0;
+			var results, errorCount = 0;
 
 			if ( typeof callback !== 'function' ) {
 				callback = function() {};
@@ -362,15 +371,25 @@ function plugin( editor ) {
 			}
 
 			// send request to our service
-			sendRequest( 'checkDocument', editor.getContent( { format: 'raw' } ), function( data, request ) {
+			sendRequest( 'checkDocument', editor.getContent( { format: 'raw' } ), function(
+				data,
+				request,
+			) {
 				// turn off the spinning thingie
 				editor.setProgressState();
 
 				// if the server is not accepting requests, let the user know
-				if ( request.status !== 200 || request.responseText.substr( 1, 4 ) === 'html' || ! request.responseXML ) {
+				if (
+					request.status !== 200 ||
+					request.responseText.substr( 1, 4 ) === 'html' ||
+					! request.responseXML
+				) {
 					editor.windowManager.alert(
-						translate( 'There was a problem communicating with the Proofreading service. Try again in one minute.', { comment: 'Editor proofreading error' } ),
-						callback( 0 )
+						translate(
+							'There was a problem communicating with the Proofreading service. Try again in one minute.',
+							{ comment: 'Editor proofreading error' },
+						),
+						callback( 0 ),
 					);
 
 					return;
@@ -380,7 +399,7 @@ function plugin( editor ) {
 				if ( request.responseXML.getElementsByTagName( 'message' ).item( 0 ) !== null ) {
 					editor.windowManager.alert(
 						request.responseXML.getElementsByTagName( 'message' ).item( 0 ).firstChild.data,
-						callback( 0 )
+						callback( 0 ),
 					);
 
 					return;
@@ -393,7 +412,11 @@ function plugin( editor ) {
 				}
 
 				if ( ! errorCount ) {
-					editor.windowManager.alert( translate( 'No writing errors were found.', { comment: 'Editor proofreading success prompt' } ) );
+					editor.windowManager.alert(
+						translate( 'No writing errors were found.', {
+							comment: 'Editor proofreading success prompt',
+						} ),
+					);
 				} else {
 					started = true;
 					editor.fire( 'SpellcheckStart' );
@@ -405,9 +428,11 @@ function plugin( editor ) {
 
 		if ( editor.settings.content_css !== false ) {
 			// CSS for underlining suggestions
-			dom.addStyle( '.hiddenSpellError{border-bottom:2px solid red;cursor:default;}' +
-				'.hiddenGrammarError{border-bottom:2px solid green;cursor:default;}' +
-				'.hiddenSuggestion{border-bottom:2px solid blue;cursor:default;}' );
+			dom.addStyle(
+				'.hiddenSpellError{border-bottom:2px solid red;cursor:default;}' +
+					'.hiddenGrammarError{border-bottom:2px solid green;cursor:default;}' +
+					'.hiddenSuggestion{border-bottom:2px solid blue;cursor:default;}',
+			);
 		}
 
 		// Click on misspelled word
@@ -449,8 +474,8 @@ function plugin( editor ) {
 		} );
 	} )();
 
-	editor.on( 'SpellcheckStart SpellcheckEnd', ( event ) => {
-		editor.contentDocument.body.spellcheck = ( 'spellcheckend' === event.type );
+	editor.on( 'SpellcheckStart SpellcheckEnd', event => {
+		editor.contentDocument.body.spellcheck = 'spellcheckend' === event.type;
 		if ( ! editor.contentDocument.body.spellcheck ) {
 			editor.contentDocument.body.focus();
 			editor.contentDocument.body.blur();
@@ -467,7 +492,7 @@ function plugin( editor ) {
 			editor.on( 'SpellcheckStart SpellcheckEnd', function() {
 				self.active( started );
 			} );
-		}
+		},
 	} );
 
 	editor.addButton( 'spellchecker', {
@@ -479,7 +504,7 @@ function plugin( editor ) {
 			editor.on( 'SpellcheckStart SpellcheckEnd', function() {
 				self.active( started );
 			} );
-		}
+		},
 	} );
 
 	editor.on( 'remove', function() {

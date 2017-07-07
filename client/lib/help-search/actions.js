@@ -24,10 +24,10 @@ var HelpSearchActions = {
 
 			Dispatcher.handleServerAction( {
 				type: ActionTypes.SET_HELP_LINKS,
-				helpLinks: helpLinks
+				helpLinks: helpLinks,
 			} );
 		} );
-	}
+	},
 };
 
 module.exports = HelpSearchActions;

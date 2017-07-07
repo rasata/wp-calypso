@@ -63,7 +63,8 @@ function embedReversal( editor ) {
 		}
 
 		// If so, queue a request for reversal
-		wpcom.undocumented()
+		wpcom
+			.undocumented()
 			.site( getSelectedSiteId( store.getState() ) )
 			.embedReversal( markup )
 			.then( partial( replaceMarkup, markup ) )

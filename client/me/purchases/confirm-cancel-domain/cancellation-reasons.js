@@ -15,7 +15,7 @@ export default [
 		label: i18n.translate( 'I misspelled the domain' ),
 		helpMessage: i18n.translate(
 			'If you misspelled the domain name you were attempting to purchase, it’s likely that others will as well, ' +
-				'and you might want to consider keeping the misspelled domain.'
+				'and you might want to consider keeping the misspelled domain.',
 		),
 	},
 	{
@@ -29,7 +29,7 @@ export default [
 				components: {
 					a: <a href={ support.UPDATE_NAMESERVERS } target="_blank" rel="noopener noreferrer" />,
 				},
-			}
+			},
 		),
 	},
 	{
@@ -44,7 +44,7 @@ export default [
 				components: {
 					a: <a href={ support.UPDATE_NAMESERVERS } target="_blank" rel="noopener noreferrer" />,
 				},
-			}
+			},
 		),
 	},
 	{
@@ -52,14 +52,14 @@ export default [
 		label: i18n.translate( 'The service isn’t what I expected' ),
 		helpMessage: i18n.translate(
 			'If you misspelled the domain name you were attempting to purchase, it’s likely that others will as well, ' +
-				'and you might want to consider keeping the misspelled domain.'
+				'and you might want to consider keeping the misspelled domain.',
 		),
 	},
 	{
 		value: 'wanted_free',
 		label: i18n.translate( 'I meant to get a free blog' ),
 		helpMessage: i18n.translate(
-			'Please provide a brief description of your reasons for canceling:'
+			'Please provide a brief description of your reasons for canceling:',
 		),
 		showTextarea: true,
 	},
@@ -67,7 +67,7 @@ export default [
 		value: 'other',
 		label: i18n.translate( 'Something not listed here' ),
 		helpMessage: i18n.translate(
-			'Please provide a brief description of your reasons for canceling:'
+			'Please provide a brief description of your reasons for canceling:',
 		),
 		showTextarea: true,
 	},

@@ -14,15 +14,13 @@ import {
 	WOOCOMMERCE_PAYMENT_METHODS_REQUEST,
 	WOOCOMMERCE_PAYMENT_METHODS_REQUEST_SUCCESS,
 } from 'woocommerce/state/action-types';
-import {
-	arePaymentMethodsLoaded,
-	arePaymentMethodsLoading,
-} from './selectors';
+import { arePaymentMethodsLoaded, arePaymentMethodsLoading } from './selectors';
 
-const addPaymentMethodDetails = ( method ) => {
+const addPaymentMethodDetails = method => {
 	return {
 		...method,
-		...getPaymentMethodDetails( method.id ) };
+		...getPaymentMethodDetails( method.id ),
+	};
 };
 
 const fetchPaymentMethodsSuccess = ( siteId, data ) => {
@@ -34,7 +32,7 @@ const fetchPaymentMethodsSuccess = ( siteId, data ) => {
 	};
 };
 
-export const fetchPaymentMethods = ( siteId ) => ( dispatch, getState ) => {
+export const fetchPaymentMethods = siteId => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
 		siteId = getSelectedSiteId( state );
@@ -50,8 +48,9 @@ export const fetchPaymentMethods = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'payment_gateways' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'payment_gateways' )
+		.then( data => {
 			dispatch( fetchPaymentMethodsSuccess( siteId, data ) );
 		} )
 		.catch( err => {
@@ -68,7 +67,10 @@ const savePaymentMethodSuccess = ( siteId, data ) => {
 	};
 };
 
-export const savePaymentMethod = ( siteId, method, successAction = null, failureAction = null ) => ( dispatch, getState ) => {
+export const savePaymentMethod = ( siteId, method, successAction = null, failureAction = null ) => (
+	dispatch,
+	getState,
+) => {
 	const state = getState();
 	if ( ! siteId ) {
 		siteId = getSelectedSiteId( state );
@@ -76,7 +78,7 @@ export const savePaymentMethod = ( siteId, method, successAction = null, failure
 	const rawEdits = getPaymentMethodEdits( state, siteId );
 	const edits = {};
 	Object.keys( rawEdits ).map( function( editKey ) {
-		return edits[ editKey ] = rawEdits[ editKey ].value;
+		return ( edits[ editKey ] = rawEdits[ editKey ].value );
 	} );
 	const body = { settings: edits };
 	const updateAction = {
@@ -86,8 +88,9 @@ export const savePaymentMethod = ( siteId, method, successAction = null, failure
 
 	dispatch( updateAction );
 
-	return request( siteId ).put( `payment_gateways/${ method.id }`, body )
-		.then( ( data ) => {
+	return request( siteId )
+		.put( `payment_gateways/${ method.id }`, body )
+		.then( data => {
 			dispatch( savePaymentMethodSuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );
@@ -115,7 +118,7 @@ export const savePaymentMethodEnabled = (
 	methodId,
 	enabled,
 	successAction = null,
-	failureAction = null
+	failureAction = null,
 ) => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
@@ -132,8 +135,9 @@ export const savePaymentMethodEnabled = (
 
 	dispatch( updateAction );
 
-	return request( siteId ).put( `payment_gateways/${ methodId }`, body )
-		.then( ( data ) => {
+	return request( siteId )
+		.put( `payment_gateways/${ methodId }`, body )
+		.then( data => {
 			dispatch( savePaymentMethodEnabledSuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );

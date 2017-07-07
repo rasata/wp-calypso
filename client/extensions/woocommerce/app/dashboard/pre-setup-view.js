@@ -17,7 +17,9 @@ import {
 import { errorNotice } from 'state/notices/actions';
 import { fetchSettingsGeneral } from 'woocommerce/state/sites/settings/general/actions';
 import { getCountryData, getCountries } from 'woocommerce/lib/countries';
-import { setSetStoreAddressDuringInitialSetup } from 'woocommerce/state/sites/setup-choices/actions';
+import {
+	setSetStoreAddressDuringInitialSetup,
+} from 'woocommerce/state/sites/setup-choices/actions';
 import SetupFooter from './setup-footer';
 import SetupHeader from './setup-header';
 import { doInitialSetup } from 'woocommerce/state/sites/settings/actions';
@@ -44,23 +46,23 @@ class PreSetupView extends Component {
 		if ( site && site.ID ) {
 			this.props.fetchSettingsGeneral( site.ID );
 		}
-	}
+	};
 
-	componentWillReceiveProps = ( newProps ) => {
+	componentWillReceiveProps = newProps => {
 		const { site } = this.props;
 		const newSiteId = site.selectedSite ? newProps.selectedSite.ID : null;
 		const oldSiteId = site ? site.ID : null;
 
-		if ( newSiteId && ( oldSiteId !== newSiteId ) ) {
+		if ( newSiteId && oldSiteId !== newSiteId ) {
 			this.props.fetchSettingsGeneral( newSiteId );
 		}
 
 		if ( ! this.state.userBeganEditing ) {
 			this.setState( { address: newProps.address } );
 		}
-	}
+	};
 
-	onChange = ( event ) => {
+	onChange = event => {
 		const addressKey = event.target.name;
 		const newValue = event.target.value;
 
@@ -74,9 +76,9 @@ class PreSetupView extends Component {
 		}
 
 		this.setState( { address, userBeganEditing: true } );
-	}
+	};
 
-	onNext = ( event ) => {
+	onNext = event => {
 		const { site, translate } = this.props;
 		event.preventDefault();
 		this.setState( { isSaving: true } );
@@ -91,14 +93,18 @@ class PreSetupView extends Component {
 
 		const onFailure = () => {
 			this.setState( { isSaving: false } );
-			return errorNotice( translate( 'There was a problem saving the store address. Please try again.' ) );
+			return errorNotice(
+				translate( 'There was a problem saving the store address. Please try again.' ),
+			);
 		};
 
 		// Provides fallbacks if the country & state options were never changed/toggled,
 		// or if an unsupported country was set in state (like WC's default GB country)
 		let country = null;
 		let state = null;
-		if ( ! this.state.address.country || ! find( getCountries(), { code: this.state.address.country } ) ) {
+		if (
+			! this.state.address.country || ! find( getCountries(), { code: this.state.address.country } )
+		) {
 			country = 'US';
 			const countryData = getCountryData( country );
 			state = this.state.address.state ? this.state.address.state : countryData.defaultState;
@@ -116,9 +122,9 @@ class PreSetupView extends Component {
 			this.state.address.postcode,
 			country,
 			onSuccess,
-			onFailure
+			onFailure,
 		);
-	}
+	};
 
 	render = () => {
 		const { loading, site, translate } = this.props;
@@ -145,12 +151,12 @@ class PreSetupView extends Component {
 				<SetupFooter
 					disabled={ this.state.isSaving }
 					onClick={ this.onNext }
-					label={ translate( 'Let\'s Go!' ) }
+					label={ translate( "Let's Go!" ) }
 					primary
 				/>
 			</div>
 		);
-	}
+	};
 }
 
 function mapStateToProps( state, ownProps ) {
@@ -174,7 +180,7 @@ function mapDispatchToProps( dispatch ) {
 			fetchSettingsGeneral,
 			doInitialSetup,
 		},
-		dispatch
+		dispatch,
 	);
 }
 

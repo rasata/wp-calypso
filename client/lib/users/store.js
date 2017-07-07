@@ -13,13 +13,13 @@ var Dispatcher = require( 'dispatcher' ),
 	emitter = require( 'lib/mixins/emitter' ),
 	deterministicStringify = require( 'lib/deterministic-stringify' );
 
-var _fetchingUsersByNamespace = {},        // store fetching state (boolean)
+var _fetchingUsersByNamespace = {}, // store fetching state (boolean)
 	_fetchingUpdatedUsersByNamespace = {}, // store fetching state (boolean)
-	_usersBySite = {},                     // store user objects
-	_totalUsersByNamespace = {},           // store total found for params
-	_usersFetchedByNamespace = {},         // store fetch progress
-	_offsetByNamespace = {},               // store fetch progress
-	_userIDsByNamespace = {};              // store user order
+	_usersBySite = {}, // store user objects
+	_totalUsersByNamespace = {}, // store total found for params
+	_usersFetchedByNamespace = {}, // store fetch progress
+	_offsetByNamespace = {}, // store fetch progress
+	_userIDsByNamespace = {}; // store user order
 
 var UsersStore = {
 	// This data can help manage infinite scroll
@@ -32,14 +32,12 @@ var UsersStore = {
 			fetchingUsers: _fetchingUsersByNamespace[ namespace ] || false,
 			usersCurrentOffset: _offsetByNamespace[ namespace ],
 			numUsersFetched: _usersFetchedByNamespace[ namespace ],
-			fetchNameSpace: namespace
+			fetchNameSpace: namespace,
 		};
 	},
 	// Get Users for a set of fetchOptions
 	getUsers: function( fetchOptions ) {
-		var namespace = getNamespace( fetchOptions ),
-			siteId = fetchOptions.siteId,
-			users = [];
+		var namespace = getNamespace( fetchOptions ), siteId = fetchOptions.siteId, users = [];
 
 		debug( 'getUsers:', namespace );
 
@@ -76,13 +74,13 @@ var UsersStore = {
 
 		return Object.assign( {}, fetchOptions, {
 			offset: 0,
-			number: Math.min( requestNumber, 1000 )
+			number: Math.min( requestNumber, 1000 ),
 		} );
 	},
 
 	emitChange: function() {
 		this.emit( 'change' );
-	}
+	},
 };
 
 function updateUser( siteId, id, user ) {
@@ -99,7 +97,9 @@ function updateUser( siteId, id, user ) {
 
 function decrementPaginationData( siteId, userId ) {
 	Object.keys( _userIDsByNamespace ).forEach( function( namespace ) {
-		if ( endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId ) ) {
+		if (
+			endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId )
+		) {
 			_totalUsersByNamespace[ namespace ]--;
 			_usersFetchedByNamespace[ namespace ]--;
 		}
@@ -108,7 +108,9 @@ function decrementPaginationData( siteId, userId ) {
 
 function incrementPaginationData( siteId, userId ) {
 	Object.keys( _userIDsByNamespace ).forEach( function( namespace ) {
-		if ( endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId ) ) {
+		if (
+			endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId )
+		) {
 			_totalUsersByNamespace[ namespace ]++;
 			_usersFetchedByNamespace[ namespace ]++;
 		}
@@ -125,7 +127,9 @@ function deleteUserFromSite( siteId, userId ) {
 
 function deleteUserFromNamespaces( siteId, userId ) {
 	Object.keys( _userIDsByNamespace ).forEach( function( namespace ) {
-		if ( endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId ) ) {
+		if (
+			endsWith( namespace, 'siteId=' + siteId ) && _userIDsByNamespace[ namespace ].has( userId )
+		) {
 			_userIDsByNamespace[ namespace ].delete( userId );
 		}
 	} );
@@ -140,8 +144,7 @@ function addSingleUser( fetchOptions, user, namespace ) {
 }
 
 function updateUsers( fetchOptions, users, total ) {
-	var namespace = getNamespace( fetchOptions ),
-		offset = fetchOptions.offset;
+	var namespace = getNamespace( fetchOptions ), offset = fetchOptions.offset;
 
 	debug( 'updateUsers:', namespace );
 
@@ -165,8 +168,7 @@ function getNamespace( fetchOptions ) {
 }
 
 UsersStore.dispatchToken = Dispatcher.register( function( payload ) {
-	var action = payload.action,
-		namespace;
+	var action = payload.action, namespace;
 
 	switch ( action.type ) {
 		case 'RECEIVE_USERS':

@@ -10,6 +10,6 @@ import PreviewRequired from './preview-required';
 
 export default React.createClass( {
 	render() {
-		return ( <legend>{ this.props.label }<PreviewRequired { ...this.props } /></legend> );
-	}
+		return <legend>{ this.props.label }<PreviewRequired { ...this.props } /></legend>;
+	},
 } );

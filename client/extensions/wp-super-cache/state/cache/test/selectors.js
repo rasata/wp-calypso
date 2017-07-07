@@ -24,7 +24,7 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: undefined,
-				}
+				},
 			};
 			const isDeleting = isDeletingCache( state, primarySiteId );
 
@@ -37,11 +37,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingCache( state, secondarySiteId );
 
@@ -54,11 +54,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingCache( state, primarySiteId );
 
@@ -71,11 +71,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isDeleting = isDeletingCache( state, primarySiteId );
 
@@ -90,11 +90,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isCacheDeleteSuccessful( state, secondarySiteId );
 
@@ -107,11 +107,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isCacheDeleteSuccessful( state, primarySiteId );
 
@@ -124,11 +124,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const isSuccessful = isCacheDeleteSuccessful( state, primarySiteId );
 
@@ -143,11 +143,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getCacheDeleteStatus( state, secondarySiteId );
 
@@ -160,11 +160,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: false, status: 'success' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: false, status: 'success' },
+							},
+						},
+					},
+				},
 			};
 			const status = getCacheDeleteStatus( state, primarySiteId );
 
@@ -177,11 +177,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: false, status: 'error' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: false, status: 'error' },
+							},
+						},
+					},
+				},
 			};
 			const status = getCacheDeleteStatus( state, primarySiteId );
 
@@ -194,11 +194,11 @@ describe( 'selectors', () => {
 					wpSuperCache: {
 						cache: {
 							deleteStatus: {
-								[ primarySiteId ]: { deleting: true, status: 'pending' }
-							}
-						}
-					}
-				}
+								[ primarySiteId ]: { deleting: true, status: 'pending' },
+							},
+						},
+					},
+				},
 			};
 			const status = getCacheDeleteStatus( state, primarySiteId );
 
@@ -211,9 +211,9 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: {
-						cache: {}
+						cache: {},
 					},
-				}
+				},
 			};
 			const isTesting = isTestingCache( state, primarySiteId );
 
@@ -227,10 +227,10 @@ describe( 'selectors', () => {
 						cache: {
 							testing: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isTesting = isTestingCache( state, secondarySiteId );
 
@@ -244,10 +244,10 @@ describe( 'selectors', () => {
 						cache: {
 							testing: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isTesting = isTestingCache( state, primarySiteId );
 
@@ -261,10 +261,10 @@ describe( 'selectors', () => {
 						cache: {
 							testing: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isTesting = isTestingCache( state, primarySiteId );
 
@@ -277,17 +277,17 @@ describe( 'selectors', () => {
 			attempts: {
 				first: {
 					status: 'OK',
-				}
-			}
+				},
+			},
 		};
 
 		it( 'should return empty object if no state exists', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: {
-						cache: {}
-					}
-				}
+						cache: {},
+					},
+				},
 			};
 			const results = getCacheTestResults( state, primarySiteId );
 
@@ -301,10 +301,10 @@ describe( 'selectors', () => {
 						cache: {
 							items: {
 								[ primarySiteId ]: primaryResults,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const results = getCacheTestResults( state, secondarySiteId );
 
@@ -318,10 +318,10 @@ describe( 'selectors', () => {
 						cache: {
 							items: {
 								[ primarySiteId ]: primaryResults,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const results = getCacheTestResults( state, primarySiteId );
 
@@ -334,9 +334,9 @@ describe( 'selectors', () => {
 			const state = {
 				extensions: {
 					wpSuperCache: {
-						cache: {}
+						cache: {},
 					},
-				}
+				},
 			};
 			const isPreloading = isPreloadingCache( state, primarySiteId );
 
@@ -350,10 +350,10 @@ describe( 'selectors', () => {
 						cache: {
 							preloading: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isPreloading = isPreloadingCache( state, secondarySiteId );
 
@@ -367,10 +367,10 @@ describe( 'selectors', () => {
 						cache: {
 							preloading: {
 								[ primarySiteId ]: false,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isPreloading = isPreloadingCache( state, primarySiteId );
 
@@ -384,10 +384,10 @@ describe( 'selectors', () => {
 						cache: {
 							preloading: {
 								[ primarySiteId ]: true,
-							}
-						}
-					}
-				}
+							},
+						},
+					},
+				},
 			};
 			const isPreloading = isPreloadingCache( state, primarySiteId );
 

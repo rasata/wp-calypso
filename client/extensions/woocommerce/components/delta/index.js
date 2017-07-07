@@ -11,7 +11,6 @@ import { includes } from 'lodash';
  */
 
 export default class Delta extends Component {
-
 	static propTypes = {
 		className: PropTypes.string,
 		icon: PropTypes.string,
@@ -31,12 +30,11 @@ export default class Delta extends Component {
 		if ( icon ) {
 			deltaIcon = icon;
 		} else {
-			deltaIcon = ( includes( className, 'is-increase' ) || includes( className, 'is-undefined-increase' ) )
+			deltaIcon = includes( className, 'is-increase' ) ||
+				includes( className, 'is-undefined-increase' )
 				? 'arrow-up'
 				: 'arrow-down';
-			deltaIcon = ( includes( className, 'is-neutral' ) )
-				? 'minus-small'
-				: deltaIcon;
+			deltaIcon = includes( className, 'is-neutral' ) ? 'minus-small' : deltaIcon;
 		}
 		return (
 			<div className={ deltaClasses }>
@@ -45,9 +43,7 @@ export default class Delta extends Component {
 					<span className="delta__value">
 						{ value }
 					</span>
-					{ suffix &&
-						<span className="delta__suffix">{ suffix }</span>
-					}
+					{ suffix && <span className="delta__suffix">{ suffix }</span> }
 				</span>
 			</div>
 		);

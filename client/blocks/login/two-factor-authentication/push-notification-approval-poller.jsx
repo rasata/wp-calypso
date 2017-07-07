@@ -7,13 +7,8 @@ import { Component, PropTypes } from 'react';
 /**
  * Internal dependencies
  */
-import {
-	startPollAppPushAuth,
-	stopPollAppPushAuth,
-} from 'state/login/actions';
-import {
-	getTwoFactorPushPollSuccess,
-} from 'state/login/selectors';
+import { startPollAppPushAuth, stopPollAppPushAuth } from 'state/login/actions';
+import { getTwoFactorPushPollSuccess } from 'state/login/selectors';
 
 class PushNotificationApprovalPoller extends Component {
 	static propTypes = {
@@ -43,11 +38,11 @@ class PushNotificationApprovalPoller extends Component {
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		pushSuccess: getTwoFactorPushPollSuccess( state ),
 	} ),
 	{
 		startPollAppPushAuth,
 		stopPollAppPushAuth,
-	}
+	},
 )( PushNotificationApprovalPoller );

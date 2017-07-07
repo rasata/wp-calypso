@@ -44,14 +44,9 @@ Object.defineProperty( actionLog, 'history', {
 } );
 
 const recordAction = action => {
-	const {
-		actionHistory,
-		historySize,
-	} = state;
+	const { actionHistory, historySize } = state;
 
-	const thunkDescription = 'function' === typeof action
-		? { type: 'thunk (hidden)' }
-		: {};
+	const thunkDescription = 'function' === typeof action ? { type: 'thunk (hidden)' } : {};
 
 	actionHistory.push( {
 		...action,
@@ -64,7 +59,7 @@ const recordAction = action => {
 
 	// cheap optimization to keep from
 	// thrashing once we hit our size limit
-	if ( actionHistory.length > ( 2 * historySize ) ) {
+	if ( actionHistory.length > 2 * historySize ) {
 		state.actionHistory = actionHistory.slice( -1 * historySize );
 	}
 };
@@ -97,7 +92,7 @@ export const consoleDispatcher = next => ( reducer, initialState ) => {
 
 	return {
 		...store,
-		dispatch
+		dispatch,
 	};
 };
 

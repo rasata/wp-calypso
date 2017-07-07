@@ -29,11 +29,13 @@ export const BusinessPluginsPanel = ( {
 			<PurchaseButton { ...{ isActive, href: purchaseLink } } />
 		</SectionHeader>
 
-		<Card className={ classNames( 'wpcom-plugins__business-panel', {
-			'is-disabled': ! isActive
-		} ) }>
+		<Card
+			className={ classNames( 'wpcom-plugins__business-panel', {
+				'is-disabled': ! isActive,
+			} ) }
+		>
 			<div className="wpcom-plugins__list">
-				{ plugins.map( ( { name, descriptionLink, icon, category, description } ) =>
+				{ plugins.map( ( { name, descriptionLink, icon, category, description } ) => (
 					<Plugin
 						{ ...{
 							category,
@@ -46,7 +48,7 @@ export const BusinessPluginsPanel = ( {
 							onClick,
 						} }
 					/>
-				) }
+				) ) }
 			</div>
 		</Card>
 	</div>
@@ -55,7 +57,7 @@ export const BusinessPluginsPanel = ( {
 BusinessPluginsPanel.propTypes = {
 	isActive: PropTypes.bool,
 	purchaseLink: PropTypes.string.isRequired,
-	plugins: PropTypes.array
+	plugins: PropTypes.array,
 };
 
 const trackClick = name =>
@@ -65,8 +67,7 @@ const trackClick = name =>
 	} );
 
 const mapDispatchToProps = dispatch => ( {
-	onClick: name => dispatch( trackClick( name ) )
+	onClick: name => dispatch( trackClick( name ) ),
 } );
 
 export default connect( null, mapDispatchToProps )( localize( BusinessPluginsPanel ) );
-

@@ -18,14 +18,14 @@ import {
 // TODO: Handle error
 
 export default createReducer( null, {
-	[ WOOCOMMERCE_CURRENCY_UPDATE ]: ( state ) => {
+	[ WOOCOMMERCE_CURRENCY_UPDATE ]: state => {
 		// TODO: Return some sort of saving indicator
 		return state;
 	},
 
 	[ WOOCOMMERCE_CURRENCY_UPDATE_SUCCESS ]: ( state, { data } ) => {
 		const settings = state || [];
-		const newSettings = settings.map( ( setting ) => {
+		const newSettings = settings.map( setting => {
 			if ( setting.id === data.id ) {
 				return data;
 			}
@@ -34,13 +34,13 @@ export default createReducer( null, {
 		return newSettings;
 	},
 
-	[ WOOCOMMERCE_TAXES_ENABLED_UPDATE ]: ( state ) => {
+	[ WOOCOMMERCE_TAXES_ENABLED_UPDATE ]: state => {
 		return state;
 	},
 
 	[ WOOCOMMERCE_TAXES_ENABLED_UPDATE_SUCCESS ]: ( state, { data } ) => {
 		const settings = state || [];
-		const newSettings = settings.map( ( setting ) => {
+		const newSettings = settings.map( setting => {
 			if ( setting.id === data.id ) {
 				return data;
 			}
@@ -57,7 +57,7 @@ export default createReducer( null, {
 		return data;
 	},
 
-	[ WOOCOMMERCE_SETTINGS_BATCH_REQUEST ]: ( state ) => {
+	[ WOOCOMMERCE_SETTINGS_BATCH_REQUEST ]: state => {
 		return state;
 	},
 

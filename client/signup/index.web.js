@@ -15,6 +15,6 @@ export default function() {
 		controller.saveQueryObject,
 		controller.redirectWithoutLocaleIfLoggedIn,
 		controller.redirectToFlow,
-		controller.start
+		controller.start,
 	);
 }

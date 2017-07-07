@@ -14,13 +14,15 @@ import Button from 'components/button';
 
 class SetupTask extends Component {
 	static propTypes = {
-		actions: PropTypes.arrayOf( PropTypes.shape( {
-			isSecondary: PropTypes.bool,
-			label: PropTypes.string.isRequired,
-			analyticsProp: PropTypes.string.isRequired,
-			onClick: PropTypes.func,
-			path: PropTypes.string,
-		} ) ),
+		actions: PropTypes.arrayOf(
+			PropTypes.shape( {
+				isSecondary: PropTypes.bool,
+				label: PropTypes.string.isRequired,
+				analyticsProp: PropTypes.string.isRequired,
+				onClick: PropTypes.func,
+				path: PropTypes.string,
+			} ),
+		),
 		checked: PropTypes.bool.isRequired,
 		explanation: PropTypes.string,
 		label: PropTypes.string.isRequired,
@@ -28,7 +30,7 @@ class SetupTask extends Component {
 
 	static defaultProps = {
 		isSecondary: false,
-	}
+	};
 
 	track( analyticsProp ) {
 		analytics.tracks.recordEvent( 'calypso_woocommerce_dashboard_action_click', {
@@ -40,52 +42,42 @@ class SetupTask extends Component {
 		const primaryActions = actions.filter( action => ! action.isSecondary );
 		return (
 			<div className="dashboard__setup-task-primary-actions">
-				{
-					primaryActions.map( ( action, index ) => {
-						// Only the last primary action gets to be a primary button
-						const primary = ( index === primaryActions.length - 1 ) && ! taskCompleted;
-						const target = '/' === action.path.substring( 0, 1 ) ? '_self' : '_blank';
-						const trackClick = ( e ) => {
-							this.track( action.analyticsProp );
-							if ( target === '_self' ) {
-								page.redirect( action.path );
-							} else {
-								window.open( action.path );
-							}
-							if ( action.onClick ) {
-								action.onClick( e );
-							}
-						};
-						return (
-							<Button
-								onClick={ trackClick }
-								key={ index }
-								primary={ primary }
-								target={ target }>
-								{ action.label }
-							</Button>
-						);
-					} )
-				}
+				{ primaryActions.map( ( action, index ) => {
+					// Only the last primary action gets to be a primary button
+					const primary = index === primaryActions.length - 1 && ! taskCompleted;
+					const target = '/' === action.path.substring( 0, 1 ) ? '_self' : '_blank';
+					const trackClick = e => {
+						this.track( action.analyticsProp );
+						if ( target === '_self' ) {
+							page.redirect( action.path );
+						} else {
+							window.open( action.path );
+						}
+						if ( action.onClick ) {
+							action.onClick( e );
+						}
+					};
+					return (
+						<Button onClick={ trackClick } key={ index } primary={ primary } target={ target }>
+							{ action.label }
+						</Button>
+					);
+				} ) }
 			</div>
 		);
 	};
 
-	renderTaskSecondaryActions = ( actions ) => {
+	renderTaskSecondaryActions = actions => {
 		const secondaryActions = actions.filter( action => action.isSecondary );
 		return (
 			<div className="dashboard__setup-task-secondary-actions">
-				{
-					secondaryActions.map( ( action, index ) => {
-						const trackClick = ( e ) => {
-							this.track( action.analyticsProp );
-							action.onClick( e );
-						};
-						return (
-							<a key={ index } onClick={ trackClick }>{ action.label }</a>
-						);
-					} )
-				}
+				{ secondaryActions.map( ( action, index ) => {
+					const trackClick = e => {
+						this.track( action.analyticsProp );
+						action.onClick( e );
+					};
+					return <a key={ index } onClick={ trackClick }>{ action.label }</a>;
+				} ) }
 			</div>
 		);
 	};
@@ -114,7 +106,7 @@ class SetupTask extends Component {
 				</div>
 			</div>
 		);
-	}
+	};
 }
 
 export default localize( SetupTask );

@@ -1,10 +1,7 @@
 /**
  * Internal dependencies
  */
-import {
-	areTaxSettingsLoaded,
-	areTaxSettingsLoading,
-} from './selectors';
+import { areTaxSettingsLoaded, areTaxSettingsLoading } from './selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
 import request from '../../request';
 import { setError } from '../../status/wc-api/actions';
@@ -15,11 +12,8 @@ import {
 	WOOCOMMERCE_SETTINGS_TAX_REQUEST_SUCCESS,
 } from 'woocommerce/state/action-types';
 
-export const fetchTaxSettings = ( siteId ) => ( dispatch, getState ) => {
-	if (
-		areTaxSettingsLoaded( getState(), siteId ) ||
-		areTaxSettingsLoading( getState(), siteId )
-	) {
+export const fetchTaxSettings = siteId => ( dispatch, getState ) => {
+	if ( areTaxSettingsLoaded( getState(), siteId ) || areTaxSettingsLoading( getState(), siteId ) ) {
 		return;
 	}
 
@@ -30,8 +24,9 @@ export const fetchTaxSettings = ( siteId ) => ( dispatch, getState ) => {
 
 	dispatch( getAction );
 
-	return request( siteId ).get( 'settings/tax' )
-		.then( ( data ) => {
+	return request( siteId )
+		.get( 'settings/tax' )
+		.then( data => {
 			dispatch( {
 				type: WOOCOMMERCE_SETTINGS_TAX_REQUEST_SUCCESS,
 				siteId,
@@ -56,7 +51,7 @@ export const updateTaxSettings = (
 	pricesIncludeTax,
 	shippingIsTaxFree,
 	successAction,
-	failureAction
+	failureAction,
 ) => ( dispatch, getState ) => {
 	const state = getState();
 	if ( ! siteId ) {
@@ -79,8 +74,9 @@ export const updateTaxSettings = (
 			value: shippingIsTaxFree ? 'zero-rate' : '',
 		},
 	];
-	return request( siteId ).post( 'settings/tax/batch', { update } )
-		.then( ( data ) => {
+	return request( siteId )
+		.post( 'settings/tax/batch', { update } )
+		.then( data => {
 			dispatch( updateTaxSettingsSuccess( siteId, data ) );
 			if ( successAction ) {
 				dispatch( successAction( data ) );

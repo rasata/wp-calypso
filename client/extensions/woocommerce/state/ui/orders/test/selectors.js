@@ -10,8 +10,8 @@ import { getOrdersCurrentPage } from '../selectors';
 
 const preInitializedState = {
 	extensions: {
-		woocommerce: {}
-	}
+		woocommerce: {},
+	},
 };
 
 const state = {

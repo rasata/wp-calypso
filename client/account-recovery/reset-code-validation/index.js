@@ -33,26 +33,19 @@ class ResetPasswordEmailValidation extends Component {
 		}
 
 		return queryString.slice( 1 );
-	}
+	};
 
 	parseQueryArgs = () => qs.parse( this.getQueryString() );
 
 	componentDidMount = () => {
-		const {
-			user,
-			method,
-			key,
-		} = this.parseQueryArgs();
+		const { user, method, key } = this.parseQueryArgs();
 
 		this.props.validateRequest( { user }, method, key );
-	}
+	};
 
-	componentWillReceiveProps = ( nextProps ) => {
+	componentWillReceiveProps = nextProps => {
 		if ( ! this.props.validationKey && nextProps.validationKey ) {
-			const {
-				user,
-				method,
-			} = this.parseQueryArgs();
+			const { user, method } = this.parseQueryArgs();
 
 			// Fill in the user & method field only if the validation is succeeded.
 			// <AccountRecoveryRoot> component is using redux state to determine which AR step we're at.
@@ -61,17 +54,17 @@ class ResetPasswordEmailValidation extends Component {
 			this.props.updatePasswordResetUserData( { user } );
 			this.props.setResetMethod( method );
 		}
-	}
+	};
 
 	render = () => {
 		const { error } = this.props;
 
 		return error ? <ErrorScreen error={ error } /> : null;
-	}
+	};
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		error: getAccountRecoveryValidationError( state ),
 		validationKey: getAccountRecoveryValidationKey( state ),
 	} ),
@@ -80,5 +73,5 @@ export default connect(
 		setResetMethod,
 		validateRequest,
 		validateRequestError,
-	}
+	},
 )( localize( ResetPasswordEmailValidation ) );

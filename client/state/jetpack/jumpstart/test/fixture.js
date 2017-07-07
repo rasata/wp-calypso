@@ -7,16 +7,16 @@ export const requests = {
 	12345678: {
 		activating: true,
 		deactivating: false,
-		requesting: false
+		requesting: false,
 	},
 	87654321: {
 		activating: false,
 		deactivating: true,
-		requesting: false
+		requesting: false,
 	},
 	11223344: {
 		activating: false,
 		deactivating: false,
-		requesting: true
+		requesting: true,
 	},
 };

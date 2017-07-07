@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	PureRenderMixin = require( 'react-pure-render/mixin' );
+var React = require( 'react' ), PureRenderMixin = require( 'react-pure-render/mixin' );
 
 /**
  * Internal dependencies
@@ -17,13 +16,13 @@ module.exports = React.createClass( {
 
 	getInitialState: function() {
 		return {
-			rangeValue: 24
+			rangeValue: 24,
 		};
 	},
 
 	onChange: function( event ) {
 		this.setState( {
-			rangeValue: event.target.value
+			rangeValue: event.target.value,
 		} );
 	},
 
@@ -35,7 +34,8 @@ module.exports = React.createClass( {
 				max="100"
 				value={ this.state.rangeValue }
 				onChange={ this.onChange }
-				showValueLabel={ true } />
+				showValueLabel={ true }
+			/>
 		);
-	}
+	},
 } );

@@ -50,15 +50,16 @@ class ConnectionsList extends PureComponent {
 
 		return (
 			<div className="post-share__connections">
-				{ connections.map( connection =>
-					<Connection { ...{
-						connection,
-						onToggle,
-						isActive: connection.isActive,
-						key: connection.keyring_connection_ID,
-					} }
+				{ connections.map( connection => (
+					<Connection
+						{ ...{
+							connection,
+							onToggle,
+							isActive: connection.isActive,
+							key: connection.keyring_connection_ID,
+						} }
 					/>
-				) }
+				) ) }
 			</div>
 		);
 	}

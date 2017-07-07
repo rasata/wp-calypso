@@ -4,9 +4,9 @@ export const testSchema = {
 		test: {
 			type: 'array',
 			items: {
-				type: 'string'
-			}
-		}
+				type: 'string',
+			},
+		},
 	},
-	additionalProperties: false
+	additionalProperties: false,
 };

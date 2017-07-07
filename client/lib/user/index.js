@@ -7,8 +7,7 @@ var Dispatcher = require( 'dispatcher' );
  * Internal Dependencies
  */
 import { action as InvitesActionTypes } from 'lib/invites/constants';
-let User = require( './user' ),
-	_user = false;
+let User = require( './user' ), _user = false;
 
 module.exports = function() {
 	if ( ! _user ) {
@@ -36,7 +35,7 @@ function decrementSiteCount() {
 	var data = _user.get(),
 		attributes = {
 			visible_site_count: data.visible_site_count - 1,
-			site_count: data.site_count - 1
+			site_count: data.site_count - 1,
 		};
 	_user.set( attributes );
 }
@@ -45,7 +44,7 @@ function incrementSiteCount() {
 	const data = _user.get(),
 		attributes = {
 			visible_site_count: data.visible_site_count + 1,
-			site_count: data.site_count + 1
+			site_count: data.site_count + 1,
 		};
 	_user.set( attributes );
 }

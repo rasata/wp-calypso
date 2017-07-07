@@ -27,19 +27,22 @@ import NoticeAction from 'components/notice/notice-action';
 import { isMonthly } from 'lib/plans/constants';
 import TrackComponentView from 'lib/analytics/track-component-view';
 
-const eventProperties = ( warning ) => ( { warning, position: 'individual-purchase' } );
+const eventProperties = warning => ( { warning, position: 'individual-purchase' } );
 
 class PurchaseNotice extends Component {
 	static propTypes = {
 		isDataLoading: React.PropTypes.bool,
 		handleRenew: React.PropTypes.func,
 		selectedPurchase: React.PropTypes.object,
-		selectedSite: React.PropTypes.oneOfType(
-			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ]
-		),
-		editCardDetailsPath: React.PropTypes.oneOfType(
-			[ React.PropTypes.string, React.PropTypes.bool ]
-		),
+		selectedSite: React.PropTypes.oneOfType( [
+			React.PropTypes.object,
+			React.PropTypes.bool,
+			React.PropTypes.undefined,
+		] ),
+		editCardDetailsPath: React.PropTypes.oneOfType( [
+			React.PropTypes.string,
+			React.PropTypes.bool,
+		] ),
 	};
 
 	getExpiringText( purchase ) {
@@ -53,7 +56,7 @@ class PurchaseNotice extends Component {
 						purchaseName: getName( purchase ),
 						expiry: moment( purchase.expiryMoment ).fromNow(),
 					},
-				}
+				},
 			);
 		}
 		if ( isMonthly( purchase.productSlug ) ) {
@@ -67,7 +70,7 @@ class PurchaseNotice extends Component {
 						purchaseName: getName( purchase ),
 						expiry: daysToExpiry,
 					},
-				}
+				},
 			);
 		}
 
@@ -102,7 +105,10 @@ class PurchaseNotice extends Component {
 	}
 
 	trackClick( warning ) {
-		this.props.recordTracksEvent( 'calypso_subscription_warning_click', eventProperties( warning ) );
+		this.props.recordTracksEvent(
+			'calypso_subscription_warning_click',
+			eventProperties( warning ),
+		);
 	}
 
 	handleExpiringNoticeRenewal = () => {
@@ -110,7 +116,7 @@ class PurchaseNotice extends Component {
 		if ( this.props.handleRenew ) {
 			this.props.handleRenew();
 		}
-	}
+	};
 
 	renderPurchaseExpiringNotice() {
 		const { moment } = this.props;
@@ -137,9 +143,9 @@ class PurchaseNotice extends Component {
 		);
 	}
 
-	onClickUpdateCreditCardDetails= () => {
+	onClickUpdateCreditCardDetails = () => {
 		this.trackClick( 'credit-card-expiring' );
-	}
+	};
 
 	renderCreditCardExpiringNotice() {
 		const { translate, editCardDetailsPath } = this.props;
@@ -176,7 +182,7 @@ class PurchaseNotice extends Component {
 							components: {
 								a: linkComponent,
 							},
-						}
+						},
 					) }
 					{ this.trackImpression( 'credit-card-expiring' ) }
 				</Notice>
@@ -189,7 +195,7 @@ class PurchaseNotice extends Component {
 		if ( this.props.handleRenew ) {
 			this.props.handleRenew();
 		}
-	}
+	};
 
 	renderExpiredRenewNotice() {
 		const purchase = getPurchase( this.props );
@@ -242,7 +248,4 @@ class PurchaseNotice extends Component {
 const mapStateToProps = null;
 const mapDispatchToProps = { recordTracksEvent };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps,
-)( localize( PurchaseNotice ) );
+export default connect( mapStateToProps, mapDispatchToProps )( localize( PurchaseNotice ) );

@@ -6,7 +6,6 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormRadio',
 
 	render: function() {
@@ -16,7 +15,8 @@ module.exports = React.createClass( {
 			<input
 				{ ...otherProps }
 				type="radio"
-				className={ classnames( this.props.className, 'form-radio' ) } />
+				className={ classnames( this.props.className, 'form-radio' ) }
+			/>
 		);
-	}
+	},
 } );

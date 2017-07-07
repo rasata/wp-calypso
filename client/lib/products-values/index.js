@@ -1,12 +1,7 @@
 /**
  * External dependencies
  */
-import {
-	assign,
-	difference,
-	isEmpty,
-	pick,
-} from 'lodash';
+import { assign, difference, isEmpty, pick } from 'lodash';
 
 /**
  * Internal dependencies
@@ -38,19 +33,20 @@ const productDependencies = {
 		gapps: true,
 		gapps_extra_license: true,
 		gapps_unlimited: true,
-		private_whois: true
+		private_whois: true,
 	},
 	domain_redemption: {
-		domain: true
-	}
+		domain: true,
+	},
 };
 
 function assertValidProduct( product ) {
 	const missingAttributes = difference( schema.required, Object.keys( product ) );
 
 	if ( ! isEmpty( missingAttributes ) ) {
-		throw new Error( 'Missing required attributes for ProductValue: [' +
-		missingAttributes.join( ', ' ) + ']' );
+		throw new Error(
+			'Missing required attributes for ProductValue: [' + missingAttributes.join( ', ' ) + ']',
+		);
 	}
 }
 
@@ -61,7 +57,7 @@ function formatProduct( product ) {
 		is_domain_registration: product.is_domain_registration !== undefined
 			? product.is_domain_registration
 			: product.isDomainRegistration,
-		free_trial: product.free_trial || product.freeTrial
+		free_trial: product.free_trial || product.freeTrial,
 	} );
 }
 
@@ -76,7 +72,7 @@ function includesProduct( products, product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return ( products.indexOf( product.product_slug ) >= 0 );
+	return products.indexOf( product.product_slug ) >= 0;
 }
 
 function isFreePlan( product ) {
@@ -106,7 +102,7 @@ function isPersonal( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return ( personalProducts.indexOf( product.product_slug ) >= 0 );
+	return personalProducts.indexOf( product.product_slug ) >= 0;
 }
 
 function isPremium( product ) {
@@ -115,7 +111,7 @@ function isPremium( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return ( premiumProducts.indexOf( product.product_slug ) >= 0 );
+	return premiumProducts.indexOf( product.product_slug ) >= 0;
 }
 
 function isBusiness( product ) {
@@ -124,7 +120,7 @@ function isBusiness( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return ( businessProducts.indexOf( product.product_slug ) >= 0 );
+	return businessProducts.indexOf( product.product_slug ) >= 0;
 }
 
 function isEnterprise( product ) {
@@ -138,7 +134,7 @@ function isJetpackPlan( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return ( JETPACK_PLANS.indexOf( product.product_slug ) >= 0 );
+	return JETPACK_PLANS.indexOf( product.product_slug ) >= 0;
 }
 
 function isJetpackBusiness( product ) {
@@ -187,10 +183,7 @@ function isPlan( product ) {
 }
 
 function isDotComPlan( product ) {
-	return (
-		isPlan( product ) &&
-		! isJetpackPlan( product )
-	);
+	return isPlan( product ) && ! isJetpackPlan( product );
 }
 
 function isPrivacyProtection( product ) {
@@ -205,9 +198,7 @@ function isDomainProduct( product ) {
 	assertValidProduct( product );
 
 	return (
-		isDomainMapping( product ) ||
-		isDomainRegistration( product ) ||
-		isPrivacyProtection( product )
+		isDomainMapping( product ) || isDomainRegistration( product ) || isPrivacyProtection( product )
 	);
 }
 
@@ -266,16 +257,21 @@ function isDependentProduct( product, dependentProduct, domainsWithPlansOnly ) {
 	assertValidProduct( product );
 
 	const slug = isDomainRegistration( product ) ? 'domain' : product.product_slug;
-	const dependentSlug = isDomainRegistration( dependentProduct ) ? 'domain' : dependentProduct.product_slug;
+	const dependentSlug = isDomainRegistration( dependentProduct )
+		? 'domain'
+		: dependentProduct.product_slug;
 
 	if ( domainsWithPlansOnly ) {
-		isPlansOnlyDependent = isPlan( product ) && ( isDomainRegistration( dependentProduct ) || isDomainMapping( dependentProduct ) );
+		isPlansOnlyDependent =
+			isPlan( product ) &&
+			( isDomainRegistration( dependentProduct ) || isDomainMapping( dependentProduct ) );
 	}
 
-	return isPlansOnlyDependent || (
-		productDependencies[ slug ] &&
-		productDependencies[ slug ][ dependentSlug ] &&
-		product.meta === dependentProduct.meta
+	return (
+		isPlansOnlyDependent ||
+		( productDependencies[ slug ] &&
+			productDependencies[ slug ][ dependentSlug ] &&
+			product.meta === dependentProduct.meta )
 	);
 }
 function isFreeWordPressComDomain( product ) {
@@ -288,7 +284,11 @@ function isGoogleApps( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return 'gapps' === product.product_slug || 'gapps_unlimited' === product.product_slug || 'gapps_extra_license' === product.product_slug;
+	return (
+		'gapps' === product.product_slug ||
+		'gapps_unlimited' === product.product_slug ||
+		'gapps_extra_license' === product.product_slug
+	);
 }
 
 function isGuidedTransfer( product ) {
@@ -348,11 +348,13 @@ function isSpaceUpgrade( product ) {
 	product = formatProduct( product );
 	assertValidProduct( product );
 
-	return '1gb_space_upgrade' === product.product_slug ||
+	return (
+		'1gb_space_upgrade' === product.product_slug ||
 		'5gb_space_upgrade' === product.product_slug ||
 		'10gb_space_upgrade' === product.product_slug ||
 		'50gb_space_upgrade' === product.product_slug ||
-		'100gb_space_upgrade' === product.product_slug;
+		'100gb_space_upgrade' === product.product_slug
+	);
 }
 
 module.exports = {
@@ -393,5 +395,5 @@ module.exports = {
 	isUnlimitedSpace,
 	isUnlimitedThemes,
 	isVideoPress,
-	whitelistAttributes
+	whitelistAttributes,
 };

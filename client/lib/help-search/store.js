@@ -15,8 +15,7 @@ var createReducerStore = require( 'lib/store' ).createReducerStore,
 var initialState = [];
 
 var HelpSearchStore = createReducerStore( function( state, payload ) {
-	var action = payload.action,
-		newState;
+	var action = payload.action, newState;
 	debug( 'register event Type', action.type, payload );
 
 	switch ( action.type ) {

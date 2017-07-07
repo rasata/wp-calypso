@@ -14,17 +14,12 @@ module.exports = React.createClass( {
 
 	propTypes: {
 		className: React.PropTypes.string,
-		item: React.PropTypes.object.isRequired
+		item: React.PropTypes.object.isRequired,
 	},
 
 	render: function() {
 		const classes = classNames( this.props.className, 'is-audio' );
 
-		return (
-			<audio
-				src={ MediaUtils.url( this.props.item ) }
-				controls
-				className={ classes } />
-		);
-	}
+		return <audio src={ MediaUtils.url( this.props.item ) } controls className={ classes } />;
+	},
 } );

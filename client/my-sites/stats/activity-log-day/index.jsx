@@ -29,10 +29,7 @@ class ActivityLogDay extends Component {
 	};
 
 	handleClickRestore = () => {
-		const {
-			tsEndOfSiteDay,
-			requestRestore,
-		} = this.props;
+		const { tsEndOfSiteDay, requestRestore } = this.props;
 		requestRestore( tsEndOfSiteDay );
 	};
 
@@ -70,35 +67,25 @@ class ActivityLogDay extends Component {
 	 * @returns { object } Heading to display with date and number of events
 	 */
 	getEventsHeading() {
-		const {
-			applySiteOffset,
-			logs,
-			moment,
-			translate,
-			tsEndOfSiteDay,
-		} = this.props;
+		const { applySiteOffset, logs, moment, translate, tsEndOfSiteDay } = this.props;
 
 		return (
 			<div>
-				<div className="activity-log-day__day">{ applySiteOffset( moment.utc( tsEndOfSiteDay ) ).format( 'LL' ) }</div>
-				<div className="activity-log-day__events">{
-					translate( '%d Event', '%d Events', {
+				<div className="activity-log-day__day">
+					{ applySiteOffset( moment.utc( tsEndOfSiteDay ) ).format( 'LL' ) }
+				</div>
+				<div className="activity-log-day__events">
+					{ translate( '%d Event', '%d Events', {
 						args: logs.length,
 						count: logs.length,
-					} )
-				}</div>
+					} ) }
+				</div>
 			</div>
 		);
 	}
 
 	render() {
-		const {
-			allowRestore,
-			logs,
-			requestRestore,
-			siteId,
-			applySiteOffset,
-		} = this.props;
+		const { allowRestore, logs, requestRestore, siteId, applySiteOffset } = this.props;
 
 		return (
 			<div className="activity-log-day">

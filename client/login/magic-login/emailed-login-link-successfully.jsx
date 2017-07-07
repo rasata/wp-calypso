@@ -23,15 +23,15 @@ class EmailedLoginLinkSuccessfully extends React.Component {
 		const line = [
 			emailAddress
 				? translate( 'We sent an email to %(emailAddress)s with a magic login link.', {
-					args: {
-						emailAddress
-					}
-				} )
+						args: {
+							emailAddress,
+						},
+					} )
 				: translate( 'We sent you an email with a magic login link.' ),
-			( <br key="magic-login-line-br" /> ),
+			<br key="magic-login-line-br" />,
 			translate( 'It should arrive within a few minutes. Go click it!', {
-				context: '"It" is an email'
-			} )
+				context: '"It" is an email',
+			} ),
 		];
 
 		this.props.recordPageView( '/log-in/link', 'Login > Link > Emailed' );
@@ -53,7 +53,7 @@ class EmailedLoginLinkSuccessfully extends React.Component {
 					illustrationWidth={ 500 }
 					line={ line }
 					title={ translate( 'Check your Email!' ) }
-					/>
+				/>
 			</div>
 		);
 	}

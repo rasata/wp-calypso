@@ -31,15 +31,7 @@ class Settings extends Component {
 	onSubmit = data => this.props.saveSettings( this.props.siteId, data );
 
 	render() {
-		const {
-			children,
-			initialValues,
-			isFetching,
-			isSaving,
-			siteId,
-			tab,
-			translate,
-		} = this.props;
+		const { children, initialValues, isFetching, isSaving, siteId, tab, translate } = this.props;
 		const mainClassName = 'wp-job-manager__main';
 		const isDisabled = isFetching || isSaving;
 
@@ -48,21 +40,21 @@ class Settings extends Component {
 				<QuerySettings siteId={ siteId } />
 				<DocumentHead title={ translate( 'WP Job Manager' ) } />
 				<Navigation activeTab={ tab } />
-				{
-					Children.map( children, child => cloneElement( child, {
+				{ Children.map( children, child =>
+					cloneElement( child, {
 						initialValues,
 						isDisabled,
 						isSaving,
 						onSubmit: this.onSubmit,
-					} ) )
-				}
+					} ),
+				) }
 			</Main>
 		);
 	}
 }
 
 const connectComponent = connect(
-	( state ) => {
+	state => {
 		const siteId = getSelectedSiteId( state );
 
 		return {
@@ -72,10 +64,7 @@ const connectComponent = connect(
 			siteId,
 		};
 	},
-	{ saveSettings }
+	{ saveSettings },
 );
 
-export default flowRight(
-	connectComponent,
-	localize,
-)( Settings );
+export default flowRight( connectComponent, localize )( Settings );

@@ -21,17 +21,19 @@ describe( 'actions', () => {
 		const siteId = '123';
 
 		useSandbox();
-		useNock( ( nock ) => {
+		useNock( nock => {
 			nock( 'https://public-api.wordpress.com:443' )
 				.persist()
 				.get( '/rest/v1.1/jetpack-blogs/123/rest-api/' )
 				.query( { path: '/wc/v3/shipping/zones&_method=get', json: true } )
 				.reply( 200, {
-					data: [ {
-						id: 0,
-						name: 'Rest of the World',
-						order: 0,
-					} ]
+					data: [
+						{
+							id: 0,
+							name: 'Rest of the World',
+							order: 0,
+						},
+					],
 				} );
 		} );
 
@@ -39,7 +41,10 @@ describe( 'actions', () => {
 			const getState = () => ( {} );
 			const dispatch = spy();
 			fetchShippingZones( siteId )( dispatch, getState );
-			expect( dispatch ).to.have.been.calledWith( { type: WOOCOMMERCE_SHIPPING_ZONES_REQUEST, siteId } );
+			expect( dispatch ).to.have.been.calledWith( {
+				type: WOOCOMMERCE_SHIPPING_ZONES_REQUEST,
+				siteId,
+			} );
 		} );
 
 		it( 'should dispatch a success action with shipping zone information when request completes', () => {
@@ -51,11 +56,13 @@ describe( 'actions', () => {
 				expect( dispatch ).to.have.been.calledWith( {
 					type: WOOCOMMERCE_SHIPPING_ZONES_REQUEST_SUCCESS,
 					siteId,
-					data: [ {
-						id: 0,
-						name: 'Rest of the World',
-						order: 0,
-					} ]
+					data: [
+						{
+							id: 0,
+							name: 'Rest of the World',
+							order: 0,
+						},
+					],
 				} );
 			} );
 		} );
@@ -66,11 +73,11 @@ describe( 'actions', () => {
 					woocommerce: {
 						sites: {
 							[ siteId ]: {
-								shippingZones: LOADING
-							}
-						}
-					}
-				}
+								shippingZones: LOADING,
+							},
+						},
+					},
+				},
 			} );
 			const dispatch = spy();
 			fetchShippingZones( siteId )( dispatch, getState );

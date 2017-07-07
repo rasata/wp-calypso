@@ -25,7 +25,7 @@ class SearchStreamHeader extends Component {
 	static defaultProps = {
 		onSelection: noop,
 		selected: POSTS,
-	}
+	};
 
 	handlePostsSelected = () => this.props.onSelection( POSTS );
 	handleSitesSelected = () => this.props.onSelection( SITES );

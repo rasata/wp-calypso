@@ -16,7 +16,7 @@ export default localize( ( { translate } ) => {
 				icon="comment"
 				title={ translate( 'Anti-Spam' ) }
 				description={ translate(
-					'Akismet filters out comment and other forms of spam, so you can focus on more important things.'
+					'Akismet filters out comment and other forms of spam, so you can focus on more important things.',
 				) }
 			/>
 		</div>

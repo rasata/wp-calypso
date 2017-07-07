@@ -10,16 +10,10 @@ import { spy, match } from 'sinon';
 import {
 	createProduct,
 	updateProduct,
-	fetchProduct
+	fetchProduct,
 } from 'woocommerce/state/sites/products/actions';
-import {
-	handleProductCreate,
-	handleProductUpdate,
-	handleProductRequest,
-} from '../';
-import {
-	WOOCOMMERCE_API_REQUEST,
-} from 'woocommerce/state/action-types';
+import { handleProductCreate, handleProductUpdate, handleProductRequest } from '../';
+import { WOOCOMMERCE_API_REQUEST } from 'woocommerce/state/action-types';
 
 describe( 'handlers', () => {
 	describe( '#handleProductCreate', () => {
@@ -42,7 +36,7 @@ describe( 'handlers', () => {
 					siteId: 123,
 					onFailureAction: failureAction,
 					body: { name: 'Product #1', type: 'simple' },
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -63,7 +57,7 @@ describe( 'handlers', () => {
 					method: 'post',
 					siteId: 123,
 					body: { name: 'Product #1', type: 'simple' },
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -76,7 +70,7 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: product1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -99,7 +93,7 @@ describe( 'handlers', () => {
 					method: 'post',
 					siteId: 123,
 					body: { name: 'Product #1', type: 'simple' },
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -112,7 +106,7 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: product1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -137,7 +131,7 @@ describe( 'handlers', () => {
 					siteId: 123,
 					onFailureAction: failureAction,
 					body: product1,
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -158,7 +152,7 @@ describe( 'handlers', () => {
 					method: 'put',
 					siteId: 123,
 					body: product1,
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -171,7 +165,7 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: product1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -194,7 +188,7 @@ describe( 'handlers', () => {
 					method: 'put',
 					siteId: 123,
 					body: product1,
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -207,7 +201,7 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: product1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -230,7 +224,7 @@ describe( 'handlers', () => {
 					method: 'get',
 					siteId: 123,
 					onFailureAction: failureAction,
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -249,7 +243,7 @@ describe( 'handlers', () => {
 					type: WOOCOMMERCE_API_REQUEST,
 					method: 'get',
 					siteId: 123,
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -262,7 +256,7 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: undefined,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -283,7 +277,7 @@ describe( 'handlers', () => {
 					type: WOOCOMMERCE_API_REQUEST,
 					method: 'get',
 					siteId: 123,
-				} )
+				} ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -296,9 +290,8 @@ describe( 'handlers', () => {
 					type: '%%success%%',
 					sentData: undefined,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
 } );
-

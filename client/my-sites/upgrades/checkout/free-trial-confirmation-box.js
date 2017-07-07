@@ -1,9 +1,7 @@
-
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	find = require( 'lodash/find' );
+var React = require( 'react' ), find = require( 'lodash/find' );
 
 /**
  * Internal dependencies
@@ -19,23 +17,21 @@ const FreeTrialConfirmationBox = React.createClass( {
 			<form onSubmit={ this.props.onSubmit }>
 				<div className="payment-box-section">
 					<h6>
-					{
-						this.translate( 'Get started with %(productName)s', { args: { productName: this.getProductName() } } )
-					}
+						{ this.translate( 'Get started with %(productName)s', {
+							args: { productName: this.getProductName() },
+						} ) }
 					</h6>
 
 					<span>
-					{
-						this.translate( 'Enjoy your free trial with no strings attached: your site will simply revert to the free plan when the period is over.' )
-					}
+						{ this.translate(
+							'Enjoy your free trial with no strings attached: your site will simply revert to the free plan when the period is over.',
+						) }
 					</span>
 				</div>
 
 				<TermsOfService />
 				<div className="payment-box-actions">
-					<PayButton
-						cart={ this.props.cart }
-						transactionStep={ this.props.transactionStep } />
+					<PayButton cart={ this.props.cart } transactionStep={ this.props.transactionStep } />
 				</div>
 			</form>
 		);
@@ -53,7 +49,7 @@ const FreeTrialConfirmationBox = React.createClass( {
 				{ this.content() }
 			</PaymentBox>
 		);
-	}
+	},
 } );
 
 module.exports = FreeTrialConfirmationBox;

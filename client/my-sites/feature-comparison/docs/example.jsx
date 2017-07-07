@@ -12,7 +12,6 @@ import PlanCompareCard from 'my-sites/plan-compare-card/index';
 import PlanCompareCardItem from 'my-sites/plan-compare-card/item';
 
 export default React.createClass( {
-
 	displayName: 'FeatureComparison',
 
 	mixins: [ PureRenderMixin ],
@@ -24,7 +23,8 @@ export default React.createClass( {
 					title="Free Plan"
 					line="Free for life"
 					buttonName="Your Plan"
-					currentPlan={ true }>
+					currentPlan={ true }
+				>
 					<PlanCompareCardItem highlight={ true }>
 						3GB Space
 					</PlanCompareCardItem>
@@ -46,7 +46,8 @@ export default React.createClass( {
 					line="$99 per year"
 					buttonName="Upgrade"
 					currentPlan={ false }
-					popularRibbon={ true }>
+					popularRibbon={ true }
+				>
 					<PlanCompareCardItem highlight={ true }>
 						13GB Space
 					</PlanCompareCardItem>
@@ -65,5 +66,5 @@ export default React.createClass( {
 				</PlanCompareCard>
 			</FeatureComparison>
 		);
-	}
+	},
 } );

@@ -7,11 +7,7 @@ import { forEach } from 'lodash';
 /**
  * Internal dependencies
  */
-import {
-	ANALYTICS_STAT_BUMP,
-	EDITOR_START,
-	EDITOR_STOP,
-} from 'state/action-types';
+import { ANALYTICS_STAT_BUMP, EDITOR_START, EDITOR_STOP } from 'state/action-types';
 import {
 	MODAL_VIEW_STAT_MAPPING,
 	setEditorMediaModalView,
@@ -29,7 +25,7 @@ describe( 'actions', () => {
 				type: EDITOR_START,
 				siteId: 10,
 				postId: 183,
-				postType: 'post'
+				postType: 'post',
 			} );
 		} );
 	} );
@@ -41,7 +37,7 @@ describe( 'actions', () => {
 			expect( action ).to.eql( {
 				type: EDITOR_STOP,
 				siteId: 10,
-				postId: 183
+				postId: 183,
 			} );
 		} );
 	} );
@@ -52,14 +48,16 @@ describe( 'actions', () => {
 				expect( setEditorMediaModalView( view ) ).to.eql( {
 					...setMediaModalView( view ),
 					meta: {
-						analytics: [ {
-							type: ANALYTICS_STAT_BUMP,
-							payload: {
-								group: 'editor_media_actions',
-								name: stat
-							}
-						} ]
-					}
+						analytics: [
+							{
+								type: ANALYTICS_STAT_BUMP,
+								payload: {
+									group: 'editor_media_actions',
+									name: stat,
+								},
+							},
+						],
+					},
 				} );
 			} );
 		} );

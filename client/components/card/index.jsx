@@ -16,13 +16,7 @@ export default React.createClass( {
 		target: React.PropTypes.string,
 		compact: React.PropTypes.bool,
 		children: React.PropTypes.node,
-		highlight: React.PropTypes.oneOf( [
-			false,
-			'error',
-			'info',
-			'success',
-			'warning',
-		] ),
+		highlight: React.PropTypes.oneOf( [ false, 'error', 'info', 'success', 'warning' ] ),
 	},
 
 	getDefaultProps() {
@@ -42,18 +36,26 @@ export default React.createClass( {
 	},
 
 	render: function() {
-		const className = classnames( 'card', this.props.className, {
-			'is-card-link': !! this.props.href,
-			'is-compact': this.props.compact,
-		}, this.getHighlightClass() );
+		const className = classnames(
+			'card',
+			this.props.className,
+			{
+				'is-card-link': !! this.props.href,
+				'is-compact': this.props.compact,
+			},
+			this.getHighlightClass(),
+		);
 
-		const omitProps = [ 'compact', 'highlight', 'tagName' ];
+		const omitProps = [ 'compact', 'highlight', 'tagName' ];
 
 		let linkIndicator;
 		if ( this.props.href ) {
-			linkIndicator = <Gridicon
-				className="card__link-indicator"
-				icon={ this.props.target ? 'external' : 'chevron-right' } />;
+			linkIndicator = (
+				<Gridicon
+					className="card__link-indicator"
+					icon={ this.props.target ? 'external' : 'chevron-right' }
+				/>
+			);
 		} else {
 			omitProps.push( 'href', 'target' );
 		}
@@ -62,7 +64,7 @@ export default React.createClass( {
 			this.props.href ? 'a' : this.props.tagName,
 			assign( omit( this.props, omitProps ), { className } ),
 			linkIndicator,
-			this.props.children
+			this.props.children,
 		);
-	}
+	},
 } );

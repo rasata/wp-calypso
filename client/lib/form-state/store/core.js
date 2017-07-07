@@ -22,7 +22,7 @@ function core() {
 			}
 
 			return next;
-		}
+		},
 	};
 }
 

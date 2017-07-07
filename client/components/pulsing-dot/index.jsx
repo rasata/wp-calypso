@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	classnames = require( 'classnames' );
+var React = require( 'react' ), classnames = require( 'classnames' );
 
 /**
  * Internal dependencies
@@ -10,10 +9,9 @@ var React = require( 'react' ),
 var analytics = require( 'lib/analytics' );
 
 var PulsingDot = React.createClass( {
-
 	getDefaultProps: function() {
 		return {
-			active: false
+			active: false,
 		};
 	},
 
@@ -44,13 +42,10 @@ var PulsingDot = React.createClass( {
 	render: function() {
 		var className = classnames( {
 			'pulsing-dot': true,
-			'is-active': this.props.active
+			'is-active': this.props.active,
 		} );
-		return (
-			<div className={ className } />
-		);
-	}
-
+		return <div className={ className } />;
+	},
 } );
 
 module.exports = PulsingDot;

@@ -12,19 +12,19 @@ import emitter from 'lib/mixins/emitter';
  * Module variables
  **/
 var olarkEvents = [
-		'api.box.onShow',
-		'api.box.onHide',
-		'api.box.onExpand',
-		'api.box.onShrink',
-		'api.chat.onReady',
-		'api.chat.onOperatorsAvailable',
-		'api.chat.onOperatorsAway',
-		'api.chat.onBeginConversation',
-		'api.chat.onMessageToOperator',
-		'api.chat.onMessageToVisitor',
-		'api.chat.onCommandFromOperator',
-		'api.chat.onOfflineMessageToOperator'
-	],
+	'api.box.onShow',
+	'api.box.onHide',
+	'api.box.onExpand',
+	'api.box.onShrink',
+	'api.chat.onReady',
+	'api.chat.onOperatorsAvailable',
+	'api.chat.onOperatorsAway',
+	'api.chat.onBeginConversation',
+	'api.chat.onMessageToOperator',
+	'api.chat.onMessageToVisitor',
+	'api.chat.onCommandFromOperator',
+	'api.chat.onOfflineMessageToOperator',
+],
 	debug = debugModule( 'calypso:olark:events' ),
 	boundEvents = {},
 	initialized = false,
@@ -47,7 +47,7 @@ var OlarkEventEmitter = {
 		initialized = true;
 
 		// add a listener for each of the events we care about
-		olarkEvents.forEach( ( event ) => this.addOlarkEventListener( event ) );
+		olarkEvents.forEach( event => this.addOlarkEventListener( event ) );
 
 		debug( 'Initalized' );
 	},
@@ -75,7 +75,7 @@ var OlarkEventEmitter = {
 	olarkEventListener: function( event, ...args ) {
 		debug( 'Olark event: %s', event );
 		this.emit( event, ...args );
-	}
+	},
 };
 
 // Inherit from EventEmitter

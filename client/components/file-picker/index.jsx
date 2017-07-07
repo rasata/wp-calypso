@@ -40,5 +40,5 @@ FilePicker.defaultProps = {
 	directory: false,
 	accept: null,
 	onClick: noop,
-	onPick: noop
+	onPick: noop,
 };

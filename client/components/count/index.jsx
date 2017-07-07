@@ -6,8 +6,9 @@ import classnames from 'classnames';
 import { localize } from 'i18n-calypso';
 import { omit } from 'lodash';
 
-export const Count = ( { count, numberFormat, primary, ...inheritProps } ) => (
-	// Omit props passed from the `localize` higher-order component that we don't need.
+export const Count = (
+	{ count, numberFormat, primary, ...inheritProps }, // Omit props passed from the `localize` higher-order component that we don't need.
+) => (
 	<span
 		className={ classnames( 'count', { 'is-primary': primary } ) }
 		{ ...omit( inheritProps, [ 'translate', 'moment' ] ) }

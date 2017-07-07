@@ -11,5 +11,5 @@ export default combineReducers( {
 	connection,
 	jumpstart,
 	modules,
-	settings
+	settings,
 } );

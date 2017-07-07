@@ -2,11 +2,7 @@
  * External dependencies
  */
 import inherits from 'inherits';
-import {
-	some,
-	includes,
-	find
-} from 'lodash';
+import { some, includes, find } from 'lodash';
 
 /**
  * Internal dependencies
@@ -14,8 +10,7 @@ import {
 import wpcom from 'lib/wp';
 import { type as domainTypes, domainAvailability } from './constants';
 
-const GOOGLE_APPS_INVALID_TLDS = [ 'in' ],
-	GOOGLE_APPS_BANNED_PHRASES = [ 'google' ];
+const GOOGLE_APPS_INVALID_TLDS = [ 'in' ], GOOGLE_APPS_BANNED_PHRASES = [ 'google' ];
 
 function ValidationError( code ) {
 	this.code = code;
@@ -71,16 +66,17 @@ function canRedirect( siteId, domainName, onComplete ) {
 }
 
 function getPrimaryDomain( siteId, onComplete ) {
-	wpcom
-		.site( siteId )
-		.domain()
-		.getPrimary( function( serverError, data ) {
-			onComplete( serverError, data );
-		} );
+	wpcom.site( siteId ).domain().getPrimary( function( serverError, data ) {
+		onComplete( serverError, data );
+	} );
 }
 
 function getFixedDomainSearch( domainName ) {
-	return domainName.trim().toLowerCase().replace( /^(https?:\/\/)?(www\.)?/, '' ).replace( /\/$/, '' );
+	return domainName
+		.trim()
+		.toLowerCase()
+		.replace( /^(https?:\/\/)?(www\.)?/, '' )
+		.replace( /\/$/, '' );
 }
 
 function isSubdomain( domainName ) {
@@ -102,7 +98,10 @@ function isMappedDomain( domain ) {
 
 function getGoogleAppsSupportedDomains( domains ) {
 	return domains.filter( function( domain ) {
-		return ( includes( [ domainTypes.REGISTERED, domainTypes.MAPPED ], domain.type ) && canAddGoogleApps( domain.name ) );
+		return (
+			includes( [ domainTypes.REGISTERED, domainTypes.MAPPED ], domain.type ) &&
+			canAddGoogleApps( domain.name )
+		);
 	} );
 }
 
@@ -111,9 +110,11 @@ function hasGoogleAppsSupportedDomain( domains ) {
 }
 
 function hasPendingGoogleAppsUsers( domain ) {
-	return domain.googleAppsSubscription &&
+	return (
+		domain.googleAppsSubscription &&
 		domain.googleAppsSubscription.pendingUsers &&
-		domain.googleAppsSubscription.pendingUsers.length !== 0;
+		domain.googleAppsSubscription.pendingUsers.length !== 0
+	);
 }
 
 function getSelectedDomain( { domains, selectedDomainName } ) {
@@ -121,7 +122,7 @@ function getSelectedDomain( { domains, selectedDomainName } ) {
 }
 
 function isRegisteredDomain( domain ) {
-	return ( domain.type === domainTypes.REGISTERED );
+	return domain.type === domainTypes.REGISTERED;
 }
 
 function getRegisteredDomains( domains ) {
@@ -159,5 +160,5 @@ export {
 	hasPendingGoogleAppsUsers,
 	isInitialized,
 	isRegisteredDomain,
-	isSubdomain
+	isSubdomain,
 };

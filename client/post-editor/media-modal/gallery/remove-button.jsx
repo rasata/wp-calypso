@@ -19,7 +19,7 @@ export default React.createClass( {
 
 	propTypes: {
 		siteId: PropTypes.number,
-		itemId: PropTypes.number
+		itemId: PropTypes.number,
 	},
 
 	remove() {
@@ -29,7 +29,7 @@ export default React.createClass( {
 		}
 
 		const selected = MediaLibrarySelectedStore.getAll( siteId );
-		const items = reject( selected, ( item ) => item.ID === itemId );
+		const items = reject( selected, item => item.ID === itemId );
 
 		MediaActions.setLibrarySelectedItems( siteId, items );
 	},
@@ -38,11 +38,12 @@ export default React.createClass( {
 		return (
 			<button
 				onClick={ this.remove }
-				onMouseDown={ ( event ) => event.stopPropagation() }
-				className="editor-media-modal-gallery__remove">
+				onMouseDown={ event => event.stopPropagation() }
+				className="editor-media-modal-gallery__remove"
+			>
 				<span className="screen-reader-text">{ this.translate( 'Remove' ) }</span>
 				<Gridicon icon="cross" />
 			</button>
 		);
-	}
+	},
 } );

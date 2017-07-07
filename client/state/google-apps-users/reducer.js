@@ -34,5 +34,5 @@ export function loaded( state = false, action ) {
 
 export default combineReducers( {
 	items,
-	loaded
+	loaded,
 } );

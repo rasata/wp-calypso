@@ -12,7 +12,7 @@ export const publicizeActionSchema = {
 				result: { type: 'object' },
 				url: { type: 'string' },
 				status: { type: 'string' },
-			}
-		}
-	}
+			},
+		},
+	},
 };

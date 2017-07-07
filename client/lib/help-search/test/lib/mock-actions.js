@@ -4,6 +4,6 @@ var helpLinks = require( './mock-help-links' ),
 module.exports = {
 	fetchedHelpLinks: {
 		type: ActionTypes.SET_HELP_LINKS,
-		helpLinks: helpLinks
-	}
+		helpLinks: helpLinks,
+	},
 };

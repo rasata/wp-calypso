@@ -1,6 +1,5 @@
 // External Dependencies
-const assign = require( 'lodash/assign' ),
-	defer = require( 'lodash/defer' );
+const assign = require( 'lodash/assign' ), defer = require( 'lodash/defer' );
 
 // Internal dependencies
 const Dispatcher = require( 'dispatcher' ),
@@ -18,21 +17,21 @@ feedPostFetcher = new PostFetcher( {
 		Dispatcher.handleViewAction( {
 			type: ACTION.FETCH_FEED_POST,
 			feedId: postKey.feedId,
-			postId: postKey.postId
+			postId: postKey.postId,
 		} );
 	},
 	onError: function( error, postKey ) {
 		FeedPostActions.receivePost( error, null, {
 			feedId: postKey.feedId,
-			postId: postKey.postId
+			postId: postKey.postId,
 		} );
 	},
 	onPostReceived: function( feedId, postId, post ) {
 		FeedPostActions.receivePost( null, post, {
 			feedId: feedId,
-			postId: postId
+			postId: postId,
 		} );
-	}
+	},
 } );
 
 blogPostFetcher = new PostFetcher( {
@@ -43,25 +42,24 @@ blogPostFetcher = new PostFetcher( {
 		Dispatcher.handleViewAction( {
 			type: ACTION.FETCH_FEED_POST,
 			blogId: postKey.blogId,
-			postId: postKey.postId
+			postId: postKey.postId,
 		} );
 	},
 	onError: function( error, postKey ) {
 		FeedPostActions.receivePost( error, null, {
 			blogId: postKey.blogId,
-			postId: postKey.postId
+			postId: postKey.postId,
 		} );
 	},
 	onPostReceived: function( blogId, postId, post ) {
 		FeedPostActions.receivePost( null, post, {
 			blogId: blogId,
-			postId: postId
+			postId: postId,
 		} );
-	}
+	},
 } );
 
 FeedPostActions = {
-
 	fetchPost: function( postKey ) {
 		const fetcher = postKey.blogId ? blogPostFetcher : feedPostFetcher;
 		fetcher.add( postKey );
@@ -73,11 +71,16 @@ FeedPostActions = {
 			fetcher.remove( postKey );
 		}
 
-		Dispatcher.handleServerAction( assign( {
-			type: ACTION.RECEIVE_FEED_POST,
-			data: data,
-			error: error
-		}, postKey ) );
+		Dispatcher.handleServerAction(
+			assign(
+				{
+					type: ACTION.RECEIVE_FEED_POST,
+					data: data,
+					error: error,
+				},
+				postKey,
+			),
+		);
 	},
 
 	markSeen: function( post, site, source ) {
@@ -87,11 +90,11 @@ FeedPostActions = {
 				data: {
 					post,
 					site,
-					source
-				}
+					source,
+				},
 			} );
 		} );
-	}
+	},
 };
 
 module.exports = FeedPostActions;

@@ -17,15 +17,15 @@ const ARecord = React.createClass( {
 	statics: {
 		initialFields: {
 			name: '',
-			data: ''
-		}
+			data: '',
+		},
 	},
 
 	propTypes: {
 		fieldValues: React.PropTypes.object.isRequired,
 		onChange: React.PropTypes.func.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		show: React.PropTypes.bool.isRequired
+		show: React.PropTypes.bool.isRequired,
 	},
 
 	render() {
@@ -35,15 +35,16 @@ const ARecord = React.createClass( {
 			isDataValid = isValid( 'data' ),
 			isAaaaRecord = this.props.fieldValues.type === 'AAAA';
 		let namePlaceholder = this.translate( 'Enter subdomain (optional)', {
-				context: 'Placeholder shown when entering the optional subdomain part of a new DNS record'
-			} ),
+			context: 'Placeholder shown when entering the optional subdomain part of a new DNS record',
+		} ),
 			dataPlaceholder = this.translate( 'e.g. %(example)s', { args: { example: '123.45.78.9' } } );
 
 		if ( isAaaaRecord ) {
-			namePlaceholder = this.translate( 'Enter subdomain (required)', {
-				context: 'Placeholder shown when entering the required subdomain part of a new DNS record'
-			} ),
-			dataPlaceholder = this.translate( 'e.g. %(example)s', { args: { example: '2001:500:84::b' } } );
+			( namePlaceholder = this.translate( 'Enter subdomain (required)', {
+				context: 'Placeholder shown when entering the required subdomain part of a new DNS record',
+			} ) ), ( dataPlaceholder = this.translate( 'e.g. %(example)s', {
+				args: { example: '2001:500:84::b' },
+			} ) );
 		}
 
 		return (
@@ -56,8 +57,11 @@ const ARecord = React.createClass( {
 						isError={ ! isNameValid }
 						onChange={ onChange }
 						value={ fieldValues.name }
-						suffix={ '.' + selectedDomainName } />
-					{ ! isNameValid ? <FormInputValidation text={ this.translate( 'Invalid Name' ) } isError={ true } /> : null }
+						suffix={ '.' + selectedDomainName }
+					/>
+					{ ! isNameValid
+						? <FormInputValidation text={ this.translate( 'Invalid Name' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 
 				<FormFieldset>
@@ -67,12 +71,15 @@ const ARecord = React.createClass( {
 						isError={ ! isDataValid }
 						onChange={ onChange }
 						value={ fieldValues.data }
-						placeholder={ dataPlaceholder } />
-					{ ! isDataValid ? <FormInputValidation text={ this.translate( 'Invalid IP' ) } isError={ true } /> : null }
+						placeholder={ dataPlaceholder }
+					/>
+					{ ! isDataValid
+						? <FormInputValidation text={ this.translate( 'Invalid IP' ) } isError={ true } />
+						: null }
 				</FormFieldset>
 			</div>
 		);
-	}
+	},
 } );
 
 export default ARecord;

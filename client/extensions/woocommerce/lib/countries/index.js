@@ -15,13 +15,10 @@ import US from './US';
 // with things like origin vs destination based tax booleans
 
 export const getCountries = () => {
-	return [
-		US(),
-		CA(),
-	];
+	return [ US(), CA() ];
 };
 
-export const getCountryData = ( country ) => {
+export const getCountryData = country => {
 	const countryData = find( getCountries(), { code: country } );
 	if ( ! countryData ) {
 		return null;

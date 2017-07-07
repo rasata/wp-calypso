@@ -25,7 +25,7 @@ const StatsPagePlaceholder = props => (
 );
 
 StatsPagePlaceholder.propTypes = {
-	className: PropTypes.string
+	className: PropTypes.string,
 };
 
 export default StatsPagePlaceholder;

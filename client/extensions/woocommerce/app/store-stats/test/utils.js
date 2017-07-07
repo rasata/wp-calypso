@@ -7,12 +7,7 @@ import { moment } from 'i18n-calypso';
 /**
  * Internal dependencies
  */
-import {
-	calculateDelta,
-	getQueryDate,
-	getUnitPeriod,
-	getEndPeriod
-} from '../utils';
+import { calculateDelta, getQueryDate, getUnitPeriod, getEndPeriod } from '../utils';
 import { UNITS } from '../constants';
 
 describe( 'calculateDelta', () => {
@@ -85,7 +80,9 @@ describe( 'getQueryDate', () => {
 
 	it( 'should return a value for today given a startDate of less than the quantity', () => {
 		const quantity = UNITS.day.quantity;
-		const startDate = moment().subtract( Math.floor( quantity / 2 ), 'days' ).format( 'YYYY-MM-DD' );
+		const startDate = moment()
+			.subtract( Math.floor( quantity / 2 ), 'days' )
+			.format( 'YYYY-MM-DD' );
 		const context = {
 			params: { unit: 'day' },
 			query: { startDate },

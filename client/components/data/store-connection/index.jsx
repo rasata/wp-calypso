@@ -10,7 +10,7 @@ const StoreConnection = React.createClass( {
 		getStateFromStores: React.PropTypes.func.isRequired,
 		isDataLoading: React.PropTypes.func,
 		loadingPlaceholder: React.PropTypes.func,
-		stores: React.PropTypes.array.isRequired
+		stores: React.PropTypes.array.isRequired,
 	},
 
 	getInitialState() {
@@ -69,7 +69,7 @@ const StoreConnection = React.createClass( {
 		const child = React.Children.only( this.props.children );
 
 		return React.cloneElement( child, this.state );
-	}
+	},
 } );
 
 export default StoreConnection;

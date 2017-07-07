@@ -28,7 +28,7 @@ const SurveyStep = React.createClass( {
 
 	getDefaultProps() {
 		return {
-			surveySiteType: 'site'
+			surveySiteType: 'site',
 		};
 	},
 
@@ -40,8 +40,14 @@ const SurveyStep = React.createClass( {
 	},
 
 	getOtherWriteIn() {
-		return this.state.otherWriteIn ||
-			get( find( this.props.signupProgress, { stepName: this.props.stepName } ), 'otherWriteIn', '' );
+		return (
+			this.state.otherWriteIn ||
+			get(
+				find( this.props.signupProgress, { stepName: this.props.stepName } ),
+				'otherWriteIn',
+				'',
+			)
+		);
 	},
 
 	renderVertical( vertical ) {
@@ -94,26 +100,38 @@ const SurveyStep = React.createClass( {
 	},
 
 	render() {
-		const blogHeaderText = this.translate( 'Let\'s create your new WordPress.com blog!' );
-		const siteHeaderText = this.translate( 'Let\'s create your new WordPress.com site!' );
+		const blogHeaderText = this.translate( "Let's create your new WordPress.com blog!" );
+		const siteHeaderText = this.translate( "Let's create your new WordPress.com site!" );
 		const blogSubHeaderText = this.translate( 'To get started, tell us what your blog is about.' );
-		const siteSubHeaderText = this.translate( 'To get started, tell us what your blog or website is about.' );
+		const siteSubHeaderText = this.translate(
+			'To get started, tell us what your blog or website is about.',
+		);
 
 		const backUrl = this.props.stepSectionName
-			? signupUtils.getStepUrl( this.props.flowName, this.props.stepName, undefined, this.props.locale )
+			? signupUtils.getStepUrl(
+					this.props.flowName,
+					this.props.stepName,
+					undefined,
+					this.props.locale,
+				)
 			: undefined;
 
 		return (
 			<StepWrapper
-					flowName={ this.props.flowName }
-					stepName={ this.props.stepName }
-					stepSectionName={ this.props.stepSectionName }
-					backUrl={ backUrl }
-					positionInFlow={ this.props.positionInFlow }
-					headerText={ this.props.surveySiteType === 'blog' ? blogHeaderText : siteHeaderText }
-					subHeaderText={ this.props.surveySiteType === 'blog' ? blogSubHeaderText : siteSubHeaderText }
-					signupProgress={ this.props.signupProgress }
-					stepContent={ this.props.stepSectionName === 'other' ? this.renderOther() : this.renderOptionList() } />
+				flowName={ this.props.flowName }
+				stepName={ this.props.stepName }
+				stepSectionName={ this.props.stepSectionName }
+				backUrl={ backUrl }
+				positionInFlow={ this.props.positionInFlow }
+				headerText={ this.props.surveySiteType === 'blog' ? blogHeaderText : siteHeaderText }
+				subHeaderText={
+					this.props.surveySiteType === 'blog' ? blogSubHeaderText : siteSubHeaderText
+				}
+				signupProgress={ this.props.signupProgress }
+				stepContent={
+					this.props.stepSectionName === 'other' ? this.renderOther() : this.renderOptionList()
+				}
+			/>
 		);
 	},
 
@@ -123,14 +141,19 @@ const SurveyStep = React.createClass( {
 	},
 
 	handleOther() {
-		page( signupUtils.getStepUrl( this.props.flowName, this.props.stepName, 'other', this.props.locale ) );
+		page(
+			signupUtils.getStepUrl(
+				this.props.flowName,
+				this.props.stepName,
+				'other',
+				this.props.locale,
+			),
+		);
 	},
 
 	handleVerticalOther( otherTextValue ) {
 		const otherText = otherTextValue.replace( /^\W+|\W+$/g, '' );
-		const otherWriteIn = otherText.length !== 0
-			? otherText
-			: undefined;
+		const otherWriteIn = otherText.length !== 0 ? otherText : undefined;
 
 		this.submitStep( 'Uncategorized', 'a8c.24', otherWriteIn );
 	},
@@ -163,14 +186,11 @@ const SurveyStep = React.createClass( {
 				otherWriteIn: otherWriteIn,
 			},
 			[],
-			{ surveySiteType: this.props.surveySiteType, surveyQuestion: value }
+			{ surveySiteType: this.props.surveySiteType, surveyQuestion: value },
 		);
 
 		this.props.goToNextStep();
-	}
+	},
 } );
 
-export default connect(
-	null,
-	{ setSurvey }
-)( SurveyStep );
+export default connect( null, { setSurvey } )( SurveyStep );

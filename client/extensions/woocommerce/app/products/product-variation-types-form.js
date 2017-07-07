@@ -14,7 +14,6 @@ import Button from 'components/button';
 import TokenField from 'components/token-field';
 
 export default class ProductVariationTypesForm extends Component {
-
 	state = {
 		attributeNames: {},
 	};
@@ -33,7 +32,8 @@ export default class ProductVariationTypesForm extends Component {
 	componentWillMount() {
 		const { product } = this.props;
 
-		const attributes = ( product.attributes && product.attributes.filter( attribute => attribute.variation ) ) || [];
+		const attributes = ( product.attributes &&
+			product.attributes.filter( attribute => attribute.variation ) ) || [];
 		if ( ! attributes.length ) {
 			this.addType();
 		}
@@ -52,31 +52,33 @@ export default class ProductVariationTypesForm extends Component {
 	addType = () => {
 		const { siteId, product, editProductAttribute } = this.props;
 		editProductAttribute( siteId, product, null, this.getNewFields() );
-	}
+	};
 
-	updateNameHandler = ( e ) => {
+	updateNameHandler = e => {
 		const attributeNames = { ...this.state.attributeNames };
 		attributeNames[ e.target.id ] = e.target.value;
 		this.setState( { attributeNames } );
 		this.debouncedUpdateName( e.target.id, e.target.value );
-	}
+	};
 
 	updateName( attributeId, name ) {
 		const { siteId, product, editProductAttribute } = this.props;
-		const attribute = product.attributes && find( product.attributes, function( a ) {
-			return a.uid === attributeId;
-		} );
+		const attribute =
+			product.attributes &&
+			find( product.attributes, function( a ) {
+				return a.uid === attributeId;
+			} );
 		editProductAttribute( siteId, product, attribute, { name } );
 	}
 
 	updateValues = ( values, attribute ) => {
 		const { siteId, product, editProductAttribute } = this.props;
 		editProductAttribute( siteId, product, attribute, { options: values } );
-	}
+	};
 
 	renderInputs( attribute, index ) {
 		const { attributeNames } = this.state;
-		const attributeName = attributeNames && attributeNames[ attribute.uid ] || attribute.name;
+		const attributeName = ( attributeNames && attributeNames[ attribute.uid ] ) || attribute.name;
 		return (
 			<div key={ index } className="products__variation-types-form-fieldset">
 				<FormTextInput
@@ -92,7 +94,7 @@ export default class ProductVariationTypesForm extends Component {
 					value={ attribute.options }
 					name="values"
 					/* eslint-disable react/jsx-no-bind */
-					onChange={ ( values ) => this.updateValues( values, attribute ) }
+					onChange={ values => this.updateValues( values, attribute ) }
 				/>
 			</div>
 		);
@@ -101,30 +103,31 @@ export default class ProductVariationTypesForm extends Component {
 	render() {
 		const { product } = this.props;
 		const { attributes } = product;
-		const variationTypes = ( attributes && attributes.filter( attribute => attribute.variation ) ) || [];
+		const variationTypes = ( attributes &&
+			attributes.filter( attribute => attribute.variation ) ) || [];
 		const inputs = variationTypes.map( this.renderInputs, this );
 
 		return (
 			<div className="products__variation-types-form-wrapper">
-				<strong>{ i18n.translate( 'Let\'s add some variations!' ) }</strong>
+				<strong>{ i18n.translate( "Let's add some variations!" ) }</strong>
 				<p>
-					{ i18n.translate(
-						'Variations let you sell one item in various different options.',
-						{ components: { em: <em /> } }
-					) }
+					{ i18n.translate( 'Variations let you sell one item in various different options.', {
+						components: { em: <em /> },
+					} ) }
 				</p>
 
 				<div className="products__variation-types-form-group">
 					<div className="products__variation-types-form-labels">
-						<FormLabel className="products__variation-types-form-label">{ i18n.translate( 'Variation type' ) }</FormLabel>
+						<FormLabel className="products__variation-types-form-label">
+							{ i18n.translate( 'Variation type' ) }
+						</FormLabel>
 						<FormLabel>{ i18n.translate( 'Values' ) }</FormLabel>
 					</div>
-					{inputs}
+					{ inputs }
 				</div>
 
 				<Button onClick={ this.addType }>{ i18n.translate( 'Add another variation' ) }</Button>
-		</div>
+			</div>
 		);
 	}
-
 }

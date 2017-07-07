@@ -14,7 +14,6 @@ import eventRecorder from 'me/event-recorder';
 import Notice from 'components/notice';
 
 export default React.createClass( {
-
 	displayName: 'ProfileLinksAddOther',
 
 	mixins: [ LinkedStateMixin, eventRecorder ],
@@ -23,7 +22,7 @@ export default React.createClass( {
 		return {
 			title: '',
 			value: '',
-			lastError: false
+			lastError: false,
 		};
 	},
 
@@ -68,11 +67,13 @@ export default React.createClass( {
 		}
 
 		this.props.userProfileLinks.addProfileLinks(
-			[ {
-				title: this.state.title.trim(),
-				value: this.state.value.trim()
-			} ],
-			this.onSubmitResponse
+			[
+				{
+					title: this.state.title.trim(),
+					value: this.state.value.trim(),
+				},
+			],
+			this.onSubmitResponse,
 		);
 	},
 
@@ -83,23 +84,19 @@ export default React.createClass( {
 
 	onSubmitResponse( error, data ) {
 		if ( error ) {
-			this.setState(
-				{
-					lastError: this.translate( 'Unable to add link right now. Please try again later.' )
-				}
-			);
+			this.setState( {
+				lastError: this.translate( 'Unable to add link right now. Please try again later.' ),
+			} );
 		} else if ( data.duplicate ) {
-			this.setState(
-				{
-					lastError: this.translate( 'That link is already in your profile links. No changes were made.' )
-				}
-			);
+			this.setState( {
+				lastError: this.translate(
+					'That link is already in your profile links. No changes were made.',
+				),
+			} );
 		} else if ( data.malformed ) {
-			this.setState(
-				{
-					lastError: this.translate( 'An unexpected error occurred. Please try again later.' )
-				}
-			);
+			this.setState( {
+				lastError: this.translate( 'An unexpected error occurred. Please try again later.' ),
+			} );
 		} else {
 			this.props.onSuccess();
 		}
@@ -107,7 +104,7 @@ export default React.createClass( {
 
 	clearLastError() {
 		this.setState( {
-			lastError: false
+			lastError: false,
 		} );
 	},
 
@@ -130,7 +127,9 @@ export default React.createClass( {
 		return (
 			<form className="profile-links-add-other" onSubmit={ this.onSubmit }>
 				<p>
-					{ this.translate( 'Please enter the URL and description of the site you want to add to your profile.' ) }
+					{ this.translate(
+						'Please enter the URL and description of the site you want to add to your profile.',
+					) }
 				</p>
 				{ this.possiblyRenderError() }
 				<FormFieldset>
@@ -163,5 +162,5 @@ export default React.createClass( {
 				</FormFieldset>
 			</form>
 		);
-	}
+	},
 } );

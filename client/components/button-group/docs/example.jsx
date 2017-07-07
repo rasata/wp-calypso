@@ -1,8 +1,7 @@
 /**
 * External dependencies
 */
-var React = require( 'react' ),
-	PureRenderMixin = require( 'react-pure-render/mixin' );
+var React = require( 'react' ), PureRenderMixin = require( 'react-pure-render/mixin' );
 
 /**
  * Internal dependencies
@@ -19,7 +18,7 @@ var Buttons = React.createClass( {
 
 	getInitialState: function() {
 		return {
-			compact: false
+			compact: false,
 		};
 	},
 

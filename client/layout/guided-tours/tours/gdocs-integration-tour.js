@@ -36,11 +36,12 @@ export const GDocsIntegrationTour = makeTour(
 					primary
 					target="_blank"
 					onClick={ trackUserInterest }
-					href="https://apps.wordpress.com/google-docs/">
+					href="https://apps.wordpress.com/google-docs/"
+				>
 					{ translate( 'Learn more' ) }
 				</LinkQuit>
 				<Quit>{ translate( 'No thanks' ) }</Quit>
 			</ButtonRow>
 		</Step>
-	</Tour>
+	</Tour>,
 );

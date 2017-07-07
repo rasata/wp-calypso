@@ -1,15 +1,13 @@
 /**
  * Internal dependencies
  */
-import {
-	DROPZONE_SHOW,
-	DROPZONE_HIDE
-} from 'state/action-types';
+import { DROPZONE_SHOW, DROPZONE_HIDE } from 'state/action-types';
 
 import { combineReducers, createReducer } from 'state/utils';
 
 // TODO(biskobe) - Can be improved with `keyedReducer` instead of state spread.
-const isVisible = createReducer( {},
+const isVisible = createReducer(
+	{},
 	{
 		[ DROPZONE_SHOW ]: ( state, { dropZoneName } ) => ( {
 			...state,
@@ -19,7 +17,7 @@ const isVisible = createReducer( {},
 			...state,
 			[ dropZoneName ]: false,
 		} ),
-	}
+	},
 );
 
 export default combineReducers( {

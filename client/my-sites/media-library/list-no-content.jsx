@@ -22,33 +22,33 @@ export default React.createClass( {
 	getLabel() {
 		switch ( this.props.filter ) {
 			case 'images':
-				return this.translate( 'You don\'t have any images.', {
+				return this.translate( "You don't have any images.", {
 					textOnly: true,
-					context: 'Media no results'
+					context: 'Media no results',
 				} );
 
 			case 'videos':
-				return this.translate( 'You don\'t have any videos.', {
+				return this.translate( "You don't have any videos.", {
 					textOnly: true,
-					context: 'Media no results'
+					context: 'Media no results',
 				} );
 
 			case 'audio':
-				return this.translate( 'You don\'t have any audio files.', {
+				return this.translate( "You don't have any audio files.", {
 					textOnly: true,
-					context: 'Media no results'
+					context: 'Media no results',
 				} );
 
 			case 'documents':
-				return this.translate( 'You don\'t have any documents.', {
+				return this.translate( "You don't have any documents.", {
 					textOnly: true,
-					context: 'Media no results'
+					context: 'Media no results',
 				} );
 
 			default:
-				return this.translate( 'You don\'t have any media.', {
+				return this.translate( "You don't have any media.", {
 					textOnly: true,
-					context: 'Media no results'
+					context: 'Media no results',
 				} );
 		}
 	},
@@ -74,5 +74,5 @@ export default React.createClass( {
 				illustrationWidth={ 150 }
 			/>
 		);
-	}
+	},
 } );

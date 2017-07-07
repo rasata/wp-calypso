@@ -10,7 +10,7 @@ import {
 	requestingMedia,
 	requestingMediaItem,
 	successMediaRequest,
-	successMediaItemRequest
+	successMediaItemRequest,
 } from 'state/media/actions';
 import wpcom from 'lib/wp';
 import debug from 'debug';
@@ -42,7 +42,7 @@ export function requestMedia( { dispatch, getState }, { siteId, query } ) {
 		.then( ( { media, found } ) => {
 			dispatch( receiveMedia( siteId, media, found, query ) );
 			dispatch( successMediaRequest( siteId, query ) );
-		}	)
+		} )
 		.catch( () => dispatch( failMediaRequest( siteId, query ) ) );
 }
 
@@ -59,7 +59,7 @@ export function requestMediaItem( { dispatch, getState }, { siteId, mediaId } ) 
 		.site( siteId )
 		.media( mediaId )
 		.get()
-		.then( ( media ) => {
+		.then( media => {
 			dispatch( receiveMedia( siteId, media ) );
 			dispatch( successMediaItemRequest( siteId, mediaId ) );
 		} )

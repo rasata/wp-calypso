@@ -9,12 +9,22 @@ import classnames from 'classnames';
  */
 import Card from 'components/card';
 
-const Table = ( { className, compact = false, horizontalScroll = false, header, children, ...props } ) => {
-	const classes = classnames( {
-		table: true,
-		'is-compact-table': compact,
-		'is-horizontally-scrollable': horizontalScroll,
-	}, className );
+const Table = ( {
+	className,
+	compact = false,
+	horizontalScroll = false,
+	header,
+	children,
+	...props
+} ) => {
+	const classes = classnames(
+		{
+			table: true,
+			'is-compact-table': compact,
+			'is-horizontally-scrollable': horizontalScroll,
+		},
+		className,
+	);
 	return (
 		<Card className={ classes }>
 			<div className="table__wrapper-shadow">

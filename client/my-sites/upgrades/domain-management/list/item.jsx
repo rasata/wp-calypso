@@ -15,7 +15,6 @@ import { type as domainTypes } from 'lib/domains/constants';
 import Spinner from 'components/spinner';
 
 const ListItem = React.createClass( {
-
 	propTypes: {
 		busy: React.PropTypes.bool,
 		busyMessage: React.PropTypes.string,
@@ -24,18 +23,20 @@ const ListItem = React.createClass( {
 		onClick: React.PropTypes.func.isRequired,
 		onSelect: React.PropTypes.func.isRequired,
 		selectionIndex: React.PropTypes.number,
-		isSelected: React.PropTypes.bool
+		isSelected: React.PropTypes.bool,
 	},
 
 	render() {
 		const cardClass = classNames( 'domain-management-list-item', {
-			busy: this.props.busy
+			busy: this.props.busy,
 		} );
 
 		return (
 			<CompactCard className={ cardClass }>
 				{ this.selectionRadio() }
-				{ this.props.enableSelection && <label htmlFor={ this.getInputId() }>{ this.content() }</label> || this.content() }
+				{ ( this.props.enableSelection &&
+					<label htmlFor={ this.getInputId() }>{ this.content() }</label> ) ||
+					this.content() }
 			</CompactCard>
 		);
 	},
@@ -49,8 +50,9 @@ const ListItem = React.createClass( {
 				</div>
 				<span className="domain-management-list-item__meta">
 					<span className="domain-management-list-item__type">{ this.getDomainTypeText() }</span>
-					{ this.props.domain.type !== 'WPCOM' && this.showDomainExpirationWarning( this.props.domain ) }
-					<DomainPrimaryFlag domain={ this.props.domain }/>
+					{ this.props.domain.type !== 'WPCOM' &&
+						this.showDomainExpirationWarning( this.props.domain ) }
+					<DomainPrimaryFlag domain={ this.props.domain } />
 				</span>
 				{ this.busyMessage() }
 			</div>
@@ -59,7 +61,9 @@ const ListItem = React.createClass( {
 
 	busyMessage() {
 		if ( this.props.busy && this.props.busyMessage ) {
-			return <div className="domain-management-list-item__busy-message">{ this.props.busyMessage }</div>;
+			return (
+				<div className="domain-management-list-item__busy-message">{ this.props.busyMessage }</div>
+			);
 		}
 	},
 
@@ -71,7 +75,7 @@ const ListItem = React.createClass( {
 		if ( this.props.enableSelection ) {
 			return null;
 		}
-		return <Gridicon className="card__link-indicator" icon="chevron-right" />
+		return <Gridicon className="card__link-indicator" icon="chevron-right" />;
 	},
 
 	handleClick() {
@@ -94,12 +98,15 @@ const ListItem = React.createClass( {
 			return null;
 		}
 
-		return <input
-			id={ this.getInputId() }
-			className="domain-management-list-item__radio"
-			type="radio"
-			checked={ this.props.isSelected }
-			onChange={ this.handleSelect }/>
+		return (
+			<input
+				id={ this.getInputId() }
+				className="domain-management-list-item__radio"
+				type="radio"
+				checked={ this.props.isSelected }
+				onChange={ this.handleSelect }
+			/>
+		);
 	},
 
 	showDomainExpirationWarning( domain ) {
@@ -108,9 +115,9 @@ const ListItem = React.createClass( {
 				<Notice isCompact status="is-error" icon="spam">
 					{ this.translate( 'Expired %(timeSinceExpiry)s', {
 						args: {
-							timeSinceExpiry: domain.expirationMoment.fromNow()
+							timeSinceExpiry: domain.expirationMoment.fromNow(),
 						},
-						context: 'timeSinceExpiry is of the form "[number] [time-period] ago" i.e. "3 days ago"'
+						context: 'timeSinceExpiry is of the form "[number] [time-period] ago" i.e. "3 days ago"',
 					} ) }
 				</Notice>
 			);
@@ -121,9 +128,9 @@ const ListItem = React.createClass( {
 				<Notice isCompact status="is-error" icon="spam">
 					{ this.translate( 'Expires %(timeUntilExpiry)s', {
 						args: {
-							timeUntilExpiry: domain.expirationMoment.fromNow()
+							timeUntilExpiry: domain.expirationMoment.fromNow(),
 						},
-						context: 'timeUntilExpiry is of the form "[number] [time-period] ago" i.e. "3 days ago"'
+						context: 'timeUntilExpiry is of the form "[number] [time-period] ago" i.e. "3 days ago"',
 					} ) }
 				</Notice>
 			);
@@ -144,7 +151,7 @@ const ListItem = React.createClass( {
 			case domainTypes.WPCOM:
 				return this.translate( 'Included with Site' );
 		}
-	}
+	},
 } );
 
 export default ListItem;

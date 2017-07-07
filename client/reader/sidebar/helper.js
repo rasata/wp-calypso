@@ -30,8 +30,8 @@ const exported = {
 		return classNames(
 			assign(
 				{ selected: selected, 'is-action-button-selected': isActionButtonSelected },
-				additionalClasses
-			)
+				additionalClasses,
+			),
 		);
 	},
 

@@ -32,12 +32,12 @@ export class WebPreviewContent extends Component {
 	state = {
 		iframeUrl: null,
 		device: this.props.defaultViewportDevice || 'computer',
-		loaded: false
+		loaded: false,
 	};
 
-	setIframeInstance = ( ref ) => {
+	setIframeInstance = ref => {
 		this.iframe = ref;
-	}
+	};
 
 	componentWillMount() {
 		// Cache touch and mobile detection for the entire lifecycle of the component
@@ -85,7 +85,7 @@ export class WebPreviewContent extends Component {
 		}
 	}
 
-	handleMessage = ( e ) => {
+	handleMessage = e => {
 		let data;
 		try {
 			data = JSON.parse( e.data );
@@ -110,7 +110,7 @@ export class WebPreviewContent extends Component {
 				this.setLoaded();
 				return;
 		}
-	}
+	};
 
 	focusIfNeeded = () => {
 		// focus content unless we are running in closed modal or on empty page
@@ -118,7 +118,7 @@ export class WebPreviewContent extends Component {
 			debug( 'focusing iframe contents' );
 			this.iframe.contentWindow.focus();
 		}
-	}
+	};
 
 	setIframeMarkup( content ) {
 		if ( ! this.iframe ) {
@@ -131,7 +131,7 @@ export class WebPreviewContent extends Component {
 		this.iframe.contentDocument.close();
 	}
 
-	setIframeUrl = ( iframeUrl ) => {
+	setIframeUrl = iframeUrl => {
 		if ( ! this.iframe || ( ! this.props.showPreview && this.props.isModalWindow ) ) {
 			return;
 		}
@@ -152,7 +152,7 @@ export class WebPreviewContent extends Component {
 				iframeUrl: iframeUrl,
 			} );
 		} catch ( e ) {}
-	}
+	};
 
 	setDeviceViewport = ( device = 'computer' ) => {
 		this.setState( { device } );
@@ -162,11 +162,11 @@ export class WebPreviewContent extends Component {
 		if ( typeof this.props.onDeviceUpdate === 'function' ) {
 			this.props.onDeviceUpdate( device );
 		}
-	}
+	};
 
 	selectSEO = () => {
 		this.setDeviceViewport( 'seo' );
-	}
+	};
 
 	setLoaded = () => {
 		if ( this.state.loaded ) {
@@ -186,7 +186,7 @@ export class WebPreviewContent extends Component {
 		this.setState( { loaded: true } );
 
 		this.focusIfNeeded();
-	}
+	};
 
 	render() {
 		const { translate } = this.props;
@@ -204,29 +204,30 @@ export class WebPreviewContent extends Component {
 
 		return (
 			<div className={ className }>
-				<Toolbar setDeviceViewport={ this.setDeviceViewport }
+				<Toolbar
+					setDeviceViewport={ this.setDeviceViewport }
 					device={ this.state.device }
 					{ ...this.props }
-					showExternal={ ( this.props.previewUrl ? this.props.showExternal : false ) }
+					showExternal={ this.props.previewUrl ? this.props.showExternal : false }
 					showDeviceSwitcher={ this.props.showDeviceSwitcher && ! this._isMobile }
 					selectSeoPreview={ this.selectSEO }
 				/>
 				<div className="web-preview__placeholder">
-					{ this.props.showPreview && ! this.state.loaded && 'seo' !== this.state.device &&
+					{ this.props.showPreview &&
+						! this.state.loaded &&
+						'seo' !== this.state.device &&
 						<div className="web-preview__loading-message-wrapper">
 							<Spinner />
 							{ this.props.loadingMessage &&
 								<span className="web-preview__loading-message">
 									{ this.props.loadingMessage }
-								</span>
-							}
-						</div>
-					}
+								</span> }
+						</div> }
 					<div
 						className={ classNames( 'web-preview__frame-wrapper', {
-							'is-resizable': ! this.props.isModalWindow
+							'is-resizable': ! this.props.isModalWindow,
 						} ) }
-						style={ { display: ( 'seo' === this.state.device ? 'none' : 'inherit' ) } }
+						style={ { display: 'seo' === this.state.device ? 'none' : 'inherit' } }
 					>
 						<iframe
 							ref={ this.setIframeInstance }
@@ -237,10 +238,7 @@ export class WebPreviewContent extends Component {
 						/>
 					</div>
 					{ 'seo' === this.state.device &&
-						<SeoPreviewPane
-							frontPageMetaDescription={ this.props.frontPageMetaDescription }
-						/>
-					}
+						<SeoPreviewPane frontPageMetaDescription={ this.props.frontPageMetaDescription } /> }
 				</div>
 			</div>
 		);

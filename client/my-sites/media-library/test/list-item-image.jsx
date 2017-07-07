@@ -34,12 +34,14 @@ describe( 'MediaLibraryListItem image', function() {
 
 	const getPhotonUrl = () => photon( fixtures.media[ 0 ].URL, { width: WIDTH } );
 	const getResizedUrl = () => resize( fixtures.media[ 0 ].URL, { w: WIDTH } );
-	const getItem = ( itemPos, type ) =>
+	const getItem = ( itemPos, type ) => (
 		<ListItemImage
 			media={ fixtures.media[ itemPos ] }
 			scale={ 1 }
 			maxImageWidth={ WIDTH }
-			thumbnailType={ type } />;
+			thumbnailType={ type }
+		/>
+	);
 
 	context( 'thumbnail display mode', function() {
 		it( 'defaults to photon when no thumbnail parameter is passed', function() {

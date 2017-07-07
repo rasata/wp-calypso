@@ -13,19 +13,20 @@ let IcannVerificationCard = React.createClass( {
 	propTypes: {
 		handleSubmit: React.PropTypes.func.isRequired,
 		submitting: React.PropTypes.bool.isRequired,
-		selectedDomainName: React.PropTypes.string.isRequired
+		selectedDomainName: React.PropTypes.string.isRequired,
 	},
 
 	getExplanation() {
 		if ( this.props.explanationContext === 'name-servers' ) {
 			return this.translate(
-					'You must verify your email address through the ICANN ' +
+				'You must verify your email address through the ICANN ' +
 					'verification email before you are able to update the name ' +
-					'servers for your domain.' );
+					'servers for your domain.',
+			);
 		}
 
 		return this.translate(
-			'Urgent. Please verify your address through the verification email as soon as possible, or your domain may be suspended.'
+			'Urgent. Please verify your address through the verification email as soon as possible, or your domain may be suspended.',
 		);
 	},
 
@@ -36,25 +37,31 @@ let IcannVerificationCard = React.createClass( {
 					{ this.getExplanation() }
 				</div>
 
-				<IcannVerification.Button submitting={ this.props.submitting }
-					onClick={ this.props.handleSubmit } />
+				<IcannVerification.Button
+					submitting={ this.props.submitting }
+					onClick={ this.props.handleSubmit }
+				/>
 
 				<div className="icann-verification__explanation">
 					{ this.translate(
 						'Use this button to resend the verification email. It contains a link to verify your address. ' +
-						'{{learnMoreLink}}Learn more{{/learnMoreLink}}.', {
+							'{{learnMoreLink}}Learn more{{/learnMoreLink}}.',
+						{
 							components: {
-								learnMoreLink: <a href={ support.EMAIL_VALIDATION_AND_VERIFICATION }
-									target="_blank"
-									rel="noopener noreferrer"
-								/>
-							}
-						}
+								learnMoreLink: (
+									<a
+										href={ support.EMAIL_VALIDATION_AND_VERIFICATION }
+										target="_blank"
+										rel="noopener noreferrer"
+									/>
+								),
+							},
+						},
 					) }
 				</div>
 			</div>
 		);
-	}
+	},
 } );
 
 IcannVerificationCard = IcannVerification.createContainer( IcannVerificationCard );

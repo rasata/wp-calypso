@@ -7,18 +7,14 @@ var Dispatcher = require( 'dispatcher' ),
 	isEqual = require( 'lodash/isEqual' );
 
 // Internal Dependencies
-var emitter = require( 'lib/mixins/emitter' ),
-	ListStore = require( './lists' );
+var emitter = require( 'lib/mixins/emitter' ), ListStore = require( './lists' );
 
-var lists = null,
-	errors = [],
-	ReaderListStore,
-	isFetching = false;
+var lists = null, errors = [], ReaderListStore, isFetching = false;
 
 function mapApiToId( list ) {
 	return {
 		owner: list.owner,
-		slug: list.slug
+		slug: list.slug,
 	};
 }
 
@@ -32,9 +28,12 @@ function sortList() {
 
 ReaderListStore = {
 	get: function() {
-		return lists && lists.map( function( list ) {
-			return ListStore.get( list.owner, list.slug );
-		} );
+		return (
+			lists &&
+			lists.map( function( list ) {
+				return ListStore.get( list.owner, list.slug );
+			} )
+		);
 	},
 
 	findByOwnerAndSlug: function( owner, slug ) {
@@ -67,8 +66,7 @@ ReaderListStore = {
 	},
 
 	unfollowList: function( data ) {
-		var key = mapApiToId( data ),
-			newList = reject( lists, key );
+		var key = mapApiToId( data ), newList = reject( lists, key );
 
 		if ( newList.length !== lists.length ) {
 			lists = newList;
@@ -89,7 +87,7 @@ ReaderListStore = {
 	setIsFetching: function( val ) {
 		isFetching = val;
 		ReaderListStore.emitChange();
-	}
+	},
 };
 
 emitter( ReaderListStore );

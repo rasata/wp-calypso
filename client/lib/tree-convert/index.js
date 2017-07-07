@@ -1,4 +1,3 @@
-
 /**
  * Internal dependencies
  */
@@ -24,8 +23,7 @@ function TreeConvert( key ) {
 }
 
 TreeConvert.prototype.treeify = function( items ) {
-	var tree = [],
-		indexedNodes = {};
+	var tree = [], indexedNodes = {};
 
 	items.forEach( function( item, i ) {
 		indexedNodes[ items[ i ][ this.key ] ] = item;
@@ -58,23 +56,25 @@ TreeConvert.prototype.untreeify = function( tree, list ) {
 			TreeConvert.prototype.untreeify( item.items, list );
 		}
 		item.order = index + 1;
-		list.push(item);
-	});
+		list.push( item );
+	} );
 	return list;
 };
-
 
 TreeConvert.prototype.sortItems = function( itemTrees ) {
 	var root = {};
 
 	root.items = itemTrees;
 
-	Traverser.traverse( root, [ function( node ) {
-		node.items && node.items.sort( function( a, b ) {
-			return a.order - b.order;
-		} );
-		return node;
-	} ] );
+	Traverser.traverse( root, [
+		function( node ) {
+			node.items &&
+				node.items.sort( function( a, b ) {
+					return a.order - b.order;
+				} );
+			return node;
+		},
+	] );
 };
 
 TreeConvert.prototype.removeOrderProperty = function( itemTrees ) {
@@ -82,12 +82,15 @@ TreeConvert.prototype.removeOrderProperty = function( itemTrees ) {
 
 	root.items = itemTrees;
 
-	Traverser.traverse( root, [ function( node ) {
-		node.items && node.items.forEach( function( item ) {
-			delete item.order;
-		} );
-		return node;
-	} ] );
+	Traverser.traverse( root, [
+		function( node ) {
+			node.items &&
+				node.items.forEach( function( item ) {
+					delete item.order;
+				} );
+			return node;
+		},
+	] );
 };
 
 module.exports = TreeConvert;

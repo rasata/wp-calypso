@@ -9,7 +9,11 @@ export default function removeContentStyles( post, dom ) {
 	}
 
 	// if there are any specials in the post, skip it
-	if ( dom.querySelector( '.gallery, .tiled-gallery, blockquote[class^="instagram-"], blockquote[class^="twitter-"]' ) ) {
+	if (
+		dom.querySelector(
+			'.gallery, .tiled-gallery, blockquote[class^="instagram-"], blockquote[class^="twitter-"]',
+		)
+	) {
 		return post;
 	}
 

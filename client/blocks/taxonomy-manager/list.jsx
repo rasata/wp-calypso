@@ -5,14 +5,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { localize } from 'i18n-calypso';
-import {
-	includes,
-	filter,
-	map,
-	noop,
-	reduce,
-	union,
-} from 'lodash';
+import { includes, filter, map, noop, reduce, union } from 'lodash';
 import WindowScroller from 'react-virtualized/WindowScroller';
 
 /**
@@ -84,9 +77,13 @@ export class TaxonomyManagerList extends Component {
 			return 0;
 		}
 
-		return reduce( this.getTermChildren( item.ID ), ( memo, childItem ) => {
-			return memo + this.getItemHeight( childItem, true );
-		}, ITEM_HEIGHT );
+		return reduce(
+			this.getTermChildren( item.ID ),
+			( memo, childItem ) => {
+				return memo + this.getItemHeight( childItem, true );
+			},
+			ITEM_HEIGHT,
+		);
 	};
 
 	getRowHeight = ( { index } ) => {
@@ -111,16 +108,13 @@ export class TaxonomyManagerList extends Component {
 
 		return (
 			<div key={ 'term-wrapper-' + itemId } className="taxonomy-manager__list-item">
-				<CompactCard
-					key={ itemId }
-					className="taxonomy-manager__list-item-card">
+				<CompactCard key={ itemId } className="taxonomy-manager__list-item-card">
 					<ListItem onClick={ onClick } taxonomy={ taxonomy } term={ item } />
 				</CompactCard>
-				{ children.length > 0 && (
+				{ children.length > 0 &&
 					<div className="taxonomy-manager__nested-list">
-						{ children.map( ( child ) => this.renderItem( child, true ) ) }
-					</div>
-				) }
+						{ children.map( child => this.renderItem( child, true ) ) }
+					</div> }
 			</div>
 		);
 	}
@@ -138,18 +132,18 @@ export class TaxonomyManagerList extends Component {
 				</span>
 			</CompactCard>
 		);
-	}
+	};
 
 	requestPages = pages => {
 		this.setState( {
-			requestedPages: union( this.state.requestedPages, pages )
+			requestedPages: union( this.state.requestedPages, pages ),
 		} );
-	}
+	};
 
 	render() {
 		const { loading, siteId, taxonomy, terms, lastPage, query } = this.props;
 		const classes = classNames( 'taxonomy-manager', {
-			'is-loading': loading
+			'is-loading': loading,
 		} );
 		const hasDefaultSetting = taxonomy === 'category';
 
@@ -160,7 +154,8 @@ export class TaxonomyManagerList extends Component {
 						key={ `query-${ page }` }
 						siteId={ siteId }
 						taxonomy={ taxonomy }
-						query={ { ...query, page } } />
+						query={ { ...query, page } }
+					/>
 				) ) }
 				{ hasDefaultSetting && <QuerySiteSettings siteId={ siteId } /> }
 
@@ -180,7 +175,7 @@ export class TaxonomyManagerList extends Component {
 							height={ height }
 							scrollTop={ scrollTop }
 						/>
-				) }
+					) }
 				</WindowScroller>
 			</div>
 		);
@@ -196,6 +191,6 @@ export default connect( ( state, ownProps ) => {
 		terms: getTermsForQueryIgnoringPage( state, siteId, taxonomy, query ),
 		lastPage: getTermsLastPageForQuery( state, siteId, taxonomy, query ),
 		siteId,
-		query
+		query,
 	};
 } )( localize( TaxonomyManagerList ) );

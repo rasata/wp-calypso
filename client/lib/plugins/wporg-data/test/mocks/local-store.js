@@ -1,8 +1,6 @@
-
 import sinon from 'sinon';
 
-const get = sinon.spy(),
-	set = sinon.spy();
+const get = sinon.spy(), set = sinon.spy();
 
 export default {
 	get,
@@ -10,5 +8,5 @@ export default {
 	reset() {
 		get.reset();
 		set.reset();
-	}
-}
+	},
+};

@@ -8,14 +8,8 @@ import { expect } from 'chai';
 /**
  * Internal dependencies
  */
-import {
-	receiveActivityLogError,
-	receiveActivityLog,
-} from '..';
-import {
-	activityLogError,
-	activityLogUpdate,
-} from 'state/activity-log/actions';
+import { receiveActivityLogError, receiveActivityLog } from '..';
+import { activityLogError, activityLogUpdate } from 'state/activity-log/actions';
 
 const SITE_ID = 77203074;
 
@@ -36,13 +30,13 @@ const SUCCESS_RESPONSE = deepFreeze( {
 			actor: {
 				displayname: 'User',
 				external_id: 1,
-				login: 'user'
+				login: 'user',
 			},
 			ts_sent_action: 1496692768557,
 			name: 'post__publicized',
 			site_id: 2,
 			error_code: '',
-			ts_recieved_action: 1496692768557
+			ts_recieved_action: 1496692768557,
 		},
 	],
 	found: 1,
@@ -50,7 +44,7 @@ const SUCCESS_RESPONSE = deepFreeze( {
 
 const ERROR_RESPONSE = deepFreeze( {
 	error: 'unknown_blog',
-	message: 'Unknown blog'
+	message: 'Unknown blog',
 } );
 
 describe( 'receiveActivityLog', () => {
@@ -74,15 +68,15 @@ describe( 'receiveActivityLog', () => {
 					actor: {
 						displayname: 'User',
 						external_id: 1,
-						login: 'user'
+						login: 'user',
 					},
 					ts_sent_action: 1496692768557,
 					name: 'post__publicized',
 					site_id: 2,
 					error_code: '',
-					ts_recieved_action: 1496692768557
+					ts_recieved_action: 1496692768557,
 				},
-			] )
+			] ),
 		);
 	} );
 } );
@@ -94,8 +88,8 @@ describe( 'receiveActivityLogError', () => {
 		expect( dispatch ).to.have.been.calledWith(
 			activityLogError( SITE_ID, {
 				error: 'unknown_blog',
-				message: 'Unknown blog'
-			} )
+				message: 'Unknown blog',
+			} ),
 		);
 	} );
 } );

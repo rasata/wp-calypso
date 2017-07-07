@@ -8,7 +8,7 @@ import React from 'react';
  */
 import Card from 'components/card';
 
-export const CommentDetailPlaceholder = () =>
+export const CommentDetailPlaceholder = () => (
 	<Card className="comment-detail comment-detail__placeholder is-expanded">
 		<div className="comment-detail__header is-preview">
 			<div className="comment-detail__author-info">
@@ -16,6 +16,7 @@ export const CommentDetailPlaceholder = () =>
 			</div>
 			<div className="comment-detail__comment-preview" />
 		</div>
-	</Card>;
+	</Card>
+);
 
 export default CommentDetailPlaceholder;

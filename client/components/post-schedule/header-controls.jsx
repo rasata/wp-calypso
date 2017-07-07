@@ -11,12 +11,12 @@ var noop = () => {};
 
 export default React.createClass( {
 	propTypes: {
-		onYearChange: React.PropTypes.func
+		onYearChange: React.PropTypes.func,
 	},
 
 	getDefaultProps() {
 		return {
-			onYearChange: noop
+			onYearChange: noop,
 		};
 	},
 
@@ -42,5 +42,5 @@ export default React.createClass( {
 				</button>
 			</div>
 		);
-	}
+	},
 } );

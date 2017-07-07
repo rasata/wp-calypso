@@ -19,9 +19,7 @@ import {
 	handleProductVariationUpdate,
 	handleProductVariationsRequest,
 } from '../';
-import {
-	WOOCOMMERCE_API_REQUEST,
-} from 'woocommerce/state/action-types';
+import { WOOCOMMERCE_API_REQUEST } from 'woocommerce/state/action-types';
 
 describe( 'handlers', () => {
 	describe( '#handleProductVariationsRequest', () => {
@@ -42,7 +40,7 @@ describe( 'handlers', () => {
 					method: 'get',
 					siteId: 123,
 					onFailureAction: failureAction,
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 	} );
@@ -62,7 +60,7 @@ describe( 'handlers', () => {
 				type: WOOCOMMERCE_API_REQUEST,
 				method: 'get',
 				siteId: 123,
-			} )
+			} ),
 		);
 
 		const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -75,7 +73,7 @@ describe( 'handlers', () => {
 				type: '%%success%%',
 				sentData: undefined,
 				receivedData: [ { id: 421 } ],
-			} )
+			} ),
 		);
 	} );
 
@@ -96,7 +94,7 @@ describe( 'handlers', () => {
 				type: WOOCOMMERCE_API_REQUEST,
 				method: 'get',
 				siteId: 123,
-			} )
+			} ),
 		);
 
 		const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -109,7 +107,7 @@ describe( 'handlers', () => {
 				type: '%%success%%',
 				sentData: undefined,
 				receivedData: [ { id: 421 } ],
-			} )
+			} ),
 		);
 	} );
 
@@ -121,9 +119,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: { index: 10 },
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 			const successAction = { type: '%%success%%' };
 			const failureAction = { type: '%%failure%%' };
@@ -138,7 +134,7 @@ describe( 'handlers', () => {
 					siteId: 123,
 					onFailureAction: failureAction,
 					body: { attributes: variation1.attributes },
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -149,9 +145,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: { index: 10 },
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 
 			const successAction = { type: '%%success%%' };
@@ -160,7 +154,7 @@ describe( 'handlers', () => {
 			handleProductVariationCreate( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -174,7 +168,7 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: variation1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -185,9 +179,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: { index: 10 },
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 
 			const successAction = ( dispatch, getState, { productId, sentData, receivedData } ) => {
@@ -198,7 +190,7 @@ describe( 'handlers', () => {
 			handleProductVariationCreate( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -212,7 +204,7 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: variation1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -225,9 +217,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: 202,
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 			const successAction = { type: '%%success%%' };
 			const failureAction = { type: '%%failure%%' };
@@ -242,7 +232,7 @@ describe( 'handlers', () => {
 					siteId: 123,
 					onFailureAction: failureAction,
 					body: variation1,
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -253,9 +243,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: 202,
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 
 			const successAction = { type: '%%success%%' };
@@ -264,7 +252,7 @@ describe( 'handlers', () => {
 			handleProductVariationUpdate( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -278,7 +266,7 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: variation1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -289,9 +277,7 @@ describe( 'handlers', () => {
 
 			const variation1 = {
 				id: 202,
-				attributes: [
-					{ id: 9, option: 'Black' }
-				],
+				attributes: [ { id: 9, option: 'Black' } ],
 			};
 
 			const successAction = ( dispatch, getState, { productId, sentData, receivedData } ) => {
@@ -302,7 +288,7 @@ describe( 'handlers', () => {
 			handleProductVariationUpdate( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -316,7 +302,7 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: variation1,
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
@@ -340,7 +326,7 @@ describe( 'handlers', () => {
 					siteId: 123,
 					path: 'products/66/variations/202',
 					onFailureAction: failureAction,
-				} ).and( match.has( 'onSuccessAction' ) )
+				} ).and( match.has( 'onSuccessAction' ) ),
 			);
 		} );
 
@@ -355,7 +341,7 @@ describe( 'handlers', () => {
 			handleProductVariationDelete( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -369,7 +355,7 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: { id: 202 },
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 
@@ -386,7 +372,7 @@ describe( 'handlers', () => {
 			handleProductVariationDelete( store, action );
 
 			expect( store.dispatch ).to.have.been.calledWith(
-				match( { type: WOOCOMMERCE_API_REQUEST } )
+				match( { type: WOOCOMMERCE_API_REQUEST } ),
 			);
 
 			const updatedSuccessAction = store.dispatch.firstCall.args[ 0 ].onSuccessAction;
@@ -400,9 +386,8 @@ describe( 'handlers', () => {
 					productId: 66,
 					sentData: { id: 202 },
 					receivedData: 'RECEIVED_DATA',
-				} )
+				} ),
 			);
 		} );
 	} );
 } );
-

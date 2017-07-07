@@ -17,13 +17,9 @@ export const comments = function( context ) {
 	const status = context.params.status === 'pending' ? 'unapproved' : context.params.status;
 
 	renderWithReduxStore(
-		<CommentsManagement
-			basePath={ context.path }
-			siteSlug={ siteSlug }
-			status={ status }
-		/>,
+		<CommentsManagement basePath={ context.path } siteSlug={ siteSlug } status={ status } />,
 		'primary',
-		context.store
+		context.store,
 	);
 };
 

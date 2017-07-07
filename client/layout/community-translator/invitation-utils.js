@@ -41,13 +41,12 @@ const debug = Debug( 'calypso:community-translator-invitation' ),
 		'zh-tw',
 		'ko',
 		'ar',
-		'sv'
+		'sv',
 	];
 let invitationPending = store.get( 'calypsoTranslatorInvitationIsPending' );
 
 function maybeInvite() {
-	const preferences = preferencesStore.getAll(),
-		locale = user.get().localeSlug;
+	const preferences = preferencesStore.getAll(), locale = user.get().localeSlug;
 
 	debug( 'Checking if we should show invitation notice' );
 
@@ -76,7 +75,10 @@ function maybeInvite() {
 	// most of the content, so we'll show the invitation on next load to avoid
 	// an ugly visual jump
 	debug( 'Translator invitation queued up for next load' );
-	analytics.tracks.recordEvent( 'calypso_community_translator_invitation_queued', analyticsProperties() );
+	analytics.tracks.recordEvent(
+		'calypso_community_translator_invitation_queued',
+		analyticsProperties(),
+	);
 	store.set( 'calypsoTranslatorInvitationIsPending', true );
 }
 
@@ -94,31 +96,45 @@ const invitationUtils = {
 	dismiss: function() {
 		debug( 'dismissed' );
 		permanentlyDisableInvitation();
-		analytics.tracks.recordEvent( 'calypso_community_translator_invitation_dismissed', analyticsProperties() );
+		analytics.tracks.recordEvent(
+			'calypso_community_translator_invitation_dismissed',
+			analyticsProperties(),
+		);
 	},
 
 	activate: function() {
 		debug( 'activated' );
-		analytics.tracks.recordEvent( 'calypso_community_translator_invitation_accepted', analyticsProperties() );
-		userSettings.saveSettings( function( error, response ) {
-			if ( error || ! response || ! response.enable_translator ) {
-				debug( 'Error saving settings: ' + JSON.stringify( error ), 'response:', response );
-				notices.error( 'There was a problem enabling the Community Translator' );
-				return;
-			}
-			translator.toggle();
-			permanentlyDisableInvitation();
-		}, { enable_translator: true }
+		analytics.tracks.recordEvent(
+			'calypso_community_translator_invitation_accepted',
+			analyticsProperties(),
+		);
+		userSettings.saveSettings(
+			function( error, response ) {
+				if ( error || ! response || ! response.enable_translator ) {
+					debug( 'Error saving settings: ' + JSON.stringify( error ), 'response:', response );
+					notices.error( 'There was a problem enabling the Community Translator' );
+					return;
+				}
+				translator.toggle();
+				permanentlyDisableInvitation();
+			},
+			{ enable_translator: true },
 		);
 	},
 	recordDocsEvent: function() {
 		debug( 'docs' );
-		analytics.tracks.recordEvent( 'calypso_community_translator_invitation_docsLink', analyticsProperties() );
+		analytics.tracks.recordEvent(
+			'calypso_community_translator_invitation_docsLink',
+			analyticsProperties(),
+		);
 	},
 	recordInvitationDisplayed: once( function() {
 		debug( 'displayed' );
-		analytics.tracks.recordEvent( 'calypso_community_translator_invitation_displayed', analyticsProperties() );
-	} )
+		analytics.tracks.recordEvent(
+			'calypso_community_translator_invitation_displayed',
+			analyticsProperties(),
+		);
+	} ),
 };
 
 emitter( invitationUtils );

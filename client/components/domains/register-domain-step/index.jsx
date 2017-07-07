@@ -13,7 +13,7 @@ import {
 	reject,
 	startsWith,
 	times,
-	uniqBy
+	uniqBy,
 } from 'lodash';
 import page from 'page';
 import qs from 'qs';
@@ -40,7 +40,7 @@ import QueryContactDetailsCache from 'components/data/query-contact-details-cach
 import QueryDomainsSuggestions from 'components/data/query-domains-suggestions';
 import {
 	getDomainsSuggestions,
-	getDomainsSuggestionsError
+	getDomainsSuggestionsError,
 } from 'state/domains/suggestions/selectors';
 
 const domains = wpcom.domains();
@@ -53,10 +53,7 @@ const analytics = analyticsMixin( 'registerDomain' ),
 	searchVendor = 'domainsbot',
 	fetchAlgo = searchVendor + '/v1';
 
-let searchQueue = [],
-	searchStackTimer = null,
-	lastSearchTimestamp = null,
-	searchCount = 0;
+let searchQueue = [], searchStackTimer = null, lastSearchTimestamp = null, searchCount = 0;
 
 function getQueryObject( props ) {
 	if ( ! props.selectedSite || ! props.selectedSite.domain ) {
@@ -77,15 +74,14 @@ function processSearchStatQueue() {
 	searchStackTimer = null;
 	searchQueue = [];
 
-	outerLoop:
-		for ( let i = 0; i < queue.length; i++ ) {
-			for ( let k = i + 1; k < queue.length; k++ ) {
-				if ( startsWith( queue[ k ].query, queue[ i ].query ) ) {
-					continue outerLoop;
-				}
+	outerLoop: for ( let i = 0; i < queue.length; i++ ) {
+		for ( let k = i + 1; k < queue.length; k++ ) {
+			if ( startsWith( queue[ k ].query, queue[ i ].query ) ) {
+				continue outerLoop;
 			}
-			reportSearchStats( queue[ i ] );
 		}
+		reportSearchStats( queue[ i ] );
+	}
 }
 
 function reportSearchStats( { query, section, timestamp } ) {
@@ -95,7 +91,14 @@ function reportSearchStats( { query, section, timestamp } ) {
 	}
 	lastSearchTimestamp = timestamp;
 	searchCount++;
-	analytics.recordEvent( 'searchFormSubmit', query, section, timeDiffFromLastSearchInSeconds, searchCount, searchVendor );
+	analytics.recordEvent(
+		'searchFormSubmit',
+		query,
+		section,
+		timeDiffFromLastSearchInSeconds,
+		searchCount,
+		searchVendor,
+	);
 }
 
 function enqueueSearchStatReport( search ) {
@@ -124,7 +127,7 @@ const RegisterDomainStep = React.createClass( {
 		showExampleSuggestions: React.PropTypes.bool,
 		onSave: React.PropTypes.func,
 		onAddMapping: React.PropTypes.func,
-		onAddDomain: React.PropTypes.func
+		onAddDomain: React.PropTypes.func,
 	},
 
 	getDefaultProps: function() {
@@ -133,7 +136,7 @@ const RegisterDomainStep = React.createClass( {
 			analyticsSection: 'domains',
 			onSave: noop,
 			onAddMapping: noop,
-			onAddDomain: noop
+			onAddDomain: noop,
 		};
 	},
 
@@ -147,25 +150,28 @@ const RegisterDomainStep = React.createClass( {
 			lastDomainStatus: null,
 			loadingResults: Boolean( suggestion ),
 			notice: null,
-			searchResults: null
+			searchResults: null,
 		};
 	},
 
 	getNewRailcarSeed() {
 		// Generate a 7 character random hash on base16. E.g. ac618a3
-		return Math.floor( ( 1 + Math.random() ) * 0x10000000 )
-			.toString( 16 )
-			.substring( 1 );
+		return Math.floor( ( 1 + Math.random() ) * 0x10000000 ).toString( 16 ).substring( 1 );
 	},
 
 	componentWillReceiveProps( nextProps ) {
 		// Reset state on site change
-		if ( nextProps.selectedSite && nextProps.selectedSite.slug !== ( this.props.selectedSite || {} ).slug ) {
+		if (
+			nextProps.selectedSite &&
+			nextProps.selectedSite.slug !== ( this.props.selectedSite || {} ).slug
+		) {
 			this.setState( this.getInitialState() );
 		}
 
-		if ( this.props.defaultSuggestionsError === nextProps.defaultSuggestionsError ||
-			( ! this.props.defaultSuggestionsError && ! nextProps.defaultSuggestionsError ) ) {
+		if (
+			this.props.defaultSuggestionsError === nextProps.defaultSuggestionsError ||
+			( ! this.props.defaultSuggestionsError && ! nextProps.defaultSuggestionsError )
+		) {
 			return;
 		}
 		const error = nextProps.defaultSuggestionsError;
@@ -193,8 +199,7 @@ const RegisterDomainStep = React.createClass( {
 		if ( this.props.initialState ) {
 			const state = { ...this.props.initialState, railcarSeed: this.getNewRailcarSeed() };
 
-			if ( state.lastSurveyVertical &&
-				( state.lastSurveyVertical !== this.props.surveyVertical ) ) {
+			if ( state.lastSurveyVertical && state.lastSurveyVertical !== this.props.surveyVertical ) {
 				state.loadingResults = true;
 				delete state.lastSurveyVertical;
 			}
@@ -211,7 +216,9 @@ const RegisterDomainStep = React.createClass( {
 	},
 
 	componentDidUpdate: function( prevProps ) {
-		if ( this.props.selectedSite && this.props.selectedSite.domain !== prevProps.selectedSite.domain ) {
+		if (
+			this.props.selectedSite && this.props.selectedSite.domain !== prevProps.selectedSite.domain
+		) {
 			this.focusSearchCard();
 		}
 	},
@@ -233,26 +240,28 @@ const RegisterDomainStep = React.createClass( {
 		const queryObject = getQueryObject( this.props );
 		return (
 			<div className="register-domain-step">
-					<div className="register-domain-step__search">
-						<SearchCard
-							ref="searchCard"
-							additionalClasses={ this.state.clickedExampleSuggestion ? 'is-refocused' : undefined }
-							initialValue={ this.state.lastQuery }
-							onSearch={ this.onSearch }
-							onSearchChange={ this.onSearchChange }
-							onBlur={ this.save }
-							placeholder={ this.props.translate( 'Enter a name or keyword' ) }
-							autoFocus={ true }
-							delaySearch={ true }
-							delayTimeout={ 1000 }
-							dir="ltr"
-							maxLength={ 60 }
-						/>
-					</div>
-				{
-					this.state.notice &&
-					<Notice text={ this.state.notice } status={ `is-${ this.state.noticeSeverity }` } showDismiss={ false } />
-				}
+				<div className="register-domain-step__search">
+					<SearchCard
+						ref="searchCard"
+						additionalClasses={ this.state.clickedExampleSuggestion ? 'is-refocused' : undefined }
+						initialValue={ this.state.lastQuery }
+						onSearch={ this.onSearch }
+						onSearchChange={ this.onSearchChange }
+						onBlur={ this.save }
+						placeholder={ this.props.translate( 'Enter a name or keyword' ) }
+						autoFocus={ true }
+						delaySearch={ true }
+						delayTimeout={ 1000 }
+						dir="ltr"
+						maxLength={ 60 }
+					/>
+				</div>
+				{ this.state.notice &&
+					<Notice
+						text={ this.state.notice }
+						status={ `is-${ this.state.noticeSeverity }` }
+						showDismiss={ false }
+					/> }
 				{ this.content() }
 				{ queryObject && <QueryDomainsSuggestions { ...queryObject } /> }
 				<QueryContactDetailsCache />
@@ -278,7 +287,8 @@ const RegisterDomainStep = React.createClass( {
 					mapDomainUrl={ this.getMapDomainUrl() }
 					path={ this.props.path }
 					domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
-					products={ this.props.products } />
+					products={ this.props.products }
+				/>
 			);
 		}
 
@@ -295,14 +305,17 @@ const RegisterDomainStep = React.createClass( {
 			lastDomainSearched: null,
 			loadingResults: Boolean( getFixedDomainSearch( searchQuery ) ),
 			notice: null,
-			searchResults: null
+			searchResults: null,
 		} );
 	},
 
 	onSearch: function( searchQuery ) {
 		const domain = getFixedDomainSearch( searchQuery );
 
-		this.setState( { lastQuery: searchQuery, lastSurveyVertical: this.props.surveyVertical }, this.save );
+		this.setState(
+			{ lastQuery: searchQuery, lastSurveyVertical: this.props.surveyVertical },
+			this.save,
+		);
 
 		if ( ! domain || ! this.state.loadingResults ) {
 			// the search was cleared or the domain contained only spaces
@@ -320,7 +333,11 @@ const RegisterDomainStep = React.createClass( {
 		async.parallel(
 			[
 				callback => {
-					if ( ! domain.match( /^([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)*[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z]{2,63}$/i ) ) {
+					if (
+						! domain.match(
+							/^([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)*[a-z0-9]([a-z0-9-]*[a-z0-9])?\.[a-z]{2,63}$/i,
+						)
+					) {
 						return callback();
 					}
 					const timestamp = Date.now();
@@ -341,7 +358,13 @@ const RegisterDomainStep = React.createClass( {
 							this.showValidationErrorMessage( domain, status );
 						}
 
-						this.recordEvent( 'domainAvailabilityReceive', domain, status, timeDiff, this.props.analyticsSection );
+						this.recordEvent(
+							'domainAvailabilityReceive',
+							domain,
+							status,
+							timeDiff,
+							this.props.analyticsSection,
+						);
 
 						this.props.onDomainsAvailabilityChange( true );
 						callback( null, isDomainAvailable ? result : null );
@@ -349,41 +372,63 @@ const RegisterDomainStep = React.createClass( {
 				},
 				callback => {
 					const query = {
-							query: domain,
-							quantity: SUGGESTION_QUANTITY,
-							include_wordpressdotcom: this.props.includeWordPressDotCom,
-							include_dotblogsubdomain: this.props.includeDotBlogSubdomain,
-							vendor: searchVendor,
-							vertical: this.props.surveyVertical,
-						},
+						query: domain,
+						quantity: SUGGESTION_QUANTITY,
+						include_wordpressdotcom: this.props.includeWordPressDotCom,
+						include_dotblogsubdomain: this.props.includeDotBlogSubdomain,
+						vendor: searchVendor,
+						vertical: this.props.surveyVertical,
+					},
 						timestamp = Date.now();
 
-					domains.suggestions( query ).then( domainSuggestions => {
-						this.props.onDomainsAvailabilityChange( true );
-						const timeDiff = Date.now() - timestamp,
-							analyticsResults = domainSuggestions.map( suggestion => suggestion.domain_name );
+					domains
+						.suggestions( query )
+						.then( domainSuggestions => {
+							this.props.onDomainsAvailabilityChange( true );
+							const timeDiff = Date.now() - timestamp,
+								analyticsResults = domainSuggestions.map( suggestion => suggestion.domain_name );
 
-						this.recordEvent( 'searchResultsReceive', domain, analyticsResults, timeDiff, domainSuggestions.length,
-							this.props.analyticsSection );
+							this.recordEvent(
+								'searchResultsReceive',
+								domain,
+								analyticsResults,
+								timeDiff,
+								domainSuggestions.length,
+								this.props.analyticsSection,
+							);
 
-						callback( null, domainSuggestions );
-					} ).catch( error => {
-						const timeDiff = Date.now() - timestamp;
-						if ( error && error.statusCode === 503 ) {
-							this.props.onDomainsAvailabilityChange( false );
-						} else if ( error && error.error ) {
-							error.code = error.error;
-							this.showValidationErrorMessage( domain, error );
-						}
+							callback( null, domainSuggestions );
+						} )
+						.catch( error => {
+							const timeDiff = Date.now() - timestamp;
+							if ( error && error.statusCode === 503 ) {
+								this.props.onDomainsAvailabilityChange( false );
+							} else if ( error && error.error ) {
+								error.code = error.error;
+								this.showValidationErrorMessage( domain, error );
+							}
 
-						const analyticsResults = [ error.code || error.error || 'ERROR' + ( error.statusCode || '' ) ];
-						this.recordEvent( 'searchResultsReceive', domain, analyticsResults, timeDiff, -1, this.props.analyticsSection );
-						callback( error, null );
-					} );
-				}
+							const analyticsResults = [
+								error.code || error.error || 'ERROR' + ( error.statusCode || '' ),
+							];
+							this.recordEvent(
+								'searchResultsReceive',
+								domain,
+								analyticsResults,
+								timeDiff,
+								-1,
+								this.props.analyticsSection,
+							);
+							callback( error, null );
+						} );
+				},
 			],
 			( error, result ) => {
-				if ( ! this.state.loadingResults || domain !== this.state.lastDomainSearched || ! this.isMounted() ) {
+				if (
+					! this.state.loadingResults ||
+					domain !== this.state.lastDomainSearched ||
+					! this.isMounted()
+				) {
 					// this callback is irrelevant now, a newer search has been made or the results were cleared OR
 					// domain registration was not available and component is unmounted
 					return;
@@ -393,18 +438,13 @@ const RegisterDomainStep = React.createClass( {
 					return suggestion.domain_name;
 				} );
 
-				const isFreeOrUnknown = ( suggestion ) => (
-						suggestion.is_free === true ||
-						suggestion.status === domainAvailability.UNKNOWN
-					),
+				const isFreeOrUnknown = suggestion =>
+					suggestion.is_free === true || suggestion.status === domainAvailability.UNKNOWN,
 					strippedDomainBase = this.getStrippedDomainBase( domain ),
-					exactMatchBeforeTld = ( suggestion ) => (
-						startsWith( suggestion.domain_name, `${ strippedDomainBase }.` )
-					),
-					bestAlternative = ( suggestion ) => (
-						! exactMatchBeforeTld( suggestion ) &&
-						suggestion.isRecommended !== true
-					),
+					exactMatchBeforeTld = suggestion =>
+						startsWith( suggestion.domain_name, `${ strippedDomainBase }.` ),
+					bestAlternative = suggestion =>
+						! exactMatchBeforeTld( suggestion ) && suggestion.isRecommended !== true,
 					availableSuggestions = reject( suggestions, isFreeOrUnknown );
 
 				const recommendedSuggestion = find( availableSuggestions, exactMatchBeforeTld );
@@ -421,11 +461,14 @@ const RegisterDomainStep = React.createClass( {
 					availableSuggestions[ 1 ].isBestAlternative = true;
 				}
 
-				this.setState( {
-					searchResults: suggestions,
-					loadingResults: false
-				}, this.save );
-			}
+				this.setState(
+					{
+						searchResults: suggestions,
+						loadingResults: false,
+					},
+					this.save,
+				);
+			},
 		);
 	},
 
@@ -440,9 +483,7 @@ const RegisterDomainStep = React.createClass( {
 	},
 
 	initialSuggestions: function() {
-		let domainRegistrationSuggestions,
-			domainMappingSuggestion,
-			suggestions;
+		let domainRegistrationSuggestions, domainMappingSuggestion, suggestions;
 
 		if ( this.isLoadingSuggestions() || isEmpty( this.props.products ) ) {
 			domainRegistrationSuggestions = times( INITIAL_SUGGESTION_QUANTITY + 1, function( n ) {
@@ -461,7 +502,8 @@ const RegisterDomainStep = React.createClass( {
 						cart={ this.props.cart }
 						selectedSite={ this.props.selectedSite }
 						domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
-						onButtonClick={ this.props.onAddDomain.bind( null, suggestion ) } />
+						onButtonClick={ this.props.onAddDomain.bind( null, suggestion ) }
+					/>
 				);
 			}, this );
 
@@ -472,13 +514,16 @@ const RegisterDomainStep = React.createClass( {
 					selectedSite={ this.props.selectedSite }
 					domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
 					cart={ this.props.cart }
-					products={ this.props.products } />
-				);
+					products={ this.props.products }
+				/>
+			);
 		}
 
 		return (
-			<div key="initial-suggestions" // Key is required for CSS transition of content.
-					className="register-domain-step__domain-suggestions">
+			<div
+				key="initial-suggestions" // Key is required for CSS transition of content.
+				className="register-domain-step__domain-suggestions"
+			>
 				{ domainRegistrationSuggestions }
 				{ domainMappingSuggestion }
 			</div>
@@ -487,9 +532,11 @@ const RegisterDomainStep = React.createClass( {
 
 	allSearchResults: function() {
 		const { lastDomainSearched, lastDomainStatus } = this.state,
-			matchesSearchedDomain = ( suggestion ) => ( suggestion.domain_name === lastDomainSearched ),
-			availableDomain = lastDomainStatus === domainAvailability.AVAILABLE && find( this.state.searchResults, matchesSearchedDomain ),
-			onAddMapping = ( domain ) => this.props.onAddMapping( domain, this.state );
+			matchesSearchedDomain = suggestion => suggestion.domain_name === lastDomainSearched,
+			availableDomain =
+				lastDomainStatus === domainAvailability.AVAILABLE &&
+				find( this.state.searchResults, matchesSearchedDomain ),
+			onAddMapping = domain => this.props.onAddMapping( domain, this.state );
 
 		let suggestions = reject( this.state.searchResults, matchesSearchedDomain );
 
@@ -502,7 +549,8 @@ const RegisterDomainStep = React.createClass( {
 						mapDomainUrl={ this.getMapDomainUrl() }
 						path={ this.props.path }
 						domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
-						products={ this.props.products } />
+						products={ this.props.products }
+					/>
 				);
 			}
 
@@ -515,7 +563,7 @@ const RegisterDomainStep = React.createClass( {
 				availableDomain={ availableDomain }
 				domainsWithPlansOnly={ this.props.domainsWithPlansOnly }
 				lastDomainSearched={ lastDomainSearched }
-				lastDomainStatus = { lastDomainStatus }
+				lastDomainStatus={ lastDomainStatus }
 				onAddMapping={ onAddMapping }
 				onClickResult={ this.props.onAddDomain }
 				onClickMapping={ this.goToMapDomainStep }
@@ -527,7 +575,8 @@ const RegisterDomainStep = React.createClass( {
 				isSignupStep={ this.props.isSignupStep }
 				railcarSeed={ this.state.railcarSeed }
 				fetchAlgo={ fetchAlgo }
-				cart={ this.props.cart } />
+				cart={ this.props.cart }
+			/>
 		);
 	},
 
@@ -558,7 +607,7 @@ const RegisterDomainStep = React.createClass( {
 	showValidationErrorMessage: function( domain, error ) {
 		const { message, severity } = getAvailabilityNotice( domain, error );
 		this.setState( { notice: message, noticeSeverity: severity } );
-	}
+	},
 } );
 
 module.exports = connect( ( state, props ) => {
@@ -566,6 +615,6 @@ module.exports = connect( ( state, props ) => {
 	return {
 		currentUser: getCurrentUser( state ),
 		defaultSuggestions: getDomainsSuggestions( state, queryObject ),
-		defaultSuggestionsError: getDomainsSuggestionsError( state, queryObject )
+		defaultSuggestionsError: getDomainsSuggestionsError( state, queryObject ),
 	};
 } )( localize( RegisterDomainStep ) );

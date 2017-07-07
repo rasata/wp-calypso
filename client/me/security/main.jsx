@@ -1,8 +1,7 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	debug = require( 'debug' )( 'calypso:me:security:password' );
+var React = require( 'react' ), debug = require( 'debug' )( 'calypso:me:security:password' );
 
 /**
  * Internal dependencies
@@ -16,7 +15,6 @@ var MeSidebarNavigation = require( 'me/sidebar-navigation' ),
 	Main = require( 'components/main' );
 
 module.exports = React.createClass( {
-
 	displayName: 'Security',
 
 	componentDidMount: function() {
@@ -39,7 +37,7 @@ module.exports = React.createClass( {
 					<p>
 						{ this.translate(
 							'To update your password enter a new one below. Your password should be at least six characters long. ' +
-							'To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ & ).'
+								'To make it stronger, use upper and lower case letters, numbers and symbols like ! " ? $ % ^ & ).',
 						) }
 					</p>
 
@@ -50,5 +48,5 @@ module.exports = React.createClass( {
 				</Card>
 			</Main>
 		);
-	}
+	},
 } );

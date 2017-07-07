@@ -26,11 +26,11 @@ const LanguageSelector = props => {
 	const languageOptGroups = [
 		{
 			label: translate( 'Popular languages', { textOnly: true } ),
-			options: popularLanguages
+			options: popularLanguages,
 		},
 		{
 			label: translate( 'All languages', { textOnly: true } ),
-			options: allLanguages
+			options: allLanguages,
 		},
 	];
 

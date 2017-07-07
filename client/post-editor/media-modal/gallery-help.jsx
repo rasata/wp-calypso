@@ -20,7 +20,7 @@ import { getPreference } from 'state/preferences/selectors';
 import { getSectionName } from 'state/ui/selectors';
 import QueryPreferences from 'components/data/query-preferences';
 
-const EditorMediaModalGalleryHelp =  React.createClass( {
+const EditorMediaModalGalleryHelp = React.createClass( {
 	displayName: 'EditorMediaModalGalleryHelp',
 
 	mixins: [ PureRenderMixin ],
@@ -33,13 +33,13 @@ const EditorMediaModalGalleryHelp =  React.createClass( {
 	getInitialState() {
 		return {
 			isDismissed: false,
-			rememberDismiss: true
+			rememberDismiss: true,
 		};
 	},
 
 	getDefaultProps() {
 		return {
-			onDismiss: () => {}
+			onDismiss: () => {},
 		};
 	},
 
@@ -60,7 +60,7 @@ const EditorMediaModalGalleryHelp =  React.createClass( {
 		// See: EditorMediaModal.preventPopoverClose()
 		setTimeout( () => {
 			this.setState( {
-				rememberDismiss: ! this.state.rememberDismiss
+				rememberDismiss: ! this.state.rememberDismiss,
 			} );
 		}, 0 );
 	},
@@ -82,7 +82,8 @@ const EditorMediaModalGalleryHelp =  React.createClass( {
 				context={ renderContext }
 				position="bottom"
 				isVisible={ ! isMobile() }
-				className="popover__gallery-help is-dialog-visible">
+				className="popover__gallery-help is-dialog-visible"
+			>
 				<div className="editor-media-modal__gallery-help-content">
 					<div className="editor-media-modal__gallery-help-instruction">
 						<span className="editor-media-modal__gallery-help-icon">
@@ -94,13 +95,22 @@ const EditorMediaModalGalleryHelp =  React.createClass( {
 					</div>
 					<div className="editor-media-modal__gallery-help-actions">
 						<label className="editor-media-modal__gallery-help-remember-dismiss">
-							<FormCheckbox checked={ this.state.rememberDismiss } onChange={ this.toggleRememberDismiss } />
+							<FormCheckbox
+								checked={ this.state.rememberDismiss }
+								onChange={ this.toggleRememberDismiss }
+							/>
 							<span>
-								{ this.translate( 'Don\'t show again' ) }
+								{ this.translate( "Don't show again" ) }
 							</span>
 						</label>
-						<Button onClick={ () => this.dismiss( { remember: this.state.rememberDismiss } ) } compact>
-							{ this.translate( 'Got it', { context: 'Button label', comment: 'User clicks this to confirm that he has understood the text' } ) }
+						<Button
+							onClick={ () => this.dismiss( { remember: this.state.rememberDismiss } ) }
+							compact
+						>
+							{ this.translate( 'Got it', {
+								context: 'Button label',
+								comment: 'User clicks this to confirm that he has understood the text',
+							} ) }
 						</Button>
 					</div>
 				</div>
@@ -123,25 +133,28 @@ const EditorMediaModalGalleryHelp =  React.createClass( {
 				{ this.renderPopover() }
 			</div>
 		);
-	}
+	},
 } );
 
 export default connect(
 	state => ( {
 		sectionName: getSectionName( state ),
-		isMediaModalGalleryInstructionsDismissed: (
-			getPreference( state, 'mediaModalGalleryInstructionsDismissed' ) ||
-			getPreference( state, 'mediaModalGalleryInstructionsDismissedForSession' )
-		)
+		isMediaModalGalleryInstructionsDismissed: getPreference(
+			state,
+			'mediaModalGalleryInstructionsDismissed',
+		) || getPreference( state, 'mediaModalGalleryInstructionsDismissedForSession' ),
 	} ),
-	dispatch => bindActionCreators( {
-		onDismiss: options => {
-			if ( options.remember ) {
-				return savePreference( 'mediaModalGalleryInstructionsDismissed', true );
-			} else {
-				return setPreference( 'mediaModalGalleryInstructionsDismissedForSession', true );
-			}
-		}
-	}, dispatch )
+	dispatch =>
+		bindActionCreators(
+			{
+				onDismiss: options => {
+					if ( options.remember ) {
+						return savePreference( 'mediaModalGalleryInstructionsDismissed', true );
+					} else {
+						return setPreference( 'mediaModalGalleryInstructionsDismissedForSession', true );
+					}
+				},
+			},
+			dispatch,
+		),
 )( EditorMediaModalGalleryHelp );
-

@@ -10,7 +10,9 @@ import { localize } from 'i18n-calypso';
  */
 import ActivityLogBanner from './index';
 import Button from 'components/button';
-import { dismissRewindRestoreProgress as dismissRewindRestoreProgressAction } from 'state/activity-log/actions';
+import {
+	dismissRewindRestoreProgress as dismissRewindRestoreProgressAction,
+} from 'state/activity-log/actions';
 
 class ErrorBanner extends PureComponent {
 	static propTypes = {

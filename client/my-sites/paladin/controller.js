@@ -14,8 +14,7 @@ module.exports = {
 		renderWithReduxStore(
 			React.createElement( PaladinComponent ),
 			document.getElementById( 'primary' ),
-			context.store
+			context.store,
 		);
-	}
+	},
 };
-

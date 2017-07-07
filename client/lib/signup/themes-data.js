@@ -6,7 +6,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://affinitydemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Apostrophe',
@@ -15,7 +15,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://apostrophe2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Baskerville',
@@ -24,7 +24,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://baskerville2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Button',
@@ -33,7 +33,7 @@ export const themes = [
 		fallback: false,
 		design: 'blog',
 		demo_uri: 'https://button2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Cubic',
@@ -42,7 +42,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://cubicdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Dyad',
@@ -51,7 +51,7 @@ export const themes = [
 		fallback: true,
 		design: 'grid',
 		demo_uri: 'https://dyad2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Intergalactic',
@@ -60,7 +60,7 @@ export const themes = [
 		fallback: true,
 		design: 'blog',
 		demo_uri: 'https://intergalacticdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Edin',
@@ -69,7 +69,7 @@ export const themes = [
 		fallback: true,
 		design: 'page',
 		demo_uri: 'https://edindemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Franklin',
@@ -78,7 +78,7 @@ export const themes = [
 		fallback: false,
 		design: 'blog',
 		demo_uri: 'https://franklindemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Gateway',
@@ -87,7 +87,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://gatewaydemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Gazette',
@@ -96,7 +96,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://gazettedemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Goran',
@@ -105,7 +105,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://gorandemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Harmonic',
@@ -114,7 +114,7 @@ export const themes = [
 		fallback: true,
 		design: 'page',
 		demo_uri: 'https://harmonicdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Hemingway Rewritten',
@@ -123,7 +123,7 @@ export const themes = [
 		fallback: true,
 		design: 'blog',
 		demo_uri: 'https://hemingwayrewrittendemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Independent Publisher',
@@ -132,7 +132,7 @@ export const themes = [
 		fallback: false,
 		design: '',
 		demo_uri: 'http://independentpublisher2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Karuna',
@@ -141,7 +141,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://karunademo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Libre',
@@ -150,7 +150,7 @@ export const themes = [
 		fallback: false,
 		design: 'blog',
 		demo_uri: 'https://libre2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Libretto',
@@ -159,7 +159,7 @@ export const themes = [
 		fallback: false,
 		design: 'blog',
 		demo_uri: 'https://librettodemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Penscratch',
@@ -168,7 +168,7 @@ export const themes = [
 		fallback: true,
 		design: 'blog',
 		demo_uri: 'https://penscratch2demo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Pictorico',
@@ -177,7 +177,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://pictoricodemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Pique',
@@ -186,7 +186,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://piquedemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Publication',
@@ -195,7 +195,7 @@ export const themes = [
 		fallback: true,
 		design: '',
 		demo_uri: 'https://publicationdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Rebalance',
@@ -204,7 +204,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://rebalancedemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Revelar',
@@ -213,7 +213,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://revelardemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Rowling',
@@ -222,7 +222,7 @@ export const themes = [
 		fallback: false,
 		design: 'grid',
 		demo_uri: 'https://rowlingdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Sapor',
@@ -231,7 +231,7 @@ export const themes = [
 		fallback: false,
 		design: 'blog',
 		demo_uri: 'https://sapordemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Dara',
@@ -240,7 +240,7 @@ export const themes = [
 		fallback: true,
 		design: 'page',
 		demo_uri: 'https://darademo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Shoreditch',
@@ -249,7 +249,7 @@ export const themes = [
 		fallback: false,
 		design: 'page',
 		demo_uri: 'https://shoreditchdemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 	{
 		name: 'Twenty Sixteen',
@@ -258,6 +258,6 @@ export const themes = [
 		fallback: true,
 		design: 'blog',
 		demo_uri: 'https://twentysixteendemo.wordpress.com',
-		verticals: []
+		verticals: [],
 	},
 ];

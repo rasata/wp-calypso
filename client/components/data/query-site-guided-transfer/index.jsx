@@ -12,7 +12,6 @@ import { isRequestingGuidedTransferStatus } from 'state/sites/guided-transfer/se
 import { requestGuidedTransferStatus } from 'state/sites/guided-transfer/actions';
 
 class QuerySiteGuidedTransfer extends Component {
-
 	constructor( props ) {
 		super( props );
 		this.request = this.request.bind( this );

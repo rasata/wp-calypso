@@ -40,7 +40,7 @@ const Navigation = ( { activeTab, site, translate } ) => {
 		return tabs;
 	};
 
-	const renderTabItems = ( tabs ) => {
+	const renderTabItems = tabs => {
 		return tabs.map( tab => {
 			let path = '/extensions/wp-super-cache';
 
@@ -56,7 +56,8 @@ const Navigation = ( { activeTab, site, translate } ) => {
 				<SectionNavTabItem
 					key={ `wp-super-cache-${ tab }` }
 					path={ path }
-					selected={ ( activeTab || Tabs.EASY ) === tab }>
+					selected={ ( activeTab || Tabs.EASY ) === tab }
+				>
 					{ getLabel( tab ) }
 				</SectionNavTabItem>
 			);

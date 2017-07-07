@@ -10,7 +10,8 @@ export const productsListSchema = {
 				'product_slug',
 				'description',
 				'is_domain_registration',
-				'cost_display' ],
+				'cost_display',
+			],
 			properties: {
 				product_id: { type: 'integer' },
 				product_name: { type: 'string' },
@@ -22,7 +23,7 @@ export const productsListSchema = {
 				},
 				is_domain_registration: { type: 'boolean' },
 				cost_display: { type: 'string' },
-			}
-		}
-	}
+			},
+		},
+	},
 };

@@ -18,8 +18,7 @@ import analyticsMixin from 'lib/mixins/analytics';
 import Notice from 'components/notice';
 import support from 'lib/url/support';
 
-const MIN_NAMESERVER_LENGTH = 2,
-	MAX_NAMESERVER_LENGTH = 4;
+const MIN_NAMESERVER_LENGTH = 2, MAX_NAMESERVER_LENGTH = 4;
 
 const CustomNameserversForm = React.createClass( {
 	mixins: [ analyticsMixin( 'domainManagement', 'nameServers' ) ],
@@ -28,27 +27,25 @@ const CustomNameserversForm = React.createClass( {
 		nameservers: React.PropTypes.array,
 		onChange: React.PropTypes.func.isRequired,
 		onSubmit: React.PropTypes.func.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired,
-		submitDisabled: React.PropTypes.bool.isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
+		submitDisabled: React.PropTypes.bool.isRequired,
 	},
 
 	warning() {
 		return (
-			<Notice
-				status="is-warning"
-				showDismiss={ false }>
+			<Notice status="is-warning" showDismiss={ false }>
 				{ this.translate(
 					'Your domain must use WordPress.com name servers for your ' +
-					'WordPress.com site to load & other features to be available.'
+						'WordPress.com site to load & other features to be available.',
 				) }
 				{ ' ' }
-				<a href={ support.CHANGE_NAME_SERVERS }
-						target="_blank"
-						rel="noopener noreferrer"
-						onClick={ this.handleLearnMoreClick }>
+				<a
+					href={ support.CHANGE_NAME_SERVERS }
+					target="_blank"
+					rel="noopener noreferrer"
+					onClick={ this.handleLearnMoreClick }
+				>
 					{ this.translate( 'Learn more.' ) }
 				</a>
 			</Notice>
@@ -64,10 +61,12 @@ const CustomNameserversForm = React.createClass( {
 			<div className="custom-nameservers-form__explanation">
 				{ this.translate( 'Not sure what name servers to use?' ) }
 				{ ' ' }
-				<a href={ support.CHANGE_NAME_SERVERS_FINDING_OUT_NEW_NS }
-						target="_blank"
-						rel="noopener noreferrer"
-						onClick={ this.handleLookUpClick }>
+				<a
+					href={ support.CHANGE_NAME_SERVERS_FINDING_OUT_NEW_NS }
+					target="_blank"
+					rel="noopener noreferrer"
+					onClick={ this.handleLookUpClick }
+				>
 					{ this.translate( 'Look up the name servers for popular hosts.' ) }
 				</a>
 			</div>
@@ -107,7 +106,8 @@ const CustomNameserversForm = React.createClass( {
 					nameserver={ nameserver }
 					selectedDomainName={ this.props.selectedDomainName }
 					onChange={ this.handleChange }
-					onRemove={ this.handleRemove } />
+					onRemove={ this.handleRemove }
+				/>
 			);
 		} );
 	},
@@ -121,7 +121,9 @@ const CustomNameserversForm = React.createClass( {
 	},
 
 	render() {
-		const classes = classnames( 'button is-primary is-full-width', { disabled: this.props.submitDisabled } );
+		const classes = classnames( 'button is-primary is-full-width', {
+			disabled: this.props.submitDisabled,
+		} );
 
 		if ( ! this.props.nameservers ) {
 			return null;
@@ -141,14 +143,12 @@ const CustomNameserversForm = React.createClass( {
 						<FormButton
 							onClick={ this.handleSubmit }
 							className={ classes }
-							disabled={ this.props.submitDisabled }>
+							disabled={ this.props.submitDisabled }
+						>
 							{ this.translate( 'Save Custom Name Servers' ) }
 						</FormButton>
 
-						<FormButton
-							type="button"
-							isPrimary={ false }
-							onClick={ this.handleReset }>
+						<FormButton type="button" isPrimary={ false } onClick={ this.handleReset }>
 							{ this.translate( 'Reset to Defaults' ) }
 						</FormButton>
 					</FormFooter>
@@ -171,7 +171,7 @@ const CustomNameserversForm = React.createClass( {
 		this.recordEvent( 'resetToDefaultsClick', this.props.selectedDomainName );
 
 		this.props.onReset();
-	}
+	},
 } );
 
 export default CustomNameserversForm;

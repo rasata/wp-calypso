@@ -14,7 +14,7 @@ var wpcom = require( 'lib/wp' ),
 function addProductsToCart( cart, newCartItems ) {
 	forEach( newCartItems, function( cartItem ) {
 		cartItem.extra = Object.assign( cartItem.extra || {}, {
-			context: 'signup'
+			context: 'signup',
 		} );
 		const addFunction = cartItems.add( cartItem );
 
@@ -52,5 +52,5 @@ module.exports = {
 
 			wpcom.undocumented().cart( cartKey, 'POST', newCart, callback );
 		} );
-	}
+	},
 };

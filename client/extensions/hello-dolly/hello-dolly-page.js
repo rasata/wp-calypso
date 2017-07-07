@@ -56,7 +56,12 @@ class HelloDollyPage extends Component {
 						answer={ [
 							'Head over to the "extensions" folder in the repository where we have a more comprehensive ',
 							'README file to walk you through the process. ',
-							<a href="https://github.com/Automattic/wp-calypso/tree/master/client/extensions" key="get-started">Get Started</a>
+							<a
+								href="https://github.com/Automattic/wp-calypso/tree/master/client/extensions"
+								key="get-started"
+							>
+								Get Started
+							</a>,
 						] }
 					/>
 					<FAQItem
@@ -64,15 +69,17 @@ class HelloDollyPage extends Component {
 						answer={ [
 							'You can browse our docs without leaving the running application, just go to the Devdocs section. ',
 							'Tip: press the keys "gd" to navigate there from any page! ',
-							<a href="/devdocs" key="go-devdocs">Go to Devdocs</a>
+							<a href="/devdocs" key="go-devdocs">Go to Devdocs</a>,
 						] }
 					/>
 					<FAQItem
 						question="Have more questions?"
 						answer={ [
-							'Let\'s talk! Visit the ',
-							<a href="https://github.com/Automattic/wp-calypso/" key="go-repo">Calypso GitHub repository</a>,
-							' and open an issue.'
+							"Let's talk! Visit the ",
+							<a href="https://github.com/Automattic/wp-calypso/" key="go-repo">
+								Calypso GitHub repository
+							</a>,
+							' and open an issue.',
 						] }
 					/>
 				</FAQ>
@@ -85,7 +92,7 @@ function mapStateToProps( state ) {
 	const currentLyric = getLyric( state );
 
 	return {
-		currentLyric
+		currentLyric,
 	};
 }
 
@@ -94,9 +101,8 @@ function mapDispatchToProps( dispatch ) {
 		{
 			nextLyric,
 		},
-		dispatch
+		dispatch,
 	);
 }
 
 export default connect( mapStateToProps, mapDispatchToProps )( HelloDollyPage );
-

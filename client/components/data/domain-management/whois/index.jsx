@@ -13,10 +13,7 @@ import StoreConnection from 'components/data/store-connection';
 import upgradesActions from 'lib/upgrades/actions';
 import WhoisStore from 'lib/domains/whois/store';
 
-const stores = [
-	DomainsStore,
-	WhoisStore
-];
+const stores = [ DomainsStore, WhoisStore ];
 
 function getStateFromStores( props ) {
 	let domains;
@@ -30,7 +27,7 @@ function getStateFromStores( props ) {
 		whois: WhoisStore.getByDomainName( props.selectedDomainName ),
 		selectedDomainName: props.selectedDomainName,
 		selectedSite: props.selectedSite,
-		context: props.context
+		context: props.context,
 	};
 }
 
@@ -38,7 +35,7 @@ class WhoisData extends Component {
 	static propTypes = {
 		component: PropTypes.func.isRequired,
 		context: PropTypes.object.isRequired,
-		selectedDomainName: PropTypes.string.isRequired
+		selectedDomainName: PropTypes.string.isRequired,
 	};
 
 	componentWillMount() {
@@ -73,13 +70,14 @@ class WhoisData extends Component {
 				getStateFromStores={ getStateFromStores }
 				selectedDomainName={ this.props.selectedDomainName }
 				selectedSite={ this.props.selectedSite }
-				context={ this.props.context } />
+				context={ this.props.context }
+			/>
 		);
 	}
 }
 
-export default connect( ( state ) => {
+export default connect( state => {
 	return {
-		selectedSite: getSelectedSite( state )
+		selectedSite: getSelectedSite( state ),
 	};
 } )( WhoisData );

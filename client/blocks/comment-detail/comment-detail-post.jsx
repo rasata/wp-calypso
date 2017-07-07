@@ -37,9 +37,10 @@ export const CommentDetailPost = ( {
 				<div className="comment-detail__post-info">
 					{ parentCommentAuthorDisplayName &&
 						<span>
-							{ translate( '%(authorName)s:', { args: { authorName: parentCommentAuthorDisplayName } } ) }
-						</span>
-					}
+							{ translate( '%(authorName)s:', {
+								args: { authorName: parentCommentAuthorDisplayName },
+							} ) }
+						</span> }
 					<ExternalLink href={ parentCommentUrl }>
 						{ parentCommentContent }
 					</ExternalLink>
@@ -55,8 +56,7 @@ export const CommentDetailPost = ( {
 				{ postAuthorDisplayName &&
 					<span>
 						{ translate( '%(authorName)s:', { args: { authorName: postAuthorDisplayName } } ) }
-					</span>
-				}
+					</span> }
 				<a href={ postUrl }>
 					{ postTitle || translate( 'Untitled' ) }
 				</a>

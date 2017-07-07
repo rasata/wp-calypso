@@ -28,10 +28,8 @@ const SiteRedirect = React.createClass( {
 	propTypes: {
 		location: React.PropTypes.object.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
 	},
 
 	componentWillMount() {
@@ -41,7 +39,7 @@ const SiteRedirect = React.createClass( {
 	componentWillReceiveProps: function( nextProps ) {
 		if ( this.props.location.value !== nextProps.location.value ) {
 			this.setState( {
-				location: nextProps.location.value
+				location: nextProps.location.value,
 			} );
 		}
 	},
@@ -52,7 +50,7 @@ const SiteRedirect = React.createClass( {
 
 	getInitialState() {
 		return {
-			location: this.props.location.value
+			location: this.props.location.value,
 		};
 	},
 
@@ -68,13 +66,27 @@ const SiteRedirect = React.createClass( {
 	handleClick( event ) {
 		event.preventDefault();
 
-		upgradesActions.updateSiteRedirect( this.props.selectedSite.domain, this.state.location, ( success ) => {
-			this.recordEvent( 'updateSiteRedirectClick', this.props.selectedDomainName, this.state.location, success );
+		upgradesActions.updateSiteRedirect(
+			this.props.selectedSite.domain,
+			this.state.location,
+			success => {
+				this.recordEvent(
+					'updateSiteRedirectClick',
+					this.props.selectedDomainName,
+					this.state.location,
+					success,
+				);
 
-			if ( success ) {
-				page( paths.domainManagementRedirectSettings( this.props.selectedSite.slug, this.state.location ) );
-			}
-		} );
+				if ( success ) {
+					page(
+						paths.domainManagementRedirectSettings(
+							this.props.selectedSite.slug,
+							this.state.location,
+						),
+					);
+				}
+			},
+		);
 	},
 
 	handleFocus() {
@@ -82,16 +94,14 @@ const SiteRedirect = React.createClass( {
 	},
 
 	render() {
-		let classes = classNames(
-			'site-redirect-card',
-			{ fetching: this.props.location.isFetching }
-		);
+		let classes = classNames( 'site-redirect-card', { fetching: this.props.location.isFetching } );
 
 		return (
 			<div>
 				<SiteRedirectNotice
 					notice={ this.props.location.notice }
-					selectedSite={ this.props.selectedSite } />
+					selectedSite={ this.props.selectedSite }
+				/>
 
 				<Main className="domain-management-site-redirect">
 					<Header onClick={ this.goToEdit } selectedDomainName={ this.props.selectedDomainName }>
@@ -115,7 +125,8 @@ const SiteRedirect = React.createClass( {
 									onFocus={ this.handleFocus }
 									prefix="http://"
 									type="text"
-									value={ this.state.location } />
+									value={ this.state.location }
+								/>
 
 								<p className="site-redirect__explanation">
 									{ this.translate( 'All domains on this site will redirect here.' ) }
@@ -125,14 +136,12 @@ const SiteRedirect = React.createClass( {
 							<FormFooter>
 								<FormButton
 									disabled={ this.props.location.isFetching || this.props.location.isUpdating }
-									onClick={ this.handleClick }>
+									onClick={ this.handleClick }
+								>
 									{ this.translate( 'Update Site Redirect' ) }
 								</FormButton>
 
-								<FormButton
-									type="button"
-									isPrimary={ false }
-									onClick={ this.goToEdit }>
+								<FormButton type="button" isPrimary={ false } onClick={ this.goToEdit }>
 									{ this.translate( 'Cancel' ) }
 								</FormButton>
 							</FormFooter>
@@ -146,8 +155,10 @@ const SiteRedirect = React.createClass( {
 	goToEdit() {
 		this.recordEvent( 'cancelClick', this.props.selectedDomainName );
 
-		page( paths.domainManagementEdit( this.props.selectedSite.slug, this.props.selectedDomainName ) );
-	}
+		page(
+			paths.domainManagementEdit( this.props.selectedSite.slug, this.props.selectedDomainName ),
+		);
+	},
 } );
 
 export default SiteRedirect;

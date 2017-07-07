@@ -31,44 +31,44 @@ class SocialLoginForm extends Component {
 		loginSocialUser: PropTypes.func.isRequired,
 	};
 
-	handleGoogleResponse = ( response ) => {
+	handleGoogleResponse = response => {
 		const { onSuccess, redirectTo } = this.props;
 
 		if ( ! response.Zi || ! response.Zi.id_token ) {
 			return;
 		}
 
-		this.props.loginSocialUser( 'google', response.Zi.id_token, redirectTo )
-			.then(
-				() => {
-					this.recordEvent( 'calypso_login_social_login_success' );
+		this.props.loginSocialUser( 'google', response.Zi.id_token, redirectTo ).then(
+			() => {
+				this.recordEvent( 'calypso_login_social_login_success' );
 
-					onSuccess();
-				},
-				error => {
-					if ( error.code === 'unknown_user' ) {
-						return this.props.createSocialUser( 'google', response.Zi.id_token, 'login' )
-							.then(
-								() => this.recordEvent( 'calypso_login_social_signup_success' ),
-								createAccountError => this.recordEvent( 'calypso_login_social_signup_failure', {
-									error_code: createAccountError.code,
-									error_message: createAccountError.message
-								} )
-							);
-					}
-
-					this.recordEvent( 'calypso_login_social_login_failure', {
-						error_code: error.code,
-						error_message: error.message
-					} );
+				onSuccess();
+			},
+			error => {
+				if ( error.code === 'unknown_user' ) {
+					return this.props.createSocialUser( 'google', response.Zi.id_token, 'login' ).then(
+						() => this.recordEvent( 'calypso_login_social_signup_success' ),
+						createAccountError =>
+							this.recordEvent( 'calypso_login_social_signup_failure', {
+								error_code: createAccountError.code,
+								error_message: createAccountError.message,
+							} ),
+					);
 				}
-			);
+
+				this.recordEvent( 'calypso_login_social_login_failure', {
+					error_code: error.code,
+					error_message: error.message,
+				} );
+			},
+		);
 	};
 
-	recordEvent = ( eventName, params ) => this.props.recordTracksEvent( eventName, {
-		social_account_type: 'google',
-		...params
-	} );
+	recordEvent = ( eventName, params ) =>
+		this.props.recordTracksEvent( eventName, {
+			social_account_type: 'google',
+			...params,
+		} );
 
 	trackGoogleLogin = () => {
 		this.recordEvent( 'calypso_login_social_button_click' );
@@ -85,27 +85,26 @@ class SocialLoginForm extends Component {
 					<GoogleLoginButton
 						clientId={ config( 'google_oauth_client_id' ) }
 						responseHandler={ this.handleGoogleResponse }
-						onClick={ this.trackGoogleLogin } />
+						onClick={ this.trackGoogleLogin }
+					/>
 				</div>
 
 				{ this.props.isSocialAccountCreating &&
-					<InfoNotice text={ this.props.translate( 'Creating your account…' ) } />
-				}
+					<InfoNotice text={ this.props.translate( 'Creating your account…' ) } /> }
 
-				{ this.props.bearerToken && (
+				{ this.props.bearerToken &&
 					<WpcomLoginForm
 						log={ this.props.username }
 						authorization={ 'Bearer ' + this.props.bearerToken }
 						redirectTo="/start"
-					/>
-				) }
+					/> }
 			</div>
 		);
 	}
 }
 
 export default connect(
-	( state ) => ( {
+	state => ( {
 		redirectTo: getCurrentQueryArguments( state ).redirect_to,
 		isSocialAccountCreating: isSocialAccountCreating( state ),
 		bearerToken: getCreatedSocialAccountBearerToken( state ),
@@ -115,5 +114,5 @@ export default connect(
 		loginSocialUser,
 		createSocialUser,
 		recordTracksEvent,
-	}
+	},
 )( localize( SocialLoginForm ) );

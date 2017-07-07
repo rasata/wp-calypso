@@ -29,7 +29,7 @@ function syncInitialize( { fieldNames } ) {
 			}
 
 			return next;
-		}
+		},
 	};
 }
 

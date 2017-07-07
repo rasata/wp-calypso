@@ -17,7 +17,8 @@ import Property from './card/property';
 import SubscriptionSettings from './card/subscription-settings';
 import VerticalNav from 'components/vertical-nav';
 import VerticalNavItem from 'components/vertical-nav/item';
-import IcannVerificationCard from 'my-sites/upgrades/domain-management/components/icann-verification/icann-verification-card';
+import IcannVerificationCard
+	from 'my-sites/upgrades/domain-management/components/icann-verification/icann-verification-card';
 
 const RegisteredDomain = React.createClass( {
 	mixins: [ analyticsMixin( 'domainManagement', 'edit' ) ],
@@ -27,14 +28,22 @@ const RegisteredDomain = React.createClass( {
 
 		if ( domain.isAutoRenewing ) {
 			return (
-				<Property label={ translate( 'Renews on', { comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string' } ) }>
+				<Property
+					label={ translate( 'Renews on', {
+						comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string',
+					} ) }
+				>
 					{ domain.autoRenewalMoment.format( 'LL' ) }
 				</Property>
 			);
 		}
 
 		return (
-			<Property label={ translate( 'Expires on', { comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string' } ) }>
+			<Property
+				label={ translate( 'Expires on', {
+					comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string',
+				} ) }
+			>
 				{ domain.expirationMoment.format( 'LL' ) }
 			</Property>
 		);
@@ -43,17 +52,21 @@ const RegisteredDomain = React.createClass( {
 	getLabel( { status, icon, message, href } ) {
 		return (
 			<a href={ href }>
-				<Notice
-					isCompact
-					status={ status }
-					icon={ icon }>{ message }
+				<Notice isCompact status={ status } icon={ icon }>
+					{ message }
 				</Notice>
 			</a>
 		);
 	},
 
 	getPrivacyProtection() {
-		const { hasPrivacyProtection, privateDomain, privacyAvailable, name, pendingTransfer } = this.props.domain,
+		const {
+			hasPrivacyProtection,
+			privateDomain,
+			privacyAvailable,
+			name,
+			pendingTransfer,
+		} = this.props.domain,
 			{ slug } = this.props.selectedSite,
 			{ translate } = this.props,
 			privacyPath = paths.domainManagementContactsPrivacy( slug, name ),
@@ -69,8 +82,8 @@ const RegisteredDomain = React.createClass( {
 				status: 'is-warning',
 				icon: 'notice',
 				message: translate( 'Pending Transfer', {
-					context: 'An icon label when domain is pending transfer.'
-				} )
+					context: 'An icon label when domain is pending transfer.',
+				} ),
 			} );
 		} else if ( hasPrivacyProtection ) {
 			if ( privateDomain ) {
@@ -79,8 +92,8 @@ const RegisteredDomain = React.createClass( {
 					icon: 'lock',
 					href: privacyPath,
 					message: translate( 'On', {
-						context: 'An icon label when Privacy Protection is enabled.'
-					} )
+						context: 'An icon label when Privacy Protection is enabled.',
+					} ),
 				} );
 			} else {
 				label = this.getLabel( {
@@ -88,8 +101,8 @@ const RegisteredDomain = React.createClass( {
 					icon: 'notice',
 					href: transferPath,
 					message: translate( 'Disabled for Transfer', {
-						context: 'An icon label when Privacy Protection is temporarily disabled for transfer.'
-					} )
+						context: 'An icon label when Privacy Protection is temporarily disabled for transfer.',
+					} ),
 				} );
 			}
 		} else {
@@ -98,8 +111,8 @@ const RegisteredDomain = React.createClass( {
 				icon: 'notice',
 				href: privacyPath,
 				message: translate( 'None', {
-					context: 'An icon label when Privacy Protection is not purchased by the user.'
-				} )
+					context: 'An icon label when Privacy Protection is not purchased by the user.',
+				} ),
 			} );
 		}
 
@@ -115,20 +128,23 @@ const RegisteredDomain = React.createClass( {
 	},
 
 	domainWarnings() {
-		return <DomainWarnings
-			domain={ this.props.domain }
-			position="registered-domain"
-			selectedSite={ this.props.selectedSite }
-			ruleWhiteList={ [
-				'expiredDomainsCanManage',
-				'expiringDomainsCanManage',
-				'newDomainsWithPrimary',
-				'newDomains',
-				'pendingGappsTosAcceptanceDomains',
-				'expiredDomainsCannotManage',
-				'expiringDomainsCannotManage',
-				'pendingTransfer'
-			] } />;
+		return (
+			<DomainWarnings
+				domain={ this.props.domain }
+				position="registered-domain"
+				selectedSite={ this.props.selectedSite }
+				ruleWhiteList={ [
+					'expiredDomainsCanManage',
+					'expiringDomainsCanManage',
+					'newDomainsWithPrimary',
+					'newDomains',
+					'pendingGappsTosAcceptanceDomains',
+					'expiredDomainsCannotManage',
+					'expiringDomainsCannotManage',
+					'pendingTransfer',
+				] }
+			/>
+		);
 	},
 
 	getVerticalNav() {
@@ -149,7 +165,7 @@ const RegisteredDomain = React.createClass( {
 	emailNavItem() {
 		const path = paths.domainManagementEmail(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -162,7 +178,7 @@ const RegisteredDomain = React.createClass( {
 	nameServersNavItem() {
 		const path = paths.domainManagementNameServers(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -175,7 +191,7 @@ const RegisteredDomain = React.createClass( {
 	contactsPrivacyNavItem() {
 		const path = paths.domainManagementContactsPrivacy(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -188,7 +204,7 @@ const RegisteredDomain = React.createClass( {
 	transferNavItem() {
 		const path = paths.domainManagementTransfer(
 			this.props.selectedSite.slug,
-			this.props.domain.name
+			this.props.domain.name,
 		);
 
 		return (
@@ -212,7 +228,11 @@ const RegisteredDomain = React.createClass( {
 							{ translate( 'Registered Domain' ) }
 						</Property>
 
-						<Property label={ translate( 'Registered on', { comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string' } ) }>
+						<Property
+							label={ translate( 'Registered on', {
+								comment: 'The corresponding date is in a different cell in the UI, the date is not included within the translated string',
+							} ) }
+						>
 							{ domain.registrationMoment.format( 'LL' ) }
 						</Property>
 
@@ -224,16 +244,22 @@ const RegisteredDomain = React.createClass( {
 							type={ domain.type }
 							subscriptionId={ domain.subscriptionId }
 							siteSlug={ this.props.selectedSite.slug }
-							onClick={ this.handlePaymentSettingsClick } />
+							onClick={ this.handlePaymentSettingsClick }
+						/>
 					</Card>
 
-					{ domain.isPendingIcannVerification && domain.currentUserCanManage && <IcannVerificationCard selectedDomainName={ domain.name } selectedSite={ this.props.selectedSite } /> }
+					{ domain.isPendingIcannVerification &&
+						domain.currentUserCanManage &&
+						<IcannVerificationCard
+							selectedDomainName={ domain.name }
+							selectedSite={ this.props.selectedSite }
+						/> }
 				</div>
 
 				{ this.getVerticalNav() }
 			</div>
 		);
-	}
+	},
 } );
 
 export default localize( RegisteredDomain );

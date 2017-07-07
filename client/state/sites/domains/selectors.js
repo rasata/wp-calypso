@@ -65,17 +65,11 @@ export function getDecoratedSiteDomains( state, siteId ) {
 		return {
 			...domain,
 
-			autoRenewalMoment: domain.autoRenewalDate
-				? moment( domain.autoRenewalDate )
-				: null,
+			autoRenewalMoment: domain.autoRenewalDate ? moment( domain.autoRenewalDate ) : null,
 
-			registrationMoment: domain.registrationDate
-				? moment( domain.registrationDate )
-				: null,
+			registrationMoment: domain.registrationDate ? moment( domain.registrationDate ) : null,
 
-			expirationMoment: domain.expiry
-				? moment( domain.expiry )
-				: null
+			expirationMoment: domain.expiry ? moment( domain.expiry ) : null,
 		};
 	} );
 }

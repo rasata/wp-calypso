@@ -45,17 +45,23 @@ class SocialSignupForm extends Component {
 		return (
 			<Card className="signup-form__social">
 				<p>
-					{ preventWidows( this.props.translate( "Or create an account using your existing social profile to get started faster. We'll never post without your permission." ) ) }
+					{ preventWidows(
+						this.props.translate(
+							"Or create an account using your existing social profile to get started faster. We'll never post without your permission.",
+						),
+					) }
 				</p>
 
 				<div className="signup-form__social-buttons">
 					<GoogleLoginButton
 						clientId={ config( 'google_oauth_client_id' ) }
-						responseHandler={ this.handleGoogleResponse } />
+						responseHandler={ this.handleGoogleResponse }
+					/>
 
 					<FacebookLoginButton
 						appId={ config( 'facebook_app_id' ) }
-						responseHandler={ this.handleFacebookResponse } />
+						responseHandler={ this.handleFacebookResponse }
+					/>
 				</div>
 			</Card>
 		);

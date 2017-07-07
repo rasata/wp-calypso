@@ -13,12 +13,9 @@ import {
 	GRAVATAR_UPLOAD_RECEIVE,
 	GRAVATAR_UPLOAD_REQUEST,
 	GRAVATAR_UPLOAD_REQUEST_SUCCESS,
-	GRAVATAR_UPLOAD_REQUEST_FAILURE
- } from 'state/action-types';
-import {
-	receiveGravatarImageFailed,
-	uploadGravatar
-} from '../actions';
+	GRAVATAR_UPLOAD_REQUEST_FAILURE,
+} from 'state/action-types';
+import { receiveGravatarImageFailed, uploadGravatar } from '../actions';
 import useNock from 'test/helpers/use-nock';
 import { useSandbox } from 'test/helpers/use-sinon';
 
@@ -29,27 +26,29 @@ describe( 'actions', () => {
 		sandbox = newSandbox;
 		spy = sandbox.spy();
 		global.FormData = sandbox.stub().returns( {
-			append: noop
+			append: noop,
 		} );
 		global.FileReader = sandbox.stub().returns( {
 			readAsDataURL: noop,
 			addEventListener: function( event, callback ) {
 				this.result = tempImageSrc;
 				callback();
-			}
+			},
 		} );
 	} );
 
 	describe( '#uploadGravatar', () => {
 		it( 'dispatches request action when thunk triggered', () => {
 			uploadGravatar( 'file', 'bearerToken', 'email' )( spy );
-			expect( spy ).to.have.been.calledWith( sinon.match( {
-				type: GRAVATAR_UPLOAD_REQUEST
-			} ) );
+			expect( spy ).to.have.been.calledWith(
+				sinon.match( {
+					type: GRAVATAR_UPLOAD_REQUEST,
+				} ),
+			);
 		} );
 
 		describe( 'successful request', () => {
-			useNock( ( nock ) => {
+			useNock( nock => {
 				nock( 'https://api.gravatar.com' )
 					.persist()
 					.post( '/v1/upload-image' )
@@ -57,39 +56,40 @@ describe( 'actions', () => {
 			} );
 
 			it( 'dispatches receive action', () => {
-				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy )
-					.then( () => {
-						expect( spy ).to.have.been.calledWith( {
-							type: GRAVATAR_UPLOAD_RECEIVE,
-							src: tempImageSrc
-						} );
+				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy ).then( () => {
+					expect( spy ).to.have.been.calledWith( {
+						type: GRAVATAR_UPLOAD_RECEIVE,
+						src: tempImageSrc,
 					} );
+				} );
 			} );
 
 			it( 'dispatches success action', () => {
-				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy )
-					.then( () => {
-						expect( spy ).to.have.been.calledWith( sinon.match( {
-							type: GRAVATAR_UPLOAD_REQUEST_SUCCESS
-						} ) );
-					} );
+				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy ).then( () => {
+					expect( spy ).to.have.been.calledWith(
+						sinon.match( {
+							type: GRAVATAR_UPLOAD_REQUEST_SUCCESS,
+						} ),
+					);
+				} );
 			} );
 		} );
 
 		describe( 'failed request', () => {
-			useNock( ( nock ) => {
+			useNock( nock => {
 				nock( 'https://api.gravatar.com' )
 					.post( '/v1/upload-image' )
 					.reply( 400, 'Failed request' );
 			} );
 
 			it( 'dispatches failure action', () => {
-				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy )
-					.then( () => {
-						expect( spy ).to.have.been.calledWith( sinon.match( {
-							type: GRAVATAR_UPLOAD_REQUEST_FAILURE
-						} ) );
-					} );
+				return uploadGravatar( 'file', 'bearerToken', 'email' )( spy ).then( () => {
+					expect( spy ).to.have.been.calledWith(
+						sinon.match( {
+							type: GRAVATAR_UPLOAD_REQUEST_FAILURE,
+						} ),
+					);
+				} );
 			} );
 		} );
 	} );
@@ -100,7 +100,7 @@ describe( 'actions', () => {
 			const statName = 'statName';
 			const result = receiveGravatarImageFailed( {
 				errorMessage,
-				statName
+				statName,
 			} );
 			expect( result ).to.have.property( 'type', GRAVATAR_RECEIVE_IMAGE_FAILURE );
 			expect( result ).to.have.property( 'errorMessage', errorMessage );

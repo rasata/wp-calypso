@@ -11,15 +11,19 @@ import sinon from 'sinon';
 import useMockery from 'test/helpers/use-mockery';
 
 describe( 'index', () => {
-	let getCurrentUserLocaleMock, addLocaleQueryParam,
-		injectLocalization, bindState, setLocale, getLocale;
+	let getCurrentUserLocaleMock,
+		addLocaleQueryParam,
+		injectLocalization,
+		bindState,
+		setLocale,
+		getLocale;
 
 	useMockery();
 
 	before( () => {
 		// Mock user locale state selector
 		mockery.registerMock( 'state/current-user/selectors', {
-			getCurrentUserLocale: () => getCurrentUserLocaleMock()
+			getCurrentUserLocale: () => getCurrentUserLocaleMock(),
 		} );
 
 		// Prepare module for rewiring
@@ -28,7 +32,7 @@ describe( 'index', () => {
 			injectLocalization,
 			bindState,
 			setLocale,
-			getLocale
+			getLocale,
 		} = require( '../' ) );
 	} );
 
@@ -55,7 +59,7 @@ describe( 'index', () => {
 			const params = addLocaleQueryParam( { query: 'search=foo' } );
 
 			expect( params ).to.eql( {
-				query: 'search=foo&locale=fr'
+				query: 'search=foo&locale=fr',
 			} );
 		} );
 	} );
@@ -76,13 +80,13 @@ describe( 'index', () => {
 			expect( wpcom.request ).to.not.equal( request );
 		} );
 
-		it( 'should modify params by default', ( done ) => {
+		it( 'should modify params by default', done => {
 			setLocale( 'fr' );
 			const wpcom = {
 				request( params ) {
 					expect( params.query ).to.equal( 'search=foo&locale=fr' );
 					done();
-				}
+				},
 			};
 
 			injectLocalization( wpcom );
@@ -103,7 +107,7 @@ describe( 'index', () => {
 				subscribe( _listener ) {
 					listener = _listener;
 				},
-				getState() {}
+				getState() {},
 			} );
 			getCurrentUserLocaleMock = sinon.stub().returns( 'de' );
 			listener();

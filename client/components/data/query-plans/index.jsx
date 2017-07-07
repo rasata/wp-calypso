@@ -24,18 +24,18 @@ class QueryPlans extends Component {
 
 QueryPlans.propTypes = {
 	requestingPlans: PropTypes.bool,
-	requestPlans: PropTypes.func
+	requestPlans: PropTypes.func,
 };
 
 QueryPlans.defaultProps = {
-	requestPlans: () => {}
+	requestPlans: () => {},
 };
 
 export default connect(
 	state => {
 		return {
-			requestingPlans: isRequestingPlans( state )
+			requestingPlans: isRequestingPlans( state ),
 		};
 	},
-	{ requestPlans }
+	{ requestPlans },
 )( QueryPlans );

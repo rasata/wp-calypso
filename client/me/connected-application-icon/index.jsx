@@ -9,12 +9,11 @@ var React = require( 'react' );
 var PluginIcon = require( 'my-sites/plugins/plugin-icon/plugin-icon' );
 
 module.exports = React.createClass( {
-
 	displayName: 'ConnectedApplicationIcon',
 
 	getDefaultProps: function() {
 		return {
-			size: 40
+			size: 40,
 		};
 	},
 
@@ -26,5 +25,5 @@ module.exports = React.createClass( {
 				size={ this.props.size }
 			/>
 		);
-	}
+	},
 } );

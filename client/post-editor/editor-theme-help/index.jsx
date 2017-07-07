@@ -35,19 +35,17 @@ class EditorThemeHelp extends PureComponent {
 		}
 
 		return (
-			<a className={ className } href={ themeHelpPath } onClick={ this.recordClick } >
+			<a className={ className } href={ themeHelpPath } onClick={ this.recordClick }>
 				{ translate( 'Need help setting up your site?' ) }
 			</a>
 		);
 	}
 }
 
-export default connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
+export default connect( state => {
+	const siteId = getSelectedSiteId( state );
 
-		return {
-			themeHelpPath: getSiteThemeShowcasePath( state, siteId )
-		};
-	}
-)( localize( EditorThemeHelp ) );
+	return {
+		themeHelpPath: getSiteThemeShowcasePath( state, siteId ),
+	};
+} )( localize( EditorThemeHelp ) );

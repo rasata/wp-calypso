@@ -8,9 +8,7 @@ import { expect } from 'chai';
  */
 import reducer from '../../reducer';
 import { LOADING } from 'woocommerce/state/constants';
-import {
-	WOOCOMMERCE_SHIPPING_METHODS_REQUEST,
-} from 'woocommerce/state/action-types';
+import { WOOCOMMERCE_SHIPPING_METHODS_REQUEST } from 'woocommerce/state/action-types';
 import { fetchShippingMethodsSuccess } from '../actions';
 
 describe( 'fetch shipping methods', () => {
@@ -37,4 +35,3 @@ describe( 'fetch shipping methods - success', () => {
 		expect( newState[ siteId ].shippingMethods ).to.deep.equal( methods );
 	} );
 } );
-

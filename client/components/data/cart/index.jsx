@@ -13,7 +13,7 @@ var stores = [ CartStore ];
 
 function getStateFromStores() {
 	return {
-		cart: CartStore.get()
+		cart: CartStore.get(),
 	};
 }
 
@@ -24,7 +24,7 @@ var CartData = React.createClass( {
 				{ this.props.children }
 			</StoreConnection>
 		);
-	}
+	},
 } );
 
 module.exports = CartData;

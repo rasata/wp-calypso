@@ -9,5 +9,5 @@ module.exports = {
 	},
 	loadedViaHistory: function() {
 		return _loadedViaHistory;
-	}
+	},
 };

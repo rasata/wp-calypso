@@ -18,5 +18,5 @@ function findPrivacyServiceWhois( whoisContacts ) {
 
 export default {
 	findRegistrantWhois,
-	findPrivacyServiceWhois
+	findPrivacyServiceWhois,
 };

@@ -18,10 +18,13 @@ import { MediaTypes } from '../constants';
  */
 export function deserialize( node ) {
 	let normalized = {
-		media: assign( {
-			transient: false
-		}, node ),
-		appearance: {}
+		media: assign(
+			{
+				transient: false,
+			},
+			node,
+		),
+		appearance: {},
 	};
 
 	// Infer media type

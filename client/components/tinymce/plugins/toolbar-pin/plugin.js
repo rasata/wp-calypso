@@ -16,9 +16,7 @@ import { isWithinBreakpoint } from 'lib/viewport';
  * @param {Object} editor TinyMCE editor instance
  */
 function toolbarPin( editor ) {
-	let isMonitoringScroll = false,
-		isPinned = false,
-		container;
+	let isMonitoringScroll = false, isPinned = false, container;
 
 	/**
 	 * Assigns the container top-level variable to the current container.
@@ -61,7 +59,7 @@ function toolbarPin( editor ) {
 	 * pinning behavior is restricted to larger viewports whilst the visual
 	 * editing mode is active.
 	 */
-	const maybeBindScroll = throttle( ( event ) => {
+	const maybeBindScroll = throttle( event => {
 		const isVisual = ! editor.isHidden();
 		const shouldBind = 'remove' !== event.type && isVisual && isWithinBreakpoint( '>660px' );
 

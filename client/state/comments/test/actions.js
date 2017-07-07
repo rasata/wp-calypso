@@ -25,11 +25,9 @@ import {
 	replyComment,
 	removeComment,
 	likeComment,
-	unlikeComment
+	unlikeComment,
 } from '../actions';
-import {
-	NUMBER_OF_COMMENTS_PER_FETCH
-} from '../constants';
+import { NUMBER_OF_COMMENTS_PER_FETCH } from '../constants';
 
 const SITE_ID = 91750058;
 const POST_ID = 287;
@@ -41,7 +39,7 @@ describe( 'actions', () => {
 	} );
 
 	describe( '#requestPostComments()', () => {
-		useSandbox( ( sandbox ) => {
+		useSandbox( sandbox => {
 			sandbox.stub( config, 'isEnabled' ).withArgs( 'comments/filters-in-posts' ).returns( true );
 		} );
 
@@ -55,8 +53,8 @@ describe( 'actions', () => {
 				query: {
 					order: 'DESC',
 					number: NUMBER_OF_COMMENTS_PER_FETCH,
-					status: 'trash'
-				}
+					status: 'trash',
+				},
 			} );
 		} );
 
@@ -70,8 +68,8 @@ describe( 'actions', () => {
 				query: {
 					order: 'DESC',
 					number: NUMBER_OF_COMMENTS_PER_FETCH,
-					status: 'approved'
-				}
+					status: 'approved',
+				},
 			} );
 		} );
 	} );
@@ -120,7 +118,7 @@ describe( 'actions', () => {
 				type: COMMENTS_LIKE,
 				siteId: SITE_ID,
 				postId: POST_ID,
-				commentId: 1
+				commentId: 1,
 			} );
 		} );
 	} );
@@ -136,7 +134,7 @@ describe( 'actions', () => {
 				type: COMMENTS_UNLIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -146,7 +144,7 @@ describe( 'actions', () => {
 					type: COMMENTS_LIKE,
 					siteId: 1,
 					postId: 1,
-					commentId: 1
+					commentId: 1,
 				} );
 			} );
 		} );
@@ -160,7 +158,7 @@ describe( 'actions', () => {
 				.reply( 200, {
 					success: true,
 					i_like: false,
-					like_count: 122
+					like_count: 122,
 				} );
 
 			const unlikeThunk = unlikeComment( 1, 1, 1 );
@@ -170,7 +168,7 @@ describe( 'actions', () => {
 				type: COMMENTS_UNLIKE,
 				siteId: 1,
 				postId: 1,
-				commentId: 1
+				commentId: 1,
 			} );
 
 			// since we didn't mock the request and we have disabled requests
@@ -182,7 +180,7 @@ describe( 'actions', () => {
 					postId: 1,
 					commentId: 1,
 					iLike: false,
-					likeCount: 122
+					likeCount: 122,
 				} );
 			} );
 		} );

@@ -46,8 +46,7 @@ class AdsFormEarnings extends Component {
 	}
 
 	getSettingsFromStore( siteInstance ) {
-		const site = siteInstance || this.props.site,
-			store = EarningsStore.getById( site.ID ) || {};
+		const site = siteInstance || this.props.site, store = EarningsStore.getById( site.ID ) || {};
 
 		store.showEarningsNotice = false;
 		store.showWordadsInfo = false;
@@ -93,14 +92,14 @@ class AdsFormEarnings extends Component {
 		this.setState( this.getSettingsFromStore() );
 	};
 
-	handleEarningsNoticeToggle = ( event ) => {
+	handleEarningsNoticeToggle = event => {
 		event.preventDefault();
 		this.setState( {
-			showEarningsNotice: ! this.state.showEarningsNotice
+			showEarningsNotice: ! this.state.showEarningsNotice,
 		} );
 	};
 
-	handleInfoToggle = ( type ) => ( event ) => {
+	handleInfoToggle = type => event => {
 		event.preventDefault();
 		switch ( type ) {
 			case 'wordads':
@@ -159,21 +158,23 @@ class AdsFormEarnings extends Component {
 
 	payoutNotice() {
 		const { translate } = this.props;
-		const owed = this.state.earnings && this.state.earnings.total_amount_owed ? this.state.earnings.total_amount_owed : '0.00',
+		const owed = this.state.earnings && this.state.earnings.total_amount_owed
+			? this.state.earnings.total_amount_owed
+			: '0.00',
 			notice = translate(
 				'Outstanding amount of $%(amountOwed)s does not exceed the minimum $100 needed to make the payment. ' +
-				'Payment will be made as soon as the total outstanding amount has reached $100.',
+					'Payment will be made as soon as the total outstanding amount has reached $100.',
 				{
 					comment: 'Insufficient balance for payout.',
 					args: { amountOwed: owed },
-				}
+				},
 			),
 			payout = translate(
 				'Outstanding amount of $%(amountOwed)s will be paid by the last business day of the month.',
 				{
 					comment: 'Payout will proceed.',
 					args: { amountOwed: owed },
-				}
+				},
 			);
 
 		return (
@@ -190,22 +191,26 @@ class AdsFormEarnings extends Component {
 			<div className="ads__module-content-text module-content-text module-content-text-info">
 				<p>{ translate( 'Payments can have the following statuses:' ) }</p>
 				<ul className="ads__earnings-history-statuses-list">
-					<li className="ads__earnings-history-status"><strong>{ translate( 'Unpaid:' ) } </strong>
+					<li className="ads__earnings-history-status">
+						<strong>{ translate( 'Unpaid:' ) } </strong>
 						{ translate( 'Payment is on hold until the end of the current month.' ) }
 					</li>
-					<li className="ads__earnings-history-status"><strong>{ translate( 'Paid:' ) } </strong>
+					<li className="ads__earnings-history-status">
+						<strong>{ translate( 'Paid:' ) } </strong>
 						{ translate( 'Payment has been processed through PayPal.' ) }
 					</li>
-					<li className="ads__earnings-history-status"><strong>{ translate( 'Pending (Missing Tax Info):' ) } </strong>
+					<li className="ads__earnings-history-status">
+						<strong>{ translate( 'Pending (Missing Tax Info):' ) } </strong>
 						{ translate(
 							'Payment is pending due to missing information. ' +
-							'You can provide tax information in the settings screen.'
+								'You can provide tax information in the settings screen.',
 						) }
 					</li>
-					<li className="ads__earnings-history-status"><strong>{ translate( 'Pending (Invalid PayPal):' ) } </strong>
+					<li className="ads__earnings-history-status">
+						<strong>{ translate( 'Pending (Invalid PayPal):' ) } </strong>
 						{ translate(
 							'Payment processing has failed due to invalid PayPal address. ' +
-							'You can correct the PayPal address in the settings screen.'
+								'You can correct the PayPal address in the settings screen.',
 						) }
 					</li>
 				</ul>
@@ -215,9 +220,15 @@ class AdsFormEarnings extends Component {
 
 	earningsBreakdown() {
 		const { numberFormat, translate } = this.props;
-		const earnings = this.state.earnings && this.state.earnings.total_earnings ? Number( this.state.earnings.total_earnings ) : 0,
-			owed = this.state.earnings && this.state.earnings.total_amount_owed ? Number( this.state.earnings.total_amount_owed ) : 0,
-			paid = this.state.earnings && this.state.earnings.total_earnings && this.state.earnings.total_amount_owed
+		const earnings = this.state.earnings && this.state.earnings.total_earnings
+			? Number( this.state.earnings.total_earnings )
+			: 0,
+			owed = this.state.earnings && this.state.earnings.total_amount_owed
+				? Number( this.state.earnings.total_amount_owed )
+				: 0,
+			paid = this.state.earnings &&
+				this.state.earnings.total_earnings &&
+				this.state.earnings.total_amount_owed
 				? this.state.earnings.total_earnings - this.state.earnings.total_amount_owed
 				: 0;
 
@@ -250,7 +261,7 @@ class AdsFormEarnings extends Component {
 		const rows = [],
 			infoIcon = this.getInfoToggle( type ) ? 'info' : 'info-outline',
 			classes = classNames( 'earnings_history', {
-				'is-showing-info': this.getInfoToggle( type )
+				'is-showing-info': this.getInfoToggle( type ),
 			} );
 
 		for ( const period in earnings ) {
@@ -258,10 +269,14 @@ class AdsFormEarnings extends Component {
 				rows.push(
 					<tr key={ type + '-' + period }>
 						<td className="ads__earnings-history-value">{ this.swapYearMonth( period ) }</td>
-						<td className="ads__earnings-history-value">${ numberFormat( earnings[ period ].amount, 2 ) }</td>
+						<td className="ads__earnings-history-value">
+							${ numberFormat( earnings[ period ].amount, 2 ) }
+						</td>
 						<td className="ads__earnings-history-value">{ earnings[ period ].pageviews }</td>
-						<td className="ads__earnings-history-value">{ this.getStatus( earnings[ period ].status ) }</td>
-					</tr>
+						<td className="ads__earnings-history-value">
+							{ this.getStatus( earnings[ period ].status ) }
+						</td>
+					</tr>,
 				);
 			}
 		}
@@ -272,11 +287,13 @@ class AdsFormEarnings extends Component {
 					<h1 className="ads__module-header-title module-header-title">{ header_text }</h1>
 					<ul className="ads__module-header-actions module-header-actions">
 						<li className="ads__module-header-action module-header-action toggle-info">
-							<a href="#"
+							<a
+								href="#"
 								className="ads__module-header-action-link module-header-action-link"
 								aria-label={ translate( 'Show or hide panel information' ) }
 								title={ translate( 'Show or hide panel information' ) }
-								onClick={ this.handleInfoToggle( type ) }>
+								onClick={ this.handleInfoToggle( type ) }
+							>
 								<Gridicon icon={ infoIcon } />
 							</a>
 						</li>
@@ -306,21 +323,25 @@ class AdsFormEarnings extends Component {
 		const { translate } = this.props;
 		const infoIcon = this.state.showEarningsNotice ? 'info' : 'info-outline',
 			classes = classNames( 'earnings_breakdown', {
-				'is-showing-info': this.state.showEarningsNotice
+				'is-showing-info': this.state.showEarningsNotice,
 			} );
 
 		return (
 			<div>
 				<Card className={ classes }>
 					<div className="ads__module-header module-header">
-						<h1 className="ads__module-header-title module-header-title">{ translate( 'Totals' ) }</h1>
+						<h1 className="ads__module-header-title module-header-title">
+							{ translate( 'Totals' ) }
+						</h1>
 						<ul className="ads__module-header-actions module-header-actions">
 							<li className="ads__module-header-action module-header-action toggle-info">
-								<a href="#"
+								<a
+									href="#"
 									className="ads__module-header-action-link module-header-action-link"
 									aria-label={ translate( 'Show or hide panel information' ) }
 									title={ translate( 'Show or hide panel information' ) }
-									onClick={ this.handleEarningsNoticeToggle } >
+									onClick={ this.handleEarningsNoticeToggle }
+								>
 									<Gridicon icon={ infoIcon } />
 								</a>
 							</li>
@@ -332,17 +353,26 @@ class AdsFormEarnings extends Component {
 					</div>
 				</Card>
 				{ this.state.earnings && this.checkSize( this.state.earnings.wordads )
-					? this.earningsTable( this.state.earnings.wordads, translate( 'Earnings History' ), 'wordads' )
-					: null
-				}
+					? this.earningsTable(
+							this.state.earnings.wordads,
+							translate( 'Earnings History' ),
+							'wordads',
+						)
+					: null }
 				{ this.state.earnings && this.checkSize( this.state.earnings.sponsored )
-					? this.earningsTable( this.state.earnings.sponsored, translate( 'Sponsored Content History' ), 'sponsored' )
-					: null
-				}
+					? this.earningsTable(
+							this.state.earnings.sponsored,
+							translate( 'Sponsored Content History' ),
+							'sponsored',
+						)
+					: null }
 				{ this.state.earnings && this.checkSize( this.state.earnings.adjustment )
-					? this.earningsTable( this.state.earnings.adjustment, translate( 'Adjustments History' ), 'adjustment' )
-					: null
-				}
+					? this.earningsTable(
+							this.state.earnings.adjustment,
+							translate( 'Adjustments History' ),
+							'adjustment',
+						)
+					: null }
 			</div>
 		);
 	}

@@ -21,11 +21,11 @@ import Search from 'components/search';
 import SectionNav from 'components/section-nav';
 
 const bulkActions = {
-	unapproved: [ 'approve', 'spam', 'trash' ],
-	approved: [ 'unapprove', 'spam', 'trash' ],
-	spam: [ 'approve', 'delete' ],
-	trash: [ 'approve', 'spam', 'delete' ],
-	all: [ 'approve', 'unapprove', 'spam', 'trash' ],
+	unapproved: [ 'approve', 'spam', 'trash' ],
+	approved: [ 'unapprove', 'spam', 'trash' ],
+	spam: [ 'approve', 'delete' ],
+	trash: [ 'approve', 'spam', 'delete' ],
+	all: [ 'approve', 'unapprove', 'spam', 'trash' ],
 };
 
 export class CommentNavigation extends Component {
@@ -55,11 +55,12 @@ export class CommentNavigation extends Component {
 				label: translate( 'All' ),
 			},
 		};
-	}
+	};
 
-	getStatusPath = status => 'unapproved' !== status
-		? `/comments/${ status }/${ this.props.siteSlug }`
-		: `/comments/pending/${ this.props.siteSlug }`;
+	getStatusPath = status =>
+		( 'unapproved' !== status
+			? `/comments/${ status }/${ this.props.siteSlug }`
+			: `/comments/pending/${ this.props.siteSlug }` );
 
 	statusHasAction = action => includes( bulkActions[ this.props.status ], action );
 
@@ -82,81 +83,73 @@ export class CommentNavigation extends Component {
 
 		if ( isBulkEdit ) {
 			return (
-			<SectionNav className="comment-navigation is-bulk-edit">
-				<CommentNavigationTab className="comment-navigation__bulk-count">
-					<FormCheckbox
-						checked={ isSelectedAll }
-						onChange={ toggleSelectAll }
-					/>
-					<Count count={ selectedCount } />
-				</CommentNavigationTab>
-				<CommentNavigationTab className="comment-navigation__actions">
-					<ButtonGroup>
-						{ this.statusHasAction( 'approve' ) &&
-							<Button
-								compact
-								disabled={ ! selectedCount }
-								onClick={ setBulkStatus( 'approved' ) }
-							>
-								{ translate( 'Approve' ) }
-							</Button>
-						}
-						{ this.statusHasAction( 'unapprove' ) &&
-							<Button
-								compact
-								disabled={ ! selectedCount }
-								onClick={ setBulkStatus( 'unapproved' ) }
-							>
-								{ translate( 'Unapprove' ) }
-							</Button>
-						}
-					</ButtonGroup>
-					<ButtonGroup>
-						{ this.statusHasAction( 'spam' ) &&
-							<Button
-								compact
-								scary
-								disabled={ ! selectedCount }
-								onClick={ setBulkStatus( 'spam' ) }
-							>
-								{ translate( 'Spam' ) }
-							</Button>
-						}
-						{ this.statusHasAction( 'trash' ) &&
-							<Button
-								compact
-								scary
-								disabled={ ! selectedCount }
-								onClick={ setBulkStatus( 'trash' ) }
-							>
-								{ translate( 'Trash' ) }
-							</Button>
-						}
-						{ this.statusHasAction( 'delete' ) &&
-							<Button
-								compact
-								scary
-								disabled={ ! selectedCount }
-								onClick={ setBulkStatus( 'delete' ) }
-							>
-								{ translate( 'Delete' ) }
-							</Button>
-						}
-					</ButtonGroup>
-				</CommentNavigationTab>
-				<CommentNavigationTab className="comment-navigation__close-bulk">
-					<a onClick={ toggleBulkEdit }>
-						<Gridicon icon="cross" />
-					</a>
-				</CommentNavigationTab>
-			</SectionNav>
+				<SectionNav className="comment-navigation is-bulk-edit">
+					<CommentNavigationTab className="comment-navigation__bulk-count">
+						<FormCheckbox checked={ isSelectedAll } onChange={ toggleSelectAll } />
+						<Count count={ selectedCount } />
+					</CommentNavigationTab>
+					<CommentNavigationTab className="comment-navigation__actions">
+						<ButtonGroup>
+							{ this.statusHasAction( 'approve' ) &&
+								<Button
+									compact
+									disabled={ ! selectedCount }
+									onClick={ setBulkStatus( 'approved' ) }
+								>
+									{ translate( 'Approve' ) }
+								</Button> }
+							{ this.statusHasAction( 'unapprove' ) &&
+								<Button
+									compact
+									disabled={ ! selectedCount }
+									onClick={ setBulkStatus( 'unapproved' ) }
+								>
+									{ translate( 'Unapprove' ) }
+								</Button> }
+						</ButtonGroup>
+						<ButtonGroup>
+							{ this.statusHasAction( 'spam' ) &&
+								<Button
+									compact
+									scary
+									disabled={ ! selectedCount }
+									onClick={ setBulkStatus( 'spam' ) }
+								>
+									{ translate( 'Spam' ) }
+								</Button> }
+							{ this.statusHasAction( 'trash' ) &&
+								<Button
+									compact
+									scary
+									disabled={ ! selectedCount }
+									onClick={ setBulkStatus( 'trash' ) }
+								>
+									{ translate( 'Trash' ) }
+								</Button> }
+							{ this.statusHasAction( 'delete' ) &&
+								<Button
+									compact
+									scary
+									disabled={ ! selectedCount }
+									onClick={ setBulkStatus( 'delete' ) }
+								>
+									{ translate( 'Delete' ) }
+								</Button> }
+						</ButtonGroup>
+					</CommentNavigationTab>
+					<CommentNavigationTab className="comment-navigation__close-bulk">
+						<a onClick={ toggleBulkEdit }>
+							<Gridicon icon="cross" />
+						</a>
+					</CommentNavigationTab>
+				</SectionNav>
 			);
 		}
 
 		return (
 			<SectionNav className="comment-navigation" selectedText={ navItems[ queryStatus ].label }>
 				<NavTabs selectedText={ navItems[ queryStatus ].label }>
-					{ map( navItems, ( { label }, status ) =>
+					{ map( navItems, ( { label }, status ) => (
 						<NavItem
 							key={ status }
 							path={ this.getStatusPath( status ) }
@@ -164,7 +157,7 @@ export class CommentNavigation extends Component {
 						>
 							{ label }
 						</NavItem>
-					) }
+					) ) }
 				</NavTabs>
 
 				<CommentNavigationTab className="comment-navigation__actions comment-navigation__open-bulk">
@@ -174,14 +167,7 @@ export class CommentNavigation extends Component {
 				</CommentNavigationTab>
 
 				{ hasSearch &&
-					<Search
-						delaySearch
-						fitsContainer
-						initialValue={ query }
-						onSearch={ doSearch }
-						pinned
-					/>
-				}
+					<Search delaySearch fitsContainer initialValue={ query } onSearch={ doSearch } pinned /> }
 			</SectionNav>
 		);
 	}

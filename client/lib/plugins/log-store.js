@@ -12,20 +12,16 @@ var reject = require( 'lodash/reject' ),
 /**
  * Internal dependencies
  */
-var Dispatcher = require( 'dispatcher' ),
-	emitter = require( 'lib/mixins/emitter' );
+var Dispatcher = require( 'dispatcher' ), emitter = require( 'lib/mixins/emitter' );
 
-var _errors = [],
-	_inProgress = [],
-	_completed = [],
-	LogStore;
+var _errors = [], _inProgress = [], _completed = [], LogStore;
 
 function addLog( status, action, site, plugin, error ) {
 	var log = {
 		status: status,
 		action: action,
 		site: site,
-		plugin: plugin
+		plugin: plugin,
 	};
 
 	debug( 'add in ' + status + ' data:', log );
@@ -90,7 +86,6 @@ function removeSingleLog( log ) {
 }
 
 LogStore = {
-
 	getErrors: function() {
 		return clone( _errors );
 	},
@@ -129,7 +124,7 @@ LogStore = {
 
 	emitChange: function() {
 		this.emit( 'change' );
-	}
+	},
 };
 
 LogStore.dispatchToken = Dispatcher.register( function( payload ) {
@@ -162,7 +157,7 @@ LogStore.dispatchToken = Dispatcher.register( function( payload ) {
 				status: 'inProgress',
 				action: action.action,
 				site: action.site,
-				plugin: action.plugin
+				plugin: action.plugin,
 			} );
 			if ( action.type === 'RECEIVE_ACTIVATED_PLUGIN' ) {
 				if ( ! ( action.data && action.data.active ) && ! action.error ) {
@@ -170,7 +165,10 @@ LogStore.dispatchToken = Dispatcher.register( function( payload ) {
 				}
 			}
 
-			if ( action.error && [ 'activation_error', 'deactivation_error' ].indexOf( action.error.error ) === -1 ) {
+			if (
+				action.error &&
+				[ 'activation_error', 'deactivation_error' ].indexOf( action.error.error ) === -1
+			) {
 				addLog( 'error', action.action, action.site, action.plugin, action.error );
 			} else {
 				addLog( 'completed', action.action, action.site, action.plugin );

@@ -6,14 +6,16 @@ var React = require( 'react' ),
 	omit = require( 'lodash/omit' );
 
 module.exports = React.createClass( {
-
 	displayName: 'FormSectionHeading',
 
 	render: function() {
 		return (
-			<h3 { ...omit( this.props, 'className' ) } className={ classnames( this.props.className, 'form-section-heading' ) } >
+			<h3
+				{ ...omit( this.props, 'className' ) }
+				className={ classnames( this.props.className, 'form-section-heading' ) }
+			>
 				{ this.props.children }
 			</h3>
 		);
-	}
+	},
 } );

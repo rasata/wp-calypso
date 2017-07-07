@@ -14,4 +14,3 @@ import { get } from 'lodash';
 export default function getRewindStatusError( state, siteId ) {
 	return get( state.activityLog.rewindStatusError, siteId, null );
 }
-

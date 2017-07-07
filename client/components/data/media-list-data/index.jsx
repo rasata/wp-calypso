@@ -17,7 +17,7 @@ function getStateData( siteId ) {
 	return {
 		media: MediaListStore.getAll( siteId ),
 		mediaHasNextPage: MediaListStore.hasNextPage( siteId ),
-		mediaFetchingNextPage: MediaListStore.isFetchingNextPage( siteId )
+		mediaFetchingNextPage: MediaListStore.isFetchingNextPage( siteId ),
 	};
 }
 
@@ -28,7 +28,7 @@ module.exports = React.createClass( {
 		siteId: React.PropTypes.number.isRequired,
 		source: React.PropTypes.string,
 		filter: React.PropTypes.string,
-		search: React.PropTypes.string
+		search: React.PropTypes.string,
 	},
 
 	getInitialState: function() {
@@ -84,8 +84,11 @@ module.exports = React.createClass( {
 	},
 
 	render: function() {
-		return passToChildren( this, assign( {}, this.state, {
-			mediaOnFetchNextPage: this.fetchData
-		} ) );
-	}
+		return passToChildren(
+			this,
+			assign( {}, this.state, {
+				mediaOnFetchNextPage: this.fetchData,
+			} ),
+		);
+	},
 } );

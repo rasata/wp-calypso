@@ -1,15 +1,13 @@
 /**
  * Internal dependencies
  */
-import {
-	SIGNUP_STEPS_SURVEY_SET,
-	SIGNUP_COMPLETE_RESET,
-} from 'state/action-types';
+import { SIGNUP_STEPS_SURVEY_SET, SIGNUP_COMPLETE_RESET } from 'state/action-types';
 
 import { createReducer } from 'state/utils';
 import { surveyStepSchema } from './schema';
 
-export default createReducer( {},
+export default createReducer(
+	{},
 	{
 		[ SIGNUP_STEPS_SURVEY_SET ]: ( state = {}, action ) => {
 			return {
@@ -23,5 +21,5 @@ export default createReducer( {},
 			return {};
 		},
 	},
-	surveyStepSchema
+	surveyStepSchema,
 );

@@ -10,7 +10,7 @@ module.exports = {
 			nice_name: 'test6',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'editor' ],
-			site_ID: 1234
+			site_ID: 1234,
 		},
 
 		{
@@ -22,7 +22,7 @@ module.exports = {
 			nice_name: 'test7',
 			profile_URL: 'http://en.gravatar.com',
 			roles: [ 'administrator' ],
-			site_ID: 1234
-		}
-	]
+			site_ID: 1234,
+		},
+	],
 };

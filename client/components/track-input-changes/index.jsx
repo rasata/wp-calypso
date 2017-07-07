@@ -9,12 +9,12 @@ export default React.createClass( {
 	displayName: 'TrackInputChanges',
 
 	propTypes: {
-		onNewValue: React.PropTypes.func
+		onNewValue: React.PropTypes.func,
 	},
 
 	getDefaultProps() {
 		return {
-			onNewValue: noop
+			onNewValue: noop,
 		};
 	},
 
@@ -22,7 +22,7 @@ export default React.createClass( {
 		this.inputEdited = false;
 	},
 
-	onInputChange( /*event*/ ) {
+	onInputChange(/*event*/) {
 		this.inputEdited = true;
 	},
 
@@ -49,9 +49,9 @@ export default React.createClass( {
 					child.props.onBlur.call( child, event );
 				}
 				this.onInputBlur( event );
-			}
+			},
 		} );
 
 		return React.cloneElement( child, props );
-	}
+	},
 } );

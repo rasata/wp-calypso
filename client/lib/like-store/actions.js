@@ -30,7 +30,6 @@ function getQuery() {
 }
 
 var LikeActions = {
-
 	/**
 	* Fetch a post's list of likes
 	*
@@ -64,7 +63,7 @@ var LikeActions = {
 		Dispatcher.handleViewAction( {
 			type: 'LIKE_POST',
 			siteId: siteId,
-			postId: postId
+			postId: postId,
 		} );
 
 		wpcom.site( siteId ).post( postId ).like().add( getQuery(), function( error, data ) {
@@ -81,7 +80,7 @@ var LikeActions = {
 		Dispatcher.handleViewAction( {
 			type: 'UNLIKE_POST',
 			siteId: siteId,
-			postId: postId
+			postId: postId,
 		} );
 
 		wpcom.site( siteId ).post( postId ).like().del( getQuery(), function( error, data ) {
@@ -95,7 +94,7 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
 	},
 
@@ -105,7 +104,7 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
 	},
 
@@ -116,9 +115,9 @@ var LikeActions = {
 			error: error,
 			siteId: siteId,
 			postId: postId,
-			data: data
+			data: data,
 		} );
-	}
+	},
 };
 
 module.exports = LikeActions;

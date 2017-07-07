@@ -17,7 +17,7 @@ import {
 	SITES_UPDATE,
 	SITES_ONCE_CHANGED,
 	SELECTED_SITE_SUBSCRIBE,
-	SELECTED_SITE_UNSUBSCRIBE
+	SELECTED_SITE_UNSUBSCRIBE,
 } from 'state/action-types';
 import analytics from 'lib/analytics';
 import cartStore from 'lib/cart/store';
@@ -82,7 +82,9 @@ const receiveSelectedSitesChangeListener = ( dispatch, action ) => {
  */
 const removeSelectedSitesChangeListener = ( dispatch, action ) => {
 	debug( 'removeSelectedSitesChangeListener' );
-	selectedSiteChangeListeners = selectedSiteChangeListeners.filter( listener => listener !== action.listener );
+	selectedSiteChangeListeners = selectedSiteChangeListeners.filter(
+		listener => listener !== action.listener,
+	);
 };
 
 /*
@@ -185,7 +187,7 @@ const receiveSitesChangeListener = ( dispatch, action ) => {
  */
 const fireChangeListeners = () => {
 	debug( 'firing', sitesListeners.length, 'emitters' );
-	sitesListeners.forEach( ( listener ) => listener() );
+	sitesListeners.forEach( listener => listener() );
 	sitesListeners = [];
 };
 
@@ -193,7 +195,6 @@ const handler = ( dispatch, action, getState ) => {
 	switch ( action.type ) {
 		case ANALYTICS_SUPER_PROPS_UPDATE:
 			return updateSelectedSiteForAnalytics( dispatch, action, getState );
-
 		//when the notifications panel is open keyboard events should not fire.
 		case NOTIFICATIONS_PANEL_TOGGLE:
 			return updateNotificationsOpenForKeyboardShortcuts( dispatch, action, getState );
@@ -233,7 +234,7 @@ const handler = ( dispatch, action, getState ) => {
 	}
 };
 
-export const libraryMiddleware = ( { dispatch, getState } ) => ( next ) => ( action ) => {
+export const libraryMiddleware = ( { dispatch, getState } ) => next => action => {
 	handler( dispatch, action, getState );
 
 	return next( action );

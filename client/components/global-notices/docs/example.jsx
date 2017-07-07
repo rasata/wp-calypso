@@ -27,7 +27,7 @@ class GlobalNotices extends Component {
 
 	toggleUseState( event ) {
 		this.setState( {
-			useState: event.target.checked
+			useState: event.target.checked,
 		} );
 	}
 
@@ -44,9 +44,7 @@ class GlobalNotices extends Component {
 		return (
 			<div>
 				<label>
-					<FormCheckbox
-						onChange={ this.toggleUseState }
-						checked={ this.state.useState } />
+					<FormCheckbox onChange={ this.toggleUseState } checked={ this.state.useState } />
 					<span>Use global application state</span>
 				</label>
 				<ButtonGroup>
@@ -61,7 +59,7 @@ class GlobalNotices extends Component {
 }
 
 GlobalNotices.propTypes = {
-	createNotice: PropTypes.func
+	createNotice: PropTypes.func,
 };
 
 const ConnectedGlobalNotices = connect( null, { createNotice } )( GlobalNotices );

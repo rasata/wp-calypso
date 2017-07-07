@@ -3,10 +3,7 @@
  */
 import { expect } from 'chai';
 
-import {
-	processInboundChain,
-	processOutboundChain,
-} from '../';
+import { processInboundChain, processOutboundChain } from '../';
 
 const succeeder = { type: 'SUCCESS' };
 const failer = { type: 'FAILURE' };
@@ -35,7 +32,13 @@ describe( '#processInboundChain', () => {
 
 	it( 'should pass through data given an empty chain', () => {
 		expect(
-			processInboundChain( [] )( getSites, {}, { value: 1 }, { error: 'bad' }, { header: 'foobar' } )
+			processInboundChain( [] )(
+				getSites,
+				{},
+				{ value: 1 },
+				{ error: 'bad' },
+				{ header: 'foobar' },
+			),
 		).to.eql( {
 			failures: [ getSites.onFailure ],
 			nextData: { value: 1 },
@@ -46,9 +49,7 @@ describe( '#processInboundChain', () => {
 	} );
 
 	it( 'should sequence a single processor', () => {
-		expect(
-			processInboundChain( [ responderDoubler ] )( getSites, {}, {}, {}, {} )
-		).to.eql( {
+		expect( processInboundChain( [ responderDoubler ] )( getSites, {}, {}, {}, {} ) ).to.eql( {
 			failures: [ getSites.onFailure, getSites.onFailure ],
 			nextData: {},
 			nextError: {},
@@ -59,19 +60,19 @@ describe( '#processInboundChain', () => {
 
 	it( 'should sequence multiple processors', () => {
 		expect(
-			processInboundChain( [ responderDoubler, responderDoubler ] )( getSites, {}, {}, {}, {} )
+			processInboundChain( [ responderDoubler, responderDoubler ] )( getSites, {}, {}, {}, {} ),
 		).to.eql( {
-			failures: ( new Array( 4 ) ).fill( getSites.onFailure ),
+			failures: new Array( 4 ).fill( getSites.onFailure ),
 			nextData: {},
 			nextError: {},
 			nextHeaders: {},
-			successes: ( new Array( 4 ) ).fill( getSites.onSuccess ),
+			successes: new Array( 4 ).fill( getSites.onSuccess ),
 		} );
 	} );
 
 	it( 'should abort the chain as soon as `shouldAbort` is set', () => {
 		expect(
-			processInboundChain( [ aborter, responderDoubler ] )( getSites, {}, {}, {}, {} )
+			processInboundChain( [ aborter, responderDoubler ] )( getSites, {}, {}, {}, {} ),
 		).to.eql( {
 			failures: [],
 			nextData: {},
@@ -98,7 +99,7 @@ describe( '#processOutboundChain', () => {
 			nextRequest: {
 				...nextRequest,
 				path: path + path,
-			}
+			},
 		};
 	};
 
@@ -116,7 +117,7 @@ describe( '#processOutboundChain', () => {
 	it( 'should sequence multiple processors', () => {
 		expect( processOutboundChain( [ pathDoubler, pathDoubler ] )( getSites, {} ) ).to.eql( {
 			...getSites,
-			path: ( new Array( 4 ) ).fill( getSites.path ).join( '' ),
+			path: new Array( 4 ).fill( getSites.path ).join( '' ),
 		} );
 	} );
 

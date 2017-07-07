@@ -69,45 +69,47 @@ export class CommentDetail extends Component {
 
 	blockUser = () => {
 		this.setState( { authorIsBlocked: ! this.state.authorIsBlocked } );
-	}
+	};
 
 	deleteCommentPermanently = () => {
 		const { commentId, deleteCommentPermanently, translate } = this.props;
-		if ( isUndefined( window ) || window.confirm( translate( 'Delete this comment permanently?' ) ) ) {
+		if (
+			isUndefined( window ) || window.confirm( translate( 'Delete this comment permanently?' ) )
+		) {
 			deleteCommentPermanently( commentId );
 		}
-	}
+	};
 
 	edit = () => noop;
 
 	toggleApprove = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'approved' === commentStatus ? 'unapproved' : 'approved' );
-	}
+	};
 
 	toggleExpanded = () => {
 		this.setState( { isExpanded: ! this.state.isExpanded } );
-	}
+	};
 
 	toggleLike = () => {
 		const { commentId, toggleCommentLike } = this.props;
 		toggleCommentLike( commentId );
-	}
+	};
 
 	toggleSelected = () => {
 		const { commentId, toggleCommentSelected } = this.props;
 		toggleCommentSelected( commentId );
-	}
+	};
 
 	toggleSpam = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'spam' === commentStatus ? 'approved' : 'spam' );
-	}
+	};
 
 	toggleTrash = () => {
 		const { commentId, commentStatus, setCommentStatus } = this.props;
 		setCommentStatus( commentId, 'trash' === commentStatus ? 'approved' : 'trash' );
-	}
+	};
 
 	render() {
 		const {
@@ -137,10 +139,7 @@ export class CommentDetail extends Component {
 			submitComment,
 		} = this.props;
 
-		const {
-			authorIsBlocked,
-			isExpanded,
-		} = this.state;
+		const { authorIsBlocked, isExpanded } = this.state;
 
 		const classes = classNames( 'comment-detail', {
 			'author-is-blocked': authorIsBlocked,
@@ -211,8 +210,7 @@ export class CommentDetail extends Component {
 							postTitle={ postTitle }
 							submitComment={ submitComment }
 						/>
-					</div>
-				}
+					</div> }
 			</Card>
 		);
 	}
@@ -222,10 +220,7 @@ const mapStateToProps = ( state, ownProps ) => {
 	// TODO: replace `const comment = ownProps.comment;` with
 	// `const comment = ownProps.comment || getComment( ownProps.commentId );`
 	// when the selector is ready.
-	const {
-		comment,
-		siteId,
-	} = ownProps;
+	const { comment, siteId } = ownProps;
 
 	const postId = get( comment, 'post.ID' );
 
@@ -239,7 +234,7 @@ const mapStateToProps = ( state, ownProps ) => {
 	// TODO: eventually it will be returned already decoded from the data layer.
 	const parentCommentContent = decodeEntities( stripHTML( get( parentComment, 'content' ) ) );
 
-	return ( {
+	return {
 		authorAvatarUrl: get( comment, 'author.avatar_URL' ),
 		authorDisplayName: get( comment, 'author.name' ),
 		authorEmail: get( comment, 'author.email' ),
@@ -263,7 +258,7 @@ const mapStateToProps = ( state, ownProps ) => {
 		postUrl: get( comment, 'URL' ),
 		repliedToComment: comment.replied, // TODO: not available in the current data structure
 		siteId: comment.siteId || siteId,
-	} );
+	};
 };
 
 export default connect( mapStateToProps )( localize( CommentDetail ) );

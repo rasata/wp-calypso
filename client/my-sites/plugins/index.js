@@ -24,15 +24,9 @@ const nonJetpackRedirectTo = path => ( context, next ) => {
 
 module.exports = function() {
 	if ( config.isEnabled( 'manage/plugins/setup' ) ) {
-		page( '/plugins/setup',
-			controller.siteSelection,
-			pluginsController.setupPlugins
-		);
+		page( '/plugins/setup', controller.siteSelection, pluginsController.setupPlugins );
 
-		page( '/plugins/setup/:site',
-			controller.siteSelection,
-			pluginsController.setupPlugins
-		);
+		page( '/plugins/setup/:site', controller.siteSelection, pluginsController.setupPlugins );
 	}
 
 	if ( config.isEnabled( 'manage/plugins' ) ) {
@@ -46,51 +40,58 @@ module.exports = function() {
 			page.redirect( '/plugins/browse/' + context.params.site );
 		} );
 
-		page( '/plugins/browse/:category/:site',
+		page(
+			'/plugins/browse/:category/:site',
 			controller.siteSelection,
 			controller.navigation,
-			pluginsController.browsePlugins
+			pluginsController.browsePlugins,
 		);
 
-		page( '/plugins/browse/:siteOrCategory?',
+		page(
+			'/plugins/browse/:siteOrCategory?',
 			controller.siteSelection,
 			controller.navigation,
-			pluginsController.browsePlugins
+			pluginsController.browsePlugins,
 		);
 
-		page( '/plugins/category/:category/:site_id',
+		page(
+			'/plugins/category/:category/:site_id',
 			controller.siteSelection,
 			controller.navigation,
 			nonJetpackRedirectTo( '/plugins' ),
 			pluginsController.plugins.bind( null, 'all' ),
 		);
 
-		page( '/plugins',
+		page(
+			'/plugins',
 			controller.siteSelection,
 			controller.navigation,
 			pluginsController.plugins.bind( null, 'all' ),
-			controller.sites
+			controller.sites,
 		);
 
-		[ 'active', 'inactive', 'updates' ].forEach( filter => (
-			page( `/plugins/${ filter }/:site_id?`,
+		[ 'active', 'inactive', 'updates' ].forEach( filter =>
+			page(
+				`/plugins/${ filter }/:site_id?`,
 				controller.siteSelection,
 				controller.navigation,
 				pluginsController.jetpackCanUpdate.bind( null, filter ),
-				pluginsController.plugins.bind( null, filter )
-			)
-		) );
-
-		page( '/plugins/:plugin/:site_id?',
-			controller.siteSelection,
-			controller.navigation,
-			pluginsController.plugin
+				pluginsController.plugins.bind( null, filter ),
+			),
 		);
 
-		page( '/plugins/:plugin/eligibility/:site_id',
+		page(
+			'/plugins/:plugin/:site_id?',
 			controller.siteSelection,
 			controller.navigation,
-			pluginsController.eligibility
+			pluginsController.plugin,
+		);
+
+		page(
+			'/plugins/:plugin/eligibility/:site_id',
+			controller.siteSelection,
+			controller.navigation,
+			pluginsController.eligibility,
 		);
 
 		page.exit( '/plugins/*', ( context, next ) => {

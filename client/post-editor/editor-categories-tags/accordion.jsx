@@ -42,7 +42,8 @@ export class EditorCategoriesTagsAccordion extends Component {
 				status="is-warning"
 				showDismiss={ false }
 				text={ translate( 'You must update Jetpack to use this feature.' ) }
-				className="editor-categories-tags__upgrade-notice" >
+				className="editor-categories-tags__upgrade-notice"
+			>
 				<NoticeAction href={ addSiteFragment( '/plugins/jetpack', siteSlug ) }>
 					{ translate( 'Update Now' ) }
 				</NoticeAction>
@@ -60,11 +61,11 @@ export class EditorCategoriesTagsAccordion extends Component {
 			<AccordionSection>
 				<EditorDrawerLabel
 					helpText={ translate( 'Use categories to group your posts by topic.' ) }
-					labelText={ translate( 'Categories' ) } />
+					labelText={ translate( 'Categories' ) }
+				/>
 				{ isTermsSupported
 					? <TermSelector compact taxonomyName="category" />
-					: this.renderJetpackNotice()
-				}
+					: this.renderJetpackNotice() }
 			</AccordionSection>
 		);
 	}
@@ -80,8 +81,7 @@ export class EditorCategoriesTagsAccordion extends Component {
 				<EditorDrawerLabel helpText={ helpText } labelText={ translate( 'Tags' ) }>
 					{ isTermsSupported
 						? <TermTokenField taxonomyName="post_tag" />
-						: this.renderJetpackNotice()
-					}
+						: this.renderJetpackNotice() }
 				</EditorDrawerLabel>
 
 			</AccordionSection>
@@ -95,7 +95,7 @@ export class EditorCategoriesTagsAccordion extends Component {
 		if ( categories.length > 1 ) {
 			return translate( '%d category', '%d categories', {
 				args: [ categories.length ],
-				count: categories.length
+				count: categories.length,
 			} );
 		}
 
@@ -121,15 +121,13 @@ export class EditorCategoriesTagsAccordion extends Component {
 				return null; // No tags subtitle
 			case 1:
 			case 2:
-				return tags.map( ( tag ) => {
-					return '#' + unescapeString( tag.name || tag );
-				} ).join( ', ' );
+				return tags
+					.map( tag => {
+						return '#' + unescapeString( tag.name || tag );
+					} )
+					.join( ', ' );
 			default:
-				return translate(
-					'%d tag',
-					'%d tags',
-					{ args: [ tagsLength ], count: tagsLength }
-				);
+				return translate( '%d tag', '%d tags', { args: [ tagsLength ], count: tagsLength } );
 		}
 	}
 
@@ -171,15 +169,11 @@ export class EditorCategoriesTagsAccordion extends Component {
 		const classes = classNames(
 			'editor-drawer__accordion',
 			'editor-categories-tags__accordion',
-			this.props.className
+			this.props.className,
 		);
 
 		return (
-			<Accordion
-				title={ this.getTitle() }
-				subtitle={ this.getSubtitle() }
-				className={ classes }
-			>
+			<Accordion title={ this.getTitle() } subtitle={ this.getSubtitle() } className={ classes }>
 				{ this.renderCategories() }
 				{ this.renderTags() }
 			</Accordion>
@@ -187,21 +181,19 @@ export class EditorCategoriesTagsAccordion extends Component {
 	}
 }
 
-export default connect(
-	( state ) => {
-		const siteId = getSelectedSiteId( state );
-		const postId = getEditorPostId( state );
-		const defaultCategoryId = getSiteOption( state, siteId, 'default_category' );
-		const isTermsSupported = false !== isJetpackMinimumVersion( state, siteId, '4.1.0' );
+export default connect( state => {
+	const siteId = getSelectedSiteId( state );
+	const postId = getEditorPostId( state );
+	const defaultCategoryId = getSiteOption( state, siteId, 'default_category' );
+	const isTermsSupported = false !== isJetpackMinimumVersion( state, siteId, '4.1.0' );
 
-		return {
-			defaultCategory: getTerm( state, siteId, 'category', defaultCategoryId ),
-			postTerms: getEditedPostValue( state, siteId, postId, 'terms' ),
-			postType: getEditedPostValue( state, siteId, postId, 'type' ),
-			siteSlug: getSiteSlug( state, siteId ),
-			siteId,
-			postId,
-			isTermsSupported,
-		};
-	}
-)( localize( EditorCategoriesTagsAccordion ) );
+	return {
+		defaultCategory: getTerm( state, siteId, 'category', defaultCategoryId ),
+		postTerms: getEditedPostValue( state, siteId, postId, 'terms' ),
+		postType: getEditedPostValue( state, siteId, postId, 'type' ),
+		siteSlug: getSiteSlug( state, siteId ),
+		siteId,
+		postId,
+		isTermsSupported,
+	};
+} )( localize( EditorCategoriesTagsAccordion ) );

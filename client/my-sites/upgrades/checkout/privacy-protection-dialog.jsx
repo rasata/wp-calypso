@@ -16,33 +16,48 @@ module.exports = React.createClass( {
 
 	getDefaultProps: function() {
 		return {
-			isVisible: false
+			isVisible: false,
 		};
 	},
 
 	formatAsFields: function( contactInformation ) {
-		return transform( contactInformation, ( result, value, key ) => {
-			result[ key ] = { value };
-		}, {} );
+		return transform(
+			contactInformation,
+			( result, value, key ) => {
+				result[ key ] = { value };
+			},
+			{},
+		);
 	},
 
 	render: function() {
-		let privacyPrice = this.translate( '%(cost)s per domain / year', { args: { cost: this.props.cost } } );
+		let privacyPrice = this.translate( '%(cost)s per domain / year', {
+			args: { cost: this.props.cost },
+		} );
 		if ( this.props.isFree ) {
-			privacyPrice =
+			privacyPrice = (
 				<span className="privacy-free-text">
 					{ this.translate( 'Free with your plan' ) }
-				</span>;
+				</span>
+			);
 		}
 
 		return (
-			<Dialog additionalClassNames="privacy-protection-dialog" isVisible={ this.props.isVisible } onClose={ this.props.onClose }>
+			<Dialog
+				additionalClassNames="privacy-protection-dialog"
+				isVisible={ this.props.isVisible }
+				onClose={ this.props.onClose }
+			>
 				<header>
 					<h1>{ this.translate( 'Why do I need Privacy Protection?' ) }</h1>
 					<p>
-						{ this.translate( 'Domains are required to have publicly accessible contact information.' ) }
+						{ this.translate(
+							'Domains are required to have publicly accessible contact information.',
+						) }
 						<span className="line-break">
-							{ this.translate( 'With Privacy Protection, we show our partner\'s contact information instead of your own, helping to:' ) }
+							{ this.translate(
+								"With Privacy Protection, we show our partner's contact information instead of your own, helping to:",
+							) }
 						</span>
 					</p>
 				</header>
@@ -61,12 +76,16 @@ module.exports = React.createClass( {
 							{ privacyPrice }
 						</div>
 						<PrivacyProtectionExample
-							countriesList= { this.props.countriesList }
-							fields={ this.formatAsFields( getProtectedContactInformation( this.props.domain, this.props.registrar ) ) } />
+							countriesList={ this.props.countriesList }
+							fields={ this.formatAsFields(
+								getProtectedContactInformation( this.props.domain, this.props.registrar ),
+							) }
+						/>
 						<button
-								className="button is-primary"
-								disabled={ this.props.disabled }
-								onClick={ this.props.onSelect.bind( null, { addPrivacy: true } ) }>
+							className="button is-primary"
+							disabled={ this.props.disabled }
+							onClick={ this.props.onSelect.bind( null, { addPrivacy: true } ) }
+						>
 							{ this.translate( 'Add Privacy Protection' ) }
 						</button>
 					</li>
@@ -74,17 +93,19 @@ module.exports = React.createClass( {
 						<h3>{ this.translate( 'Without Privacy Protection' ) }</h3>
 						<div className="privacy-price">{ this.translate( 'No additional cost' ) }</div>
 						<PrivacyProtectionExample
-							countriesList= { this.props.countriesList }
-							fields={ this.props.fields } />
+							countriesList={ this.props.countriesList }
+							fields={ this.props.fields }
+						/>
 						<button
-								className="button"
-								disabled={ this.props.disabled }
-								onClick={ this.props.onSelect.bind( null, { addPrivacy: false } ) }>
+							className="button"
+							disabled={ this.props.disabled }
+							onClick={ this.props.onSelect.bind( null, { addPrivacy: false } ) }
+						>
 							{ this.translate( 'Publish My Information' ) }
 						</button>
 					</li>
 				</ul>
 			</Dialog>
 		);
-	}
+	},
 } );

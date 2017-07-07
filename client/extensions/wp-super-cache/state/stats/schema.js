@@ -21,8 +21,8 @@ export const statsSchema = {
 				wpcache: {
 					type: 'object',
 					items: cacheSchema,
-				}
-			}
-		}
-	}
+				},
+			},
+		},
+	},
 };

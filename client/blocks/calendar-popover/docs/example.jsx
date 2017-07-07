@@ -1,4 +1,3 @@
-
 /**
  * External dependencies
  */
@@ -23,11 +22,7 @@ class CalendarPopoverExample extends PureComponent {
 	render() {
 		return (
 			<div>
-				<Button
-					primary
-					ref="button"
-					onClick={ this.toggle }
-				>
+				<Button primary ref="button" onClick={ this.toggle }>
 					Show Popover
 				</Button>
 

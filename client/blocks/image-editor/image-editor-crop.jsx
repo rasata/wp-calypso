@@ -15,13 +15,10 @@ import {
 	getImageEditorAspectRatio,
 	getImageEditorTransform,
 	getImageEditorCrop,
-	imageEditorHasChanges
+	imageEditorHasChanges,
 } from 'state/ui/editor/image-editor/selectors';
 import { AspectRatios } from 'state/ui/editor/image-editor/constants';
-import {
-	imageEditorCrop,
-	imageEditorComputedCrop
-} from 'state/ui/editor/image-editor/actions';
+import { imageEditorCrop, imageEditorComputedCrop } from 'state/ui/editor/image-editor/actions';
 import { defaultCrop } from 'state/ui/editor/image-editor/reducer';
 import { getImageEditorOriginalAspectRatio } from 'state/selectors';
 
@@ -32,22 +29,22 @@ class ImageEditorCrop extends Component {
 			topBound: PropTypes.number,
 			leftBound: PropTypes.number,
 			bottomBound: PropTypes.number,
-			rightBound: PropTypes.number
+			rightBound: PropTypes.number,
 		} ),
 		crop: PropTypes.shape( {
 			topRatio: PropTypes.number,
 			leftRatio: PropTypes.number,
 			widthRatio: PropTypes.number,
-			heightRatio: PropTypes.number
+			heightRatio: PropTypes.number,
 		} ),
 		aspectRatio: PropTypes.string,
 		imageEditorCrop: PropTypes.func,
 		imageEditorComputedCrop: PropTypes.func,
 		minCropSize: PropTypes.shape( {
 			width: PropTypes.number,
-			height: PropTypes.number
+			height: PropTypes.number,
 		} ),
-		imageEditorHasChanges: PropTypes.bool
+		imageEditorHasChanges: PropTypes.bool,
 	};
 
 	static defaultProps = {
@@ -56,15 +53,15 @@ class ImageEditorCrop extends Component {
 			topBound: 0,
 			leftBound: 0,
 			bottomBound: 100,
-			rightBound: 100
+			rightBound: 100,
 		},
 		imageEditorCrop: noop,
 		imageEditorComputedCrop: noop,
 		minCropSize: {
 			width: 50,
-			height: 50
+			height: 50,
 		},
-		imageEditorHasChanges: false
+		imageEditorHasChanges: false,
 	};
 
 	constructor( props ) {
@@ -86,24 +83,16 @@ class ImageEditorCrop extends Component {
 			top: props.bounds.topBound,
 			left: props.bounds.leftBound,
 			bottom: props.bounds.bottomBound,
-			right: props.bounds.rightBound
+			right: props.bounds.rightBound,
 		};
 	}
 
 	componentWillMount() {
-		this.updateCrop(
-			this.getDefaultState( this.props ),
-			this.props,
-			this.applyComputedCrop
-		);
+		this.updateCrop( this.getDefaultState( this.props ), this.props, this.applyComputedCrop );
 	}
 
 	componentWillReceiveProps( newProps ) {
-		const {
-			bounds,
-			aspectRatio,
-			crop
-		} = this.props;
+		const { bounds, aspectRatio, crop } = this.props;
 
 		if ( ! isEqual( bounds, newProps.bounds ) ) {
 			const imageWidth = newProps.bounds.rightBound - newProps.bounds.leftBound;
@@ -117,7 +106,7 @@ class ImageEditorCrop extends Component {
 				top: newTop,
 				left: newLeft,
 				bottom: newBottom,
-				right: newRight
+				right: newRight,
 			};
 
 			this.setState( newBounds );
@@ -157,10 +146,7 @@ class ImageEditorCrop extends Component {
 			newWidth = newState.right - newState.left,
 			newHeight = newState.bottom - newState.top;
 
-		let imageWidth,
-			imageHeight,
-			finalWidth = newWidth,
-			finalHeight = newHeight;
+		let imageWidth, imageHeight, finalWidth = newWidth, finalHeight = newHeight;
 
 		switch ( aspectRatio ) {
 			case AspectRatios.ORIGINAL:
@@ -225,10 +211,9 @@ class ImageEditorCrop extends Component {
 		const { right, bottom } = this.state;
 		const { minCropSize } = this.props;
 
-		let top = y,
-			left = x;
+		let top = y, left = x;
 
-		if ( right - left <= minCropSize.width	) {
+		if ( right - left <= minCropSize.width ) {
 			left = right - minCropSize.width;
 		}
 
@@ -238,7 +223,7 @@ class ImageEditorCrop extends Component {
 
 		this.updateCrop( {
 			top,
-			left
+			left,
 		} );
 	}
 
@@ -246,10 +231,9 @@ class ImageEditorCrop extends Component {
 		const { left, bottom } = this.state;
 		const { minCropSize } = this.props;
 
-		let top = y,
-			right = x;
+		let top = y, right = x;
 
-		if ( right - left <= minCropSize.width	) {
+		if ( right - left <= minCropSize.width ) {
 			right = left + minCropSize.width;
 		}
 
@@ -259,7 +243,7 @@ class ImageEditorCrop extends Component {
 
 		this.updateCrop( {
 			top,
-			right
+			right,
 		} );
 	}
 
@@ -267,10 +251,9 @@ class ImageEditorCrop extends Component {
 		const { left, top } = this.state;
 		const { minCropSize } = this.props;
 
-		let bottom = y,
-			right = x;
+		let bottom = y, right = x;
 
-		if ( right - left <= minCropSize.width	) {
+		if ( right - left <= minCropSize.width ) {
 			right = left + minCropSize.width;
 		}
 
@@ -280,7 +263,7 @@ class ImageEditorCrop extends Component {
 
 		this.updateCrop( {
 			bottom,
-			right
+			right,
 		} );
 	}
 
@@ -288,10 +271,9 @@ class ImageEditorCrop extends Component {
 		const { right, top } = this.state;
 		const { minCropSize } = this.props;
 
-		let bottom = y,
-			left = x;
+		let bottom = y, left = x;
 
-		if ( right - left <= minCropSize.width	) {
+		if ( right - left <= minCropSize.width ) {
 			left = right - minCropSize.width;
 		}
 
@@ -301,37 +283,25 @@ class ImageEditorCrop extends Component {
 
 		this.updateCrop( {
 			bottom,
-			left
+			left,
 		} );
 	}
 
 	onBorderDrag( x, y ) {
-		const { top, left, right, bottom } = this.state,
-			width = right - left,
-			height = bottom - top;
+		const { top, left, right, bottom } = this.state, width = right - left, height = bottom - top;
 
 		this.setState( {
 			top: y,
 			left: x,
 			bottom: y + height,
-			right: x + width
+			right: x + width,
 		} );
 	}
 
 	getCropBounds() {
-		const {
-			top,
-			left,
-			right,
-			bottom
-		} = this.state;
+		const { top, left, right, bottom } = this.state;
 
-		const {
-			topBound,
-			leftBound,
-			rightBound,
-			bottomBound
-		} = this.props.bounds;
+		const { topBound, leftBound, rightBound, bottomBound } = this.props.bounds;
 
 		const currentTop = top - topBound,
 			currentLeft = left - leftBound,
@@ -357,7 +327,7 @@ class ImageEditorCrop extends Component {
 			currentTop / imageHeight,
 			currentLeft / imageWidth,
 			currentWidth / imageWidth,
-			currentHeight / imageHeight
+			currentHeight / imageHeight,
 		];
 	}
 
@@ -370,23 +340,13 @@ class ImageEditorCrop extends Component {
 	}
 
 	render() {
-		const {
-			top,
-			left,
-			right,
-			bottom
-		} = this.state;
+		const { top, left, right, bottom } = this.state;
 
 		const width = right - left,
 			height = bottom - top,
 			handleClassName = 'image-editor__crop-handle';
 
-		const {
-			topBound,
-			leftBound,
-			rightBound,
-			bottomBound
-		} = this.props.bounds;
+		const { topBound, leftBound, rightBound, bottomBound } = this.props.bounds;
 
 		return (
 			<div>
@@ -396,7 +356,7 @@ class ImageEditorCrop extends Component {
 						top: topBound + 'px',
 						left: left + 'px',
 						width: width + 'px',
-						height: Math.max( 0, top - topBound ) + 'px'
+						height: Math.max( 0, top - topBound ) + 'px',
 					} }
 				/>
 				<div
@@ -405,7 +365,7 @@ class ImageEditorCrop extends Component {
 						top: topBound + 'px',
 						left: leftBound + 'px',
 						width: Math.max( 0, left - leftBound ) + 'px',
-						height: Math.max( 0, bottomBound - topBound ) + 'px'
+						height: Math.max( 0, bottomBound - topBound ) + 'px',
 					} }
 				/>
 				<div
@@ -414,7 +374,7 @@ class ImageEditorCrop extends Component {
 						top: bottom + 'px',
 						left: left + 'px',
 						width: width + 'px',
-						height: Math.max( 0, bottomBound - bottom ) + 'px'
+						height: Math.max( 0, bottomBound - bottom ) + 'px',
 					} }
 				/>
 				<div
@@ -423,7 +383,7 @@ class ImageEditorCrop extends Component {
 						top: topBound + 'px',
 						left: right + 'px',
 						width: Math.max( 0, rightBound - right ) + 'px',
-						height: Math.max( 0, bottomBound - topBound ) + 'px'
+						height: Math.max( 0, bottomBound - topBound ) + 'px',
 					} }
 				/>
 				<Draggable
@@ -438,7 +398,7 @@ class ImageEditorCrop extends Component {
 						top: topBound,
 						left: leftBound,
 						bottom: bottomBound,
-						right: rightBound
+						right: rightBound,
 					} }
 					className="image-editor__crop"
 				/>
@@ -452,7 +412,7 @@ class ImageEditorCrop extends Component {
 						bottom,
 						right,
 						top: topBound,
-						left: leftBound
+						left: leftBound,
 					} }
 					ref="topLeft"
 					className={ classNames( handleClassName, handleClassName + '-nwse' ) }
@@ -467,7 +427,7 @@ class ImageEditorCrop extends Component {
 						bottom,
 						left,
 						top: topBound,
-						right: rightBound
+						right: rightBound,
 					} }
 					ref="topRight"
 					className={ classNames( handleClassName, handleClassName + '-nesw' ) }
@@ -482,7 +442,7 @@ class ImageEditorCrop extends Component {
 						top,
 						left,
 						bottom: bottomBound,
-						right: rightBound
+						right: rightBound,
 					} }
 					ref="bottomRight"
 					className={ classNames( handleClassName, handleClassName + '-nwse' ) }
@@ -497,7 +457,7 @@ class ImageEditorCrop extends Component {
 						top,
 						right,
 						bottom: bottomBound,
-						left: leftBound
+						left: leftBound,
 					} }
 					ref="bottomLeft"
 					className={ classNames( handleClassName, handleClassName + '-nesw' ) }
@@ -508,7 +468,7 @@ class ImageEditorCrop extends Component {
 }
 
 export default connect(
-	( state ) => {
+	state => {
 		const bounds = getImageEditorCropBounds( state );
 		const crop = getImageEditorCrop( state );
 		const aspectRatio = getImageEditorAspectRatio( state );
@@ -520,11 +480,11 @@ export default connect(
 			aspectRatio,
 			degrees,
 			originalAspectRatio: getImageEditorOriginalAspectRatio( state ),
-			imageEditorHasChanges: imageEditorHasChanges( state )
+			imageEditorHasChanges: imageEditorHasChanges( state ),
 		};
 	},
 	{
 		imageEditorCrop,
-		imageEditorComputedCrop
-	}
+		imageEditorComputedCrop,
+	},
 )( ImageEditorCrop );

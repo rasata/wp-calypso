@@ -15,9 +15,12 @@ import RedirectWhenLoggedIn from 'components/redirect-when-logged-in';
 import page from 'page';
 import { recordPageView } from 'state/analytics/actions';
 
-const lostPasswordURL = addQueryArgs( {
-	action: 'lostpassword',
-}, config( 'login_url' ) );
+const lostPasswordURL = addQueryArgs(
+	{
+		action: 'lostpassword',
+	},
+	config( 'login_url' ),
+);
 
 class EmailedLoginLinkExpired extends React.Component {
 	static propTypes = {

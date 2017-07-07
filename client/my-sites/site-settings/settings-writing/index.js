@@ -17,7 +17,7 @@ export default function() {
 		mySitesController.siteSelection,
 		mySitesController.navigation,
 		settingsController.siteSettings,
-		controller.writing
+		controller.writing,
 	);
 
 	if ( config.isEnabled( 'manage/site-settings/categories' ) ) {
@@ -26,7 +26,7 @@ export default function() {
 			mySitesController.siteSelection,
 			mySitesController.navigation,
 			settingsController.setScroll,
-			controller.taxonomies
+			controller.taxonomies,
 		);
 	}
 }

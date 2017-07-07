@@ -28,23 +28,21 @@ const PrimaryDomain = React.createClass( {
 	propTypes: {
 		domains: React.PropTypes.object.isRequired,
 		selectedDomainName: React.PropTypes.string.isRequired,
-		selectedSite: React.PropTypes.oneOfType( [
-			React.PropTypes.object,
-			React.PropTypes.bool
-		] ).isRequired
+		selectedSite: React.PropTypes.oneOfType( [ React.PropTypes.object, React.PropTypes.bool ] )
+			.isRequired,
 	},
 
 	getInitialState() {
 		return {
 			loading: false,
-			errorMessage: null
+			errorMessage: null,
 		};
 	},
 
 	getEditPath() {
 		return paths.domainManagementEdit(
 			this.props.selectedSite.slug,
-			this.props.selectedDomainName
+			this.props.selectedDomainName,
 		);
 	},
 
@@ -64,7 +62,7 @@ const PrimaryDomain = React.createClass( {
 
 			this.setState( {
 				loading: true,
-				errorMessage: null
+				errorMessage: null,
 			} );
 
 			this.props.setPrimaryDomain(
@@ -79,14 +77,15 @@ const PrimaryDomain = React.createClass( {
 					} else {
 						this.setState( {
 							loading: false,
-							errorMessage: error.message || this.translate(
-								'There was a problem updating your primary ' +
-								'domain. Please try again later or contact ' +
-								'support'
-							)
+							errorMessage: error.message ||
+								this.translate(
+									'There was a problem updating your primary ' +
+										'domain. Please try again later or contact ' +
+										'support',
+								),
 						} );
 					}
-				}
+				},
 			);
 		}
 	},
@@ -96,29 +95,23 @@ const PrimaryDomain = React.createClass( {
 		}
 	},
 	render() {
-		const {
-			selectedDomainName,
-			selectedSite,
-		} = this.props;
+		const { selectedDomainName, selectedSite } = this.props;
 		const primaryDomainSupportUrl = support.SETTING_PRIMARY_DOMAIN;
 
 		return (
 			<Main className="domain-management-primary-domain">
 				<QuerySiteDomains siteId={ selectedSite && selectedSite.ID } />
 
-				<Header
-					selectedDomainName={ selectedDomainName }
-					onClick={ this.goToEditDomainRoot }>
+				<Header selectedDomainName={ selectedDomainName } onClick={ this.goToEditDomainRoot }>
 					{ this.translate( 'Primary Domain' ) }
 				</Header>
 
 				{ this.errors() }
 
 				<SectionHeader
-					label={ this.translate(
-						'Make %(domainName)s the Primary Domain',
-						{ args: { domainName: selectedDomainName } }
-					) }
+					label={ this.translate( 'Make %(domainName)s the Primary Domain', {
+						args: { domainName: selectedDomainName },
+					} ) }
 				/>
 
 				<Card className="primary-domain-card">
@@ -126,29 +119,27 @@ const PrimaryDomain = React.createClass( {
 						<div className="primary-domain-explanation">
 							{ this.translate(
 								'Your primary domain is the address ' +
-								'visitors will see in their browser ' +
-								'when visiting your site.'
+									'visitors will see in their browser ' +
+									'when visiting your site.',
 							) }
-							<a
-								href={ primaryDomainSupportUrl }
-								target="_blank"
-								rel="noopener noreferrer"
-							>{ this.translate( 'Learn More' ) }</a>
+							<a href={ primaryDomainSupportUrl } target="_blank" rel="noopener noreferrer">
+								{ this.translate( 'Learn More' ) }
+							</a>
 						</div>
 					</section>
 
-					<Notice
-						showDismiss={ false }
-						className="primary-domain-notice">
+					<Notice showDismiss={ false } className="primary-domain-notice">
 						{ this.translate(
 							'The primary domain for this site is currently ' +
-							'%(oldDomainName)s. If you update the primary ' +
-							'domain, all other domains will redirect to ' +
-							'%(newDomainName)s.',
-							{ args: {
-								oldDomainName: selectedSite.domain,
-								newDomainName: selectedDomainName
-							} }
+								'%(oldDomainName)s. If you update the primary ' +
+								'domain, all other domains will redirect to ' +
+								'%(newDomainName)s.',
+							{
+								args: {
+									oldDomainName: selectedSite.domain,
+									newDomainName: selectedDomainName,
+								},
+							},
 						) }
 					</Notice>
 
@@ -156,21 +147,23 @@ const PrimaryDomain = React.createClass( {
 						<button
 							className="button is-primary"
 							disabled={ this.state.loading }
-							onClick={ this.handleConfirmClick }>
+							onClick={ this.handleConfirmClick }
+						>
 							{ this.translate( 'Update Primary Domain' ) }
 						</button>
 
 						<button
 							className="button"
 							disabled={ this.state.loading }
-							onClick={ this.handleCancelClick }>
+							onClick={ this.handleCancelClick }
+						>
 							{ this.translate( 'Cancel' ) }
 						</button>
 					</section>
 				</Card>
 			</Main>
 		);
-	}
+	},
 } );
 
 const mapStateToProps = state => {
@@ -187,7 +180,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-	setPrimaryDomain: upgradesActions.setPrimaryDomain
+	setPrimaryDomain: upgradesActions.setPrimaryDomain,
 };
 
 export default connect( mapStateToProps, mapDispatchToProps )( PrimaryDomain );

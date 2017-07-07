@@ -34,7 +34,8 @@ const TableRow = ( { className, isHeader, href, children, ...props } ) => {
 			tabIndex="0"
 			onClick={ goToHref }
 			onKeyDown={ onKeyDownCallback( goToHref ) }
-			{ ...props }>
+			{ ...props }
+		>
 			{ children }
 		</tr>
 	);

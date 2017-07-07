@@ -1,7 +1,6 @@
 var debug = require( 'debug' )( 'calypso:poller' );
 
-var DEFAULT_INTERVAL = 30000,
-	_id = 0;
+var DEFAULT_INTERVAL = 30000, _id = 0;
 
 function Poller( dataStore, fetcher, options ) {
 	options = options || {};
@@ -38,9 +37,12 @@ function Poller( dataStore, fetcher, options ) {
 	}
 
 	// Defer setting initialized until stack is cleared
-	setTimeout( function() {
-		this.initialized = true;
-	}.bind( this ), 0 );
+	setTimeout(
+		function() {
+			this.initialized = true;
+		}.bind( this ),
+		0,
+	);
 }
 
 Poller.prototype.start = function() {

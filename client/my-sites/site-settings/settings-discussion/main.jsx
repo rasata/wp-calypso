@@ -15,10 +15,7 @@ import SiteSettingsNavigation from 'my-sites/site-settings/navigation';
 import DiscussionForm from 'my-sites/site-settings/form-discussion';
 import { getSelectedSite } from 'state/ui/selectors';
 
-const SiteSettingsWriting = ( {
-	site,
-	translate,
-} ) => (
+const SiteSettingsWriting = ( { site, translate } ) => (
 	<Main className="settings-discussion__main site-settings">
 		<DocumentHead title={ translate( 'Site Settings' ) } />
 		<SidebarNavigation />
@@ -27,8 +24,6 @@ const SiteSettingsWriting = ( {
 	</Main>
 );
 
-export default connect(
-	( state ) => ( {
-		site: getSelectedSite( state ),
-	} )
-)( localize( SiteSettingsWriting ) );
+export default connect( state => ( {
+	site: getSelectedSite( state ),
+} ) )( localize( SiteSettingsWriting ) );

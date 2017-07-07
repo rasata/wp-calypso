@@ -84,9 +84,11 @@ class ManagePurchase extends Component {
 		hasLoadedSites: React.PropTypes.bool.isRequired,
 		hasLoadedUserPurchasesFromServer: React.PropTypes.bool.isRequired,
 		selectedPurchase: React.PropTypes.object,
-		selectedSite: React.PropTypes.oneOfType(
-			[ React.PropTypes.object, React.PropTypes.bool, React.PropTypes.undefined ]
-		),
+		selectedSite: React.PropTypes.oneOfType( [
+			React.PropTypes.object,
+			React.PropTypes.bool,
+			React.PropTypes.undefined,
+		] ),
 	};
 
 	componentWillMount() {
@@ -135,7 +137,7 @@ class ManagePurchase extends Component {
 				{
 					id: purchase.id,
 					domain: purchase.domain,
-				}
+				},
 			);
 
 			renewItems.push( privacyItem );
@@ -149,7 +151,7 @@ class ManagePurchase extends Component {
 				{
 					id: purchase.id,
 					domain: purchase.domain,
-				}
+				},
 			);
 
 			renewItems.push( redemptionItem );
@@ -263,9 +265,7 @@ class ManagePurchase extends Component {
 		const { translate } = this.props;
 
 		if (
-			isExpired( purchase ) ||
-			! hasPrivacyProtection( purchase ) ||
-			! getSelectedSite( this.props )
+			isExpired( purchase ) || ! hasPrivacyProtection( purchase ) || ! getSelectedSite( this.props )
 		) {
 			return null;
 		}
@@ -323,7 +323,7 @@ class ManagePurchase extends Component {
 					args: {
 						domain: selectedSite.domain,
 					},
-				}
+				},
 			);
 		}
 

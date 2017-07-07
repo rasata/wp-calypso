@@ -30,7 +30,7 @@ const apiResponse = {
 	data: {
 		job_manager_per_page: 25,
 		job_manager_hide_filled_positions: true,
-	}
+	},
 };
 const saveAction = {
 	type: 'DUMMY_ACTION',
@@ -38,7 +38,7 @@ const saveAction = {
 	data: {
 		hideFilledPositions: true,
 		perPage: 25,
-	}
+	},
 };
 
 describe( '#fetchExtensionSettings()', () => {
@@ -52,13 +52,18 @@ describe( '#fetchExtensionSettings()', () => {
 		fetchExtensionSettings( { dispatch }, action );
 
 		expect( dispatch ).to.have.been.calledOnce;
-		expect( dispatch ).to.have.been.calledWith( http( {
-			method: 'GET',
-			path: '/jetpack-blogs/101010/rest-api/',
-			query: {
-				path: '/wpjm/v1/settings',
-			}
-		}, action ) );
+		expect( dispatch ).to.have.been.calledWith(
+			http(
+				{
+					method: 'GET',
+					path: '/jetpack-blogs/101010/rest-api/',
+					query: {
+						path: '/wpjm/v1/settings',
+					},
+				},
+				action,
+			),
+		);
 	} );
 } );
 
@@ -70,25 +75,27 @@ describe( '#updateExtensionSettings', () => {
 		updateExtensionSettings( { dispatch }, action, null, apiResponse );
 
 		expect( dispatch ).to.have.been.calledOnce;
-		expect( dispatch ).to.have.been.calledWith( updateSettings( 12345678, {
-			listings: {
-				perPage: 25,
-				hideFilledPositions: true,
-				hideExpired: undefined,
-				hideExpiredContent: undefined
-			},
-			categories: {
-				enableCategories: undefined,
-				enableDefaultCategory: undefined,
-				categoryFilterType: undefined
-			},
-			types: {
-				enableTypes: undefined,
-				multiJobType: undefined
-			},
-			format: { dateFormat: undefined },
-			apiKey: { googleMapsApiKey: undefined }
-		} ) );
+		expect( dispatch ).to.have.been.calledWith(
+			updateSettings( 12345678, {
+				listings: {
+					perPage: 25,
+					hideFilledPositions: true,
+					hideExpired: undefined,
+					hideExpiredContent: undefined,
+				},
+				categories: {
+					enableCategories: undefined,
+					enableDefaultCategory: undefined,
+					categoryFilterType: undefined,
+				},
+				types: {
+					enableTypes: undefined,
+					multiJobType: undefined,
+				},
+				format: { dateFormat: undefined },
+				apiKey: { googleMapsApiKey: undefined },
+			} ),
+		);
 	} );
 } );
 
@@ -110,15 +117,20 @@ describe( '#saveSettings()', () => {
 
 		saveSettings( { dispatch }, saveAction );
 
-		expect( dispatch ).to.have.been.calledWith( http( {
-			method: 'POST',
-			path: '/jetpack-blogs/101010/rest-api/',
-			query: {
-				body: JSON.stringify( apiResponse.data ),
-				json: true,
-				path: '/wpjm/v1/settings',
-			}
-		}, saveAction ) );
+		expect( dispatch ).to.have.been.calledWith(
+			http(
+				{
+					method: 'POST',
+					path: '/jetpack-blogs/101010/rest-api/',
+					query: {
+						body: JSON.stringify( apiResponse.data ),
+						json: true,
+						path: '/wpjm/v1/settings',
+					},
+				},
+				saveAction,
+			),
+		);
 	} );
 
 	it( 'should dispatch `removeNotice`', () => {
@@ -144,10 +156,9 @@ describe( '#announceSuccess()', () => {
 
 		announceSuccess( { dispatch }, saveAction );
 
-		expect( dispatch ).to.have.been.calledWith( successNotice( translate(
-			'Settings saved!' ),
-			{ id: 'wpjm-settings-save' }
-		) );
+		expect( dispatch ).to.have.been.calledWith(
+			successNotice( translate( 'Settings saved!' ), { id: 'wpjm-settings-save' } ),
+		);
 	} );
 } );
 
@@ -165,10 +176,10 @@ describe( '#announceFailure()', () => {
 
 		announceFailure( { dispatch }, saveAction );
 
-		expect( dispatch ).to.have.been.calledWith( errorNotice(
-			translate( 'There was a problem saving your changes. Please try again.' ),
-			{ id: 'wpjm-settings-save' }
-		) );
+		expect( dispatch ).to.have.been.calledWith(
+			errorNotice( translate( 'There was a problem saving your changes. Please try again.' ), {
+				id: 'wpjm-settings-save',
+			} ),
+		);
 	} );
 } );
-

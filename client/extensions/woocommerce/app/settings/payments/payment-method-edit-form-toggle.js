@@ -9,14 +9,14 @@ import { omit } from 'lodash';
  */
 import CompactFormToggle from 'components/forms/form-toggle/compact';
 
-const PaymentMethodEditFormToggle = ( props ) => {
+const PaymentMethodEditFormToggle = props => {
 	const { checked, name, onChange } = props;
 	const onChangeHandler = () => {
 		const fakeEvent = {
 			target: {
 				name,
-				value: checked ? 'no' : 'yes'
-			}
+				value: checked ? 'no' : 'yes',
+			},
 		};
 		onChange( fakeEvent );
 	};
@@ -26,7 +26,8 @@ const PaymentMethodEditFormToggle = ( props ) => {
 			{ ...omit( props, [ 'onChange' ] ) }
 			checked={ checked }
 			name={ name }
-			onChange={ onChangeHandler } />
+			onChange={ onChangeHandler }
+		/>
 	);
 };
 

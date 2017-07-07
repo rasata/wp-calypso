@@ -35,7 +35,7 @@ const mockComment = {
 	replied: true,
 	status: 'approved',
 	URL: 'http://discover.wordpress.com',
-}
+};
 
 const mockSite = {
 	id: 3584907,
@@ -47,13 +47,9 @@ const mockComments = [
 	{ ...mockComment, ID: 3 },
 ];
 
-const CommentList = ( {
-	comments,
-	setCommentStatus,
-	toggleCommentLike,
-} ) =>
+const CommentList = ( { comments, setCommentStatus, toggleCommentLike } ) => (
 	<div>
-		{ map( comments, comment =>
+		{ map( comments, comment => (
 			<CommentDetail
 				comment={ comment }
 				key={ comment.ID }
@@ -61,16 +57,18 @@ const CommentList = ( {
 				siteId={ mockSite.id }
 				toggleCommentLike={ toggleCommentLike }
 			/>
-		) }
-	</div>;
+		) ) }
+	</div>
+);
 
 const CommentListFake = CommentFaker( CommentList );
 
-export const CommentDetailExample = () =>
+export const CommentDetailExample = () => (
 	<div>
 		<CommentDetailPlaceholder />
 		<CommentListFake comments={ mockComments } status="all" />
-	</div>;
+	</div>
+);
 
 CommentDetailExample.displayName = 'CommentDetail';
 

@@ -50,5 +50,5 @@ export default connect(
 			requestingSettings: isRequestingSettings( state, siteId ),
 		};
 	},
-	{ requestSettings }
+	{ requestSettings },
 )( QuerySettings );

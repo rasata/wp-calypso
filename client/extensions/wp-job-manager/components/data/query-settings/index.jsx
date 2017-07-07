@@ -46,5 +46,5 @@ class QuerySettings extends Component {
 
 export default connect(
 	( state, { siteId } ) => ( { fetchingSettings: isFetchingSettings( state, siteId ) } ),
-	{ fetchSettings }
+	{ fetchSettings },
 )( QuerySettings );

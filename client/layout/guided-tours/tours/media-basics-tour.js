@@ -66,7 +66,7 @@ export const MediaBasicsTour = makeTour(
 				{ translate( 'You can also drag-and-drop image and video files from your computer into your media library.' ) }
 			</p>
 			<img
-				src="https://cldup.com/AnA1V5AnoE.gif"
+				src="https://en-support.files.wordpress.com/2017/07/media-drag-and-drop.gif"
 				style={ { marginBottom: '10px', border: '3px solid #00AADC', borderRadius: '4px' } }
 			/>
 

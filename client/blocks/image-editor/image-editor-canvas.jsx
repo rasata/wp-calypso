@@ -4,7 +4,7 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDom from 'react-dom';
 import { connect } from 'react-redux';
-import { noop, throttle, startsWith } from 'lodash';
+import { noop, startsWith } from 'lodash';
 import classNames from 'classnames';
 
 /**
@@ -65,11 +65,10 @@ class ImageEditorCanvas extends Component {
 	constructor( props ) {
 		super( props );
 
-		this.onWindowResize = null;
-
 		this.onLoadComplete = this.onLoadComplete.bind( this );
+		this.onWindowResize = this.onWindowResize.bind( this );
 		this.updateCanvasPosition = this.updateCanvasPosition.bind( this );
-
+		this.requestAnimationFrameId = null;
 		this.isVisible = false;
 	}
 
@@ -126,7 +125,7 @@ class ImageEditorCanvas extends Component {
 
 		this.drawImage();
 		this.updateCanvasPosition();
-		this.onWindowResize = throttle( this.updateCanvasPosition, 200 );
+
 		if ( typeof window !== 'undefined' ) {
 			window.addEventListener( 'resize', this.onWindowResize );
 		}
@@ -134,10 +133,15 @@ class ImageEditorCanvas extends Component {
 		this.props.setImageEditorImageHasLoaded( this.image.width, this.image.height );
 	}
 
+	onWindowResize() {
+		this.requestAnimationFrameId = window.requestAnimationFrame( this.updateCanvasPosition );
+	}
+
 	componentWillUnmount() {
 		if ( typeof window !== 'undefined' && this.onWindowResize ) {
 			window.removeEventListener( 'resize', this.onWindowResize );
-			this.onWindowResize = null;
+			window.cancelAnimationFrame( this.requestAnimationFrameId );
+			// this.onWindowResize = null;
 		}
 
 		this.isVisible = false;

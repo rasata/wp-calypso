@@ -55,7 +55,8 @@
 	position: absolute;
 	top: 50%;
 	left: 50%;
-
+	transition: transform 0.15s linear;
+	will-change: transform;
 	&.is-placeholder {
 		@include placeholder-dark();
 	}
@@ -65,6 +66,7 @@
 	position: absolute;
 	border: 1px solid $white;
 	cursor: move;
+	box-sizing: border-box;
 }
 
 .image-editor__crop-background {

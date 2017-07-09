@@ -60,7 +60,7 @@ import StatusLabel from 'post-editor/editor-status-label';
 import { editedPostHasContent } from 'state/selectors';
 import EditorGroundControl from 'post-editor/editor-ground-control';
 import { isMobile } from 'lib/viewport';
-import { isSitePreviewable } from 'state/sites/selectors';
+import { isSitePreviewable, getSite } from 'state/sites/selectors';
 
 export const PostEditor = React.createClass( {
 	propTypes: {
@@ -570,7 +570,7 @@ export const PostEditor = React.createClass( {
 		}
 
 		// TODO: REDUX - remove flux actions when whole post-editor is reduxified
-		actions.autosave( callback );
+		actions.autosave( callback, this.props.site );
 	},
 
 	onClose: function() {
@@ -652,7 +652,7 @@ export const PostEditor = React.createClass( {
 			if ( 'function' === typeof callback ) {
 				callback( error );
 			}
-		}.bind( this ) );
+		}.bind( this ), null, this.props.site );
 
 		this.setState( { isSaving: true } );
 	},
@@ -701,7 +701,7 @@ export const PostEditor = React.createClass( {
 		if ( status === 'publish' ) {
 			// TODO: REDUX - remove flux actions when whole post-editor is reduxified
 			actions.edit( { content: this.editor.getContent() } );
-			actions.autosave( previewPost );
+			actions.autosave( previewPost, this.props.site );
 		} else {
 			this.onSave( null, previewPost );
 		}
@@ -800,7 +800,7 @@ export const PostEditor = React.createClass( {
 			} else {
 				this.onPublishSuccess();
 			}
-		}.bind( this ) );
+		}.bind( this ), null, this.props.site );
 
 		this.setState( {
 			isSaving: true,
@@ -1019,6 +1019,7 @@ export default connect(
 			hasBrokenPublicizeConnection: hasBrokenSiteUserConnection( state, siteId, userId ),
 			isSitePreviewable: isSitePreviewable( state, siteId ),
 			isConfirmationSidebarEnabled: isConfirmationSidebarEnabled( state, siteId ),
+			site: getSite( state, siteId )
 		};
 	},
 	( dispatch ) => {

@@ -13,7 +13,6 @@ var wpcom = require( 'lib/wp' ),
 	PostEditStore = require( './post-edit-store' ),
 	postListStoreFactory = require( './post-list-store-factory' ),
 	PreferencesStore = require( 'lib/preferences/store' ),
-	sites = require( 'lib/sites-list' )(),
 	utils = require( './utils' ),
 	versionCompare = require( 'lib/version-compare' ),
 	Dispatcher = require( 'dispatcher' ),
@@ -97,7 +96,7 @@ PostActions = {
 	 * @param {Number} siteId  Site ID
 	 * @param {Object} options Edit options
 	 */
-	startEditingNew: function( siteId, options ) {
+	startEditingNew: function( siteId, options, site ) {
 		var args;
 		options = options || {};
 
@@ -107,6 +106,7 @@ PostActions = {
 			postType: options.type || 'post',
 			title: options.title,
 			content: options.content,
+			site
 		};
 
 		Dispatcher.handleViewAction( args );
@@ -118,7 +118,7 @@ PostActions = {
 	 * @param {Number} siteId Site ID to load post from
 	 * @param {Number} postId Post ID to load
 	 */
-	startEditingExisting: function( siteId, postId ) {
+	startEditingExisting: function( siteId, postId, site ) {
 		var currentPost = PostEditStore.get(),
 			postHandle;
 
@@ -142,7 +142,8 @@ PostActions = {
 			Dispatcher.handleServerAction( {
 				type: 'RECEIVE_POST_TO_EDIT',
 				error: error,
-				post: data
+				post: data,
+				site
 			} );
 		} );
 	},
@@ -156,11 +157,10 @@ PostActions = {
 		} );
 	},
 
-	autosave: function( callback ) {
+	autosave: function( callback, site ) {
 		var post = PostEditStore.get(),
 			savedPost = PostEditStore.getSavedPost(),
-			siteHandle = wpcom.undocumented().site( post.site_ID ),
-			site;
+			siteHandle = wpcom.undocumented().site( post.site_ID );
 
 		callback = callback || function() {};
 
@@ -172,8 +172,6 @@ PostActions = {
 
 		// TODO: incorporate post locking
 		if ( utils.isPublished( savedPost ) || utils.isPublished( post ) ) {
-			site = sites.getSite( post.site_ID );
-
 			if ( ! post.ID || ! site || site.jetpack && versionCompare( site.options.jetpack_version, '3.7.0-dev', '<' ) ) {
 				return callback( new Error( 'NO_AUTOSAVE' ) );
 			}
@@ -191,13 +189,14 @@ PostActions = {
 				Dispatcher.handleServerAction( {
 					type: 'RECEIVE_POST_AUTOSAVE',
 					error: error,
-					autosave: data
+					autosave: data,
+					site
 				} );
 
 				callback( error, data );
 			} );
 		} else {
-			PostActions.saveEdited( null, callback, { recordSaveEvent: false } );
+			PostActions.saveEdited( null, callback, { recordSaveEvent: false }, site );
 		}
 	},
 
@@ -284,7 +283,7 @@ PostActions = {
 	 * @param {function} callback receives ( err, post ) arguments
 	 * @param {object} options object with optional recordSaveEvent property. True if you want to record the save event.
 	 */
-	saveEdited: function( attributes, callback, options ) {
+	saveEdited: function( attributes, callback, options, site ) {
 		var post, postHandle, query, changedAttributes, rawContent, mode, isNew;
 
 		Dispatcher.handleViewAction( {
@@ -370,7 +369,8 @@ PostActions = {
 				rawContent: mode === currentMode ? rawContent : null,
 				isNew: isNew,
 				original: original,
-				post: data
+				post: data,
+				site
 			} );
 
 			callback( error, data );
@@ -384,10 +384,10 @@ PostActions = {
 	 * @param {object} attributes only send the attributes to be changed
 	 * @param {function} callback callback receives ( err, post ) arguments
 	 */
-	update: function( post, attributes, callback ) {
+	update: function( post, attributes, callback, site ) {
 		var postHandle = wpcom.site( post.site_ID ).post( post.ID );
 
-		postHandle.update( attributes, PostActions.receiveUpdate.bind( null, callback ) );
+		postHandle.update( attributes, PostActions.receiveUpdate.bind( null, callback, site ) );
 	},
 
 	/**
@@ -397,10 +397,10 @@ PostActions = {
 	 * @param {object} post to be trashed
 	 * @param {function} callback that receives ( err, post ) arguments
 	 */
-	trash: function( post, callback ) {
+	trash: function( post, callback, site ) {
 		var postHandle = wpcom.site( post.site_ID ).post( post.ID );
 
-		postHandle.delete( PostActions.receiveUpdate.bind( null, callback ) );
+		postHandle.delete( PostActions.receiveUpdate.bind( null, callback, site ) );
 	},
 
 	/**
@@ -409,10 +409,10 @@ PostActions = {
 	 * @param {object} post to be trashed
 	 * @param {function} callback that receives ( err, post ) arguments
 	 */
-	restore: function( post, callback ) {
+	restore: function( post, callback, site ) {
 		var postHandle = wpcom.site( post.site_ID ).post( post.ID );
 
-		postHandle.restore( PostActions.receiveUpdate.bind( null, callback ) );
+		postHandle.restore( PostActions.receiveUpdate.bind( null, callback, site ) );
 	},
 
 	queryPosts: function( options, postListStoreId = 'default' ) {
@@ -504,7 +504,7 @@ PostActions = {
 		} );
 	},
 
-	receiveUpdate: function( callback, error, data ) {
+	receiveUpdate: function( callback, site, error, data ) {
 		var original;
 
 		if ( ! error ) {
@@ -515,7 +515,8 @@ PostActions = {
 			type: 'RECEIVE_UPDATED_POST',
 			error: error,
 			original: original,
-			post: data
+			post: data,
+			site
 		} );
 		callback( error, data );
 	},

@@ -13,7 +13,12 @@ import useMockery from 'test/helpers/use-mockery';
 
 describe( 'actions', function() {
 	let Dispatcher, PostActions, PostEditStore, sandbox;
-
+	const sampleSite = {
+		ID: 123,
+		jetpack: false,
+		slug: 'example.wordpress.com',
+		URL: 'https://example.wordpress.com',
+	};
 	useFakeDom();
 
 	useMockery( mockery => {
@@ -188,7 +193,7 @@ describe( 'actions', function() {
 			const spy = sandbox.spy();
 			sandbox.stub( PostEditStore, 'hasContent' ).returns( false );
 
-			PostActions.saveEdited( null, spy );
+			PostActions.saveEdited( null, spy, sampleSite );
 
 			defer( () => {
 				expect( spy ).to.have.been.calledOnce;
@@ -204,7 +209,7 @@ describe( 'actions', function() {
 			sandbox.stub( PostEditStore, 'hasContent' ).returns( true );
 			sandbox.stub( PostEditStore, 'getChangedAttributes' ).returns( {} );
 
-			PostActions.saveEdited( null, spy );
+			PostActions.saveEdited( null, spy, sampleSite );
 
 			defer( () => {
 				expect( spy ).to.have.been.calledOnce;
@@ -252,7 +257,7 @@ describe( 'actions', function() {
 				expect( error ).to.be.null;
 				expect( data ).to.eql( normalizedAttributes );
 				done();
-			} );
+			}, sampleSite );
 		} );
 	} );
 } );

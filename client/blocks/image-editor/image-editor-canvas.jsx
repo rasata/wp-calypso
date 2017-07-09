@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /**
  * External dependencies
  */
@@ -141,7 +142,6 @@ class ImageEditorCanvas extends Component {
 		if ( typeof window !== 'undefined' && this.onWindowResize ) {
 			window.removeEventListener( 'resize', this.onWindowResize );
 			window.cancelAnimationFrame( this.requestAnimationFrameId );
-			// this.onWindowResize = null;
 		}
 
 		this.isVisible = false;

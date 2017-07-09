@@ -81,6 +81,7 @@ module.exports = {
 	},
 
 	updatePostStatus: function( status ) {
+		const site = this.props.site;
 		var post = this.props.post || this.props.page,
 			previousStatus = null,
 			strings = this.strings,
@@ -107,7 +108,7 @@ module.exports = {
 			});
 
 			if ( window.confirm( strings.deleteWarning ) ) { // eslint-disable-line no-alert
-				actions.trash( post, setNewStatus );
+				actions.trash( post, setNewStatus, site );
 			} else {
 				this.resetState();
 			}
@@ -119,7 +120,7 @@ module.exports = {
 				updated: true
 			});
 			previousStatus = post.status;
-			actions.trash( post, setNewStatus );
+			actions.trash( post, setNewStatus, site );
 
 		} else if ( status === 'restore' ) {
 
@@ -128,7 +129,7 @@ module.exports = {
 				updated: true
 			});
 			previousStatus = 'trash';
-			actions.restore( post, setNewStatus );
+			actions.restore( post, setNewStatus, site );
 
 		} else {
 
@@ -143,7 +144,7 @@ module.exports = {
 				setTimeout( function() {
 					this.resetState();
 				}.bind( this ), 1200 );
-			}.bind( this ) );
+			}.bind( this ), site );
 
 		}
 	},

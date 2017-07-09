@@ -9,8 +9,7 @@ import includes from 'lodash/includes';
 /**
  * Internal dependencies
  */
-var postNormalizer = require( 'lib/post-normalizer' ),
-	sites = require( 'lib/sites-list' )();
+var postNormalizer = require( 'lib/post-normalizer' );
 
 var utils = {
 
@@ -24,8 +23,8 @@ var utils = {
 		return `${basePath}/${post.type}/${site.slug}/${post.ID}`;
 	},
 
-	getPreviewURL: function( post ) {
-		var parsed, site, previewUrl;
+	getPreviewURL: function( post, site ) {
+		var parsed, previewUrl;
 
 		if ( ! post || ! post.URL || post.status === 'trash' ) {
 			return '';
@@ -43,7 +42,6 @@ var utils = {
 		}
 
 		if ( post.site_ID ) {
-			site = sites.getSite( post.site_ID );
 			if ( ! ( site && site.options ) ) {
 				// site info is still loading, just use what we already have until it does
 				return previewUrl;

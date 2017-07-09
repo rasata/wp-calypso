@@ -88,7 +88,7 @@ const Draft = React.createClass( {
 		}.bind( this );
 
 		if ( utils.userCan( 'delete_post', this.props.post ) ) {
-			actions.trash( this.props.post, updateStatus );
+			actions.trash( this.props.post, updateStatus, this.props.site );
 		}
 	},
 
@@ -116,7 +116,7 @@ const Draft = React.createClass( {
 		}.bind( this );
 
 		if ( utils.userCan( 'delete_post', this.props.post ) ) {
-			actions.restore( this.props.post, updateStatus );
+			actions.restore( this.props.post, updateStatus, this.props.site );
 		}
 	},
 

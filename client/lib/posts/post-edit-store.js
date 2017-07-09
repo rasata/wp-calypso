@@ -71,24 +71,24 @@ function getPageTemplate( post ) {
 	return post.page_template;
 }
 
-function startEditing( post ) {
+function startEditing( post, site ) {
 	resetState();
 	post = normalize( post );
 	if ( post.title ) {
 		post.title = decodeEntities( post.title );
 	}
-	_previewUrl = utils.getPreviewURL( post );
+	_previewUrl = utils.getPreviewURL( post, site );
 	_savedPost = Object.freeze( post );
 	_post = _savedPost;
 	_isLoading = false;
 }
 
-function updatePost( post ) {
+function updatePost( post, site ) {
 	post = normalize( post );
 	if ( post.title ) {
 		post.title = decodeEntities( post.title );
 	}
-	_previewUrl = utils.getPreviewURL( post );
+	_previewUrl = utils.getPreviewURL( post, site );
 	_savedPost = Object.freeze( post );
 	_post = _savedPost;
 	_isNew = false;
@@ -100,7 +100,7 @@ function updatePost( post ) {
 	} );
 }
 
-function initializeNewPost( siteId, options ) {
+function initializeNewPost( siteId, options, site ) {
 	var args;
 	options = options || {};
 
@@ -112,7 +112,7 @@ function initializeNewPost( siteId, options ) {
 		title: options.title || ''
 	};
 
-	startEditing( args );
+	startEditing( args, site );
 	_isNew = true;
 }
 
@@ -211,7 +211,7 @@ function dispatcherCallback( payload ) {
 				postType: action.postType,
 				title: action.title,
 				content: action.content,
-			} );
+			}, action.site );
 			PostEditStore.emit( 'change' );
 			break;
 
@@ -231,7 +231,7 @@ function dispatcherCallback( payload ) {
 			if ( action.error ) {
 				setLoadingError( action.error );
 			} else {
-				startEditing( action.post );
+				startEditing( action.post, action.site );
 			}
 			PostEditStore.emit( 'change' );
 			break;
@@ -256,7 +256,7 @@ function dispatcherCallback( payload ) {
 		case 'RECEIVE_UPDATED_POST':
 			if ( ! action.error ) {
 				if ( _post && action.post.ID === _post.ID ) {
-					updatePost( action.post );
+					updatePost( action.post, action.site );
 					PostEditStore.emit( 'change' );
 				}
 			}
@@ -266,7 +266,7 @@ function dispatcherCallback( payload ) {
 
 		case 'RECEIVE_POST_BEING_EDITED':
 			if ( ! action.error ) {
-				updatePost( action.post );
+				updatePost( action.post, action.site );
 				if ( typeof action.rawContent === 'string' ) {
 					_initialRawContent = action.rawContent;
 				}
@@ -284,7 +284,7 @@ function dispatcherCallback( payload ) {
 		case 'RECEIVE_POST_AUTOSAVE':
 			_isAutosaving = false;
 			if ( ! action.error ) {
-				_previewUrl = utils.getPreviewURL( assign( { preview_URL: action.autosave.preview_URL }, _savedPost ) );
+				_previewUrl = utils.getPreviewURL( assign( { preview_URL: action.autosave.preview_URL }, _savedPost ), action.site );
 			}
 			PostEditStore.emit( 'change' );
 			break;

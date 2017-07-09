@@ -4,6 +4,8 @@
 import React from 'react';
 import classnames from 'classnames';
 import Gridicon from 'gridicons';
+import { get } from 'lodash';
+import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
@@ -12,8 +14,9 @@ import actions from 'lib/posts/actions';
 import accept from 'lib/accept';
 import utils from 'lib/posts/utils';
 import Button from 'components/button';
+import { getSite } from 'state/sites/selectors';
 
-export default React.createClass( {
+export const EditorDeletePost = React.createClass( {
 	displayName: 'EditorDeletePost',
 
 	propTypes: {
@@ -43,7 +46,7 @@ export default React.createClass( {
 
 		if ( utils.userCan( 'delete_post', this.props.post ) ) {
 			// TODO: REDUX - remove flux actions when whole post-editor is reduxified
-			actions.trash( this.props.post, handleTrashingPost );
+			actions.trash( this.props.post, handleTrashingPost, this.props.site );
 		}
 	},
 
@@ -90,3 +93,13 @@ export default React.createClass( {
 		);
 	}
 } );
+
+export default connect(
+	( state, props ) => {
+		const siteId = get( props, 'post.site_ID' );
+		return {
+			site: getSite( state, siteId )
+		};
+	}
+)( EditorDeletePost );
+

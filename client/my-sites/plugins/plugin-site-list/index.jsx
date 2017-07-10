@@ -1,39 +1,36 @@
 /**
  * External dependencies
  */
-var React = require( 'react' ),
-	classNames = require( 'classnames' ),
-	compact = require( 'lodash/compact' );
+import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
+import { compact } from 'lodash';
 import { connect } from 'react-redux';
 
 /**
  * Internal dependencies
  */
-var PluginSite = require( 'my-sites/plugins/plugin-site/plugin-site' ),
-	SectionHeader = require( 'components/section-header' ),
-	PluginsStore = require( 'lib/plugins/store' );
+import PluginSite from 'my-sites/plugins/plugin-site/plugin-site';
+import SectionHeader from 'components/section-header';
+import PluginsStore from 'lib/plugins/store';
 import { isConnectedSecondaryNetworkSite, getNetworkSites } from 'state/selectors';
 
-const PluginSiteList =  React.createClass( {
+export class PluginSiteList extends Component {
+	static propTypes = {
+		sites: PropTypes.array,
+		plugin: PropTypes.object,
+		notices: PropTypes.object,
+		title: PropTypes.string,
+		sitesWithSecondarySites: PropTypes.array,
+	};
 
-	displayName: 'PluginSiteList',
-
-	propTypes: {
-		sites: React.PropTypes.array,
-		plugin: React.PropTypes.object,
-		notices: React.PropTypes.object,
-		title: React.PropTypes.string,
-		sitesWithSecondarySites: React.PropTypes.array,
-	},
-
-	getSecondaryPluginSites: function( site, secondarySites ) {
+	getSecondaryPluginSites = function( site, secondarySites ) {
 		const secondaryPluginSites = site.plugin
 			? PluginsStore.getSites( secondarySites, this.props.plugin.slug )
 			: secondarySites;
 		return compact( secondaryPluginSites );
-	},
+	};
 
-	renderPluginSite: function( { site, secondarySites } ) {
+	renderPluginSite = function( { site, secondarySites } ) {
 		return <PluginSite
 				key={ 'pluginSite' + site.ID }
 				site={ site }
@@ -41,9 +38,9 @@ const PluginSiteList =  React.createClass( {
 				plugin={ this.props.plugin }
 				wporg={ this.props.wporg }
 				notices={ this.props.notices } />;
-	},
+	};
 
-	render: function() {
+	render = function() {
 		if ( ! this.props.sites || this.props.sites.length === 0 ) {
 			return null;
 		}
@@ -59,7 +56,7 @@ const PluginSiteList =  React.createClass( {
 			</div>
 		);
 	}
-} );
+}
 
 export default connect(
 	( state, props ) => {

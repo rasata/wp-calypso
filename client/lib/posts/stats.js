@@ -1,27 +1,24 @@
-/*
+/**
  * External dependencies
  */
 import debugModule from 'debug';
 import noop from 'lodash/noop';
 
-/*
+/**
  * Internal dependencies
  */
 import config from 'config';
 import analytics from 'lib/analytics';
 import PostEditStore from 'lib/posts/post-edit-store';
 import utils from 'lib/posts/utils';
-import SitesList from 'lib/sites-list';
 
-/*
+/**
  * Module variables
  */
 const debug = debugModule( 'calypso:posts:stats' );
-const sites = new SitesList();
 
-function recordUsageStats( action, postType ) {
+function recordUsageStats( action, postType, site ) {
 	let source;
-	const site = sites.getSelectedSite();
 
 	analytics.mc.bumpStat( 'editor_usage', action );
 
@@ -43,7 +40,7 @@ export function recordEvent( action, label, value ) {
 	analytics.ga.recordEvent( 'Editor', action, label, value );
 }
 
-export function recordSaveEvent() {
+export function recordSaveEvent( site ) {
 	const post = PostEditStore.get();
 	const savedPost = PostEditStore.getSavedPost();
 
@@ -84,7 +81,7 @@ export function recordSaveEvent() {
 	}
 
 	if ( usageAction ) {
-		recordUsageStats( usageAction, post.type );
+		recordUsageStats( usageAction, post.type, site );
 	}
 
 	// if this action has an mc stat name, record it

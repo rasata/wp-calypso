@@ -63,8 +63,6 @@ import domainsPaths from 'my-sites/domains/paths';
 import config from 'config';
 import { getSitePlanSlug } from 'state/sites/plans/selectors';
 import { getSelectedSiteId } from 'state/ui/selectors';
-import { isFreePlan } from 'lib/plans';
-import { isJetpackSite } from 'state/sites/selectors';
 
 function getPurchases( props ) {
 	return ( props.receipt.data && props.receipt.data.purchases ) || [];
@@ -208,7 +206,8 @@ const CheckoutThankYou = React.createClass( {
 	},
 
 	isEligibleForLiveChat() {
-		return this.props.isJetpackPaidPlan;
+		const { planSlug } = this.props;
+		return planSlug === 'jetpack_business' || planSlug === 'jetpack_business_monthly';
 	},
 
 	isNewUser() {
@@ -407,7 +406,7 @@ export default connect(
 		const planSlug = getSitePlanSlug( state, siteId );
 
 		return {
-			isJetpackPaidPlan: siteId && isJetpackSite( state, siteId ) && ! isFreePlan( planSlug ),
+			planSlug,
 			receipt: getReceiptById( state, props.receiptId ),
 			sitePlans: getPlansBySite( state, props.selectedSite ),
 			user: getCurrentUser( state ),

@@ -40,9 +40,12 @@ export const MediaBasicsTour = makeTour(
 			placement="below"
 		>
 			<p>
+				{ translate( 'Welcome to your media libary!' ) }
+			</p>
+			<p>
 				{
-					translate( 'Welcome to the Media Libary! You can add media by clicking ' +
-									'the {{icon/}} {{strong}}Add New{{/strong}} button.',
+					translate( 'Upload media — photos, documents, audio files, and more — ' +
+						'by clicking the {{icon/}} {{strong}}Add New{{/strong}} button.',
 						{
 							components: {
 								icon: <Gridicon icon="add-image" />,
@@ -84,7 +87,11 @@ export const MediaBasicsTour = makeTour(
 			style={ { marginTop: '-10px' } }
 		>
 			<Continue click step="click-to-edit" target=".media-library__list-item-figure">
-				{ translate( 'Click this image to select it.' ) }
+				{
+					translate( 'Once you upload a file, you can edit its title, add a caption, and even do basic photo editing. ' +
+						'To find these options, first click on a file to select it. '
+					)
+				}
 			</Continue>
 		</Step>
 
@@ -96,11 +103,13 @@ export const MediaBasicsTour = makeTour(
 		>
 			<Continue click step="launch-modal" target=".editor-media-modal__secondary-action">
 				{
-					translate( 'Click the {{strong}}Edit{{/strong}} button to edit the selected image.', {
-						components: {
-							strong: <strong />,
+					translate( 'Then, click the {{strong}}Edit{{/strong}} button.',
+						{
+							components: {
+								strong: <strong />,
+							}
 						}
-					} )
+					)
 				}
 			</Continue>
 		</Step>

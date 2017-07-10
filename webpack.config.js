@@ -160,6 +160,7 @@ const webpackConfig = {
 			return chunk.modules.map( m => path.relative( m.context, m.request ) ).join( '_' );
 		} ),
 		new NameAllModulesPlugin(),
+		new webpack.optimize.ModuleConcatenationPlugin(),
 	] ),
 	externals: [ 'electron' ]
 };

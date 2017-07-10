@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { localize } from 'i18n-calypso';
+import page from 'page';
 
 /**
  * Internal dependencies
@@ -16,7 +17,9 @@ import {
 	createPaymentSettingsActionList,
 } from 'woocommerce/state/ui/payments/actions';
 import { errorNotice, successNotice } from 'state/notices/actions';
+import { fetchSetupChoices } from 'woocommerce/state/sites/setup-choices/actions';
 import { getActionList } from 'woocommerce/state/action-list/selectors';
+import { getFinishedInitialSetup } from 'woocommerce/state/sites/setup-choices/selectors';
 import { getLink } from 'woocommerce/lib/nav-utils';
 import { getSelectedSiteWithFallback } from 'woocommerce/state/sites/selectors';
 import Main from 'components/main';
@@ -36,13 +39,38 @@ class SettingsPayments extends Component {
 		className: PropTypes.string,
 	};
 
-	onSave = () => {
-		const { translate, actions } = this.props;
+	componentDidMount = () => {
+		const { site, actions } = this.props;
 
-		const successAction = successNotice(
+		if ( site && site.ID ) {
+			actions.fetchSetupChoices( site.ID );
+		}
+	}
+
+	componentWillReceiveProps = ( newProps ) => {
+		const { site, actions } = this.props;
+
+		const newSiteId = newProps.site ? newProps.site.ID : null;
+		const oldSiteId = site ? site.ID : null;
+
+		if ( oldSiteId !== newSiteId ) {
+			actions.fetchSetupChoices( newSiteId );
+		}
+	}
+
+	onSave = () => {
+		const { translate, actions, site, finishedInitialSetup } = this.props;
+
+		let successAction = successNotice(
 			translate( 'Payment settings saved.' ),
 			{ duration: 4000 }
 		);
+
+		if ( ! finishedInitialSetup ) {
+			successAction = () => {
+				page.redirect( getLink( '/store/:site', site ) );
+			};
+		}
 
 		const failureAction = errorNotice(
 			translate( 'There was a problem saving the payment settings. Please try again.' )
@@ -52,13 +80,14 @@ class SettingsPayments extends Component {
 	}
 
 	render() {
-		const { isSaving, site, translate, className } = this.props;
+		const { isSaving, site, translate, className, finishedInitialSetup } = this.props;
 
 		const breadcrumbs = [
 			( <a href={ getLink( '/store/:site/', site ) }>{ translate( 'Settings' ) }</a> ),
 			( <span>{ translate( 'Payments' ) }</span> ),
 		];
 
+		const saveMessage = finishedInitialSetup ? translate( 'Save' ) : translate( 'Save & Finish' );
 		return (
 			<Main
 				className={ classNames( 'settingsPayments', className ) }>
@@ -68,7 +97,7 @@ class SettingsPayments extends Component {
 						onClick={ this.onSave }
 						busy={ isSaving }
 						disabled={ isSaving }>
-						{ translate( 'Save' ) }
+						{ saveMessage }
 					</Button>
 				</ActionHeader>
 				<SettingsNavigation activeSection="payments" />
@@ -84,9 +113,11 @@ class SettingsPayments extends Component {
 
 function mapStateToProps( state ) {
 	const site = getSelectedSiteWithFallback( state );
+	const finishedInitialSetup = getFinishedInitialSetup( state );
 	return {
 		isSaving: Boolean( getActionList( state ) ),
 		site,
+		finishedInitialSetup,
 	};
 }
 
@@ -95,6 +126,7 @@ function mapDispatchToProps( dispatch ) {
 		actions: bindActionCreators(
 			{
 				createPaymentSettingsActionList,
+				fetchSetupChoices,
 			}, dispatch
 		)
 	};

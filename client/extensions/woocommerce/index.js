@@ -4,7 +4,6 @@
 import config from 'config';
 import page from 'page';
 import React from 'react';
-import { translate } from 'i18n-calypso';
 
 /**
  * Internal dependencies
@@ -36,112 +35,59 @@ const getStorePages = () => {
 			container: Dashboard,
 			configKey: 'woocommerce/extension-dashboard',
 			path: '/store/:site',
-			sidebarItem: {
-				icon: 'house',
-				isPrimary: true,
-				label: translate( 'Dashboard' ),
-				slug: 'dashboard',
-				showDuringSetup: true,
-			},
 		},
 		{
 			container: Products,
 			configKey: 'woocommerce/extension-products',
 			path: '/store/products/:site',
-			sidebarItem: {
-				icon: 'product',
-				isPrimary: true,
-				label: translate( 'Products' ),
-				slug: 'products',
-				showDuringSetup: false,
-			},
 		},
 		{
 			container: ProductCreate,
 			configKey: 'woocommerce/extension-products',
 			path: '/store/product/:site',
-			parentPath: '/store/products/:site',
-			sidebarItemButton: {
-				label: translate( 'Add' ),
-				parentSlug: 'products',
-				slug: 'product-add',
-				showDuringSetup: false,
-			},
 		},
 		{
 			container: ProductUpdate,
 			configKey: 'woocommerce/extension-products',
 			path: '/store/product/:site/:product',
-			parentPath: '/store/products/:site',
 		},
 		{
 			container: Orders,
 			configKey: 'woocommerce/extension-orders',
 			path: '/store/orders/:site',
-			sidebarItem: {
-				icon: 'pages',
-				isPrimary: true,
-				label: translate( 'Orders' ),
-				slug: 'orders',
-				showDuringSetup: false,
-			},
 		},
 		{
 			container: Order,
 			configKey: 'woocommerce/extension-orders',
 			path: '/store/order/:site/:order',
-			parentPath: '/store/orders/:site',
 		},
 		{
 			container: SettingsPayments,
 			configKey: 'woocommerce/extension-settings',
 			path: '/store/settings/:site',
-			sidebarItem: {
-				icon: 'cog',
-				isPrimary: false,
-				label: translate( 'Settings' ),
-				slug: 'settings',
-				showDuringSetup: false,
-			},
 		},
 		{
 			container: SettingsPayments,
 			configKey: 'woocommerce/extension-settings-payments',
 			path: '/store/settings/payments/:site',
-			parentPath: '/store/settings/:site',
 		},
 		{
 			container: Shipping,
 			configKey: 'woocommerce/extension-settings-shipping',
 			path: '/store/settings/shipping/:site',
-			parentPath: '/store/settings/:site',
 		},
 		{
 			container: ShippingZone,
 			configKey: 'woocommerce/extension-settings-shipping',
 			path: '/store/settings/shipping/zone/:site/:zone?',
-			parentPath: '/store/settings/:site',
 		},
 		{
 			container: SettingsTaxes,
 			configKey: 'woocommerce/extension-settings-tax',
 			path: '/store/settings/taxes/:site',
-			parentPath: '/store/settings/:site',
 		},
 	];
 };
-
-function getStoreSidebarItems() {
-	return getStorePages().filter( storePage => storePage.sidebarItem ).map( storePage => {
-		return { path: storePage.path, ...storePage.sidebarItem };
-	} );
-}
-
-function getStoreSidebarItemButtons() {
-	return getStorePages().filter( storePage => storePage.sidebarItemButton ).map( storePage => {
-		return { path: storePage.path, ...storePage.sidebarItemButton };
-	} );
-}
 
 function addStorePage( storePage, storeNavigation ) {
 	page( storePage.path, siteSelection, storeNavigation, function( context ) {
@@ -159,8 +105,6 @@ function createStoreNavigation( context, next, storePage ) {
 		React.createElement( StoreSidebar, {
 			path: context.path,
 			page: storePage,
-			sidebarItems: getStoreSidebarItems(),
-			sidebarItemButtons: getStoreSidebarItemButtons(),
 		} ),
 		document.getElementById( 'secondary' ),
 		context.store

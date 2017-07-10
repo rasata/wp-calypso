@@ -86,6 +86,7 @@ export getReaderRecommendedSites from './get-reader-recommended-sites';
 export getReaderRecommendedSitesPagingOffset from './get-reader-recommended-sites-paging-offset';
 export getReaderTags from './get-reader-tags';
 export getReaderTeams from './get-reader-teams';
+export getRegistrantWhois from './get-registrant-whois';
 export getSelectedOrAllSites from './get-selected-or-all-sites';
 export getSelectedOrPrimarySiteId from './get-selected-or-primary-site-id';
 export getScheduledPublicizeShareActionTime from './get-scheduled-publicize-share-action-time';

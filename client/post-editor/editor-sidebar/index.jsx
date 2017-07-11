@@ -100,7 +100,7 @@ export default class EditorSidebar extends Component {
 
 	renderFeedbackSidebar() {
 		return (
-			<FeedbackView sharedLinks={ [
+			<FeedbackView close={ this.closeFeedbackPane } sharedLinks={ [
 				{
 					label: 'lance@automattic.com',
 					link: '',
